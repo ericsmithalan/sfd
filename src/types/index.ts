@@ -1,3 +1,9 @@
+export interface Address {
+    city: string;
+    state: string;
+    zip: string;
+}
+
 export interface FlexAttribures {
     dir?: "col" | "row";
     full?: "w" | "h" | "both";

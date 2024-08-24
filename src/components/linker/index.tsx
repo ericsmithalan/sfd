@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { IconName } from "../../../types";
+import { IconName } from "../../types";
 import { FontIcon } from "../font-icon";
 import Link from "next/link";
 

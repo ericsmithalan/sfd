@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { ButtonLink, Flex, Linker, Logo } from "..";
+import { ButtonLink, Flex, Linker, Logo } from "../";
 import "./style.scss";
 
 export const Header = () => {

@@ -20,11 +20,11 @@ export default function RootLayout({
 }>) {
     return (
         <>
-            <SpeedInsights />
             <html lang="en">
                 <body className={inter.className}>
                     <Header />
                     {children}
+                    <SpeedInsights />
                 </body>
             </html>
         </>

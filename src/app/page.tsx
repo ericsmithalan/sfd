@@ -1,90 +1,10 @@
 import { HomeHero, PageLayout } from "@/components";
+import { ServicesCards } from "@/components/services-cards";
 
 const Home = () => {
     return (
-        <PageLayout hero={<HomeHero />} title="home">
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
-            Home
-            <br />
+        <PageLayout as="div" hero={<HomeHero />} title="home">
+            <ServicesCards />
         </PageLayout>
     );
 };

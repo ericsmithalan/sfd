@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { FlexAttribures } from "../../../types";
-import { flexPropsToCss } from "../../../utils/flex-props-to-css";
+import { FlexAttribures } from "../../types";
+import { flexPropsToCss } from "../../utils/flex-props-to-css";
 import { forwardRef, Ref } from "react";
 
 export interface FlexProps extends FlexAttribures {

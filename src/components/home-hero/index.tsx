@@ -1,11 +1,11 @@
 "use client";
-import { useEmail } from "@/hooks/useEmail";
-import { Flex, FontIcon, Title } from "../shared";
+import { useContactInfo } from "@/hooks";
+import { ButtonLink, Flex, Title } from "../";
 
 interface HomeHeroProps {}
 
 export const HomeHero = ({}: HomeHeroProps) => {
-    const email = useEmail();
+    const { email, phone } = useContactInfo();
 
     return (
         <Flex
@@ -26,14 +26,22 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     Design. Build.{" "}
                     <span className="text-sfdPrimary3"> Inspire</span>.
                 </Title>
-                <p className="text-2xl font-thin max-w-[600px] mt-5">
+                <p className="text-2xl font-extralight max-w-[600px] mt-5">
                     Experience the art of furniture design, tailored to your
                     unique vision.
-                    {email}
                 </p>
 
-                <Flex as="div">
-                    <FontIcon icon="phone-fill" />
+                <Flex as="div" dir="row" className="gap-4 mt-7 text-2xl">
+                    <ButtonLink
+                        href={`tel:${phone}`}
+                        icon="phone-fill"
+                        className="text-xl"
+                    >
+                        {phone}
+                    </ButtonLink>
+                    <ButtonLink href={`mailto:${email}`} icon="mail-fill">
+                        Email
+                    </ButtonLink>
                 </Flex>
             </Flex>
         </Flex>

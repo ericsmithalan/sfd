@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import { IconName } from "../../../types";
+import { IconName } from "../../types";
 
 interface FontIconProps {
     icon?: IconName;
