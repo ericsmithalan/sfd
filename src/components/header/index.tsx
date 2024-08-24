@@ -77,32 +77,20 @@ export const Header = () => {
                 as="section"
                 flex="auto"
                 align={["items", "center"]}
-                className="p-4 gap-10 md:gap-x-28"
+                className="p-4 gap-2 md:gap-x-28 lg:gap-x-28"
                 dir="row"
             >
                 <Flex as="div" className="">
-                    <Logo />
+                    <Logo className="w-44 lg:w-64 md:w-44 sm:w-44 xsm:w-44" />
                 </Flex>
-                <Flex
-                    as="nav"
-                    justify={["content", "end"]}
-                    flex="auto"
-                    dir="row"
-                    className="gap-7"
-                >
-                    {/* <Linker href="/">Home</Linker>
-                    <Linker href="/about">About</Linker> */}
-                </Flex>
+
                 <Flex
                     as="div"
                     full="w"
                     justify={["content", "end"]}
                     flex="auto"
                 >
-                    <ButtonLink
-                        variant={stuck ? "border" : "fill"}
-                        href="/contact"
-                    >
+                    <ButtonLink variant={"border"} href="/contact">
                         Contact Us
                     </ButtonLink>
                 </Flex>

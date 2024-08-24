@@ -25,7 +25,7 @@ export const ButtonLink = ({
                 "inline-flex flex-nowrap flex-row text-nowrap rounded-sm gap-2 items-center",
                 !variant && "pl-0 pr-0",
                 variant == "border" &&
-                    "outline outline-1 pl-5 pr-5 outline-sfdPrimary1 pt-2 pb-2 ",
+                    "outline outline-1 pl-5 pr-5 outline-sfdPrimary3 pt-2 pb-2 ",
                 variant == "fill" && "bg-sfdPrimary3 pl-5 pr-5 pt-2 pb-2 ",
                 className
             )}

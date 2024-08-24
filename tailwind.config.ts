@@ -25,7 +25,8 @@ const config: Config = {
         },
         extend: {
             backgroundImage: {
-                "bg-home-hero": "url('/images/home/hero.png')",
+                "home-hero": "url('/images/home/hero.webp')",
+                "home-hero-mobile": "url('/images/home/hero-mobile.webp')",
             },
             height: {
                 header: "100px",

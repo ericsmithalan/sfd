@@ -26,13 +26,13 @@ export const ServiceCard = ({
             <Flex as="div">
                 <Title
                     as="h3"
-                    className="font-medium text-2xl lg:text-4xl md:text-2xl text-sfdPrimary2"
+                    className="font-medium text-3xl lg:text-4xl md:text-2xl text-sfdPrimary2"
                 >
                     {title}
                 </Title>
             </Flex>
             <Flex as="div">
-                <Text as={"span"} className="text-gray-500">
+                <Text as={"span"} className="text-gray-500/70">
                     {description}
                 </Text>
             </Flex>

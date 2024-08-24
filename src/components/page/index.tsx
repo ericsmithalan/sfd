@@ -19,7 +19,11 @@ export const PageLayout = ({
 }: PageLayoutProps) => {
     return (
         <>
-            <Flex as="div" dir="col" className={classNames("", className)}>
+            <Flex
+                as="div"
+                dir="col"
+                className={classNames("bg-gray-100", className)}
+            >
                 {hero && (
                     <Flex
                         dir="col"

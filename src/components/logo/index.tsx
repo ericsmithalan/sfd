@@ -23,7 +23,7 @@ export const Logo = ({
             viewBox="0 0 374 105"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={classNames("w-36 lg:w-56 md:w-44", className)}
+            className={classNames(className)}
         >
             <g opacity="0.4">
                 <path
