@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import "./remixicon.css";
-
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,11 +19,14 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en">
-            <body className={inter.className}>
-                <Header />
-                {children}
-            </body>
-        </html>
+        <>
+            <SpeedInsights />
+            <html lang="en">
+                <body className={inter.className}>
+                    <Header />
+                    {children}
+                </body>
+            </html>
+        </>
     );
 }
