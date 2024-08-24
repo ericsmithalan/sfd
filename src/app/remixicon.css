@@ -15,7 +15,7 @@
   url("/fonts/remix/remixicon.woff2?t=1718271040674") format("woff2"),
   url("/fonts/remix/remixicon.woff?t=1718271040674") format("woff"),
   url('/fonts/remix/remixicon.ttf?t=1718271040674') format('truetype'), /* chrome, firefox, opera, Safari, Android, iOS 4.2+*/
-  url('/fonts/remixicon.svg?t=1718271040674#remixicon') format('svg'); /* iOS 4.1- */
+  url('/fonts/remix/remixicon.svg?t=1718271040674#remixicon') format('svg'); /* iOS 4.1- */
   font-display: swap;
 }
 
