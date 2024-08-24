@@ -69,14 +69,15 @@ export const Header = () => {
             flex="auto"
             full="w"
             ref={headerRef}
-            className="sfd-header h-header fixed text-white"
+            className="sfd-header h-header z-30 fixed text-white"
             dir="row"
         >
             <Flex
                 contain
                 as="section"
+                flex="auto"
                 align={["items", "center"]}
-                className="p-4 gap-x-28"
+                className="p-4 gap-10 md:gap-x-28"
                 dir="row"
             >
                 <Flex as="div" className="">
@@ -92,7 +93,12 @@ export const Header = () => {
                     {/* <Linker href="/">Home</Linker>
                     <Linker href="/about">About</Linker> */}
                 </Flex>
-                <Flex as="div" justify={["items", "center"]}>
+                <Flex
+                    as="div"
+                    full="w"
+                    justify={["content", "end"]}
+                    flex="auto"
+                >
                     <ButtonLink
                         variant={stuck ? "border" : "fill"}
                         href="/contact"

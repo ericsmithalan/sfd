@@ -20,9 +20,9 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 dir="col"
                 flex="auto"
                 contain
-                className="mt-20 pl-20"
+                className="mt-10 md:mt-20 lg:mt-20 pl-20"
             >
-                <Title as="h1">
+                <Title as="h1" className="text-5xl md:text-4xl lg:text-6xl">
                     Design. Build.{" "}
                     <span className="text-sfdPrimary3"> Inspire</span>.
                 </Title>
