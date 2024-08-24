@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import "./typography.scss";
+
+#__next {
+    @apply flex flex-auto flex-col h-full w-full;
+}
