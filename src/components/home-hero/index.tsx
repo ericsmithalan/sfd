@@ -12,7 +12,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
             as="section"
             flex="auto"
             dir="col"
-            className="bg-sfdSecondary1 bg-home-hero-mobile md:bg-home-hero lg:bg-home-hero bg-cover bg-right-top sm:bg-right-bottom w-screen h-[600px] text-white"
+            className="bg-sfdSecondary1 bg-home-hero-mobile sm:bg-home-hero-tablet md:bg-home-hero lg:bg-home-hero bg-cover bg-right-top w-screen h-[550px] max-sm:h-[500px] max-md:h-[500px] text-white"
         >
             <div className="h-header"></div>
             <Flex
@@ -24,12 +24,12 @@ export const HomeHero = ({}: HomeHeroProps) => {
             >
                 <Title
                     as="h1"
-                    className="text-4xl leading-snug font-normal md:text-4xl lg:text-6xl"
+                    className="text-4xl leading-snug font-normal md:text-5xl lg:text-6xl"
                 >
                     Design. Build.{" "}
                     <span className="text-sfdPrimary3"> Inspire</span>.
                 </Title>
-                <p className="text-xl leading-relaxed font-light max-w-[600px] mt-5 text-white/70">
+                <p className="text-2xl leading-relaxed font-light max-w-[600px] max-md:max-w-[400px] mt-5 text-white/70">
                     Experience the art of furniture design, tailored to your
                     unique vision.
                 </p>

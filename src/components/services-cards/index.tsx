@@ -14,11 +14,12 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
             dir="col"
             contain
             className={classNames(
-                "relative z-10 ml-4 mr-4 mt-[-100px] md:flex-row lg:flex-row gap-6 text-center",
+                "relative z-10 ml-4 mr-4 mt-[-100px] sm:flex-row md:flex-row lg:flex-row gap-6 text-center pl-12 pr-12",
                 className
             )}
         >
             <ServiceCard
+                className=""
                 image="/images/services/icn-woodworking.svg"
                 title="Woodworking"
                 description="Our custom-made furniture pieces are meticulously crafted with attention to detail and a dedication to quality that ensures each creation is a true work of art."

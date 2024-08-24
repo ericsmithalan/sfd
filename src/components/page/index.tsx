@@ -22,7 +22,7 @@ export const PageLayout = ({
             <Flex
                 as="div"
                 dir="col"
-                className={classNames("bg-gray-100", className)}
+                className={classNames("bg-black/5", className)}
             >
                 {hero && (
                     <Flex

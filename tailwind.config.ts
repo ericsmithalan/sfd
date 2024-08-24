@@ -26,7 +26,12 @@ const config: Config = {
         extend: {
             backgroundImage: {
                 "home-hero": "url('/images/home/hero.webp')",
+                "home-hero-2": "url('/images/home/hero-2.webp')",
                 "home-hero-mobile": "url('/images/home/hero-mobile.webp')",
+                "home-hero-tablet": "url('/images/home/hero-tablet.webp')",
+                "services-wood": "url('/images/services/wood-hover.webp')",
+                "services-cnc": "url('/images/services/cnc-hover.webp')",
+                "services-design": "url('/images/services/design-hover.webp')",
             },
             height: {
                 header: "100px",
