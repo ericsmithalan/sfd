@@ -2,10 +2,8 @@ export interface FlexAttribures {
     dir?: "col" | "row";
     full?: "w" | "h" | "both";
     screen?: "w" | "h" | "both";
-    basis?: number | string;
     flex?: "1" | "auto" | "initial" | "none";
     inline?: boolean;
-    gap?: number | string;
     grow?: boolean;
     shrink?: boolean;
     wrap?: boolean;

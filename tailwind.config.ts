@@ -11,7 +11,25 @@ const config: Config = {
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
-    safelist: ["flex", "flex-col", "flex-row"],
+    // dir?: "col" | "row";
+    // full?: "w" | "h" | "both";
+    // screen?: "w" | "h" | "both";
+    // basis?: number | string;
+    // flex?: "1" | "auto" | "initial" | "none";
+    // inline?: boolean;
+    // gap?: number | string;
+    // grow?: boolean;
+    // shrink?: boolean;
+    // wrap?: boolean;
+    // justify?: [
+    //     "self" | "items" | "content",
+    //     "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
+    // ];
+    // align?: [
+    //     "self" | "items" | "content",
+    //     "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
+    // ];
+
     theme: {
         container: {
             screens: {
@@ -75,6 +93,56 @@ const config: Config = {
         // require("@tailwindcss/forms"),
         // require("@tailwindcss/aspect-ratio"),
         // require("@tailwindcss/container-queries"),
+    ],
+    safelist: [
+        "flex",
+        "flex-col",
+        "flex-row",
+        "inline-flex",
+        "flex-grow-1",
+        "flex-grow-0",
+        "flex-shrink-1",
+        "flex-shrink-0",
+        "flex-wrap",
+        "flex-nowrap",
+        "justify-normal",
+        "justify-start",
+        "justify-end",
+        "justify-center",
+        "justify-between",
+        "justify-around",
+        "justify-evenly",
+        "justify-stretch",
+        "justify-items-start",
+        "justify-items-end",
+        "justify-items-center",
+        "justify-items-stretch",
+        "justify-self-auto",
+        "justify-self-start",
+        "justify-self-end",
+        "justify-self-center",
+        "justify-self-stretch",
+        "content-normal",
+        "content-center",
+        "content-start",
+        "content-end",
+        "content-between",
+        "content-around",
+        "content-evenly",
+        "content-baseline",
+        "content-stretch",
+        "items-start",
+        "items-end",
+        "items-center",
+        "items-baseline",
+        "items-stretch",
+        "self-auto",
+        "self-start",
+        "self-auto",
+        "self-end",
+        "self-center",
+        "self-stretch",
+        "self-baseline",
     ],
 };
 export default config;

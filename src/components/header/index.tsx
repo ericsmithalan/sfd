@@ -18,7 +18,6 @@ export const Header = () => {
                 align={["items", "center"]}
                 className="p-4"
                 dir="row"
-                gap="9"
             >
                 <Flex as="div" flex="initial" className="">
                     <Logo width={200} />

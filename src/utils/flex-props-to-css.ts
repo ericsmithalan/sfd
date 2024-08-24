@@ -15,14 +15,6 @@ export const flexPropsToCss = (props: FlexProps) => {
         }
     }
 
-    if (props.basis) {
-        cn.push(`basis-${props.basis}`);
-    }
-
-    if (props.gap) {
-        cn.push(`gap-${props.gap}`);
-    }
-
     if (props.full) {
         switch (props.full) {
             case "w":
