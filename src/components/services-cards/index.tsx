@@ -14,7 +14,7 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
             dir="col"
             contain
             className={classNames(
-                "relative z-10 mt-[-100px] md:flex-row lg:flex-row gap-6",
+                "relative z-10 mt-[-100px] md:flex-row lg:flex-row gap-6 text-center",
                 className
             )}
         >

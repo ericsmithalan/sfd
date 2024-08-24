@@ -89,11 +89,16 @@ export const Header = () => {
                     dir="row"
                     className="gap-7"
                 >
-                    <Linker href="/">Home</Linker>
-                    <Linker href="/about">About</Linker>
+                    {/* <Linker href="/">Home</Linker>
+                    <Linker href="/about">About</Linker> */}
                 </Flex>
                 <Flex as="div" justify={["items", "center"]}>
-                    <ButtonLink href="/contact">Contact Us</ButtonLink>
+                    <ButtonLink
+                        variant={stuck ? "border" : "fill"}
+                        href="/contact"
+                    >
+                        Contact Us
+                    </ButtonLink>
                 </Flex>
             </Flex>
         </Flex>

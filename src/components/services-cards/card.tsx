@@ -26,7 +26,7 @@ export const ServiceCard = ({
             <Flex as="div">
                 <Title
                     as="h3"
-                    className="font-normal text-xl lg:text-4xl md:text-2xl text-sfdPrimary2"
+                    className="font-medium text-xl lg:text-4xl md:text-2xl text-sfdPrimary2"
                 >
                     {title}
                 </Title>
@@ -37,7 +37,13 @@ export const ServiceCard = ({
                 </Text>
             </Flex>
             <Flex as="div">
-                <Image alt="" width={150} height={150} src={image} />
+                <Image
+                    alt=""
+                    width={150}
+                    height={150}
+                    style={{ width: "auto", height: "auto" }}
+                    src={image}
+                />
             </Flex>
         </Flex>
     );
