@@ -6,30 +6,6 @@ const config: Config = {
         "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
         "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
     ],
-    purge: [
-        "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-        "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
-        "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
-    ],
-    // dir?: "col" | "row";
-    // full?: "w" | "h" | "both";
-    // screen?: "w" | "h" | "both";
-    // basis?: number | string;
-    // flex?: "1" | "auto" | "initial" | "none";
-    // inline?: boolean;
-    // gap?: number | string;
-    // grow?: boolean;
-    // shrink?: boolean;
-    // wrap?: boolean;
-    // justify?: [
-    //     "self" | "items" | "content",
-    //     "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
-    // ];
-    // align?: [
-    //     "self" | "items" | "content",
-    //     "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
-    // ];
-
     theme: {
         container: {
             screens: {
@@ -48,6 +24,9 @@ const config: Config = {
             xl: "1280px",
         },
         extend: {
+            backgroundImage: {
+                "bg-home-hero": "url('/images/home/hero.png')",
+            },
             height: {
                 header: "100px",
             },
@@ -71,7 +50,7 @@ const config: Config = {
                 sfdPrimary4: "#EADECC",
                 sfdPrimary5: "#FBF9F7",
 
-                sfdSecondary0: "#3E4A4A",
+                sfdSecondary0: "#384346",
                 sfdSecondary1: "#687877",
                 sfdSecondary2: "#7C8B8B",
                 sfdSecondary3: "#BABABA",
@@ -95,9 +74,23 @@ const config: Config = {
         // require("@tailwindcss/container-queries"),
     ],
     safelist: [
+        "font-extrabold",
+        "leading-none",
+        "tracking-tight",
+        "fixed",
+        "mx-auto",
+        "container",
+        "w-full",
+        "h-full",
+        "w-screen",
+        "h-screen",
         "flex",
         "flex-col",
         "flex-row",
+        "flex-1",
+        "flex-auto",
+        "flex-initial",
+        "flex-none",
         "inline-flex",
         "flex-grow-1",
         "flex-grow-0",

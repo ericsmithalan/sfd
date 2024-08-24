@@ -14,7 +14,7 @@ export const Logo = ({
     className,
 }: LogoProps) => {
     const color1 = theme == "light" ? "#ffffff" : "#272727";
-    const color2 = theme == "light" ? "#B88A4E" : "#B88A4E";
+    const color2 = theme == "light" ? "#D5B895" : "#B88A4E";
 
     return (
         <svg
@@ -23,7 +23,7 @@ export const Logo = ({
             viewBox="0 0 374 105"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={classNames("", className)}
+            className={classNames("w-36 lg:w-56 md:w-44", className)}
         >
             <g opacity="0.4">
                 <path

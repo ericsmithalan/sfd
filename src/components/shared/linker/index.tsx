@@ -3,26 +3,18 @@ import { IconName } from "../../../types";
 import { FontIcon } from "../font-icon";
 import Link from "next/link";
 
-interface ButtonLinkProps {
+interface LinkerProps {
     icon?: IconName;
     href: string;
     children?: React.ReactNode;
     className?: string;
 }
 
-export const ButtonLink = ({
-    className,
-    children,
-    href,
-    icon,
-}: ButtonLinkProps) => {
+export const Linker = ({ className, children, href, icon }: LinkerProps) => {
     return (
         <Link
             href={href}
-            className={classNames(
-                "inline-flex flex-nowrap flex-row rounded-sm pt-2 pb-2 pl-5 pr-5 outline outline-1 outline-sfdPrimary1 gap-2",
-                className
-            )}
+            className={classNames("inline-flex flex-row gap-4", className)}
         >
             {icon && <FontIcon icon={icon} />}
             {children}

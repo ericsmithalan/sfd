@@ -1,31 +1,40 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
-import { Container } from "../container";
 import { Flex } from "../flex";
+import Head from "next/head";
 
-interface PageProps {
+interface PageLayoutProps {
     children?: ReactNode;
     hero?: ReactNode;
+    title: string;
     className?: string;
+    description?: string;
 }
 
-export const Page = ({ children, className, hero }: PageProps) => {
+export const PageLayout = ({
+    children,
+    className,
+    hero,
+    title,
+}: PageLayoutProps) => {
     return (
-        <Flex as="div" dir="col" className={classNames("", className)}>
-            {hero && (
-                <Flex dir="col" full="w" flex="auto" as="section" className="">
-                    {hero}
+        <>
+            <Flex as="div" dir="col" className={classNames("", className)}>
+                {hero && (
+                    <Flex
+                        dir="col"
+                        full="w"
+                        flex="auto"
+                        as="section"
+                        className=""
+                    >
+                        {hero}
+                    </Flex>
+                )}
+                <Flex flex="auto" full="both" as="section" contain>
+                    {children}
                 </Flex>
-            )}
-            <Container
-                flex="auto"
-                className="bg-red-400"
-                full="both"
-                center={true}
-                as="section"
-            >
-                {children}
-            </Container>
-        </Flex>
+            </Flex>
+        </>
     );
 };

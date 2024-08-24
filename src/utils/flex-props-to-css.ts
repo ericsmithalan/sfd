@@ -7,6 +7,12 @@ export const flexPropsToCss = (props: FlexProps) => {
         cn.push(`flex-${props.dir}`);
     }
 
+    if (props.contain !== undefined) {
+        if (props.contain) {
+            cn.push(`container mx-auto`);
+        }
+    }
+
     if (props.wrap !== undefined) {
         if (props.wrap) {
             cn.push(`flex-wrap`);

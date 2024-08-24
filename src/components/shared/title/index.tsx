@@ -9,17 +9,17 @@ export const Title = ({ children, ...props }: TitleProps) => {
     const classes = () => {
         switch (props.as) {
             case "h1":
-                return "mb-4 text-4xl font-extrabold leading-none tracking-tight text-gray-900 md:text-5xl lg:text-6xl dark:text-white";
+                return "text-6xl font-thinleading-none tracking-tight";
             case "h2":
-                return "mb-4 text-3xl font-extrabold leading-none tracking-tight text-gray-900 md:text-4xl lg:text-5xl dark:text-white";
+                return "text-5xl font-thin leading-none tracking-tight";
             case "h3":
-                return "mb-4 text-2xl font-extrabold leading-none tracking-tight text-gray-900 md:text-3xl lg:text-4xl dark:text-white";
+                return "text-4xl font-thin leading-none tracking-tight";
             case "h4":
-                return "mb-4 text-xl font-extrabold leading-none tracking-tight text-gray-900 md:text-2xl lg:text-3xl dark:text-white";
+                return "text-3xl font-thin leading-none tracking-tight";
             case "h5":
-                return "mb-4 text-lg font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-2xl dark:text-white";
+                return "text-2xl font-thin leading-none tracking-tight";
             case "h6":
-                return "mb-4 text-m font-extrabold leading-none tracking-tight text-gray-900 md:text-xl lg:text-xl dark:text-white";
+                return "text-xl font-thin leading-none tracking-tight";
         }
     };
 

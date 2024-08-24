@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ButtonLink, Container, Flex, Logo } from "../shared";
+import { ButtonLink, Container, Flex, Linker, Logo } from "..";
 
 export const Header = () => {
     return (
@@ -7,7 +7,7 @@ export const Header = () => {
             as="header"
             flex="auto"
             full="w"
-            className="h-header fixed bg-gray-700/70 backdrop-blur-md text-white"
+            className="h-header bg-gray-700/70 backdrop-blur-md text-white"
             dir="row"
         >
             <Container
@@ -30,11 +30,11 @@ export const Header = () => {
                     className=""
                     dir="row"
                 >
-                    <Link href={"/"}>Home</Link>
-                    <Link href={"/about"}>About</Link>
+                    <Linker href="/">Home</Linker>
+                    <Linker href="/about">About</Linker>
                 </Flex>
                 <Flex as="div" flex="initial" justify={["items", "center"]}>
-                    <ButtonLink>Contact Us</ButtonLink>
+                    <ButtonLink href="/contact">Contact Us</ButtonLink>
                 </Flex>
             </Container>
         </Flex>

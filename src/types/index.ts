@@ -7,6 +7,8 @@ export interface FlexAttribures {
     grow?: boolean;
     shrink?: boolean;
     wrap?: boolean;
+    contain?: boolean;
+
     justify?: [
         "self" | "items" | "content",
         "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
