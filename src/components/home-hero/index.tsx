@@ -1,8 +1,12 @@
-import { Flex, Title } from "../shared";
+"use client";
+import { useEmail } from "@/hooks/useEmail";
+import { Flex, FontIcon, Title } from "../shared";
 
 interface HomeHeroProps {}
 
 export const HomeHero = ({}: HomeHeroProps) => {
+    const email = useEmail();
+
     return (
         <Flex
             as="section"
@@ -22,10 +26,15 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     Design. Build.{" "}
                     <span className="text-sfdPrimary3"> Inspire</span>.
                 </Title>
-                <p className="text-2xl font-thin">
+                <p className="text-2xl font-thin max-w-[600px] mt-5">
                     Experience the art of furniture design, tailored to your
                     unique vision.
+                    {email}
                 </p>
+
+                <Flex as="div">
+                    <FontIcon icon="phone-fill" />
+                </Flex>
             </Flex>
         </Flex>
     );
