@@ -12,12 +12,15 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
     return (
         <Grid
             cols={1}
-            autoRows="min"
+            autoRows="auto"
+            flow="col"
             as={"div"}
+            justify={["content", "start"]}
+            align={["items", "start"]}
             gap={4}
             contain
             className={classNames(
-                "grid-cols-1 mt-[-100px] relative z-10 gap-6 text-center ml-1 mr-1  pl-4 pr-4",
+                "h-fit grid-cols-1 mt-[-100px] relative z-10 gap-6 text-center ml-1 mr-1  pl-4 pr-4",
                 "lg:grid-cols-3",
                 "md:grid-cols-3",
                 "sm:grid-cols-3 sm:gap-4",

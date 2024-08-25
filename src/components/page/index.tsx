@@ -31,7 +31,14 @@ export const PageLayout = ({
                         {hero}
                     </Flex>
                 )}
-                <Flex flex="auto" full="both" as="section" contain>
+                <Flex
+                    flex="auto"
+                    dir="col"
+                    full="both"
+                    as="section"
+                    contain
+                    className={classNames("pb-11")}
+                >
                     {children}
                 </Flex>
             </Flex>
