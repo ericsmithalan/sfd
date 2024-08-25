@@ -13,7 +13,6 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
         <Grid
             cols={1}
             autoRows="auto"
-            flow="col"
             as={"div"}
             justify={["content", "start"]}
             align={["items", "start"]}
