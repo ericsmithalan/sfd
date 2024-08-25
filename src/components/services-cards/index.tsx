@@ -32,7 +32,7 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
             <ServiceCard
                 image="/images/services/icn-3d-design.svg"
                 title="3D Design"
-                description="transforming concepts into detailed digital models using advanced software, allowing for precise visualization and customization before the final creation."
+                description="Transforming concepts into detailed digital models using advanced software, allowing for precise visualization and customization before the final creation."
             />
             <ServiceCard
                 image="/images/services/icn-cnc.svg"

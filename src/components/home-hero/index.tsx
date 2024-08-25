@@ -59,8 +59,8 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </h1>
                 <h2
                     className={classNames(
-                        "text-l mt-4 leading-relaxed font-light text-shadow-lg text-white/70",
-                        "sm:w-[400px] text-xl",
+                        "text-sm leading-tight mt-6 font-light text-shadow-lg text-white/70",
+                        "sm:w-[400px] text-sm sm:mt-6",
                         "md:w-[600px] text-xl",
                         "lg:w-[450px] text-2xl"
                     )}
@@ -72,10 +72,10 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     as="div"
                     dir="row"
                     className={classNames(
-                        "gap-8 mt-10 max-w-[180px] border-b-2 pb-4 border-dotted border-sfdPrimary2 text-xl",
-                        "sm:max-w-[400px]",
-                        "md:max-w-[400px]",
-                        "lg:max-w-[400px]"
+                        "gap-14 mt-10 max-w-[200px] border-b-2 pb-4 border-dotted border-sfdPrimary2 text-xl",
+                        "sm:max-w-[350px]",
+                        "md:max-w-[250px]",
+                        "lg:max-w-[250px]"
                     )}
                 >
                     <ButtonLink
@@ -83,7 +83,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                         onClick={handlePhoneClick}
                         icon="phone-line"
                         className={classNames(
-                            "text-sm",
+                            "text-lg",
                             "sm:text-xl",
                             "md:text-xl",
                             "lg:text-xl"
@@ -95,7 +95,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                         href={`#`}
                         onClick={handleEmailClick}
                         className={classNames(
-                            "text-sm",
+                            "text-lg",
                             "sm:text-xl",
                             "md:text-xl",
                             "lg:text-xl"
@@ -107,13 +107,16 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </Flex>
                 <h3
                     className={classNames(
-                        "font-light text-sm mt-4 max-w-[150px] text-shadow-lg text-white/70",
+                        "font-light text-sm mt-3 text-shadow-lg text-white/40",
                         "sm:text-sm max-w-[150px]",
                         "md:text-xl max-w-[300px]",
                         "lg:text-xl max-w-[400px]"
                     )}
                 >
-                    Proudly serving Lenawee County, MI
+                    <span className={classNames("text-xs font-bold ")}>
+                        Proud to Serve:
+                    </span>
+                    <br /> Lenawee County, MI
                 </h3>
             </Flex>
         </Flex>
