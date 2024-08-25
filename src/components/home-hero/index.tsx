@@ -65,11 +65,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                         "text-shadow-lg gap-4 mt-16 border-b-2 pb-4 border-dotted border-sfdPrimary2 text-2xl"
                     )}
                 >
-                    <ButtonLink
-                        href={`tel:${phone}`}
-                        icon="phone-line"
-                        className="text-xl"
-                    >
+                    <ButtonLink href={`tel:${phone}`} icon="phone-line">
                         Call
                     </ButtonLink>
                     <ButtonLink href={`mailto:${email}`} icon="mail-line">
