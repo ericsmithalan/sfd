@@ -10,11 +10,11 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
     openGraph: {
+        locale: "en",
         title: "Smith Smith Furniture Design",
         type: "website",
-        images: [
-            "https://www.smithfurnituredesign.com/images/social-media/sfd.jpg",
-        ],
+        url: "https://www.smithfurnituredesign.com",
+        images: "https://www.smithfurnituredesign.com/images/social-media/sfd.jpg",
         description:
             "Experience the art of furniture design, tailored to your unique vision.",
     },
