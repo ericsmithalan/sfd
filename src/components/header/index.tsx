@@ -100,7 +100,7 @@ export const Header = () => {
                     full="w"
                     justify={["content", "end"]}
                     flex="auto"
-                    className="gap-3"
+                    className="gap-4"
                 >
                     <ButtonLink
                         title="Call Me"

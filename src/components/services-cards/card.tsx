@@ -38,8 +38,8 @@ export const ServiceCard = ({
 
             <h3
                 className={classNames(
-                    "font-normal text-3xl lg:text-4xl mt-3 md:text-2xl text-sfdPrimary2",
-                    "sm: text-xl"
+                    "font-normal text-2xl lg:text-4xl mt-3 md:text-2xl text-sfdPrimary2",
+                    "sm:text-xl"
                 )}
             >
                 {title}
