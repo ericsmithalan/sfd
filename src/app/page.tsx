@@ -1,6 +1,7 @@
 import { HomeHero, PageLayout } from "@/components";
 import { Alert } from "@/components/alert";
 import { ServicesCards } from "@/components/services-cards";
+import { Metadata } from "next";
 
 const Home = () => {
     return (
@@ -9,7 +10,6 @@ const Home = () => {
             dir="col"
             className="bg-sfdGray5"
             hero={<HomeHero />}
-            title="home"
         >
             <ServicesCards />
             <Alert />

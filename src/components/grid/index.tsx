@@ -1,9 +1,11 @@
 import classNames from "classnames";
+import { CSSProperties } from "react";
 
 interface GridProps {
     children?: React.ReactNode;
     as: React.ElementType;
     className?: string;
+    inline?: boolean;
     cols?: number | "none" | "subgrid";
     colSpan?: ["span" | "start" | "end", number | "full" | "auto"];
     rows?: number | "none" | "subgrid";
@@ -15,6 +17,7 @@ interface GridProps {
     screen?: "w" | "h" | "both";
     contain?: boolean;
     gap?: number | string;
+    style?: CSSProperties;
     justify?: [
         "self" | "items" | "content",
         "start" | "center" | "end" | "between" | "around" | "stretch" | "evenly"
@@ -41,6 +44,8 @@ export const Grid = ({
     justify,
     align,
     gap,
+    style,
+    inline,
     ...props
 }: GridProps) => {
     let justifyPrefix, alignPrefix;
@@ -65,8 +70,9 @@ export const Grid = ({
 
     return (
         <props.as
+            style={style}
             className={classNames(
-                "grid",
+                inline ? "grid-inline" : "grid",
                 cols && `grid-cols-${cols}`,
                 colSpan && `col-${colSpan[0]}-${colSpan[1]}`,
                 rows && `grid-rows-${rows}`,

@@ -6,20 +6,14 @@ import Head from "next/head";
 interface PageLayoutProps extends FlexProps {
     children?: ReactNode;
     hero?: ReactNode;
-    title: string;
     className?: string;
     description?: string;
 }
 
-export const PageLayout = ({
-    children,
-    className,
-    hero,
-    title,
-}: PageLayoutProps) => {
+export const PageLayout = ({ children, className, hero }: PageLayoutProps) => {
     return (
         <>
-            <Flex as="div" dir="col" className={classNames("", className)}>
+            <Flex as="div" dir="col" className={classNames("h-fit", className)}>
                 {hero && (
                     <Flex
                         dir="col"
@@ -32,9 +26,8 @@ export const PageLayout = ({
                     </Flex>
                 )}
                 <Flex
-                    flex="auto"
+                    flex="1"
                     dir="col"
-                    full="both"
                     as="section"
                     contain
                     className={classNames("pb-11")}

@@ -18,8 +18,6 @@ export const ServiceCard = ({
         <Flex
             as="div"
             dir="col"
-            flex="auto"
-            full="w"
             align={["items", "center"]}
             className={classNames(
                 "bg-white shadow-md p-7 pb-12 rounded-md",
