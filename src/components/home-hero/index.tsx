@@ -1,6 +1,7 @@
 "use client";
 import { useContactInfo } from "@/hooks";
 import { ButtonLink, Flex, Title } from "../";
+import classNames from "classnames";
 
 interface HomeHeroProps {}
 
@@ -12,7 +13,13 @@ export const HomeHero = ({}: HomeHeroProps) => {
             as="section"
             flex="auto"
             dir="col"
-            className="bg-sfdSecondary1 bg-home-hero-mobile sm:bg-home-hero-tablet md:bg-home-hero lg:bg-home-hero bg-cover bg-right-top w-screen h-[600px] max-sm:h-[500px] max-md:h-[500px] text-white"
+            className={classNames(
+                "bg-home-hero-mobile bg-sfdSecondary1 bg-cover bg-right-bottom",
+                "w-screen pb-44 text-white",
+                "lg:bg-home-hero",
+                "md:bg-home-hero",
+                "sm:bg-home-hero-tablet"
+            )}
         >
             <div className="h-header"></div>
             <Flex
@@ -20,32 +27,62 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 dir="col"
                 flex="auto"
                 contain
-                className="mt-10 pl-10 pr-10 md:mt-20 lg:mt-20 md:pl-20 lg:pl-20 md:pr-20 lg:pr-20"
+                className={classNames(
+                    "mt-14 pl-10 pr-10",
+                    "lg:mt-20 lg:pl-20 lg:pr-20",
+                    "md:mt-20 md:pl-20 md:pr-20",
+                    "sm:mt-20",
+                    "xsm:mt-20"
+                )}
             >
-                <Title
-                    as="h1"
-                    className="text-4xl leading-snug font-normal md:text-5xl lg:text-6xl"
+                <h1
+                    className={classNames(
+                        "text-5xl leading-none font-normal text-shadow-lg",
+                        "lg:text-7xl",
+                        "md:text-7xl"
+                    )}
                 >
-                    Design. Build.{" "}
-                    <span className="text-sfdPrimary3"> Inspire</span>.
-                </Title>
-                <p className="text-2xl leading-relaxed font-light max-w-[600px] max-md:max-w-[400px] mt-5 text-white/70">
+                    Design<span className="font-extralight">. </span>
+                    Build<span className="font-extralight">. </span>
+                    <span className="text-sfdPrimary3">Inspire</span>
+                    <span className="font-extralight">. </span>
+                </h1>
+                <h2
+                    className={classNames(
+                        "text-2xl mt-7 leading-tight font-light text-shadow-lg text-white/70",
+                        "lg:max-w-[800px]",
+                        "md:max-w-[600px]",
+                        "sm:max-w-[500px]"
+                    )}
+                >
                     Experience the art of furniture design, tailored to your
                     unique vision.
-                </p>
-
-                <Flex as="div" dir="row" className="gap-4 mt-7 text-2xl">
+                </h2>
+                <Flex
+                    as="div"
+                    dir="row"
+                    className={classNames(
+                        "text-shadow-lg gap-4 mt-16 border-b-2 pb-4 border-dotted border-sfdPrimary2 text-2xl"
+                    )}
+                >
                     <ButtonLink
                         href={`tel:${phone}`}
-                        icon="phone-fill"
+                        icon="phone-line"
                         className="text-xl"
                     >
-                        {phone}
+                        Call
                     </ButtonLink>
-                    <ButtonLink href={`mailto:${email}`} icon="mail-fill">
+                    <ButtonLink href={`mailto:${email}`} icon="mail-line">
                         Email
                     </ButtonLink>
                 </Flex>
+                <h3
+                    className={classNames(
+                        "font-light mt-4 text-shadow-lg text-white/70"
+                    )}
+                >
+                    Proudly serving Lenawee County, MI
+                </h3>
             </Flex>
         </Flex>
     );

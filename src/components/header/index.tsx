@@ -8,7 +8,7 @@ import { useContactInfo } from "@/hooks";
 
 export const Header = () => {
     const [stuck, setStuck] = useState<boolean>(false);
-    const { email } = useContactInfo();
+    const { email, phone } = useContactInfo();
 
     const headerRef = useRef(null);
     const handleScroll = (
@@ -73,7 +73,7 @@ export const Header = () => {
             flex="auto"
             full="w"
             ref={headerRef}
-            className="sfd-header h-header z-30 fixed text-white"
+            className={classNames("sfd-header h-header z-50 fixed text-white")}
             dir="row"
         >
             <Flex
@@ -81,26 +81,30 @@ export const Header = () => {
                 as="section"
                 flex="auto"
                 align={["items", "center"]}
-                className="p-4 gap-2 md:gap-x-28 lg:gap-x-28"
+                className={classNames("p-4 pl-8 pr-8")}
                 dir="row"
             >
-                <Flex as="div" className="">
-                    <Logo className="w-44 lg:w-64 md:w-44 sm:w-44 xsm:w-44" />
-                </Flex>
+                <Logo className={classNames("w-80 aspect-auto")} />
 
                 <Flex
                     as="div"
                     full="w"
                     justify={["content", "end"]}
                     flex="auto"
+                    className="gap-3"
                 >
                     <ButtonLink
+                        title="Call Me"
+                        icon="phone-fill"
                         variant={"border"}
-                        className={classNames(!stuck && "bg-sfdPrimary2")}
+                        href={`tel:${phone}`}
+                    />
+                    <ButtonLink
+                        title="Email Me"
+                        icon="mail-fill"
+                        variant={"border"}
                         href={`mailto:${email}`}
-                    >
-                        Contact Us
-                    </ButtonLink>
+                    />
                 </Flex>
             </Flex>
         </Flex>

@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { Flex, FlexProps } from "../flex";
 import { ServiceCard } from "./card";
 import classNames from "classnames";
+import { Grid } from "../grid";
 
 interface ServicesCardsProps {
     className?: string;
@@ -9,17 +10,21 @@ interface ServicesCardsProps {
 
 export const ServicesCards = ({ className }: ServicesCardsProps) => {
     return (
-        <Flex
+        <Grid
+            cols={1}
+            autoRows="min"
             as={"div"}
-            dir="col"
+            gap={4}
             contain
             className={classNames(
-                "relative z-10 ml-4 mr-4 mt-[-30px] lg:mt-[-100px] md:mt-[-100] sm:flex-row md:flex-row lg:flex-row gap-6 text-center pl-8 pr-8",
+                "grid-cols-1 mt-[-100px] relative z-10 gap-6 text-center ml-1 mr-1  pl-4 pr-4",
+                "lg:grid-cols-3",
+                "md:grid-cols-3",
+                "sm:grid-cols-3",
                 className
             )}
         >
             <ServiceCard
-                className=""
                 image="/images/services/icn-woodworking.svg"
                 title="Woodworking"
                 description="Our custom-made furniture pieces are meticulously crafted with attention to detail and a dedication to quality that ensures each creation is a true work of art."
@@ -34,6 +39,6 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
                 title="CNC"
                 description="Using state-of-the-art CNC technology, we bring your visions to life with unparalleled accuracy and creativity."
             />
-        </Flex>
+        </Grid>
     );
 };

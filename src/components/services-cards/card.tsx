@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Flex } from "../flex";
 import { Title } from "../title";
 import { Text } from "../text";
+import classNames from "classnames";
 
 interface ServiceCardProps {
     title: string;
@@ -22,31 +23,26 @@ export const ServiceCard = ({
             flex="auto"
             full="w"
             align={["items", "center"]}
-            className="bg-white shadow-md p-7 rounded-md gap-7"
+            className={classNames(
+                "bg-white shadow-md p-7 pb-12 rounded-md",
+                classNames
+            )}
         >
             <Flex as="div">
                 <Image
-                    className="w-[100px] h-[100px]"
+                    className="w-[120px] aspect-auto"
                     alt={title}
-                    width={100}
-                    height={100}
+                    width={220}
+                    height={160}
                     src={image}
                 />
             </Flex>
-            <Flex as="div">
-                <Title
-                    as="h3"
-                    className="font-normal text-3xl lg:text-4xl md:text-2xl text-sfdPrimary2"
-                >
-                    {title}
-                </Title>
-            </Flex>
 
-            <Flex as="div">
-                <Text as={"span"} className="text-gray-500/70">
-                    {description}
-                </Text>
-            </Flex>
+            <h3 className="font-normal text-3xl lg:text-4xl md:text-2xl text-sfdPrimary2">
+                {title}
+            </h3>
+
+            <p className="text-gray-500/70 mt-3">{description}</p>
         </Flex>
     );
 };

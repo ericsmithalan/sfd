@@ -1,4 +1,5 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 const config: Config = {
     content: [
@@ -24,6 +25,11 @@ const config: Config = {
             xl: "1280px",
         },
         extend: {
+            textShadow: {
+                sm: "0 1px 2px var(--tw-shadow-color)",
+                DEFAULT: "0 2px 4px var(--tw-shadow-color)",
+                lg: "0 8px 16px var(--tw-shadow-color)",
+            },
             backgroundImage: {
                 "home-hero": "url('/images/home/hero.webp')",
                 "home-hero-2": "url('/images/home/hero-2.webp')",
@@ -74,12 +80,37 @@ const config: Config = {
     },
 
     plugins: [
+        plugin(function ({ matchUtilities, theme }) {
+            matchUtilities(
+                {
+                    "text-shadow": (value) => ({
+                        textShadow: value,
+                    }),
+                },
+                { values: theme("textShadow") }
+            );
+        }),
         // require("@tailwindcss/typography"),
         // require("@tailwindcss/forms"),
         // require("@tailwindcss/aspect-ratio"),
         // require("@tailwindcss/container-queries"),
     ],
     safelist: [
+        "auto-cols-auto",
+        "auto-cols-min",
+        "auto-cols-max",
+        "auto-cols-fr",
+        "auto-rows-auto",
+        "auto-rows-min",
+        "auto-rows-max",
+        "auto-rows-fr",
+        "grid-flow-row",
+        "grid-flow-col",
+        "grid-flow-row-dense",
+        "grid-flow-col-dense",
+        "grid-flow-dense",
+        "grid-rows-1",
+        "grid-cols-3",
         "font-extrabold",
         "leading-none",
         "tracking-tight",

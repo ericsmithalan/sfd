@@ -9,6 +9,7 @@ interface ButtonLinkProps {
     children?: React.ReactNode;
     className?: string;
     variant?: "border" | "fill";
+    title?: string;
 }
 
 export const ButtonLink = ({
@@ -17,9 +18,11 @@ export const ButtonLink = ({
     href,
     icon,
     variant,
+    title,
 }: ButtonLinkProps) => {
     return (
         <Link
+            title={title}
             href={href}
             className={classNames(
                 "inline-flex flex-nowrap flex-row text-nowrap rounded-sm gap-2 items-center",
