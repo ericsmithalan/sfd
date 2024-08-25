@@ -3,7 +3,12 @@ import { ServicesCards } from "@/components/services-cards";
 
 const Home = () => {
     return (
-        <PageLayout as="div" hero={<HomeHero />} title="home">
+        <PageLayout
+            as="div"
+            className="bg-sfdGray5"
+            hero={<HomeHero />}
+            title="home"
+        >
             <ServicesCards />
         </PageLayout>
     );

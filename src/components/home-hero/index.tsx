@@ -12,7 +12,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
             as="section"
             flex="auto"
             dir="col"
-            className="bg-sfdSecondary1 bg-home-hero-mobile sm:bg-home-hero-tablet md:bg-home-hero lg:bg-home-hero bg-cover bg-right-top w-screen h-[550px] max-sm:h-[500px] max-md:h-[500px] text-white"
+            className="bg-sfdSecondary1 bg-home-hero-mobile sm:bg-home-hero-tablet md:bg-home-hero lg:bg-home-hero bg-cover bg-right-top w-screen h-[600px] max-sm:h-[500px] max-md:h-[500px] text-white"
         >
             <div className="h-header"></div>
             <Flex

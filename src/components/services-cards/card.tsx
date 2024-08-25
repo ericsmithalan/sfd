@@ -22,8 +22,17 @@ export const ServiceCard = ({
             flex="auto"
             full="w"
             align={["items", "center"]}
-            className="bg-white shadow-md p-10 rounded-md gap-7"
+            className="bg-white shadow-md p-7 rounded-md gap-7"
         >
+            <Flex as="div">
+                <Image
+                    className="w-[100px] h-[100px]"
+                    alt={title}
+                    width={100}
+                    height={100}
+                    src={image}
+                />
+            </Flex>
             <Flex as="div">
                 <Title
                     as="h3"
@@ -32,16 +41,7 @@ export const ServiceCard = ({
                     {title}
                 </Title>
             </Flex>
-            <Flex as="div">
-                <Image
-                    className="hover:animate-spin"
-                    alt={title}
-                    width={100}
-                    height={100}
-                    style={{ width: "200px", height: "200px" }}
-                    src={image}
-                />
-            </Flex>
+
             <Flex as="div">
                 <Text as={"span"} className="text-gray-500/70">
                     {description}

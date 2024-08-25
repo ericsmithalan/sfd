@@ -2,9 +2,13 @@
 import { useEffect, useRef, useState } from "react";
 import { ButtonLink, Flex, Linker, Logo } from "../";
 import "./style.scss";
+import classNames from "classnames";
+import { Stick } from "next/font/google";
+import { useContactInfo } from "@/hooks";
 
 export const Header = () => {
     const [stuck, setStuck] = useState<boolean>(false);
+    const { email } = useContactInfo();
 
     const headerRef = useRef(null);
     const handleScroll = (
@@ -18,7 +22,7 @@ export const Header = () => {
                     el.style.marginTop = "0";
                     el.classList.add(
                         "sfd-sticky",
-                        "bg-sfdSecondary0/90",
+                        "bg-sfdGray2/90",
                         "backdrop-blur-md"
                     );
                     setStuck(true);
@@ -28,7 +32,7 @@ export const Header = () => {
                     el.style.marginTop = `-${scrollY}px`;
                     el.classList.remove(
                         "sfd-sticky",
-                        "bg-sfdSecondary0/90",
+                        "bg-sfdGray2/90",
                         "backdrop-blur-md"
                     );
 
@@ -90,7 +94,11 @@ export const Header = () => {
                     justify={["content", "end"]}
                     flex="auto"
                 >
-                    <ButtonLink variant={"border"} href="/contact">
+                    <ButtonLink
+                        variant={"border"}
+                        className={classNames(!stuck && "bg-sfdPrimary2")}
+                        href={`mailto:${email}`}
+                    >
                         Contact Us
                     </ButtonLink>
                 </Flex>
