@@ -46,7 +46,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
             >
                 <h1
                     className={classNames(
-                        "text-4xl leading-tight font-light text-shadow-lg",
+                        "text-5xl leading-tight font-light text-shadow-lg",
                         "sm:text-7xl sm:max-w-[500px]",
                         "md:text-7xl md:max-w-[500px]",
                         "lg:text-7xl md:max-w-[500px]"
@@ -59,10 +59,10 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </h1>
                 <h2
                     className={classNames(
-                        "text-sm leading-tight mt-6 font-light text-shadow-lg text-white/70",
-                        "sm:w-[400px] text-sm sm:mt-6",
-                        "md:w-[600px] text-xl",
-                        "lg:w-[450px] text-2xl"
+                        "text-lg leading-tight mt-6 font-light text-shadow-lg text-white/70",
+                        "sm:w-[400px] sm:text-sm",
+                        "md:w-[600px] md:text-xl",
+                        "lg:w-[450px] md:text-2xl"
                     )}
                 >
                     Experience the art of furniture design, tailored to your
@@ -72,10 +72,10 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     as="div"
                     dir="row"
                     className={classNames(
-                        "gap-14 mt-10 max-w-[200px] border-b-2 pb-4 border-dotted border-sfdPrimary2 text-xl",
-                        "sm:max-w-[350px]",
-                        "md:max-w-[250px]",
-                        "lg:max-w-[250px]"
+                        "gap-8 mt-10 max-w-[200px] border-b-2 pb-4 border-dotted border-sfdPrimary2 text-xl",
+                        "sm:max-w-[350px] sm:gap-14",
+                        "md:max-w-[250px] md:gap-14",
+                        "lg:max-w-[250px] lg:gap-14"
                     )}
                 >
                     <ButtonLink
