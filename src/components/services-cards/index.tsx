@@ -14,8 +14,6 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
             cols={1}
             autoRows="auto"
             as={"div"}
-            justify={["content", "start"]}
-            align={["items", "start"]}
             gap={4}
             contain
             className={classNames(
