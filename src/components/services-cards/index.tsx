@@ -19,10 +19,10 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
                     gridTemplateRows: "1fr min-content",
                 }}
                 className={classNames(
-                    "h-auto gap-6 gap-x-6 grid-rows-3 grid-cols-1 text-center ml-1 mr-1 pl-4 pr-4",
-                    "lg:grid-cols-3 lg:pl-0 lg:pr-0",
-                    "md:grid-cols-3 md:pl-0 md:pr-0",
-                    "sm:grid-cols-3 sm:gap-4 sm:pl-0",
+                    "h-[30%] gap-6 gap-x-6 grid-rows-3 grid-cols-1 text-center ml-1 mr-1 pl-4 pr-4",
+                    "lg:grid-cols-3 lg:pl-0 lg:pr-0 lg:row-span-2",
+                    "md:grid-cols-3 md:pl-0 md:pr-0 lg:row-span-2",
+                    "sm:grid-cols-3 sm:gap-4 sm:pl-0 lg:row-span-2",
                     className
                 )}
             >
