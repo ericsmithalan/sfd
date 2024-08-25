@@ -37,7 +37,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 flex="auto"
                 contain
                 className={classNames(
-                    "mt-5 pl-10 pr-10",
+                    "mt-12 pl-10 pr-10",
                     "lg:mt-20 lg:pl-20 lg:pr-20",
                     "md:mt-20 md:pl-20 md:pr-20",
                     "sm:mt-20",
