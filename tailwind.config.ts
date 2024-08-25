@@ -32,7 +32,6 @@ const config: Config = {
             },
             backgroundImage: {
                 "home-hero": "url('/images/home/hero.webp')",
-                "home-hero-2": "url('/images/home/hero-2.webp')",
                 "home-hero-mobile": "url('/images/home/hero-mobile.webp')",
                 "home-hero-tablet": "url('/images/home/hero-tablet.webp')",
                 "services-wood": "url('/images/services/wood-hover.webp')",
@@ -90,10 +89,6 @@ const config: Config = {
                 { values: theme("textShadow") }
             );
         }),
-        // require("@tailwindcss/typography"),
-        // require("@tailwindcss/forms"),
-        // require("@tailwindcss/aspect-ratio"),
-        // require("@tailwindcss/container-queries"),
     ],
     safelist: [
         "auto-cols-auto",

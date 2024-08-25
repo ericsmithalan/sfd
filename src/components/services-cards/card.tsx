@@ -1,7 +1,5 @@
 import Image from "next/image";
 import { Flex } from "../flex";
-import { Title } from "../title";
-import { Text } from "../text";
 import classNames from "classnames";
 
 interface ServiceCardProps {
@@ -38,11 +36,18 @@ export const ServiceCard = ({
                 />
             </Flex>
 
-            <h3 className="font-normal text-3xl lg:text-4xl md:text-2xl text-sfdPrimary2">
+            <h3
+                className={classNames(
+                    "font-normal text-3xl lg:text-4xl mt-3 md:text-2xl text-sfdPrimary2",
+                    "sm: text-xl"
+                )}
+            >
                 {title}
             </h3>
 
-            <p className="text-gray-500/70 mt-3">{description}</p>
+            <p className={classNames("text-gray-500/70 mt-3", "sm:text-sm")}>
+                {description}
+            </p>
         </Flex>
     );
 };

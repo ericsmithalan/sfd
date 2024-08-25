@@ -22,7 +22,7 @@ export const Header = () => {
                     el.style.marginTop = "0";
                     el.classList.add(
                         "sfd-sticky",
-                        "bg-sfdGray2/90",
+                        "bg-sfdSecondary0/90",
                         "backdrop-blur-md"
                     );
                     setStuck(true);
@@ -32,7 +32,7 @@ export const Header = () => {
                     el.style.marginTop = `-${scrollY}px`;
                     el.classList.remove(
                         "sfd-sticky",
-                        "bg-sfdGray2/90",
+                        "bg-sfdSecondary0/90",
                         "backdrop-blur-md"
                     );
 
@@ -67,6 +67,15 @@ export const Header = () => {
         };
     }, [stuck]);
 
+    const handlePhoneClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.open(`tel:${phone}`);
+    };
+    const handleEmailClick = (e: React.MouseEvent) => {
+        e.preventDefault();
+        window.open(`mailto:${email}`);
+    };
+
     return (
         <Flex
             as="header"
@@ -84,7 +93,7 @@ export const Header = () => {
                 className={classNames("p-4 pl-8 pr-8")}
                 dir="row"
             >
-                <Logo className={classNames("w-80 aspect-auto")} />
+                <Logo className={classNames("w-96 aspect-auto")} />
 
                 <Flex
                     as="div"
@@ -96,14 +105,20 @@ export const Header = () => {
                     <ButtonLink
                         title="Call Me"
                         icon="phone-fill"
-                        variant={"border"}
-                        href={`tel:${phone}`}
+                        href={"#"}
+                        onClick={handlePhoneClick}
+                        className={classNames(
+                            "outline outline-1 outline-sfdPrimary3 py-1 px-4 bg-none"
+                        )}
                     />
                     <ButtonLink
                         title="Email Me"
                         icon="mail-fill"
-                        variant={"border"}
-                        href={`mailto:${email}`}
+                        onClick={handleEmailClick}
+                        href={`#`}
+                        className={classNames(
+                            "outline outline-1 outline-sfdPrimary3 py-1 px-4 bg-none"
+                        )}
                     />
                 </Flex>
             </Flex>

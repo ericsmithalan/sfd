@@ -12,7 +12,9 @@ export const useContactInfo = (): ContactInfo => {
         {} as ContactInfo
     );
     useEffect(() => {
-        const encEmail = atob("ZXJpY3NtaXRoYWxhbkBnbWFpbC5jb20=").concat();
+        const encEmail = atob(
+            "aW5mb0BzbWl0aGZ1cm5pdHVyZWRlc2lnbi5jb20="
+        ).concat();
         const encPhone = atob("MjUzLTIyOS0xNjc5").concat();
         setContactInfo({ email: encEmail, phone: encPhone });
     }, []);

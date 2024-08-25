@@ -4,8 +4,6 @@ export * from "./flex";
 export * from "./font-icon";
 export * from "./logo";
 export * from "./page";
-export * from "./text";
-export * from "./title";
 export * from "./linker";
 export * from "./header";
 export * from "./grid";

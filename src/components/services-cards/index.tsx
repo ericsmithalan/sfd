@@ -20,7 +20,7 @@ export const ServicesCards = ({ className }: ServicesCardsProps) => {
                 "grid-cols-1 mt-[-100px] relative z-10 gap-6 text-center ml-1 mr-1  pl-4 pr-4",
                 "lg:grid-cols-3",
                 "md:grid-cols-3",
-                "sm:grid-cols-3",
+                "sm:grid-cols-3 sm:gap-4",
                 className
             )}
         >
