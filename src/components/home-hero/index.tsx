@@ -47,21 +47,22 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 <h1
                     className={classNames(
                         "text-5xl leading-tight font-light text-shadow-lg",
-                        "sm:text-7xl sm:max-w-[500px]",
-                        "md:text-7xl md:max-w-[500px]",
-                        "lg:text-7xl md:max-w-[500px]"
+                        "sm:text-7xl",
+                        "md:text-7xl",
+                        "lg:text-7xl"
                     )}
                 >
                     Design<span className="font-extralight">. </span>
                     Build<span className="font-extralight">. </span>
+                    <br />
                     <span className="text-sfdPrimary3">Inspire</span>
                     <span className="font-extralight">. </span>
                 </h1>
                 <h2
                     className={classNames(
-                        "text-lg leading-tight mt-6 font-light text-shadow-lg text-white/70",
-                        "sm:w-[400px] sm:text-sm",
-                        "md:w-[600px] md:text-xl",
+                        "text-lg w-[350px] leading-tight mt-6 font-light text-shadow-lg text-white/70",
+                        "sm:w-[400px] sm:text-xl",
+                        "md:w-[450px] md:text-2xl",
                         "lg:w-[450px] md:text-2xl"
                     )}
                 >
@@ -108,9 +109,9 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 <h3
                     className={classNames(
                         "font-light text-sm mt-3 text-shadow-lg text-white/40",
-                        "sm:text-sm max-w-[150px]",
-                        "md:text-xl max-w-[300px]",
-                        "lg:text-xl max-w-[400px]"
+                        "sm:text-sm sm:max-w-[150px]",
+                        "md:text-xl md:max-w-[300px]",
+                        "lg:text-xl lg:max-w-[400px]"
                     )}
                 >
                     <span className={classNames("text-xs font-bold ")}>
