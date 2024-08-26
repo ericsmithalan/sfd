@@ -1,9 +1,8 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { ButtonLink, Flex, Linker, Logo } from "../";
+import { ButtonLink, Flex, Logo } from "../";
 import "./style.scss";
 import classNames from "classnames";
-import { Stick } from "next/font/google";
 import { useContactInfo } from "@/hooks";
 
 export const Header = () => {
@@ -11,40 +10,41 @@ export const Header = () => {
     const { email, phone } = useContactInfo();
 
     const headerRef = useRef(null);
-    const handleScroll = (
-        el: HTMLElement | null,
-        scrollY: number,
-        headerHeight: number | undefined
-    ) => {
-        if (el && headerHeight) {
-            if (headerHeight < scrollY) {
-                if (!stuck) {
-                    el.style.marginTop = "0";
-                    el.classList.add(
-                        "sfd-sticky",
-                        "bg-sfdSecondary0/90",
-                        "backdrop-blur-md"
-                    );
-                    setStuck(true);
-                }
-            } else {
-                if (stuck) {
-                    el.style.marginTop = `-${scrollY}px`;
-                    el.classList.remove(
-                        "sfd-sticky",
-                        "bg-sfdSecondary0/90",
-                        "backdrop-blur-md"
-                    );
-
-                    setStuck(false);
-                }
-            }
-        }
-    };
 
     useEffect(() => {
         let height: number | undefined = undefined;
         let el: HTMLElement | null = headerRef?.current;
+
+        const handleScroll = (
+            el: HTMLElement | null,
+            scrollY: number,
+            headerHeight: number | undefined
+        ) => {
+            if (el && headerHeight) {
+                if (headerHeight < scrollY) {
+                    if (!stuck) {
+                        el.style.marginTop = "0";
+                        el.classList.add(
+                            "sfd-sticky",
+                            "bg-sfdSecondary0/90",
+                            "backdrop-blur-md"
+                        );
+                        setStuck(true);
+                    }
+                } else {
+                    if (stuck) {
+                        el.style.marginTop = `-${scrollY}px`;
+                        el.classList.remove(
+                            "sfd-sticky",
+                            "bg-sfdSecondary0/90",
+                            "backdrop-blur-md"
+                        );
+
+                        setStuck(false);
+                    }
+                }
+            }
+        };
 
         if (el) {
             el = el as HTMLElement;

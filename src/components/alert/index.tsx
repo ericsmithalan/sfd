@@ -19,7 +19,7 @@ export const Alert = () => {
         <Flex
             as="div"
             dir="col"
-            className={classNames("bg-white rounded-md shadow-md p-7 mt-8")}
+            className={classNames("bg-white rounded-md shadow-md p-10")}
         >
             <p className="text-gray-600/50">
                 My website is currently under construction . Please contact me
@@ -30,7 +30,7 @@ export const Alert = () => {
             <Flex
                 as="div"
                 dir="row"
-                className={classNames("gap-4 mt-10 pb-4 text-xl")}
+                className={classNames("gap-4 mt-7 text-xl")}
             >
                 <ButtonLink
                     href={`#`}

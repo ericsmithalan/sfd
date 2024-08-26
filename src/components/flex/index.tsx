@@ -1,7 +1,8 @@
 import classNames from "classnames";
 import { FlexAttribures } from "../../types";
 import { flexPropsToCss } from "../../utils/flex-props-to-css";
-import { forwardRef, Ref } from "react";
+import { Ref } from "react";
+import React from "react";
 
 export interface FlexProps extends FlexAttribures {
     as: React.ElementType;
@@ -11,7 +12,7 @@ export interface FlexProps extends FlexAttribures {
     ref?: Ref<unknown>;
 }
 
-export const Flex = forwardRef(
+export const Flex = React.forwardRef(
     (
         { className, children, style, ...props }: FlexProps,
         ref: Ref<unknown>
@@ -32,11 +33,4 @@ export const Flex = forwardRef(
     }
 );
 
-// export const FlexRef = forwardRef(
-//     (
-//         { as, className, style, children, ...props }: FlexProps,
-//         ref: Ref<unknown>
-//     ) => {
-//         return <Flex as={as} {...props} ref={ref} />;
-//     }
-// );
+Flex.displayName = "Flex";

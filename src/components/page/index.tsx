@@ -13,24 +13,19 @@ interface PageLayoutProps extends FlexProps {
 export const PageLayout = ({ children, className, hero }: PageLayoutProps) => {
     return (
         <>
-            <Flex as="div" dir="col" className={classNames("h-fit", className)}>
+            <Flex as="div" dir="col" className={classNames(className)}>
                 {hero && (
-                    <Flex
-                        dir="col"
-                        full="w"
-                        flex="auto"
-                        as="section"
-                        className=""
-                    >
+                    <Flex dir="col" full="w" flex="auto" as="section">
                         {hero}
                     </Flex>
                 )}
                 <Flex
-                    flex="1"
+                    flex="auto"
                     dir="col"
                     as="section"
+                    full="both"
                     contain
-                    className={classNames("pb-11")}
+                    className={classNames("gap-4 pb-20")}
                 >
                     {children}
                 </Flex>
