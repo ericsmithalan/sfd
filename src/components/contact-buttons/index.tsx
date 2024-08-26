@@ -21,12 +21,16 @@ export const ContactButtons = ({
 
     const handlePhoneClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        window.open(`tel:${phone}`);
+        if (window) {
+            window.open(`tel:${phone}`);
+        }
     };
 
     const handleEmailClick = (e: React.MouseEvent) => {
         e.preventDefault();
-        window.open(`mailto:${email}`);
+        if (window) {
+            window.open(`mailto:${email}`);
+        }
     };
 
     return (

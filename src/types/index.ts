@@ -4,6 +4,25 @@ export interface Address {
     zip: string;
 }
 
+export interface ModelViewerJSX {
+    src: string;
+    poster?: string;
+    iosSrc?: string;
+    seamlessPoster?: boolean;
+    autoplay?: boolean;
+    environmentImage?: string;
+    exposure?: string;
+    interactionPromptThreshold?: string;
+    shadowIntensity?: string;
+    ar?: boolean;
+    arModes?: string;
+    autoRotate?: boolean;
+    cameraControls?: boolean;
+    cameraOrbit?: string;
+    alt?: string;
+    sx?: any;
+}
+
 export interface FlexAttribures {
     dir?: "col" | "row";
     full?: "w" | "h" | "both";

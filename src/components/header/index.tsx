@@ -44,7 +44,7 @@ export const Header = () => {
             }
         };
 
-        if (el) {
+        if (el && window) {
             el = el as HTMLElement;
 
             height = el.getBoundingClientRect().height;
