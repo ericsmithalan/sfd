@@ -18,14 +18,14 @@ declare global {
 
 export const ModelViewer = () => {
     const glbSrc = "/models/bunkbed-pre-design.glb";
-    const iosSrc = "/models/bunkbed-pre-design.usdz";
+    const iosSrc = "/models/bunkbed-pre-design.usdcz.usdz";
 
     useEffect(() => {
         import("@google/model-viewer/lib/model-viewer").catch(console.error);
     }, []);
 
     return (
-        <Flex as="div" className="w-screen h-screen">
+        <Flex as="div" className="w-[400px] h-[500px]">
             <model-viewer
                 id="first"
                 src={glbSrc}
