@@ -4,7 +4,8 @@ import "./globals.css";
 import "./remixicon.css";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Header } from "@/components";
-import Head from "next/head";
+import { GoogleAnalytics } from "@next/third-parties/google";
+import { Footer } from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,7 +38,9 @@ export default function RootLayout({
                 <body className={inter.className}>
                     <Header />
                     {children}
+                    {/* <Footer /> */}
                     <SpeedInsights />
+                    <GoogleAnalytics gaId="G-SLPRDNBCMZ" />
                 </body>
             </html>
         </>
