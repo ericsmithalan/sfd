@@ -24,6 +24,7 @@ export const Footer = ({ className }: FooterProps) => {
                 <Flex as="div" className={classNames("")}></Flex>
             </Flex>
             <Flex
+                contain
                 as="div"
                 dir="col"
                 className={classNames(
