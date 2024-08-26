@@ -30,6 +30,7 @@ export const ButtonLink = ({
             href={href}
             onClick={(e) => {
                 if (onClick) {
+                    e.preventDefault();
                     onClick(e);
                 }
             }}

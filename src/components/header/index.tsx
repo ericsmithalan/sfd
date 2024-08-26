@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { ContactButtons, Flex, Logo } from "../";
 import "./style.scss";
 import classNames from "classnames";
+import { Nav } from "../nav";
 
 export const Header = () => {
     const [stuck, setStuck] = useState<boolean>(false);
@@ -82,7 +83,7 @@ export const Header = () => {
                 dir="row"
             >
                 <Logo className={classNames("w-96 aspect-auto")} />
-
+                {/* <Nav /> */}
                 <ContactButtons
                     variant="border"
                     iconOnly={true}

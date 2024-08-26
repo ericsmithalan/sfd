@@ -12,11 +12,26 @@ export const Alert = () => {
             dir="col"
             className={classNames("bg-white rounded-md shadow-md p-10")}
         >
-            <Flex as="p" dir="col" className="text-gray-600/50 max-w-prose">
+            <Flex as="div" dir="col" className="text-gray-600/50 max-w-prose">
                 <i className="text-xs mb-2">Aug 25, 2024</i>
-                My website is currently under construction . Please contact me
-                directly if you have any questions. More will come soon...{" "}
-                <br />
+
+                <p>
+                    My website is currently under construction and will be
+                    updated soon with the following:
+                </p>
+                <ul className="list-disc mt-3">
+                    <li className="list-inside">
+                        Woodworking portfolio with images
+                    </li>
+                    <li className="list-inside">Current projects</li>
+                    <li className="list-inside">About me page</li>
+                </ul>
+
+                <p className="mt-3">
+                    Please contact me directly if you have any questions. I can
+                    send images of past work and provide you with more
+                    information.
+                </p>
             </Flex>
 
             <ContactButtons
