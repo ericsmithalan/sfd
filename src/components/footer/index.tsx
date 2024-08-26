@@ -31,26 +31,24 @@ export const Footer = ({ className }: FooterProps) => {
                 )}
             >
                 <h6 className="font-medium text-sfdPrimary2">
-                    Proud to Serve:
+                    Proud to Serve Lenawee County
                 </h6>
                 <Flex as="div" dir="row">
-                    <div className="text-white/70 min-w-[100px]">Cities:</div>
-                    <div className="text-white/50">
+                    <h6 className="text-white/70 min-w-[100px]">Cities:</h6>
+                    <p className="text-white/50">
                         Adrian, Hudson, Morenci, Tecumseh.
-                    </div>
+                    </p>
                 </Flex>
                 <Flex as="div" dir="row">
-                    <div className="text-white/70 min-w-[100px]">Villages:</div>
-                    <div className="text-white/50">
+                    <h6 className="text-white/70 min-w-[100px]">Villages:</h6>
+                    <p className="text-white/50">
                         Addison, Blissfield, Britton, Cement City, Clayton,
                         Deerfield, Onsted.
-                    </div>
+                    </p>
                 </Flex>
                 <Flex as="div" dir="row">
-                    <div className="text-white/70 min-w-[100px]">
-                        Townships:
-                    </div>
-                    <div className="text-white/50">
+                    <h6 className="text-white/70 min-w-[100px]">Townships:</h6>
+                    <p className="text-white/50">
                         Addison, Blissfield, Britton, Cement City, Adrian
                         Township, Blissfield Township, Cambridge Township,
                         Clinton Township, Deerfield Township, Dover Township,
@@ -59,7 +57,7 @@ export const Footer = ({ className }: FooterProps) => {
                         Township, Palmyra Township, Raisin Township, Ridgeway
                         Township, Rollin Township, Rome Township, Seneca
                         Township, Tecumseh Township, Woodstock Township.
-                    </div>
+                    </p>
                 </Flex>
             </Flex>
         </Flex>

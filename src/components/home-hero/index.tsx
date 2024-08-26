@@ -66,8 +66,8 @@ export const HomeHero = ({}: HomeHeroProps) => {
                         "lg:w-[500px] md:text-2xl"
                     )}
                 >
-                    Bringing Your Ideas to Life with Expert Wood Craftsmanship
-                    and Personalized 3D Design
+                    Bringing Your Ideas to Life with Expert Woodworking
+                    Craftsmanship and Personalized 3D Design
                 </h2>
                 <Flex
                     as="div"
@@ -108,16 +108,15 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </Flex>
                 <h3
                     className={classNames(
-                        "font-light text-sm mt-3 text-shadow-lg text-white/40",
-                        "sm:text-sm sm:max-w-[150px]",
-                        "md:text-xl md:max-w-[300px]",
-                        "lg:text-xl lg:max-w-[400px]"
+                        "font-light text-xs mt-3 text-shadow-lg text-white/40",
+                        "sm:text-sm",
+                        "md:text-xl",
+                        "lg:text-xl"
                     )}
                 >
-                    <span className={classNames("text-xs font-bold ")}>
-                        Proud to Serve:
+                    <span className={classNames("")}>
+                        Proud to Serve Lenawee County, MI
                     </span>
-                    <br /> Lenawee County, MI
                 </h3>
             </Flex>
         </Flex>
