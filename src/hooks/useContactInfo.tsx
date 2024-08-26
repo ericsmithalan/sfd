@@ -17,7 +17,7 @@ export const useContactInfo = (): ContactInfo => {
         ).concat();
         const encPhone = atob("MjUzLTIyOS0xNjc5").concat();
         setContactInfo({ email: encEmail, phone: encPhone });
-    }, []);
+    }, [setContactInfo]);
 
     return contactInfo;
 };

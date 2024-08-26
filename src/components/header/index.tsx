@@ -1,14 +1,11 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { ButtonLink, Flex, Logo } from "../";
+import { ContactButtons, Flex, Logo } from "../";
 import "./style.scss";
 import classNames from "classnames";
-import { useContactInfo } from "@/hooks";
 
 export const Header = () => {
     const [stuck, setStuck] = useState<boolean>(false);
-    const { email, phone } = useContactInfo();
-
     const headerRef = useRef(null);
 
     useEffect(() => {
@@ -67,15 +64,6 @@ export const Header = () => {
         };
     }, [stuck]);
 
-    const handlePhoneClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        window.open(`tel:${phone}`);
-    };
-    const handleEmailClick = (e: React.MouseEvent) => {
-        e.preventDefault();
-        window.open(`mailto:${email}`);
-    };
-
     return (
         <Flex
             as="header"
@@ -95,32 +83,11 @@ export const Header = () => {
             >
                 <Logo className={classNames("w-96 aspect-auto")} />
 
-                <Flex
-                    as="div"
-                    full="w"
-                    justify={["content", "end"]}
-                    flex="auto"
-                    className="gap-4"
-                >
-                    <ButtonLink
-                        title="Call Me"
-                        icon="phone-fill"
-                        href={"#"}
-                        onClick={handlePhoneClick}
-                        className={classNames(
-                            "outline outline-1 outline-sfdPrimary3 py-1 px-4 bg-none"
-                        )}
-                    />
-                    <ButtonLink
-                        title="Email Me"
-                        icon="mail-fill"
-                        onClick={handleEmailClick}
-                        href={`#`}
-                        className={classNames(
-                            "outline outline-1 outline-sfdPrimary3 py-1 px-4 bg-none"
-                        )}
-                    />
-                </Flex>
+                <ContactButtons
+                    variant="border"
+                    iconOnly={true}
+                    className="justify-end"
+                />
             </Flex>
         </Flex>
     );

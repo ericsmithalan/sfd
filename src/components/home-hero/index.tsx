@@ -60,14 +60,14 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </h1>
                 <h2
                     className={classNames(
-                        "text-lg w-[350px] leading-tight mt-6 font-light text-shadow-lg text-white/70",
-                        "sm:w-[400px] sm:text-xl",
-                        "md:w-[450px] md:text-2xl",
-                        "lg:w-[450px] md:text-2xl"
+                        "text-lg w-[300px] leading-relaxed mt-6 font-light text-shadow-lg text-white/70",
+                        "sm:w-[350px] sm:text-xl",
+                        "md:w-[500px] md:text-2xl",
+                        "lg:w-[500px] md:text-2xl"
                     )}
                 >
-                    Experience the art of furniture design, tailored to your
-                    unique vision.
+                    Bringing Your Ideas to Life with Expert Wood Craftsmanship
+                    and Personalized 3D Design
                 </h2>
                 <Flex
                     as="div"

@@ -6,3 +6,4 @@ export * from "./logo";
 export * from "./page";
 export * from "./linker";
 export * from "./header";
+export * from "./contact-buttons";
