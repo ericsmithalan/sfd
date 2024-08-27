@@ -14,7 +14,7 @@ export const Footer = ({ className }: FooterProps) => {
         <Flex
             as="footer"
             dir="col"
-            className={classNames("bg-sfdSecondary0 p-8", className)}
+            className={classNames("bg-sfdGray2 p-8", className)}
         >
             <Flex as="div" contain dir="row" className={classNames("gap-12")}>
                 <Logo className={classNames("w-60 aspect-auto")} />

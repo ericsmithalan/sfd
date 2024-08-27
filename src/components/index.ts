@@ -7,5 +7,3 @@ export * from "./page";
 export * from "./linker";
 export * from "./header";
 export * from "./contact-buttons";
-export * from "./model-viewer";
-export * from "./ar";

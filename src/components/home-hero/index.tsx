@@ -64,7 +64,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </h1>
                 <h2
                     className={classNames(
-                        "text-lg w-[300px] leading-relaxed mt-6 font-light text-shadow-lg text-white/70",
+                        "text-lg w-[320px] leading-relaxed mt-6 font-light text-shadow-lg text-white/70",
                         "sm:w-[350px] sm:text-xl",
                         "md:w-[500px] md:text-2xl",
                         "lg:w-[500px] md:text-2xl"
