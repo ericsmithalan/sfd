@@ -77,10 +77,10 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     as="div"
                     dir="row"
                     className={classNames(
-                        "gap-8 mt-10 max-w-[200px] border-b-2 pb-4 border-dotted border-sfdPrimary2 text-xl",
-                        "sm:max-w-[350px] sm:gap-14",
-                        "md:max-w-[250px] md:gap-14",
-                        "lg:max-w-[250px] lg:gap-14"
+                        "gap-8 mt-10 max-w-[200px] border-b-2 pb-2 border-dotted border-sfdPrimary2 text-xl",
+                        "sm:max-w-[450px] sm:gap-14",
+                        "md:max-w-[450px] md:gap-14",
+                        "lg:max-w-[450px] lg:gap-14"
                     )}
                 >
                     <ButtonLink
@@ -112,7 +112,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                 </Flex>
                 <h3
                     className={classNames(
-                        "font-light text-xs mt-3 text-shadow-lg text-white/40",
+                        "font-light text-xs mt-2 text-shadow-lg text-white/40",
                         "sm:text-sm",
                         "md:text-xl",
                         "lg:text-xl"
