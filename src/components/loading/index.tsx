@@ -17,7 +17,8 @@ export const Loading = ({
     return (
         <Flex
             as="div"
-            justify={["content", "center"]}
+            dir="col"
+            align={["items", "center"]}
             className={classNames("w-screen", !loading && "hidden", className)}
         >
             <IconHelper
@@ -27,6 +28,7 @@ export const Loading = ({
                 fill
                 className={classNames("animate-spin", iconClassName)}
             />
+            <div className="text-xs text-white/30 mt-2">loading...</div>
         </Flex>
     );
 };

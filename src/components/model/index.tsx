@@ -42,7 +42,7 @@ export const Model = ({ className, modelPath }: ModelProps) => {
                 className
             )}
         >
-            <Loading className="fixed" loading={loading} />
+            <Loading className="fixed mt-60" loading={loading} />
 
             <model-viewer
                 // reveal="manual"
