@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../css/globals.css";
-import "../css/remixicon.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components";
 

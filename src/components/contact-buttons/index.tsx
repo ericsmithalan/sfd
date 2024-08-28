@@ -43,7 +43,7 @@ export const ContactButtons = ({
         >
             <ButtonLink
                 title="Call Me"
-                icon="phone-fill"
+                icon="email"
                 href={"#"}
                 variant={variant}
                 onClick={handlePhoneClick}
@@ -52,7 +52,7 @@ export const ContactButtons = ({
             </ButtonLink>
             <ButtonLink
                 title="Email Me"
-                icon="mail-fill"
+                icon="phone"
                 variant={variant}
                 onClick={handleEmailClick}
                 href={`#`}

@@ -86,7 +86,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     <ButtonLink
                         href={`#`}
                         onClick={handlePhoneClick}
-                        icon="phone-line"
+                        icon="phone"
                         className={classNames(
                             "text-lg",
                             "sm:text-xl",
@@ -105,7 +105,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                             "md:text-xl",
                             "lg:text-xl"
                         )}
-                        icon="mail-line"
+                        icon="email"
                     >
                         Email
                     </ButtonLink>

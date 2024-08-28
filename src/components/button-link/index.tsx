@@ -1,10 +1,10 @@
 import classNames from "classnames";
-import { IconName } from "../../types";
-import { FontIcon } from "../font-icon";
 import Link from "next/link";
+import { IconNames } from "../icon/types";
+import { IconHelper } from "../icon/helper";
 
 interface ButtonLinkProps {
-    icon?: IconName;
+    icon?: IconNames;
     href: string;
     children?: React.ReactNode;
     className?: string;
@@ -42,12 +42,7 @@ export const ButtonLink = ({
                 className
             )}
         >
-            {icon && (
-                <FontIcon
-                    className={classNames("text-sfdPrimary2", iconClassName)}
-                    icon={icon}
-                />
-            )}
+            {icon && <IconHelper name={icon} />}
             {children}
         </Link>
     );

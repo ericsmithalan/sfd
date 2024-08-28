@@ -32,7 +32,7 @@ export const Nav = ({ className }: NavProps) => {
             <Flex as="div">
                 <ButtonLink
                     href="#"
-                    icon="menu-line"
+                    icon="menu"
                     className="text-3xl"
                     onClick={(e) => {
                         setIsMenuOpen(!isMenuOpen);

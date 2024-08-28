@@ -3,7 +3,7 @@ export interface ModelProps {
     className?: string;
     modelPath?: string;
 }
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { Flex } from "../flex";
 import classNames from "classnames";
 
@@ -11,36 +11,9 @@ import { ModelViewerElement } from "@google/model-viewer";
 import "./style.scss";
 
 export const Model = ({ className, modelPath }: ModelProps) => {
-    const modelRef = useRef<ModelViewerElement>(null);
-
     useEffect(() => {
         import("@google/model-viewer");
-        const el = modelRef.current;
-
-        if (el) {
-            const onProgress = (event: any) => {
-                const progressBar = event.target.querySelector(".progress-bar");
-                const updatingBar = event.target.querySelector(".update-bar");
-
-                updatingBar.style.width = `${
-                    event.detail.totalProgress * 100
-                }%`;
-
-                if (event.detail.totalProgress === 1) {
-                    progressBar.classList.add("hide");
-                    event.target.removeEventListener("progress", onProgress);
-                } else {
-                    progressBar.classList.remove("hide");
-                }
-            };
-
-            el.addEventListener("progress", onProgress);
-
-            return () => {
-                el.removeEventListener("progress", onProgress);
-            };
-        }
-    }, [modelRef]);
+    }, []);
 
     return (
         <Flex
@@ -53,7 +26,6 @@ export const Model = ({ className, modelPath }: ModelProps) => {
             )}
         >
             <model-viewer
-                ref={modelRef}
                 src={modelPath}
                 camera-controls
                 shadow-intensity="1.12"
@@ -61,11 +33,7 @@ export const Model = ({ className, modelPath }: ModelProps) => {
                 camera-orbit="-247.4deg 80.79deg 13.73m"
                 field-of-view="26.33deg"
                 auto-rotate
-            >
-                <div className="progress-bar hide" slot="progress-bar">
-                    <div className="update-bar"></div>
-                </div>
-            </model-viewer>
+            ></model-viewer>
         </Flex>
     );
 };
