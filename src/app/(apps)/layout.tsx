@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../css/globals.css";
 import "../css/remixicon.css";
-import { Flex, Footer, Header } from "@/components";
+import { AppHeader, Flex, Footer, Header } from "@/components";
 import classNames from "classnames";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -39,7 +39,7 @@ export default function RootLayout({
                     "w-vw h-vh bg-sfdGray2 text-white"
                 )}
             >
-                <Header />
+                <AppHeader />
                 <Flex full="both" dir="col" as="main" className="">
                     {children}
                 </Flex>

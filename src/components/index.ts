@@ -9,3 +9,4 @@ export * from "./header";
 export * from "./footer";
 export * from "./contact-buttons";
 export * from "./model";
+export * from "./app-header";
