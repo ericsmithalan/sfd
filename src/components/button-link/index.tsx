@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { IconNames } from "../icon/types";
+import { IconNames } from "../icon";
 import { IconHelper } from "../icon/helper";
 
 interface ButtonLinkProps {
