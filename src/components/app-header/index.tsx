@@ -44,6 +44,7 @@ export const AppHeader = ({ className, title }: AppHeaderProps) => {
                     {title}
                 </Flex>
                 <ButtonLink
+                    title="Close Model Viewer"
                     className={classNames("p-0")}
                     href="/"
                     icon="close"

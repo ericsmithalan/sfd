@@ -89,11 +89,11 @@ export const Header = ({ fixed, className }: HeaderProps) => {
                 as="section"
                 flex="auto"
                 align={["items", "center"]}
-                className={classNames("p-4 pl-8 pr-8")}
+                className={classNames("p-4 pl-4 pr-4 gap-2")}
                 dir="row"
             >
                 <Logo
-                    className={classNames("w-52")}
+                    className={classNames("w-44", "lg:48")}
                     imageClassName={classNames("w-96 aspect-auto")}
                 />
                 {/* <Nav /> */}
