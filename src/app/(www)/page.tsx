@@ -1,4 +1,4 @@
-import { HomeHero, PageLayout } from "@/components";
+import { Flex, HomeHero, Model, PageLayout } from "@/components";
 import { Alert } from "@/components/alert";
 import { ServicesCards } from "@/components/services-cards";
 
@@ -11,6 +11,15 @@ const Home = () => {
             hero={<HomeHero />}
         >
             <ServicesCards />
+            <Flex as="div">
+                <Model
+                    modelPath="/models/case-1-light.glb"
+                    className="w-[300px] h-[300px]"
+                    loaderClass="text-black/60"
+                    cameraControls={false}
+                />
+            </Flex>
+
             <Alert />
         </PageLayout>
     );

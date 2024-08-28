@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { Flex } from "../flex";
 import { IconHelper } from "../icon";
 import classNames from "classnames";
@@ -28,7 +27,7 @@ export const Loading = ({
                 fill
                 className={classNames("animate-spin", iconClassName)}
             />
-            <div className="text-xs text-white/30 mt-2">loading...</div>
+            <div className="text-xs mt-2">loading...</div>
         </Flex>
     );
 };

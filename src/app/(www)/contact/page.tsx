@@ -1,6 +1,3 @@
-import { PageLayout } from "@/components";
-import Head from "next/head";
-
 export default function Page() {
     return (
         <div title="Contact Us" className="text-red-800">

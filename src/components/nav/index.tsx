@@ -3,7 +3,6 @@
 import classNames from "classnames";
 import { Flex } from "../flex";
 import Link from "next/link";
-import { useMediaQuery } from "react-responsive";
 import { ButtonLink } from "../button-link";
 import { createPortal } from "react-dom";
 import { NavMenu } from "./menu";
@@ -15,13 +14,6 @@ interface NavProps {
 
 export const Nav = ({ className }: NavProps) => {
     const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
-    const isDesktopOrLaptop = useMediaQuery({
-        query: "(max-width: 768px)",
-    });
-
-    if (isDesktopOrLaptop) {
-        console.log("is that");
-    }
 
     return (
         <Flex

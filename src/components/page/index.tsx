@@ -1,7 +1,6 @@
 import classNames from "classnames";
 import { ReactNode } from "react";
 import { Flex, FlexProps } from "../flex";
-import Head from "next/head";
 
 interface PageLayoutProps extends FlexProps {
     children?: ReactNode;

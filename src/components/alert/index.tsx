@@ -1,8 +1,6 @@
 "use client";
 import classNames from "classnames";
-import { ButtonLink } from "../button-link";
 import { Flex } from "../flex";
-import { useContactInfo } from "@/hooks";
 import { ContactButtons } from "../contact-buttons";
 
 export const Alert = () => {

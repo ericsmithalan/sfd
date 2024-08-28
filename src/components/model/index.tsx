@@ -2,8 +2,11 @@
 export interface ModelProps {
     className?: string;
     modelPath?: string;
+    poster?: string;
+    loaderClass?: string;
+    cameraControls?: boolean;
 }
-import { Suspense, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Flex } from "../flex";
 import classNames from "classnames";
 
@@ -11,7 +14,13 @@ import { ModelViewerElement } from "@google/model-viewer";
 import "./style.scss";
 import { Loading } from "../loading";
 
-export const Model = ({ className, modelPath }: ModelProps) => {
+export const Model = ({
+    className,
+    loaderClass,
+    poster,
+    modelPath,
+    cameraControls,
+}: ModelProps) => {
     const [loading, setLoading] = useState(true);
     const viewerRef = useRef<ModelViewerElement>(null);
 
@@ -37,19 +46,18 @@ export const Model = ({ className, modelPath }: ModelProps) => {
             as="div"
             full="both"
             id="card"
-            className={classNames(
-                "min-h-screen relative z-1 min-w-[100vw]",
-                className
-            )}
+            className={classNames("relative z-1", className)}
         >
-            <Loading className="fixed mt-60" loading={loading} />
+            <Loading
+                className={classNames("fixed mt-60 ", loaderClass)}
+                loading={loading}
+            />
 
             <model-viewer
-                // reveal="manual"
                 ref={viewerRef}
-                // loading="auto"
                 src={modelPath}
-                camera-controls
+                poster={poster}
+                camera-controls={cameraControls || true}
                 shadow-intensity="1.12"
                 environment-image="legacy"
                 camera-orbit="-247.4deg 80.79deg 13.73m"

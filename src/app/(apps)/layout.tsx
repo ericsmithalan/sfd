@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import "../css/globals.css";
-import { AppHeader, Flex, Footer, Header } from "@/components";
+import { AppHeader, Flex } from "@/components";
 import classNames from "classnames";
 
 const inter = Inter({ subsets: ["latin"] });

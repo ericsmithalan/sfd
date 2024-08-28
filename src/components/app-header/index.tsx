@@ -1,9 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import { ButtonLink, ContactButtons, Flex, Logo } from "../";
+import { ButtonLink, Flex, Logo } from "../";
 import classNames from "classnames";
 import "./style.scss";
-import Link from "next/link";
 
 interface AppHeaderProps {
     className?: string;

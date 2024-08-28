@@ -1,14 +1,13 @@
-import { Flex, IconHelper, Model, ModelProps } from "@/components";
-import { BladeIcon } from "@/components/icon/blade";
-import { Loading } from "@/components/loading";
-import { Suspense, useEffect } from "react";
+import { Flex, Model } from "@/components";
 
 const ModelViewer = ({ params }: { params: { slug: string } }) => {
     return (
         <Flex as="section" dir="col">
-            <Suspense fallback={<Loading />}>
-                <Model modelPath={`/models/${params.slug}.glb`} />
-            </Suspense>
+            <Model
+                modelPath={`/models/${params.slug}.glb`}
+                className="min-h-screen  min-w-[100vw]"
+                loaderClass="text-white/30"
+            />
         </Flex>
     );
 };
