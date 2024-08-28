@@ -4,7 +4,6 @@ import { Loading } from "@/components/loading";
 import { Suspense, useEffect } from "react";
 
 const ModelViewer = ({ params }: { params: { slug: string } }) => {
-    console.log(params);
     return (
         <Flex as="section" dir="col">
             <Suspense fallback={<Loading />}>

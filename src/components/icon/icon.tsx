@@ -1,5 +1,3 @@
-import React, { ReactElement } from "react";
-
 export interface IconProps {
     fill?: boolean;
     width?: number | string;

@@ -38,7 +38,7 @@ export default function RootLayout({
                     "w-vw h-vh bg-sfdGray2 text-white"
                 )}
             >
-                <AppHeader />
+                <AppHeader title="Model Viewer" />
                 <Flex full="both" dir="col" as="main" className="">
                     {children}
                 </Flex>

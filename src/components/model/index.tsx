@@ -21,7 +21,7 @@ export const Model = ({ className, modelPath }: ModelProps) => {
             full="both"
             id="card"
             className={classNames(
-                "min-h-screen relative min-w-[100vw]",
+                "min-h-screen relative z-1 min-w-[100vw]",
                 className
             )}
         >
