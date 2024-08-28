@@ -1,6 +1,7 @@
 "use client";
 export interface ModelProps {
     className?: string;
+    modelPath?: string;
 }
 import { useEffect, useRef } from "react";
 import { Flex } from "../flex";
@@ -8,7 +9,8 @@ import classNames from "classnames";
 
 import { ModelViewerElement } from "@google/model-viewer";
 import "./style.scss";
-export const Model = ({ className }: ModelProps) => {
+
+export const Model = ({ className, modelPath }: ModelProps) => {
     const modelRef = useRef<ModelViewerElement>(null);
 
     useEffect(() => {
@@ -23,8 +25,6 @@ export const Model = ({ className }: ModelProps) => {
                 updatingBar.style.width = `${
                     event.detail.totalProgress * 100
                 }%`;
-
-                console.log(event.detail.totalProgress);
 
                 if (event.detail.totalProgress === 1) {
                     progressBar.classList.add("hide");
@@ -54,7 +54,7 @@ export const Model = ({ className }: ModelProps) => {
         >
             <model-viewer
                 ref={modelRef}
-                src="/models/bunkbed-pre-design.glb"
+                src={modelPath}
                 camera-controls
                 shadow-intensity="1.12"
                 environment-image="legacy"

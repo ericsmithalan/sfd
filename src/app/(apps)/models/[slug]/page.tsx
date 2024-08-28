@@ -2,10 +2,11 @@ import { Flex, Model, ModelProps } from "@/components";
 import dynamic from "next/dynamic";
 import { useEffect } from "react";
 
-const ModelViewer = () => {
+const ModelViewer = ({ params }: { params: { slug: string } }) => {
+    console.log(params);
     return (
         <Flex as="section">
-            <Model />
+            <Model modelPath={`/models/${params.slug}.glb`} />
         </Flex>
     );
 };
