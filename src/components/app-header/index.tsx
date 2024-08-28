@@ -17,7 +17,7 @@ export const AppHeader = ({ className, title }: AppHeaderProps) => {
             flex="auto"
             full="w"
             className={classNames(
-                "text-white bg-sfdGray1 shadow-sm z-50 fixed",
+                "text-white bg-sfdGray1 shadow-lg z-50 fixed",
                 className
             )}
             dir="row"
@@ -26,22 +26,28 @@ export const AppHeader = ({ className, title }: AppHeaderProps) => {
                 contain
                 as="section"
                 align={["items", "center"]}
-                justify={["content", "center"]}
+                justify={["content", "start"]}
                 className={classNames("p-4 pl-5 pr-5 gap-4")}
                 dir="row"
             >
-                <Logo className={classNames("w-36 aspect-auto")} />
+                <Logo
+                    className={classNames("")}
+                    imageClassName={classNames("w-36")}
+                />
                 <Flex
                     as="h3"
-                    flex="auto"
                     className={classNames(
-                        "border-l-2 pl-4 text-lg border-sfdPrimary2",
+                        "border-r-2 pr-4 text-lg border-white/10",
                         "lg:text-2xl"
                     )}
                 >
                     {title}
                 </Flex>
-                <ButtonLink variant="border" href="/" icon="close"></ButtonLink>
+                <ButtonLink
+                    className={classNames("p-0")}
+                    href="/"
+                    icon="close"
+                ></ButtonLink>
             </Flex>
         </Flex>
     );

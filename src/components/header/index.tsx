@@ -92,7 +92,10 @@ export const Header = ({ fixed, className }: HeaderProps) => {
                 className={classNames("p-4 pl-8 pr-8")}
                 dir="row"
             >
-                <Logo className={classNames("w-96 aspect-auto")} />
+                <Logo
+                    className={classNames("w-52")}
+                    imageClassName={classNames("w-96 aspect-auto")}
+                />
                 {/* <Nav /> */}
                 <ContactButtons
                     variant="border"
