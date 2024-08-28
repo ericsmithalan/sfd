@@ -1,11 +1,15 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { ContactButtons, Flex, Logo } from "../";
-import "./style.scss";
 import classNames from "classnames";
-import { Nav } from "../nav";
+import "./style.scss";
 
-export const Header = () => {
+interface HeaderProps {
+    className?: string;
+    fixed?: boolean;
+}
+
+export const Header = ({ fixed, className }: HeaderProps) => {
     const [stuck, setStuck] = useState<boolean>(false);
     const headerRef = useRef(null);
 
@@ -13,56 +17,58 @@ export const Header = () => {
         let height: number | undefined = undefined;
         let el: HTMLElement | null = headerRef?.current;
 
-        const handleScroll = (
-            el: HTMLElement | null,
-            scrollY: number,
-            headerHeight: number | undefined
-        ) => {
-            if (el && headerHeight) {
-                if (headerHeight < scrollY) {
-                    if (!stuck) {
-                        el.style.marginTop = "0";
-                        el.classList.add(
-                            "sfd-sticky",
-                            "bg-sfdSecondary0/90",
-                            "backdrop-blur-md"
-                        );
-                        setStuck(true);
-                    }
-                } else {
-                    if (stuck) {
-                        el.style.marginTop = `-${scrollY}px`;
-                        el.classList.remove(
-                            "sfd-sticky",
-                            "bg-sfdSecondary0/90",
-                            "backdrop-blur-md"
-                        );
+        if (fixed) {
+            const handleScroll = (
+                el: HTMLElement | null,
+                scrollY: number,
+                headerHeight: number | undefined
+            ) => {
+                if (el && headerHeight) {
+                    if (headerHeight < scrollY) {
+                        if (!stuck) {
+                            el.style.marginTop = "0";
+                            el.classList.add(
+                                "sfd-sticky",
+                                "bg-sfdSecondary0/90",
+                                "backdrop-blur-md"
+                            );
+                            setStuck(true);
+                        }
+                    } else {
+                        if (stuck) {
+                            el.style.marginTop = `-${scrollY}px`;
+                            el.classList.remove(
+                                "sfd-sticky",
+                                "bg-sfdSecondary0/90",
+                                "backdrop-blur-md"
+                            );
 
-                        setStuck(false);
+                            setStuck(false);
+                        }
                     }
                 }
+            };
+
+            if (el && window) {
+                el = el as HTMLElement;
+
+                height = el.getBoundingClientRect().height;
+
+                if (window.scrollY > height) {
+                    handleScroll(el, window.scrollY, height);
+                }
+
+                window.addEventListener("scroll", (e) =>
+                    handleScroll(el, window.scrollY, height)
+                );
             }
-        };
 
-        if (el && window) {
-            el = el as HTMLElement;
-
-            height = el.getBoundingClientRect().height;
-
-            if (window.scrollY > height) {
-                handleScroll(el, window.scrollY, height);
-            }
-
-            window.addEventListener("scroll", (e) =>
-                handleScroll(el, window.scrollY, height)
-            );
+            return () => {
+                window.removeEventListener("scroll", (e) =>
+                    handleScroll(el, window.scrollY, height)
+                );
+            };
         }
-
-        return () => {
-            window.removeEventListener("scroll", (e) =>
-                handleScroll(el, window.scrollY, height)
-            );
-        };
     }, [stuck]);
 
     return (
@@ -71,7 +77,11 @@ export const Header = () => {
             flex="auto"
             full="w"
             ref={headerRef}
-            className={classNames("sfd-header h-header z-50 fixed text-white")}
+            className={classNames(
+                "sfd-header h-header z-50 text-white",
+                fixed ? "fixed" : "",
+                className
+            )}
             dir="row"
         >
             <Flex

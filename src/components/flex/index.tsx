@@ -10,6 +10,7 @@ export interface FlexProps extends FlexAttribures {
     style?: React.CSSProperties;
     children?: React.ReactNode;
     ref?: Ref<unknown>;
+    id?: string;
 }
 
 export const Flex = React.forwardRef(
