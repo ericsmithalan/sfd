@@ -3,17 +3,34 @@ export interface ModelProps {
     className?: string;
     modelPath?: string;
 }
-import { useEffect } from "react";
+import { Suspense, useEffect, useRef, useState } from "react";
 import { Flex } from "../flex";
 import classNames from "classnames";
 
 import { ModelViewerElement } from "@google/model-viewer";
 import "./style.scss";
+import { Loading } from "../loading";
 
 export const Model = ({ className, modelPath }: ModelProps) => {
+    const [loading, setLoading] = useState(true);
+    const viewerRef = useRef<ModelViewerElement>(null);
+
     useEffect(() => {
         import("@google/model-viewer");
-    }, []);
+        const progressBar = viewerRef.current;
+
+        const onLoad = (e: any) => {
+            setLoading(false);
+        };
+
+        if (progressBar) {
+            progressBar.addEventListener("load", onLoad);
+        }
+
+        return () => {
+            progressBar?.removeEventListener("load", onLoad);
+        };
+    }, [viewerRef]);
 
     return (
         <Flex
@@ -25,7 +42,12 @@ export const Model = ({ className, modelPath }: ModelProps) => {
                 className
             )}
         >
+            <Loading className="fixed" loading={loading} />
+
             <model-viewer
+                // reveal="manual"
+                ref={viewerRef}
+                // loading="auto"
                 src={modelPath}
                 camera-controls
                 shadow-intensity="1.12"

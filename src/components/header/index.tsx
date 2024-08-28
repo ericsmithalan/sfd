@@ -69,7 +69,7 @@ export const Header = ({ fixed, className }: HeaderProps) => {
                 );
             };
         }
-    }, [stuck]);
+    }, [stuck, fixed]);
 
     return (
         <Flex
