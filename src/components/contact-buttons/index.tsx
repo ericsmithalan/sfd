@@ -47,7 +47,7 @@ export const ContactButtons = ({
             <ButtonLink
                 iconSize={iconSize}
                 title="Call Me"
-                icon="email"
+                icon="phone"
                 href={"#"}
                 variant={variant}
                 onClick={handlePhoneClick}
@@ -57,7 +57,7 @@ export const ContactButtons = ({
             <ButtonLink
                 iconSize={iconSize}
                 title="Email Me"
-                icon="phone"
+                icon="email"
                 variant={variant}
                 onClick={handleEmailClick}
                 href={`#`}
