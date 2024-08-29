@@ -4,22 +4,31 @@ export interface ModelProps {
     modelPath?: string;
     poster?: string;
     loaderClass?: string;
+    autoRotate?: boolean;
+    disablePan?: boolean;
+    disableZoom?: boolean;
+    interactions?: "auto" | "none";
+    disableTap?: boolean;
     cameraControls?: boolean;
 }
 import { useEffect, useRef, useState } from "react";
 import { Flex } from "../flex";
 import classNames from "classnames";
-
 import { ModelViewerElement } from "@google/model-viewer";
-import "./style.scss";
 import { Loading } from "../loading";
+import "./style.scss";
 
 export const Model = ({
     className,
     loaderClass,
     poster,
     modelPath,
+    disablePan,
+    disableZoom,
+    interactions,
+    autoRotate,
     cameraControls,
+    disableTap,
 }: ModelProps) => {
     const [loading, setLoading] = useState(true);
     const viewerRef = useRef<ModelViewerElement>(null);
@@ -42,27 +51,30 @@ export const Model = ({
     }, [viewerRef]);
 
     return (
-        <Flex
-            as="div"
-            full="both"
-            id="card"
-            className={classNames("relative z-1", className)}
-        >
+        <Flex as="div" className={classNames("relative z-1", className)}>
             <Loading
-                className={classNames("fixed mt-60 ", loaderClass)}
+                className={classNames("fixed z-10 mt-60 ", loaderClass)}
                 loading={loading}
             />
 
             <model-viewer
+                reveal="auto"
+                loading="lazy"
                 ref={viewerRef}
                 src={modelPath}
                 poster={poster}
-                camera-controls={cameraControls || true}
+                disable-pan={disablePan === undefined ? false : disablePan}
+                disable-zoom={disableZoom === undefined ? false : disableZoom}
+                disable-tap={disableTap === undefined ? false : disableTap}
+                interaction-prompt={interactions || "auto"}
+                camera-controls={
+                    cameraControls === undefined ? true : cameraControls
+                }
                 shadow-intensity="1.12"
                 environment-image="legacy"
                 camera-orbit="-247.4deg 80.79deg 13.73m"
                 field-of-view="26.33deg"
-                auto-rotate
+                auto-rotate={autoRotate === undefined ? true : autoRotate}
             ></model-viewer>
         </Flex>
     );

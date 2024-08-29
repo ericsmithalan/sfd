@@ -91,6 +91,8 @@ const config: Config = {
         }),
     ],
     safelist: [
+        "mx-auto",
+        "my-auto",
         "auto-cols-auto",
         "auto-cols-min",
         "auto-cols-max",

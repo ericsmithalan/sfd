@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import Link from "next/link";
-import { IconNames } from "../icon";
-import { IconHelper } from "../icon/helper";
+
+import { Icon, IconNames, IconSize } from "../icon";
 
 interface ButtonLinkProps {
     icon?: IconNames;
@@ -10,7 +10,8 @@ interface ButtonLinkProps {
     className?: string;
     iconClassName?: string;
     variant?: "border" | "fill";
-    title?: string;
+    title: string;
+    iconSize?: IconSize;
     onClick?: (e: React.MouseEvent) => void;
 }
 
@@ -21,6 +22,7 @@ export const ButtonLink = ({
     icon,
     variant,
     iconClassName,
+    iconSize,
     title,
     onClick,
 }: ButtonLinkProps) => {
@@ -42,7 +44,7 @@ export const ButtonLink = ({
                 className
             )}
         >
-            {icon && <IconHelper name={icon} />}
+            {icon && <Icon title={title} iconSize={iconSize} icon={icon} />}
             {children}
         </Link>
     );

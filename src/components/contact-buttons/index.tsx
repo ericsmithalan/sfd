@@ -3,12 +3,14 @@ import classNames from "classnames";
 import { ButtonLink } from "../button-link";
 import { Flex } from "../flex";
 import { useContactInfo } from "@/hooks";
+import { IconSize } from "../icon";
 
 interface ContactButtonsProps {
     iconOnly?: boolean;
     dir?: "row" | "col";
     variant?: "border" | "fill";
     className?: string;
+    iconSize?: IconSize;
 }
 
 export const ContactButtons = ({
@@ -16,6 +18,7 @@ export const ContactButtons = ({
     dir,
     variant,
     className,
+    iconSize,
 }: ContactButtonsProps) => {
     const { email, phone } = useContactInfo();
 
@@ -42,6 +45,7 @@ export const ContactButtons = ({
             dir={dir}
         >
             <ButtonLink
+                iconSize={iconSize}
                 title="Call Me"
                 icon="email"
                 href={"#"}
@@ -51,6 +55,7 @@ export const ContactButtons = ({
                 {!iconOnly && "Call"}
             </ButtonLink>
             <ButtonLink
+                iconSize={iconSize}
                 title="Email Me"
                 icon="phone"
                 variant={variant}

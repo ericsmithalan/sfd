@@ -1,6 +1,6 @@
 import { Flex } from "../flex";
-import { IconHelper } from "../icon";
 import classNames from "classnames";
+import { Icon } from "../icon";
 
 interface LoadingProps {
     className?: string;
@@ -20,10 +20,10 @@ export const Loading = ({
             align={["items", "center"]}
             className={classNames("w-screen", !loading && "hidden", className)}
         >
-            <IconHelper
-                width={100}
-                height={100}
-                name="blade"
+            <Icon
+                title="loading..."
+                iconSize="xxxl"
+                icon="blade"
                 fill
                 className={classNames("animate-spin", iconClassName)}
             />

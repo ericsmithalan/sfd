@@ -16,10 +16,20 @@ export const Footer = ({ className }: FooterProps) => {
             dir="col"
             className={classNames("bg-sfdSecondary0 p-8", className)}
         >
-            <Flex as="div" contain dir="row" className={classNames("gap-12")}>
-                <Logo className={classNames("w-60 aspect-auto")} />
+            <Flex as="div" contain dir="row" className={classNames("gap-9")}>
+                <Flex
+                    as="div"
+                    dir="row"
+                    className={classNames("min-w-[200px]")}
+                >
+                    <Logo
+                        className={classNames("h-16")}
+                        imageClassName={classNames("h-16")}
+                    />
+                </Flex>
+
                 <Flex as="div" className={classNames("text-white")}>
-                    <ContactButtons dir="col" />
+                    <ContactButtons iconSize={"md"} dir="col" />
                 </Flex>
                 <Flex as="div" className={classNames("")}></Flex>
             </Flex>
