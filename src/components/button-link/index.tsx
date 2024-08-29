@@ -11,6 +11,7 @@ interface ButtonLinkProps {
     iconClassName?: string;
     variant?: "border" | "fill";
     title: string;
+    rel?: string;
     iconSize?: IconSize;
     onClick?: (e: React.MouseEvent) => void;
 }
@@ -22,6 +23,7 @@ export const ButtonLink = ({
     icon,
     variant,
     iconClassName,
+    rel,
     iconSize,
     title,
     onClick,
@@ -30,6 +32,7 @@ export const ButtonLink = ({
         <Link
             title={title}
             href={href}
+            rel={rel}
             onClick={(e) => {
                 if (onClick) {
                     e.preventDefault();
@@ -38,6 +41,7 @@ export const ButtonLink = ({
             }}
             className={classNames(
                 "inline-flex flex-nowrap flex-row text-nowrap rounded-sm gap-2 items-center",
+
                 variant == "border" &&
                     "outline outline-1 pl-5 pr-5 outline-sfdPrimary3 pt-2 pb-2 ",
                 variant == "fill" && "bg-sfdPrimary3 pl-5 pr-5 pt-2 pb-2 ",

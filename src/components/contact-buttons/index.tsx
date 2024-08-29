@@ -28,14 +28,14 @@ export const ContactButtons = ({
     const handlePhoneClick = (e: React.MouseEvent) => {
         e.preventDefault();
         if (window) {
-            window.open(`tel:${phone}`);
+            document.location.href = `tel:${phone}`;
         }
     };
 
     const handleEmailClick = (e: React.MouseEvent) => {
         e.preventDefault();
         if (window) {
-            window.open(`mailto:${email}`);
+            document.location.href = `mailto:${email}`;
         }
     };
 
