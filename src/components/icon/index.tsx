@@ -2,7 +2,13 @@ import classNames from "classnames";
 import "./style.scss";
 
 export type IconSize = "sm" | "md" | "lg" | "xl" | "xxl" | "xxxl";
-export type IconNames = "blade" | "email" | "phone" | "menu" | "close";
+export type IconNames =
+    | "blade"
+    | "email"
+    | "phone"
+    | "menu"
+    | "close"
+    | "location";
 
 export interface IconProps {
     fill?: boolean;
@@ -47,13 +53,19 @@ export const getIconSizeStyle = (size?: IconSize): IconSizeStyle => {
     };
 };
 
-export const Icon = ({ icon, iconSize, title, color }: IconProps) => {
+export const Icon = ({
+    icon,
+    iconSize,
+    className,
+    title,
+    color,
+}: IconProps) => {
     const { width, height, cssClass } = getIconSizeStyle(iconSize);
 
     return (
         <div
             title={title}
-            className={classNames("img-icon", "", cssClass)}
+            className={classNames("img-icon", "", cssClass, className)}
             style={{
                 maskImage: `url(/images/icons/${icon}.svg)`,
                 WebkitMaskImage: `url(/images/icons/${icon}.svg)`,

@@ -94,7 +94,7 @@ export const Header = ({ fixed, className }: HeaderProps) => {
             >
                 <Logo
                     className={classNames("w-44", "lg:48")}
-                    imageClassName={classNames("w-96 aspect-auto")}
+                    imageClassName={classNames("w-44")}
                 />
                 {/* <Nav /> */}
                 <ContactButtons

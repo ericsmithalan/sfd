@@ -8,15 +8,50 @@ import { Header } from "@/components";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+    icons: {
+        icon: [
+            { url: "/fav-icon.png" },
+            new URL("/fav-icon.png", "https://smithfurnituredesign.com"),
+            { url: "/fav-icon.png", media: "(prefers-color-scheme: dark)" },
+        ],
+        shortcut: ["/fav-icon.png"],
+        apple: [
+            { url: "/apple-icon.png" },
+            { url: "/fav-icon.png", sizes: "200x200", type: "image/png" },
+        ],
+        other: [
+            {
+                rel: "apple-touch-icon-precomposed",
+                url: "/fav-icon.png",
+            },
+        ],
+    },
     openGraph: {
         locale: "en",
-
         title: "Smith Furniture Design | Custom Woodworking in Adrian, MI",
         type: "website",
         url: "https://www.smithfurnituredesign.com",
         images: "https://www.smithfurnituredesign.com/images/social-media/sfd.png",
         description:
             "Experience the art of furniture design, tailored to your unique vision.",
+    },
+    robots: {
+        index: false,
+        follow: true,
+        nocache: true,
+        googleBot: {
+            index: true,
+            follow: false,
+            noimageindex: true,
+            "max-video-preview": -1,
+            "max-image-preview": "large",
+            "max-snippet": -1,
+        },
+    },
+    formatDetection: {
+        email: true,
+        address: false,
+        telephone: true,
     },
     title: "Smith Furniture Design | Custom Woodworking in Adrian, MI",
     description:

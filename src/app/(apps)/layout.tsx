@@ -8,6 +8,24 @@ import classNames from "classnames";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+    icons: {
+        icon: [
+            { url: "/fav-icon.png" },
+            new URL("/fav-icon.png", "https://smithfurnituredesign.com"),
+            { url: "/fav-icon.png", media: "(prefers-color-scheme: dark)" },
+        ],
+        shortcut: ["/fav-icon.png"],
+        apple: [
+            { url: "/apple-icon.png" },
+            { url: "/fav-icon.png", sizes: "200x200", type: "image/png" },
+        ],
+        other: [
+            {
+                rel: "apple-touch-icon-precomposed",
+                url: "/fav-icon.png",
+            },
+        ],
+    },
     openGraph: {
         locale: "en",
 

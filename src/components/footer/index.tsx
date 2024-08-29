@@ -20,16 +20,26 @@ export const Footer = ({ className }: FooterProps) => {
                 <Flex
                     as="div"
                     dir="row"
-                    className={classNames("min-w-[200px]")}
+                    className={classNames("min-w-[200px] max-w-[300px] w-full")}
                 >
                     <Logo
-                        className={classNames("h-16")}
-                        imageClassName={classNames("h-16")}
+                        className={classNames("w-full")}
+                        imageClassName={classNames("w-full")}
                     />
                 </Flex>
 
                 <Flex as="div" className={classNames("text-white")}>
-                    <ContactButtons iconSize={"md"} dir="col" />
+                    <ContactButtons
+                        showLocation={true}
+                        iconSize={"md"}
+                        dir="col"
+                        className={classNames(
+                            "gap-1",
+                            "sm:gap-2",
+                            "md:gap-2",
+                            "lg:gap-2"
+                        )}
+                    />
                 </Flex>
                 <Flex as="div" className={classNames("")}></Flex>
             </Flex>

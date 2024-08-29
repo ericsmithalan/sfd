@@ -4,6 +4,7 @@ import { ButtonLink } from "../button-link";
 import { Flex } from "../flex";
 import { useContactInfo } from "@/hooks";
 import { IconSize } from "../icon";
+import { IconLabel } from "../icon-label";
 
 interface ContactButtonsProps {
     iconOnly?: boolean;
@@ -11,6 +12,7 @@ interface ContactButtonsProps {
     variant?: "border" | "fill";
     className?: string;
     iconSize?: IconSize;
+    showLocation?: boolean;
 }
 
 export const ContactButtons = ({
@@ -19,6 +21,7 @@ export const ContactButtons = ({
     variant,
     className,
     iconSize,
+    showLocation,
 }: ContactButtonsProps) => {
     const { email, phone } = useContactInfo();
 
@@ -64,6 +67,15 @@ export const ContactButtons = ({
             >
                 {!iconOnly && "Email"}
             </ButtonLink>
+            {showLocation && (
+                <IconLabel
+                    title="Location Icon"
+                    iconSize={iconSize}
+                    icon="location"
+                >
+                    Adrian, MI
+                </IconLabel>
+            )}
         </Flex>
     );
 };
