@@ -23,6 +23,7 @@ export const Nav = ({ className }: NavProps) => {
         >
             <Flex as="div">
                 <ButtonLink
+                    title="Menu"
                     href="#"
                     icon="menu"
                     className="text-3xl"

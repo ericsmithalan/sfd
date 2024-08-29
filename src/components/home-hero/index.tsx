@@ -84,6 +84,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                     )}
                 >
                     <ButtonLink
+                        title="Call Me"
                         href={`#`}
                         onClick={handlePhoneClick}
                         icon="phone"
@@ -97,6 +98,7 @@ export const HomeHero = ({}: HomeHeroProps) => {
                         Call
                     </ButtonLink>
                     <ButtonLink
+                        title="Email Me"
                         href={`#`}
                         onClick={handleEmailClick}
                         className={classNames(
