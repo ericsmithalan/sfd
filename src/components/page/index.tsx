@@ -24,7 +24,7 @@ export const PageLayout = ({ children, className, hero }: PageLayoutProps) => {
                     as="section"
                     full="both"
                     contain
-                    className={classNames("gap-4 pb-20")}
+                    className={classNames("gap-16 pb-20")}
                 >
                     {children}
                 </Flex>

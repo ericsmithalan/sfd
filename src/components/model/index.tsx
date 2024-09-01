@@ -10,6 +10,7 @@ export interface ModelProps {
     interactions?: "auto" | "none";
     disableTap?: boolean;
     cameraControls?: boolean;
+    modelClassName?: string;
 }
 import { useEffect, useRef, useState } from "react";
 import { Flex } from "../flex";
@@ -63,14 +64,14 @@ export const Model = ({
                 ref={viewerRef}
                 src={modelPath}
                 poster={poster}
-                disable-pan={disablePan === undefined ? false : disablePan}
-                disable-zoom={disableZoom === undefined ? false : disableZoom}
-                disable-tap={disableTap === undefined ? false : disableTap}
-                interaction-prompt={interactions || "auto"}
+                // disable-pan={disablePan === undefined ? false : disablePan}
+                // disable-zoom={disableZoom === undefined ? false : disableZoom}
+                // disable-tap={disableTap === undefined ? false : disableTap}
+                // interaction-prompt={interactions || "auto"}
                 camera-controls={
                     cameraControls === undefined ? true : cameraControls
                 }
-                shadow-intensity="1.12"
+                shadow-intensity="2"
                 environment-image="legacy"
                 camera-orbit="-247.4deg 80.79deg 13.73m"
                 field-of-view="26.33deg"

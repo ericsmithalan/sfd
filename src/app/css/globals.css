@@ -1,3 +1,8 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body {
+    font-family: "Inter";
+    @apply text-lg text-sfdGray2/70 antialiased;
+}

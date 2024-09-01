@@ -37,6 +37,8 @@ const config: Config = {
                 "services-wood": "url('/images/services/wood-hover.webp')",
                 "services-cnc": "url('/images/services/cnc-hover.webp')",
                 "services-design": "url('/images/services/design-hover.webp')",
+                "project-hero":
+                    "url('/images/projects/box-on-legs/photo-1.webp')",
             },
             height: {
                 header: "100px",
@@ -93,6 +95,15 @@ const config: Config = {
     safelist: [
         "mx-auto",
         "my-auto",
+        "bg-bottom",
+        "bg-center",
+        "bg-left",
+        "bg-left-bottom",
+        "bg-left-top",
+        "bg-right",
+        "bg-right-bottom",
+        "bg-right-top",
+        "bg-top",
         "auto-cols-auto",
         "auto-cols-min",
         "auto-cols-max",
