@@ -71,8 +71,12 @@ export const Model = ({
                 camera-controls={
                     cameraControls === undefined ? true : cameraControls
                 }
-                shadow-intensity="2"
-                environment-image="legacy"
+                shadow-intensity="1"
+                exposure="0.8"
+                shadow-softness="1"
+                // environment-image="legacy"
+                environment-image="/images/model-viewer/room-1.hdr"
+                // environment="legacy"
                 camera-orbit="-247.4deg 80.79deg 13.73m"
                 field-of-view="26.33deg"
                 auto-rotate={autoRotate === undefined ? true : autoRotate}
