@@ -2,6 +2,10 @@
     display: none;
 }
 
+:not(:defined) > * {
+    display: none;
+}
+
 model-viewer {
     position: absolute;
     top: 0;
@@ -9,6 +13,7 @@ model-viewer {
     right: 0;
     bottom: 0;
     border: none;
+    overflow-x: hidden;
 }
 
 .progress-bar.hide {
