@@ -2,6 +2,7 @@ import Image from "next/image";
 import { Flex } from "../flex";
 import classNames from "classnames";
 import { CSSProperties } from "react";
+import { Card } from "../card";
 
 interface ServiceCardProps {
     title: string;
@@ -19,16 +20,10 @@ export const ServiceCard = ({
     className,
 }: ServiceCardProps) => {
     return (
-        <Flex
-            as="div"
+        <Card
             dir="col"
-            flex="auto"
-            align={["items", "center"]}
             style={style}
-            className={classNames(
-                "bg-white shadow-md text-center rounded-md p-8",
-                className
-            )}
+            className={classNames("bg-white", className)}
         >
             <Flex as="div">
                 <Image
@@ -60,6 +55,6 @@ export const ServiceCard = ({
             >
                 {description}
             </p>
-        </Flex>
+        </Card>
     );
 };

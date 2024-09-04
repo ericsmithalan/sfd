@@ -4,5 +4,5 @@
 
 body {
     font-family: "Inter";
-    @apply text-lg text-sfdGray2/70 antialiased;
+    @apply text-lg antialiased bg-sfdSecondary0;
 }

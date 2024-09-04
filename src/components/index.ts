@@ -17,3 +17,4 @@ export * from "./alert";
 export * from "./app-header";
 export * from "./services-cards";
 export * from "./responsiveImage";
+export * from "./image-card";

@@ -81,7 +81,7 @@ export const Model = ({
                 // environment="legacy"
                 camera-orbit="-247.4deg 80.79deg 13.73m"
                 field-of-view="26.33deg"
-                auto-rotate={autoRotate === undefined ? true : autoRotate}
+                // auto-rotate={autoRotate === undefined ? true : autoRotate}
             ></model-viewer>
         </Flex>
     );

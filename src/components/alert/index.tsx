@@ -8,6 +8,7 @@ export const Alert = () => {
         <Flex
             as="div"
             dir="col"
+            contain
             className={classNames("bg-white rounded-md shadow-md p-10")}
         >
             <Flex as="div" dir="col" className="text-gray-600/50 max-w-prose">

@@ -23,7 +23,6 @@ export const PageLayout = ({ children, className, hero }: PageLayoutProps) => {
                     dir="col"
                     as="section"
                     full="both"
-                    contain
                     className={classNames("gap-16 pb-20")}
                 >
                     {children}

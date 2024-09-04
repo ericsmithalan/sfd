@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
-import "../css/globals.css";
+import "../../css/globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components";
+import classNames from "classnames";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -36,16 +37,12 @@ export const metadata: Metadata = {
             "Experience the art of furniture design, tailored to your unique vision.",
     },
     robots: {
-        index: false,
+        index: true,
         follow: true,
         nocache: true,
         googleBot: {
             index: true,
-            follow: false,
-            noimageindex: true,
-            "max-video-preview": -1,
-            "max-image-preview": "large",
-            "max-snippet": -1,
+            follow: true,
         },
     },
     formatDetection: {
@@ -67,7 +64,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
-            <body className={inter.className}>
+            <body className={classNames(inter.className, "bg-black/10")}>
                 <Header fixed />
                 {children}
                 <Footer />

@@ -31,7 +31,7 @@ export const ResponsiveImage = ({
         <Flex
             as="div"
             title={title}
-            className={classNames(`w-full h-full relative`, className)}
+            className={classNames(`relative`, className)}
         >
             <Flex
                 as="div"
