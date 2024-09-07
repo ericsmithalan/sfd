@@ -7,9 +7,10 @@ import "./style.scss";
 interface HeaderProps {
     className?: string;
     fixed?: boolean;
+    isDark?: boolean;
 }
 
-export const Header = ({ fixed, className }: HeaderProps) => {
+export const Header = ({ fixed, className, isDark }: HeaderProps) => {
     const [stuck, setStuck] = useState<boolean>(false);
     const headerRef = useRef(null);
 
@@ -69,7 +70,7 @@ export const Header = ({ fixed, className }: HeaderProps) => {
                 );
             };
         }
-    }, [stuck, fixed]);
+    }, [stuck, fixed, isDark]);
 
     return (
         <Flex
@@ -79,6 +80,7 @@ export const Header = ({ fixed, className }: HeaderProps) => {
             ref={headerRef}
             className={classNames(
                 "sfd-header h-header z-50 text-white",
+                isDark && "bg-sfdSecondary0",
                 fixed ? "fixed" : "",
                 className
             )}

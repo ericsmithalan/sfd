@@ -8,6 +8,7 @@
         "esModuleInterop": true,
         "module": "ESNext",
         "moduleResolution": "bundler",
+        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
@@ -26,7 +27,8 @@
         "./src/default.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        ".next/types/**/*.ts"
-, "src/components/model/index.old"    ],
+        ".next/types/**/*.ts",
+        "src/components/model/index.old"
+    ],
     "exclude": ["node_modules"]
 }
