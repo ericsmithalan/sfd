@@ -56,6 +56,7 @@ export const Model = ({
             <Loading
                 className={classNames("fixed z-10 mt-60 ", loaderClass)}
                 loading={loading}
+                message="Loading 3D model, please wait..."
             />
 
             <model-viewer

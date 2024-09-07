@@ -35,7 +35,7 @@ export const getIconSizeStyle = (size?: IconSize): IconSizeStyle => {
         lg: 24,
         xl: 26,
         xxl: 32,
-        xxxl: 40,
+        xxxl: 90,
     };
 
     if (!size) {

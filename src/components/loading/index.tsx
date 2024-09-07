@@ -6,12 +6,14 @@ interface LoadingProps {
     className?: string;
     iconClassName?: string;
     loading?: boolean;
+    message?: string;
 }
 
 export const Loading = ({
     className,
     iconClassName,
     loading,
+    message,
 }: LoadingProps) => {
     return (
         <Flex
@@ -27,7 +29,9 @@ export const Loading = ({
                 fill
                 className={classNames("animate-spin", iconClassName)}
             />
-            <div className="text-xs mt-2">loading...</div>
+            <div className="text-xs mt-2">
+                {message ? message : "loading..."}
+            </div>
         </Flex>
     );
 };
