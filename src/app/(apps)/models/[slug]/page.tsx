@@ -8,7 +8,7 @@ const ModelViewer = ({ params }: { params: { slug: string } }) => {
                 modelPath={`/models/${params.slug}.glb`}
                 className="min-h-screen  min-w-[100vw]"
                 loaderClass="text-white/30"
-                iosSrc={`/models/${params.slug}.glb`}
+                iosSrc={`/models/ar/${params.slug}.usdz`}
             />
         </Flex>
     );
