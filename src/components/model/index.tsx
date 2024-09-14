@@ -11,6 +11,7 @@ export interface ModelProps {
     disableTap?: boolean;
     cameraControls?: boolean;
     modelClassName?: string;
+    iosSrc?: string;
 }
 import { useEffect, useRef, useState } from "react";
 import { Flex } from "../flex";
@@ -30,6 +31,7 @@ export const Model = ({
     autoRotate,
     cameraControls,
     disableTap,
+    iosSrc,
 }: ModelProps) => {
     const [loading, setLoading] = useState(true);
     const viewerRef = useRef<ModelViewerElement>(null);
@@ -63,6 +65,9 @@ export const Model = ({
                 id="manifold"
                 reveal="auto"
                 loading="lazy"
+                ar
+                ios-src={iosSrc}
+                ar-scale="fixed"
                 ref={viewerRef}
                 src={modelPath}
                 poster={poster}
