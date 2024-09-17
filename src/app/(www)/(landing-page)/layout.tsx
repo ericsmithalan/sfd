@@ -5,6 +5,7 @@ import "../../css/globals.css";
 import { Footer } from "@/components/footer";
 import { Header } from "@/components";
 import classNames from "classnames";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -64,6 +65,12 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en">
+            <Head>
+                <meta
+                    name="facebook-domain-verification"
+                    content="m6bofkvpmmt916f51k8m3na1qi05ac"
+                />
+            </Head>
             <body className={classNames(inter.className, "bg-black/10")}>
                 <Header fixed />
                 {children}
