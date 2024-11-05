@@ -12,21 +12,24 @@ export const Alert = () => {
             className={classNames("bg-white rounded-md shadow-md p-10")}
         >
             <Flex as="div" dir="col" className="text-gray-600/50 max-w-prose">
-                <i className="text-xs mb-2">Aug 25, 2024</i>
-
+                <i className="text-xs mb-2">Nov 5, 2024</i>
                 <p>
-                    My website is currently under construction and will be
-                    updated soon with the following:
+                    I have been busy working on projects and have not had the
+                    time to update my website. I will be posting more info as
+                    soon as I have time.
                 </p>
-                <ul className="list-disc mt-3">
+
+                <p className="pt-4">
+                    <b>Comming Soon:</b>
+                </p>
+                <ul className="list-disc mt-2">
                     <li className="list-inside">
                         Woodworking portfolio with images
                     </li>
                     <li className="list-inside">Current projects</li>
                     <li className="list-inside">About me page</li>
                 </ul>
-
-                <p className="mt-3">
+                <p className="mt-4">
                     Please contact me directly if you have any questions. I can
                     send images of past work and provide you with more
                     information.
