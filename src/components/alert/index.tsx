@@ -14,9 +14,9 @@ export const Alert = () => {
             <Flex as="div" dir="col" className="text-gray-600/50 max-w-prose">
                 <i className="text-xs mb-2">Nov 5, 2024</i>
                 <p>
-                    I have been busy working on projects and have not had the
-                    time to update my website. I will be posting more info as
-                    soon as I have time.
+                    I have been busy working with a client making bunk beds and
+                    have not had the time to update my website. I will be
+                    posting more info as soon as I have time.
                 </p>
 
                 <p className="pt-4">
