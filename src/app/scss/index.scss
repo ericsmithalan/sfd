@@ -1,0 +1,306 @@
+@use "./halflap.scss";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+    // SHADOW
+    --shadow-1: rgba(0, 0, 0, 0.05) 0px 4px 16px,
+        rgba(0, 0, 0, 0.05) 0px 8px 32px;
+    --shadow-2: rgba(0, 0, 0, 0.19) 0px 10px 20px,
+        rgba(0, 0, 0, 0.23) 0px 6px 6px;
+
+    // BACKDROP
+    --blur-1: blur(6rem);
+    --blur-2: blur(3rem);
+    --blur-3: blur(0.5rem);
+
+    // RADIUS
+    --radius-1: 1.3rem;
+    --radius-2: 1rem;
+    --radius-3: 0.7rem;
+    --radius-4: 0.4rem;
+    --radius-5: 0.2rem;
+    --radius-6: 0.1rem;
+    --radius-7: 0.08rem;
+    --radius-8: 0.05rem;
+
+    // PADDING
+    --padding-1: 1.3rem;
+    --padding-2: 1rem;
+    --padding-3: 0.8rem;
+    --padding-4: 0.5rem;
+    --padding-5: 0.3rem;
+    --padding-6: 0.1rem;
+    --padding-7: 0.08rem;
+    --padding-8: 0.05rem;
+
+    // MARGIN
+    --margin-1: 2rem;
+    --margin-2: 1.5rem;
+    --margin-3: 1rem;
+    --margin-4: 0.5rem;
+    --margin-5: 0.2rem;
+    --margin-6: 0.1rem;
+    --margin-7: 0.08rem;
+    --margin-8: 0.05rem;
+
+    // GAP
+    --gap-1: 1.4rem;
+    --gap-2: 1.2rem;
+    --gap-3: 1rem;
+    --gap-4: 0.8rem;
+    --gap-5: 0.6rem;
+    --gap-6: 0.3rem;
+    --gap-7: 0.1rem;
+
+    // COLORS
+
+    --color-error-1: rgba(205, 42, 42, 1);
+    --color-error-2: rgba(205, 42, 42, 0.8);
+    --color-error-3: rgba(205, 42, 42, 0.6);
+    --color-error-4: rgba(205, 42, 42, 0.5);
+    --color-error-5: rgba(205, 42, 42, 0.3);
+    --color-error-6: rgba(205, 42, 42, 0.2);
+    --color-error-7: rgba(205, 42, 42, 0.1);
+    --color-error-8: rgba(205, 42, 42, 0.08);
+
+    --color-axis-x: rgba(203, 57, 77, 1);
+    --color-axis-y: rgba(108, 154, 31, 1);
+    --color-axis-z: rgba(45, 129, 221, 1);
+
+    --color-black-1: rgba(34, 34, 34, 1);
+    --color-black-2: rgba(34, 34, 34, 0.8);
+    --color-black-3: rgba(34, 34, 34, 0.6);
+    --color-black-4: rgba(34, 34, 34, 0.5);
+    --color-black-5: rgba(34, 34, 34, 0.3);
+    --color-black-6: rgba(34, 34, 34, 0.2);
+    --color-black-7: rgba(34, 34, 34, 0.1);
+    --color-black-8: rgba(34, 34, 34, 0.08);
+
+    --color-white-1: rgba(255, 255, 255, 1);
+    --color-white-2: rgba(255, 255, 255, 0.8);
+    --color-white-3: rgba(255, 255, 255, 0.6);
+    --color-white-4: rgba(255, 255, 255, 0.5);
+    --color-white-5: rgba(255, 255, 255, 0.3);
+    --color-white-6: rgba(255, 255, 255, 0.2);
+    --color-white-7: rgba(255, 255, 255, 0.1);
+    --color-white-8: rgba(255, 255, 255, 0.08);
+
+    --color-alt-1: rgba(53, 140, 205, 1);
+    --color-alt-2: rgba(53, 140, 205, 0.8);
+    --color-alt-3: rgba(53, 140, 205, 0.6);
+    --color-alt-4: rgba(53, 140, 205, 0.5);
+    --color-alt-5: rgba(53, 140, 205, 0.3);
+    --color-alt-6: rgba(53, 140, 205, 0.2);
+    --color-alt-7: rgba(53, 140, 205, 0.1);
+    --color-alt-8: rgba(53, 140, 205, 0.08);
+
+    // FONT SIZE
+    --font-1: 2rem;
+    --font-2: 1.9rem;
+    --font-3: 1.7rem;
+    --font-4: 1.5rem;
+    --font-5: 1.2rem;
+    --font-6: 1rem;
+    --font-7: 0.8rem;
+    --font-8: 0.5rem;
+
+    --indent-1: 1rem;
+    --indent-2: 0.8rem;
+    --indent-3: 0.5rem;
+    --indent-4: 0.3rem;
+    --indent-5: 0.1rem;
+
+    // TRANSITIONS
+    --transition-slow: 0.8s;
+    --transition: 0.3s;
+    --transition-fast: 0.1s;
+}
+
+[data-theme="light"] {
+    --color-primary-1: rgba(255, 255, 255, 1);
+    --color-primary-2: rgba(255, 255, 255, 0.8);
+    --color-primary-3: rgba(255, 255, 255, 0.6);
+    --color-primary-4: rgba(255, 255, 255, 0.5);
+    --color-primary-5: rgba(255, 255, 255, 0.3);
+    --color-primary-6: rgba(255, 255, 255, 0.1);
+
+    --color-secondary-1: rgba(34, 34, 34, 1);
+    --color-secondary-2: rgba(34, 34, 34, 0.8);
+    --color-secondary-3: rgba(34, 34, 34, 0.6);
+    --color-secondary-4: rgba(34, 34, 34, 0.5);
+    --color-secondary-5: rgba(34, 34, 34, 0.3);
+    --color-secondary-6: rgba(34, 34, 34, 0.1);
+
+    --input-focus-background-color: var(--color-primary-1);
+    --input-focus-color: var(--color-secondary-1);
+
+    --app-background-color: #afafaf;
+}
+
+body,
+html {
+    font-size: 14px;
+    color: var(--color-white-3);
+    background-color: var(--color-black-1);
+    font-family: "Inter", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+    overflow: hidden;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+html,
+body,
+div,
+span,
+object,
+iframe,
+figure,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+code,
+em,
+img,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+b,
+u,
+i,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+main,
+canvas,
+embed,
+footer,
+header,
+nav,
+section,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    vertical-align: baseline;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    text-size-adjust: none;
+}
+
+footer,
+header,
+nav,
+section,
+main {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: "";
+    content: none;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+input {
+    -webkit-appearance: none;
+    border-radius: 0;
+}
+
+h1 {
+    font-size: var(--font-1);
+    font-weight: 600;
+}
+h2 {
+    font-size: var(--font-2);
+}
+h3 {
+    font-size: var(--font-3);
+}
+h4 {
+    font-size: var(--font-4);
+}
+h4 {
+    font-size: var(--font-5);
+}
+h6 {
+    font-size: var(--font-6);
+    font-weight: 600;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    /* display: none; <- Crashes Chrome on hover */
+    -webkit-appearance: none;
+    margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type="number"] {
+    -moz-appearance: textfield; /* Firefox */
+}
+
+.editor {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1;
+
+    & > .canvas {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1;
+    }
+}
