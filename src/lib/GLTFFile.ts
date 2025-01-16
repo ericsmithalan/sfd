@@ -1,6 +1,7 @@
 import { Material, Mesh, Object3D, PerspectiveCamera, Scene } from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { IOutlinerUserData, ObjectUserData } from "./ObjectUserData";
+import { ObjectUserData } from "./ObjectUserData";
+import { IModelOutliner, IObjectOutliner, IRootOutliner } from "@/interface";
 
 export interface SFDCurrentFile {
     url: string;
@@ -9,7 +10,7 @@ export interface SFDCurrentFile {
 
 export interface IGLTFResult {
     model: Object3D;
-    outliner: Array<IOutlinerUserData>;
+    outliner: Array<IModelOutliner>;
 }
 
 export class GLTFFile {
@@ -34,7 +35,7 @@ export class GLTFFile {
         this.container = container;
     }
 
-    load = (obj: IOutlinerUserData): Promise<IGLTFResult> => {
+    load = (obj: IModelOutliner): Promise<IGLTFResult> => {
         return new Promise((resolve, reject) => {
             if (this.model) {
                 this.materials.clear();
@@ -44,38 +45,28 @@ export class GLTFFile {
             if (obj.url) {
                 this.loader.load(obj.url, (gltf) => {
                     this.gtlf = gltf;
-                    const outliner: Array<IOutlinerUserData> = [];
                     this.model = gltf.scene;
                     this.model.castShadow = true;
                     this.model.receiveShadow = true;
-                    this.model.userData = new ObjectUserData({
-                        selectable: true,
-                        outliner: {
-                            isModel: true,
-                            name: obj.name,
-                            icon: "stack",
-                            url: obj.url,
-                            children: [],
-                        },
-                    });
 
                     this.model.traverse((object: Object3D) => {
                         if (object instanceof Mesh) {
                             object.castShadow = true;
                             object.receiveShadow = true;
 
-                            const outlinerUD: IOutlinerUserData = {
-                                isModel: false,
+                            const outlinerUD: IObjectOutliner = {
+                                id: object.id,
                                 name: object.name,
                                 icon: "box",
-                                url: object.id.toString(),
                                 children: [],
+                                level: 1,
                             };
 
-                            object.userData = new ObjectUserData({
-                                selectable: true,
-                                outliner: outlinerUD,
-                            });
+                            object.userData =
+                                new ObjectUserData<IObjectOutliner>({
+                                    selectable: true,
+                                    outliner: outlinerUD,
+                                });
 
                             this.model?.userData.children.push(outlinerUD);
                         } else {

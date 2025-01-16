@@ -8,7 +8,7 @@ import {
     Vector2,
 } from "three";
 
-import { Config } from "./Config";
+import { Config } from "../Config";
 
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { ObjectUserData } from "./";

@@ -1,0 +1,18 @@
+.region {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    z-index: 100;
+
+    width: 30rem;
+
+    &.left {
+        left: 1rem;
+        top: 1rem;
+    }
+
+    &.right {
+        right: 1rem;
+        top: 1rem;
+    }
+}
