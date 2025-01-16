@@ -27,6 +27,7 @@ export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
+            // viewport.selection.object = e.object;
             handleSetObject(e.object);
         };
 

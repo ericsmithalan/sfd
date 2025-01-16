@@ -14,7 +14,7 @@ export const Icon: FC<IconProps> = ({ name, fill = false, className }) => {
 
     return (
         <div className={className}>
-            <i className={clsx(`hl-icon-${name}${filled}`)} />
+            <i className={clsx(`icon hl-icon-${name}${filled}`)} />
         </div>
     );
 };

@@ -1,7 +1,8 @@
 import { IModelOutliner, IObjectOutliner, IRootOutliner } from "@/interface";
 import clsx from "clsx";
 import { FC } from "react";
-import { NavLink } from "../nav-link";
+import { Logo } from "../logo";
+import { OutlinerChild } from "./child";
 import "./style.scss";
 
 type OutlinerTreeProps = {
@@ -20,68 +21,51 @@ export const OutlinerTree: FC<OutlinerTreeProps> = ({
     console.log("model", model);
     return (
         <div className={clsx("outliner-tree")}>
+            <div className="logo-content">
+                <Logo height={50} />
+            </div>
             {rootOutliner.map((item, i) => {
                 return (
-                    <div key={i}>
-                        <NavLink
-                            variant="outliner"
-                            active={project?.id === item.id}
-                            href={`/${item.id}`}
-                        >
-                            {item.name}
-                        </NavLink>
-
+                    <OutlinerChild
+                        icon="folder"
+                        level={1}
+                        active={project?.id === item.id}
+                        href={`/${item.id}`}
+                        name={item.name}
+                    >
                         {project &&
                             project.id === item.id &&
                             item.models.map((item2, n) => {
                                 return (
-                                    <div key={i + n}>
-                                        <NavLink
-                                            variant="outliner"
-                                            active={model?.id === item2.id}
-                                            href={`/${item.id}/${item2.id}`}
-                                        >
-                                            {item2.name}
-                                        </NavLink>
-
+                                    <OutlinerChild
+                                        level={2}
+                                        active={model?.id === item2.id}
+                                        name={item2.name}
+                                        href={`/${item.id}/${item2.id}`}
+                                        icon={"stack"}
+                                    >
                                         {model &&
                                             model.id === item2.id &&
-                                            model?.children.map((item3, l) => {
+                                            model.children.map((item3, h) => {
                                                 return (
-                                                    <div key={i + n + l}>
-                                                        <NavLink
-                                                            active={
-                                                                object?.id ===
-                                                                item3.id
-                                                            }
-                                                            variant="outliner"
-                                                            href={`/${item.id}/${model.id}/${item3.id}`}
-                                                        >
-                                                            {item3.name}
-                                                        </NavLink>
-                                                    </div>
+                                                    <OutlinerChild
+                                                        level={3}
+                                                        active={
+                                                            object?.id ===
+                                                            item3.id
+                                                        }
+                                                        name={item3.name}
+                                                        href={`/${item.id}/${model.id}/${item3.id}`}
+                                                        icon={item3.icon}
+                                                    />
                                                 );
                                             })}
-                                    </div>
+                                    </OutlinerChild>
                                 );
                             })}
-                    </div>
+                    </OutlinerChild>
                 );
             })}
         </div>
     );
 };
-
-//  model.children.map((child, h) => {
-//                                 return (
-//                                     <div key={i + h}>
-//                                         <NavLink
-//                                             active={object?.id === child.id}
-//                                             variant="outliner"
-//                                             href={`/${item.id}/${model.id}/${child.id}`}
-//                                         >
-//                                             {child.name}
-//                                         </NavLink>
-//                                     </div>
-//                                 );
-//                             })}

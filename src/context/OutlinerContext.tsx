@@ -103,6 +103,7 @@ export const OutlinerProvider = ({
             if (e.object) {
                 if (e.object.userData instanceof ObjectUserData) {
                     setObject(e.object.userData.outliner);
+
                     if (project && model) {
                         navigate(`/${project.id}/${model.id}/${e.object.id}`);
                     }
