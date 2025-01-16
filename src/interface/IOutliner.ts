@@ -5,7 +5,6 @@ export interface IObjectOutliner {
     level: number;
     name: string;
     icon: IconName;
-    children: Array<IObjectOutliner>;
 }
 
 export interface IModelOutliner {

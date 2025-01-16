@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 
 function App({ Component, pageProps }: AppProps) {
     const [isServer, setIsServer] = useState(true);
+
     useEffect(() => {
         setIsServer(false);
     }, []);
+
     if (isServer) return null;
 
     return (

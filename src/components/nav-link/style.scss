@@ -1,4 +1,13 @@
 .link {
     font-size: inherit;
     color: inherit;
+
+    &.outliner {
+        display: flex;
+        flex-direction: row;
+    }
+
+    &.active {
+        color: var(--color-alt-3);
+    }
 }

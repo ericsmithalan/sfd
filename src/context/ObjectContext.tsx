@@ -1,7 +1,5 @@
 import { ISelectionEvent, Viewport } from "@/lib";
-import { getObjectUserData } from "@/utils";
-import { ReactNode, useState, useEffect, createContext } from "react";
-import { useNavigate } from "react-router-dom";
+import { createContext, ReactNode, useEffect, useState } from "react";
 import { Object3D } from "three";
 
 export interface IObjectContext<T extends Object3D = Object3D> {
@@ -23,8 +21,6 @@ export type ObjectState = {};
 export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
     const [object, setObject] = useState<Object3D | null>(null);
 
-    const navigate = useNavigate();
-
     const handleSetObject = <T extends Object3D | null>(obj: T) => {
         setObject(obj);
     };
@@ -32,21 +28,6 @@ export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
             handleSetObject(e.object);
-
-            if (e.object) {
-                const outlinerUserData = getObjectUserData(
-                    viewport,
-                    e.object.id
-                );
-
-                if (outlinerUserData) {
-                    navigate(`/viewer/mesh/${e.object.id}`);
-                } else {
-                    navigate(`/viewer`);
-                }
-            } else {
-                navigate(`/viewer`);
-            }
         };
 
         viewport.selection.addEventListener("selectionChange", selectionChange);

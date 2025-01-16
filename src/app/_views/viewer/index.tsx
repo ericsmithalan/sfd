@@ -1,12 +1,12 @@
 "use client";
+import { Region } from "@/components";
+import { ObjectProvider, OutlinerProvider } from "@/context";
 import { Viewport } from "@/lib";
 import { isObjEmpty } from "@/utils";
-import { useState, useRef, useEffect } from "react";
-import "./style.scss";
+import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { ObjectProvider, OutlinerProvider } from "@/context";
 import { OutlinerView } from "../outliner";
-import { Region } from "@/components";
+import "./style.scss";
 
 export const Viewer = () => {
     const [viewport, setViewport] = useState<Viewport>({} as Viewport);
@@ -29,6 +29,7 @@ export const Viewer = () => {
                             <OutlinerView />
                         </Region>
                     </OutlinerProvider>
+
                     <ObjectProvider viewport={viewport}>
                         <Region placement="right">
                             <Outlet />

@@ -1,17 +1,17 @@
 import { Config } from "@/Config";
-import { IModelOutliner, IRootOutliner } from "@/interface";
-import { ISelectionEvent, Viewport } from "@/lib";
-import { getObjectUserData } from "@/utils";
-import { useRouter } from "next/navigation";
+import { IModelOutliner, IObjectOutliner, IRootOutliner } from "@/interface";
+import { ISelectionEvent, ObjectUserData, Viewport } from "@/lib";
+import { getObject } from "@/utils";
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Object3D } from "three";
+import { useNavigate, useParams } from "react-router-dom";
 
 export interface IOutlinerContext {
-    root: Array<IRootOutliner>;
-    modelOutliner: Array<IModelOutliner>;
+    rootOutliner: Array<IRootOutliner>;
     model: IModelOutliner | null;
-    setModel: (model: IModelOutliner) => Promise<void>;
+    project: IRootOutliner | null;
+    setProject: (project: IRootOutliner | null) => void;
+    setModel: (model: IModelOutliner | null) => Promise<void>;
+    object: IObjectOutliner | null;
 }
 
 export const OutlinerContext = createContext<IOutlinerContext>(
@@ -28,34 +28,114 @@ export const OutlinerProvider = ({
     viewport,
 }: OutlinerProviderProps) => {
     const [rootOutline] = useState<Array<IRootOutliner>>(Config.rootOutliner);
+    const [project, setProject] = useState<IRootOutliner | null>(null);
     const [model, setModel] = useState<IModelOutliner | null>(null);
-    const [modelOutliner, setModelOutliner] = useState<Array<IModelOutliner>>(
-        []
-    );
+    const [object, setObject] = useState<IObjectOutliner | null>(null);
+    const params = useParams();
+    const navigate = useNavigate();
 
-    const handleSetModel = async (model: IModelOutliner) => {
-        const file = await viewport.gltfFile.load(model);
-        if (file) {
-            viewport.clear();
-
-            const selected = modelOutliner.find((item) => item.id === model.id);
-
-            if (selected) {
-                setModel(selected);
+    const handleSetModel = async (model: IModelOutliner | null) => {
+        if (model) {
+            const modelObj = await viewport.modelFile.load(model);
+            if (
+                modelObj.userData &&
+                modelObj.userData instanceof ObjectUserData
+            ) {
+                setModel(modelObj.userData.outliner);
             }
-        }
-        if (file.outliner) {
-            setModelOutliner(file.outliner);
+        } else {
+            viewport.clear();
         }
     };
+
+    useEffect(() => {
+        const load = async () => {
+            if (params && params.projectId) {
+                const project = Config.rootOutliner.find(
+                    (item) => item.id === params.projectId
+                );
+
+                if (project) {
+                    setProject(project);
+
+                    if (params.modelId) {
+                        const model = project.models.find(
+                            (item) => item.id === params.modelId
+                        );
+
+                        if (model) {
+                            await handleSetModel(model);
+
+                            if (params.objectId) {
+                                const obj = getObject(
+                                    viewport,
+                                    Number(params.id),
+                                    true
+                                );
+
+                                if (obj) {
+                                    if (
+                                        obj.userData instanceof ObjectUserData
+                                    ) {
+                                        setObject(obj.userData.outliner);
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        setModel(null);
+                        setObject(null);
+                    }
+                } else {
+                    setProject(null);
+                    setModel(null);
+                    setObject(null);
+                }
+            }
+        };
+
+        viewport.clear();
+        load();
+    }, [params]);
+
+    useEffect(() => {
+        const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
+            if (e.object) {
+                if (e.object.userData instanceof ObjectUserData) {
+                    setObject(e.object.userData.outliner);
+                    if (project && model) {
+                        navigate(`/${project.id}/${model.id}/${e.object.id}`);
+                    }
+                }
+            } else {
+                setObject(null);
+            }
+        };
+
+        if (viewport) {
+            viewport.selection.addEventListener(
+                "selectionChange",
+                selectionChange
+            );
+        }
+
+        return () => {
+            viewport.selection.removeEventListener(
+                "selectionChange",
+                selectionChange
+            );
+        };
+    }, [viewport]);
 
     return (
         <OutlinerContext.Provider
             value={{
-                root: rootOutline,
+                rootOutliner: rootOutline,
                 setModel: handleSetModel,
-                modelOutliner: modelOutliner,
+                project: project,
+                setProject: setProject,
                 model: model,
+                object: object,
             }}
         >
             {children}

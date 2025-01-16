@@ -45,34 +45,32 @@ export interface IConfig {
 export const Config: IConfig = {
     rootOutliner: [
         {
-            id: "16fb15fe-b194-4eaa-8983-14275479ef12",
+            id: "bunk_beds",
             name: "Bunk Beds",
             models: [
                 {
-                    url: "models/bunks/beds.glb",
-                    id: "1e70bd1c-7f2c-42b5-aae2-36dd544b9eef",
+                    url: "/models/bunks/beds.glb",
+                    id: "beds",
                     name: "Beds",
                     children: [],
                 },
                 {
-                    url: "models/bunks/mockups.glb",
-                    id: "c6d2e5f4-8650-42e3-a9ea-fb17f97df556",
+                    url: "/models/bunks/mockups.glb",
+                    id: "mockups",
                     name: "Mockups",
                     children: [],
                 },
             ],
         },
         {
-            id: "16fb15fe-b194-4eaa-8983-142ds329ef12",
+            id: "cabinet",
             name: "Cabinet",
-            icon: "stack",
             models: [
                 {
-                    url: "models/john/case-1.glb",
-                    id: "1e70bd1c-7f2c-42b5-34sd-36dd544b9eef",
+                    url: "/models/john/case-1.glb",
+                    id: "case",
                     name: "Case",
                     children: [],
-                    icon: "box",
                 },
             ],
         },

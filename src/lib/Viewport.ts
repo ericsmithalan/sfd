@@ -13,7 +13,7 @@ import {
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import { GLTFFile } from "./GLTFFile";
+import { IModelEvent, Model } from "./Model";
 import { ObjectUserData } from "./ObjectUserData";
 import { Selection } from "./Selection";
 import { Grid } from "./Grid";
@@ -40,7 +40,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly camera: PerspectiveCamera;
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
-    readonly gltfFile: GLTFFile;
+    readonly modelFile: Model;
 
     size: IScreenSize = {
         width: 0,
@@ -85,7 +85,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             selectable: false,
         });
 
-        this.gltfFile = new GLTFFile(this.scene, this.camera, this.container);
+        this.modelFile = new Model();
 
         this.renderer = new WebGLRenderer({
             canvas: canvas,
@@ -137,8 +137,9 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     }
 
     clear() {
-        if (this.selection.object) {
-            this.selection.object = null;
+        if (this.modelFile.model) {
+            this.remove(this.modelFile.model);
+            this.modelFile.reset();
         }
     }
 
@@ -201,12 +202,25 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.selection.resize();
     };
 
+    private modelChanged(e: IModelEvent["changed"]) {
+        if (e.prevModel) {
+            this.remove(e.prevModel);
+        }
+        if (e.model) {
+            this.add(e.model);
+        }
+    }
+
     private registerEvents() {
         window.addEventListener("resize", () => this.resize());
+        this.modelFile.addEventListener("changed", (e) => this.modelChanged(e));
     }
 
     private unregisterEvents() {
         window.removeEventListener("resize", () => this.resize());
+        this.modelFile.removeEventListener("changed", (e) =>
+            this.modelChanged(e)
+        );
     }
 
     dispose() {

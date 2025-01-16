@@ -17,7 +17,7 @@ export default function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<Viewer />}>
-                    <Route path={"/:prjectId/"} element={<ProjectView />}>
+                    <Route path={"/:projectId/"} element={<ProjectView />}>
                         <Route path={":modelId/"} element={<ModelView />}>
                             <Route
                                 path={":objectId/"}
