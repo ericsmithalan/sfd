@@ -1,7 +1,0 @@
-.sfd-project-list {
-    @apply w-full h-full mt-8 justify-center items-center gap-5 flex-wrap sm:flex-wrap md:flex-nowrap lg:flex-nowrap;
-
-    & > .project-list-item {
-        @apply justify-center items-center bg-white/5 p-5 rounded shadow-sm;
-    }
-}
