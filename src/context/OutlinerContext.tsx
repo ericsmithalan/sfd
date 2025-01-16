@@ -101,6 +101,7 @@ export const OutlinerProvider = ({
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
             if (e.object) {
+                console.log("object changed");
                 if (e.object.userData instanceof ObjectUserData) {
                     setObject(e.object.userData.outliner);
 

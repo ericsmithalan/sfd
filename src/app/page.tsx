@@ -1,16 +1,9 @@
 "use client";
-import React from "react";
-import {
-    BrowserRouter as Router,
-    Routes,
-    Route,
-    Navigate,
-    BrowserRouter,
-} from "react-router-dom";
-import { Viewer } from "./_views/viewer";
-import { ProjectView } from "./_views/project";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { ModelView } from "./_views/model";
 import { ObjectView } from "./_views/object";
+import { ProjectView } from "./_views/project";
+import { Viewer } from "./_views/viewer";
 
 export default function App() {
     return (

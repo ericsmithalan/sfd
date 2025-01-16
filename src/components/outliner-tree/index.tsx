@@ -18,7 +18,6 @@ export const OutlinerTree: FC<OutlinerTreeProps> = ({
     model,
     object,
 }) => {
-    console.log("model", model);
     return (
         <div className={clsx("outliner-tree")}>
             <div className="logo-content">
@@ -27,6 +26,7 @@ export const OutlinerTree: FC<OutlinerTreeProps> = ({
             {rootOutliner.map((item, i) => {
                 return (
                     <OutlinerChild
+                        key={`${item.id}-${i}`}
                         icon="folder"
                         level={1}
                         active={project?.id === item.id}
@@ -38,6 +38,7 @@ export const OutlinerTree: FC<OutlinerTreeProps> = ({
                             item.models.map((item2, n) => {
                                 return (
                                     <OutlinerChild
+                                        key={`${item2.id}-${n}`}
                                         level={2}
                                         active={model?.id === item2.id}
                                         name={item2.name}
@@ -49,6 +50,7 @@ export const OutlinerTree: FC<OutlinerTreeProps> = ({
                                             model.children.map((item3, h) => {
                                                 return (
                                                     <OutlinerChild
+                                                        key={`${item3.id}-${h}`}
                                                         level={3}
                                                         active={
                                                             object?.id ===
