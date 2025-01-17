@@ -11,23 +11,11 @@
         flex-direction: column;
         flex: 1 1 auto;
 
-        &.level-2,
-        &.level-3 {
-            & > .v-line {
-                border-left: 1px dashed var(--color-white-6);
-
-                & > .content {
-                    & > .h-line {
-                        border-bottom: 1px dashed var(--color-white-6);
-                    }
-                }
-            }
-        }
-
         & > .v-line {
             display: flex;
             flex-direction: column;
             margin-left: 6px;
+            gap: 1px;
 
             & > .content {
                 display: flex;
@@ -38,8 +26,8 @@
                     flex-direction: row;
                     justify-self: center;
                     align-self: center;
+                    width: 8px;
                     height: 1px;
-                    width: 1rem;
                 }
             }
 
@@ -48,7 +36,8 @@
                 flex-direction: column;
                 flex: 1 1 auto;
                 position: relative;
-                margin-left: 1rem;
+                margin-left: 0.9rem;
+                gap: 1px;
 
                 &.level-2 {
                     & > .scroller {
@@ -56,8 +45,21 @@
                         flex-direction: column;
 
                         overflow: auto;
-                        max-height: 30rem;
+                        max-height: 20rem;
                         min-height: 1rem;
+                    }
+                }
+            }
+        }
+
+        &.level-2,
+        &.level-3 {
+            & > .v-line {
+                border-left: 1px dashed var(--color-white-5);
+
+                & > .content {
+                    & > .h-line {
+                        border-bottom: 1px dashed var(--color-white-5);
                     }
                 }
             }

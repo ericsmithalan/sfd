@@ -1,3 +1,5 @@
+import { IOutlinerModel, IOutlinerObject, IOutlinerProject } from "./interface";
+
 export type ViewportSpace = "world" | "local";
 export type SelectMode = "select" | "edit";
 export type PickPropertiesType<T> = Pick<
@@ -6,6 +8,8 @@ export type PickPropertiesType<T> = Pick<
         [K in keyof T]: T[K] extends Function ? never : K;
     }[keyof T]
 >;
+
+export type UserData = IOutlinerProject | IOutlinerModel | IOutlinerObject;
 
 export type RegionPlacement = "left" | "right" | "top" | "bottom";
 

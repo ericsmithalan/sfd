@@ -15,9 +15,9 @@ export class Grid extends Object3D {
         // @ts-ignore
         this.type = "Grid";
 
-        this._size = 2;
-        this._divisions = 20;
-        this._color = new Color("#666666");
+        this._size = 300;
+        this._divisions = 200;
+        this._color = new Color("#555555");
 
         this.update();
         // this.rotateX(Math.PI / 2);

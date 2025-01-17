@@ -1,0 +1,103 @@
+import clsx from "clsx";
+import { useCallback, useEffect, useState } from "react";
+import { Object3D } from "three";
+import { Logo, OutlinerChild, Panel } from "../../components";
+import { Config } from "../../Config";
+import { IModelOutliner, IObjectOutliner, IProjectOutliner, Viewport } from "../../lib";
+import { getObject } from "../../utils";
+import "./style.scss";
+
+type OutlinerViewProps = {
+    viewport: Viewport;
+    object: Object3D | null;
+    model: Object3D | null;
+};
+
+export const OutlinerView = ({ viewport, object, model }: OutlinerViewProps) => {
+    const [rootOutliner] = useState<Array<IProjectOutliner>>(Config.rootOutliner);
+    const [projectOutliner, setProjectOutliner] = useState<IProjectOutliner | null>(null);
+    const [modelOutliner, setModelOutliner] = useState<IModelOutliner | null>(null);
+    const [objectOutliner, setObjectOutliner] = useState<IObjectOutliner | null>(null);
+
+    useEffect(() => {
+        if (object?.id !== objectOutliner?.id) {
+            setObjectOutliner(object?.userData.outliner || null);
+        }
+        if (modelOutliner?.id !== model?.id) {
+            setModelOutliner(model?.userData.outliner);
+        }
+    }, [object, model, objectOutliner?.id, modelOutliner?.id]);
+
+    const loadModel = useCallback(
+        async (item: IModelOutliner) => {
+            await viewport.modelFile.load(item);
+        },
+        [viewport.modelFile],
+    );
+
+    return (
+        <Panel>
+            <div className={clsx("outliner-tree")}>
+                <div className="logo-content">
+                    <Logo height={50} />
+                </div>
+                {rootOutliner.map((item, i) => {
+                    return (
+                        <OutlinerChild
+                            key={`${item.id}-${i}`}
+                            icon="folder"
+                            level={1}
+                            active={projectOutliner?.id === item.id}
+                            href={`/${item.id}`}
+                            name={item.name}
+                            onClick={(e) => {
+                                setProjectOutliner(item);
+                            }}
+                        >
+                            {projectOutliner &&
+                                projectOutliner.id === item.id &&
+                                item.models.map((item2, n) => {
+                                    return (
+                                        <OutlinerChild
+                                            key={`${item2.id}-${n}`}
+                                            level={2}
+                                            active={modelOutliner?.id === item2.id}
+                                            name={item2.name}
+                                            href={`/${item.id}/${item2.id}`}
+                                            icon={"stack"}
+                                            onClick={async (e) => {
+                                                await loadModel(item2);
+                                            }}
+                                        >
+                                            {modelOutliner &&
+                                                modelOutliner.id === item2.id &&
+                                                modelOutliner.children.map((item3, h) => {
+                                                    return (
+                                                        <OutlinerChild
+                                                            key={`${item3.id}-${h}`}
+                                                            level={3}
+                                                            active={objectOutliner?.id === item3.id}
+                                                            name={item3.name}
+                                                            href={`/${item.id}/${modelOutliner.id}/${item3.id}`}
+                                                            icon={"box"}
+                                                            onClick={(e) => {
+                                                                setObjectOutliner(item3);
+                                                                const obj = getObject(
+                                                                    viewport,
+                                                                    item3.id,
+                                                                    true,
+                                                                );
+                                                            }}
+                                                        />
+                                                    );
+                                                })}
+                                        </OutlinerChild>
+                                    );
+                                })}
+                        </OutlinerChild>
+                    );
+                })}
+            </div>
+        </Panel>
+    );
+};

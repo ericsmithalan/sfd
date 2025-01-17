@@ -1,14 +1,27 @@
-import { AmbientLight, DirectionalLight, HemisphereLight } from "three";
+import {
+    AmbientLight,
+    DirectionalLight,
+    DirectionalLightHelper,
+    HemisphereLight,
+    SpotLight,
+    SpotLightHelper,
+} from "three";
 
 export class Lights {
-    private _dirLight: DirectionalLight;
-    private _hemiLight: HemisphereLight;
-    private _ambientLight: AmbientLight;
+    dirLight: DirectionalLight;
+    hemiLight: HemisphereLight;
+    ambientLight: AmbientLight;
+    dirLightHelper: DirectionalLightHelper;
+    spotLight: SpotLight;
+    spotLightHelper: SpotLightHelper;
 
     constructor() {
-        this._dirLight = new DirectionalLight(0xffffff, 2);
-        this._hemiLight = new HemisphereLight(0xffffff, 0x8d8d8d, 1);
-        this._ambientLight = new AmbientLight(0xffffff);
+        this.dirLight = new DirectionalLight(0xffffff, 1);
+        this.hemiLight = new HemisphereLight(0xffffff, 0x000000, 1);
+        this.ambientLight = new AmbientLight(0xffffff);
+        this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 1);
+        this.spotLight = new SpotLight(0xffffff, 100);
+        this.spotLightHelper = new SpotLightHelper(this.spotLight);
 
         this.init();
     }
@@ -17,33 +30,38 @@ export class Lights {
         this.setAmbient();
         this.setDirectional();
         this.setHemi();
+        this.setSpotLight();
+        this.spotLightHelper.update();
     }
 
     private setAmbient() {
-        this._ambientLight.name = "Ambient Light";
-    }
-    private setDirectional() {
-        this._dirLight.name = "Directional Light";
-        this._dirLight.position.set(1, -1, 2);
-        this._dirLight.castShadow = true;
-        this._dirLight.shadow.camera.near = 0.5;
-        this._dirLight.shadow.camera.far = 100;
-        this._dirLight.shadow.bias = -0.001;
-        this._dirLight.shadow.mapSize.width = 1024 * 2;
-        this._dirLight.shadow.mapSize.height = 1024 * 2;
-    }
-    private setHemi() {
-        this._hemiLight.name = "Hemi Light";
-        this._hemiLight.position.set(10, 20, 0);
+        this.ambientLight.name = "Ambient Light";
     }
 
-    public get directional() {
-        return this._dirLight;
+    private setSpotLight() {
+        this.spotLight.castShadow = true;
+        this.spotLight.angle = Math.PI / 8;
+        this.spotLight.shadow.mapSize.width = 1024;
+        this.spotLight.shadow.mapSize.height = 1024;
+        this.spotLight.shadow.camera.near = 5;
+        this.spotLight.shadow.camera.far = 100;
+        this.spotLight.shadow.camera.near = 10;
+        this.spotLight.shadow.camera.far = 100;
+
+        this.spotLight.shadow.focus = 1;
     }
-    public get ambient() {
-        return this._ambientLight;
+    private setDirectional() {
+        this.dirLight.name = "Directional Light";
+        this.dirLight.position.set(4, 1, 6);
+        this.dirLight.castShadow = true;
+        this.dirLight.shadow.camera.near = 0.5;
+        this.dirLight.shadow.camera.far = 100;
+        this.dirLight.shadow.bias = -0.001;
+        this.dirLight.shadow.mapSize.width = 1024 * 2;
+        this.dirLight.shadow.mapSize.height = 1024 * 2;
     }
-    public get hemi() {
-        return this._hemiLight;
+    private setHemi() {
+        this.hemiLight.name = "Hemi Light";
+        this.hemiLight.position.set(10, 20, 0);
     }
 }

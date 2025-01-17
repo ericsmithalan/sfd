@@ -1,7 +1,5 @@
 import { BoxHelper, Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from "three";
 
-import { Config } from "../Config";
-
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
 import { ObjectUserData } from "./";
@@ -105,8 +103,8 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.removeSelectionHelper();
 
         if (this.object) {
-            this.selectHelper = new BoxHelper(this.object, Config.selection.borderColor);
-            this.selectHelper.name = Config.selection.helperName;
+            this.selectHelper = new BoxHelper(this.object, "red");
+            this.selectHelper.name = "Selection Helper";
             this.selectHelper.material.vertexColors = false;
             this.selectHelper.material.transparent = true;
 
@@ -141,10 +139,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             this.setMouse(e);
 
             const objects = this.intersects(this.mouse.x, this.mouse.y);
-
-            if (objects && objects.length > 0 && objects[0]) {
-                this.object = objects[0].object;
-            }
+            this.object = objects[0].object || null;
         }
     }
 
@@ -194,13 +189,13 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     };
 
     private registerEvents() {
-        this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
+        // this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
         this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     private unRegisterEvents() {
-        this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
+        // this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
         this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }

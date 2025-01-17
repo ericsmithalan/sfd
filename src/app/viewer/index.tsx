@@ -3,63 +3,94 @@ import { useEffect, useRef, useState } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { Object3D } from "three";
 import { Region } from "../../components";
-import { ISelectionEvent, Viewport } from "../../lib";
-import { isObjEmpty } from "../../utils";
-import { OutlinerView } from "../../views/outliner";
+import { Loading } from "../../components/loading";
+import { IModelEvent, ISelectionEvent, Viewport } from "../../lib";
+import { OutlinerView } from "../views/outliner";
 import "./style.scss";
 
+export interface IOutletContenxt {
+    viewport: Viewport;
+}
+
 export const Viewer = () => {
-    const [viewport, setViewport] = useState<Viewport>({} as Viewport);
+    const [viewport, setViewport] = useState<Viewport>();
     const [object, setObject] = useState<Object3D | null>(null);
+    const [model, setModel] = useState<Object3D | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
+
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const navigate = useNavigate();
     const params = useParams();
 
     useEffect(() => {
-        const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
-            setObject(e.object);
-        };
-
         let vp: Viewport;
 
         if (canvasRef) {
             if (canvasRef.current) {
                 vp = new Viewport(canvasRef.current);
-
-                vp.selection.addEventListener("selectionChange", selectionChange);
                 setViewport(vp);
             }
         }
 
         return () => {
             if (vp) {
-                vp.selection.addEventListener("selectionChange", selectionChange);
+                vp.dispose();
             }
         };
     }, [canvasRef]);
 
     useEffect(() => {
-        if (object) {
-            navigate(`${params.projectId}/${params.modelId}/${object.id}/`);
-        } else {
-            navigate(`${params.projectId}/${params.modelId}`);
+        const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
+            setObject(e.object);
+
+            if (e.object) {
+                // navigate(`./${e.object.id}`);
+            } else {
+                // navigate(`${params.projectId}/${params.modelId}`);
+            }
+        };
+
+        const loadingModel = (e: IModelEvent["load"]) => {
+            setLoading(true);
+        };
+
+        const modelChange = (e: IModelEvent["changed"]) => {
+            setModel(e.model);
+            setLoading(false);
+        };
+
+        if (viewport) {
+            viewport.modelFile.addEventListener("load", loadingModel);
+            viewport.modelFile.addEventListener("changed", modelChange);
+            viewport.selection.addEventListener("selectionChange", selectionChange);
         }
-    }, [navigate, object, params.modelId, params.projectId]);
+
+        return () => {
+            if (viewport) {
+                viewport.modelFile.removeEventListener("load", loadingModel);
+                viewport.modelFile.removeEventListener("changed", modelChange);
+                viewport.selection.removeEventListener("selectionChange", selectionChange);
+            }
+        };
+    }, [viewport, params, navigate]);
 
     return (
         <div className="viewer">
-            {!isObjEmpty(viewport) && (
-                <>
-                    <Region placement="left">
-                        <OutlinerView viewport={viewport} />
-                    </Region>
-
-                    <Region placement="right">
-                        <Outlet context={{ object: viewport.selection.object }} />
-                    </Region>
-                </>
-            )}
-
+            {loading && <Loading message={"loading"} />}
+            <Region placement="left">
+                {viewport && <OutlinerView object={object} model={model} viewport={viewport} />}
+            </Region>
+            <Region placement="right">
+                <Outlet
+                    context={{
+                        params: params,
+                        viewport: viewport,
+                        projectOutliner: null,
+                        modelOutliner: null,
+                        objectOutliner: null,
+                    }}
+                />
+            </Region>
             <canvas className="canvas" ref={canvasRef} />
         </div>
     );

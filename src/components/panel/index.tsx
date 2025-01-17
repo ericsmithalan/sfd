@@ -8,5 +8,9 @@ type PanelProps = {
 };
 
 export const Panel: FC<PanelProps> = ({ className, children }) => {
-    return <div className={clsx("panel", className)}>{children}</div>;
+    return (
+        <div className={clsx("panel", className)}>
+            <div className="content">{children}</div>
+        </div>
+    );
 };

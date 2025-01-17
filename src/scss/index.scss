@@ -3,15 +3,15 @@
 
 :root {
     // SHADOW
-    --shadow-1: rgba(0, 0, 0, 0.05) 0px 4px 16px,
-        rgba(0, 0, 0, 0.05) 0px 8px 32px;
-    --shadow-2: rgba(0, 0, 0, 0.19) 0px 10px 20px,
-        rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    --shadow-1: rgba(0, 0, 0, 0.05) 0px 4px 16px, rgba(0, 0, 0, 0.05) 0px 8px 32px;
+    --shadow-2: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 
     // BACKDROP
     --blur-1: blur(6rem);
     --blur-2: blur(3rem);
     --blur-3: blur(0.5rem);
+    --blur-4: blur(0.2rem);
+    --blur-5: blur(0.1rem);
 
     // RADIUS
     --radius-1: 1.3rem;
@@ -116,30 +116,9 @@
     --transition-fast: 0.1s;
 }
 
-[data-theme="light"] {
-    --color-primary-1: rgba(255, 255, 255, 1);
-    --color-primary-2: rgba(255, 255, 255, 0.8);
-    --color-primary-3: rgba(255, 255, 255, 0.6);
-    --color-primary-4: rgba(255, 255, 255, 0.5);
-    --color-primary-5: rgba(255, 255, 255, 0.3);
-    --color-primary-6: rgba(255, 255, 255, 0.1);
-
-    --color-secondary-1: rgba(34, 34, 34, 1);
-    --color-secondary-2: rgba(34, 34, 34, 0.8);
-    --color-secondary-3: rgba(34, 34, 34, 0.6);
-    --color-secondary-4: rgba(34, 34, 34, 0.5);
-    --color-secondary-5: rgba(34, 34, 34, 0.3);
-    --color-secondary-6: rgba(34, 34, 34, 0.1);
-
-    --input-focus-background-color: var(--color-primary-1);
-    --input-focus-color: var(--color-secondary-1);
-
-    --app-background-color: #afafaf;
-}
-
 body,
 html {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-white-3);
     background-color: var(--color-black-1);
     font-family: "Inter", serif;

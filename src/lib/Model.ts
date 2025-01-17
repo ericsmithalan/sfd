@@ -1,6 +1,6 @@
 import { EventDispatcher, Mesh, Object3D } from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { IModelOutliner, IObjectOutliner } from "../lib";
+import { IOutlinerModel, IOutlinerObject } from "../interface";
 import { ObjectUserData } from "./ObjectUserData";
 
 export interface SFDCurrentFile {
@@ -50,12 +50,12 @@ export class Model extends EventDispatcher<IModelEvent> {
         this.model = null;
     }
 
-    load = (obj: IModelOutliner): Promise<Object3D> => {
+    load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
             if (!this.loading) {
-                this.loading = true;
                 this.dispatchEvent({ type: "load", model: this.model });
-                const objects: Array<IObjectOutliner> = [];
+                this.loading = true;
+                const objects: Array<IOutlinerObject> = [];
 
                 this.loader.load(obj.url, (gltf) => {
                     this.gtlf = null;
@@ -63,6 +63,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
                     this.gtlf = gltf;
                     const model = gltf.scene;
+                    model.visible = false;
                     model.castShadow = true;
                     model.receiveShadow = true;
 
@@ -73,14 +74,12 @@ export class Model extends EventDispatcher<IModelEvent> {
                             object.castShadow = true;
                             object.receiveShadow = true;
 
-                            const outlinerUD: IObjectOutliner = {
+                            const outlinerUD: IOutlinerObject = {
                                 id: object.id,
                                 name: object.name,
-                                icon: "box",
-                                level: 1,
                             };
 
-                            object.userData = new ObjectUserData<IObjectOutliner>({
+                            object.userData = new ObjectUserData<IOutlinerObject>({
                                 selectable: true,
                                 outliner: outlinerUD,
                             });
@@ -91,7 +90,7 @@ export class Model extends EventDispatcher<IModelEvent> {
                         }
                     });
 
-                    model.userData = new ObjectUserData<IModelOutliner>({
+                    model.userData = new ObjectUserData<IOutlinerModel>({
                         selectable: true,
                         outliner: {
                             name: obj.name,

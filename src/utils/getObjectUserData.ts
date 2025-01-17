@@ -1,5 +1,6 @@
 import { Object3D } from "three";
-import { ObjectUserData, UserData, Viewport } from "../lib";
+import { ObjectUserData, Viewport } from "../lib";
+import { UserData } from "../types";
 import { getObject } from "./getObject";
 
 export const isUserDataType = <T extends UserData>(obj: Record<string, any>): obj is T => {

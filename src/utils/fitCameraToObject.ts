@@ -8,7 +8,7 @@ export const fitCameraToObject = function (
     scene: Scene,
     camera: PerspectiveCamera,
     controls: OrbitControls,
-    offset: number = 1.25,
+    offset: number = 0.5,
 ) {
     const boundingBox = new Box3();
 
@@ -45,7 +45,7 @@ export const fitCameraToObject = function (
     const minZ = boundingBox.min.z;
     const cameraToFarEdge = minZ < 0 ? -minZ + cameraZ : cameraZ - minZ;
 
-    camera.far = cameraToFarEdge * 3;
+    camera.far = cameraToFarEdge * 10;
     camera.rotation.z += Math.PI / 2;
     camera.updateProjectionMatrix();
 
@@ -54,7 +54,7 @@ export const fitCameraToObject = function (
         controls.target = center;
 
         // prevent camera from zooming out far enough to create far plane cutoff
-        controls.maxDistance = cameraToFarEdge * 2;
+        controls.maxDistance = cameraToFarEdge * 10;
 
         controls.saveState();
     } else {
