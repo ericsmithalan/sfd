@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Logo, OutlinerChild, Panel } from "../../../components";
 import {
     getModel,
@@ -27,7 +27,6 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
     const [projectOpen, setProjectOpen] = useState<boolean>(true);
     const [modelOpen, setModelOpen] = useState<boolean>(true);
     const params = useParams();
-    const navigate = useNavigate();
 
     useEffect(() => {
         const loadModel = async (project: IOutlinerProject | null) => {
@@ -61,6 +60,7 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                 <div className="logo-content">
                     <Logo height={60} />
                 </div>
+                <div className="title">Projects</div>
                 {rootOutliner.map((item, i) => {
                     return (
                         <OutlinerChild

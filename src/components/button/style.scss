@@ -9,6 +9,13 @@
         cursor: pointer;
     }
 
+    &.image {
+        background-color: transparent;
+        border: 0;
+        padding: 0;
+        margin: 0;
+    }
+
     &.default {
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-4);
@@ -25,7 +32,8 @@
         flex: 1 1 auto;
 
         &:hover {
-            background-color: var(--color-white-6);
+            background-color: var(--color-white-7);
+            color: var(--color-alt-2);
         }
     }
 }

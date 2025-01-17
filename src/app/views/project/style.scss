@@ -1,6 +1,37 @@
-.project {
+.project-view {
     display: flex;
-    background-color: red;
-    position: absolute;
-    z-index: 100;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding-left: var(--padding-1);
+    padding-right: var(--padding-1);
+
+    & > .images {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        flex: 1 1 auto;
+
+        & > .scroll {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            gap: var(--gap-5);
+            min-height: 200px;
+
+            & > .button {
+                display: flex;
+                flex-direction: column;
+
+                & > .bg-image {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 1 auto;
+                    min-width: 4rem;
+                    min-height: 5rem;
+
+                    height: 100%;
+                }
+            }
+        }
+    }
 }

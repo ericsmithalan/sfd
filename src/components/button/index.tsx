@@ -9,7 +9,7 @@ type ButtonProps = {
     children?: ReactNode;
     icon?: IconName;
     active?: boolean;
-    variant?: "toolbar" | "default";
+    variant?: "toolbar" | "image" | "default";
     onClick?: (e: MouseEvent) => void;
 };
 

@@ -4,6 +4,10 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
     {
         id: "bunks",
         name: "Bunk Beds",
+        image: {
+            count: 18,
+            path: "/models/bunks/images/",
+        },
         models: [
             {
                 url: "/models/bunks/bunks1.glb",
@@ -22,22 +26,14 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
     {
         id: "case1",
         name: "Case",
+        image: {
+            count: 3,
+            path: "/models/case-1/images/",
+        },
         models: [
             {
                 url: "/models/case-1/final.glb",
                 id: "final",
-                name: "Case",
-                children: [],
-            },
-        ],
-    },
-    {
-        id: "cabinet",
-        name: "Cabinet",
-        models: [
-            {
-                url: "/models/john/case-1.glb",
-                id: "case",
                 name: "Case",
                 children: [],
             },

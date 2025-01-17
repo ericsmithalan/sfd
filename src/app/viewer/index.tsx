@@ -13,7 +13,6 @@ export interface IOutletContenxt {
 
 export const Viewer = () => {
     const [viewport, setViewport] = useState<Viewport>();
-
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {

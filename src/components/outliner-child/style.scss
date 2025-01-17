@@ -55,11 +55,11 @@
         &.level-2,
         &.level-3 {
             & > .v-line {
-                border-left: 1px dashed var(--color-white-5);
+                border-left: 1px dashed var(--color-alt-3);
 
                 & > .content {
                     & > .h-line {
-                        border-bottom: 1px dashed var(--color-white-5);
+                        border-bottom: 1px dashed var(--color-alt-3);
                     }
                 }
             }

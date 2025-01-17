@@ -11,7 +11,10 @@ export const App = () => {
             <Route path="viewer/*" element={<Viewer />}>
                 <Route path=":projectId/" element={<ProjectView />}>
                     <Route path=":modelId/" element={<ModelView />}>
-                        <Route path=":objectId" element={<ObjectView />}></Route>
+                        <Route
+                            path=":objectId"
+                            element={<ObjectView />}
+                        ></Route>
                     </Route>
                 </Route>
             </Route>
