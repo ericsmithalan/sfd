@@ -3,8 +3,10 @@
 
 :root {
     // SHADOW
-    --shadow-1: rgba(0, 0, 0, 0.05) 0px 4px 16px, rgba(0, 0, 0, 0.05) 0px 8px 32px;
-    --shadow-2: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    --shadow-1: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    --shadow-2: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    --shadow-3: rgba(0, 0, 0, 0.25) 0px 6px 12px -2px,
+        rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
     // BACKDROP
     --blur-1: blur(6rem);
@@ -67,6 +69,15 @@
     --color-axis-y: rgba(108, 154, 31, 1);
     --color-axis-z: rgba(45, 129, 221, 1);
 
+    --color-dark-1: rgba(0, 0, 0, 1);
+    --color-dark-2: rgba(0, 0, 0, 0.8);
+    --color-dark-3: rgba(0, 0, 0, 0.6);
+    --color-dark-4: rgba(0, 0, 0, 0.5);
+    --color-dark-5: rgba(0, 0, 0, 0.3);
+    --color-dark-6: rgba(0, 0, 0, 0.2);
+    --color-dark-7: rgba(0, 0, 0, 0.1);
+    --color-dark-8: rgba(0, 0, 0, 0.08);
+
     --color-black-1: rgba(34, 34, 34, 1);
     --color-black-2: rgba(34, 34, 34, 0.8);
     --color-black-3: rgba(34, 34, 34, 0.6);
@@ -85,14 +96,14 @@
     --color-white-7: rgba(255, 255, 255, 0.1);
     --color-white-8: rgba(255, 255, 255, 0.08);
 
-    --color-alt-1: rgba(53, 140, 205, 1);
-    --color-alt-2: rgba(53, 140, 205, 0.8);
-    --color-alt-3: rgba(53, 140, 205, 0.6);
-    --color-alt-4: rgba(53, 140, 205, 0.5);
-    --color-alt-5: rgba(53, 140, 205, 0.3);
-    --color-alt-6: rgba(53, 140, 205, 0.2);
-    --color-alt-7: rgba(53, 140, 205, 0.1);
-    --color-alt-8: rgba(53, 140, 205, 0.08);
+    --color-alt-1: rgba(195, 158, 106, 1);
+    --color-alt-2: rgba(195, 158, 106, 0.8);
+    --color-alt-3: rgba(195, 158, 106, 0.6);
+    --color-alt-4: rgba(195, 158, 106, 0.5);
+    --color-alt-5: rgba(195, 158, 106, 0.3);
+    --color-alt-6: rgba(195, 158, 106, 0.2);
+    --color-alt-7: rgba(195, 158, 106, 0.1);
+    --color-alt-8: rgba(195, 158, 106, 0.08);
 
     // FONT SIZE
     --font-1: 2rem;

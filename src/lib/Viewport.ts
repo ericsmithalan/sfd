@@ -49,7 +49,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         aspect: 0,
     };
 
-    constructor(canvas: HTMLCanvasElement, container: HTMLElement | null = null) {
+    constructor(
+        canvas: HTMLCanvasElement,
+        container: HTMLElement | null = null,
+    ) {
         super();
 
         this.canvas = canvas;
@@ -100,7 +103,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.orbitControls.update();
 
-        this.selection = new Selection(this.container, this.scene, this.camera, this.orbitControls);
+        this.selection = new Selection(
+            this.container,
+            this.scene,
+            this.camera,
+            this.orbitControls,
+        );
 
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
             placement: "bottom-right",
@@ -131,14 +139,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     remove(...object: Object3D[]) {
         this.scene.remove(...object);
-    }
-
-    clear() {
-        if (this.modelFile.model) {
-            this.selection.clear();
-            this.remove(this.modelFile.model);
-            this.modelFile.reset();
-        }
     }
 
     private animate = () => {
@@ -184,7 +184,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private modelChanged(e: IModelEvent["changed"]) {
         if (e.prevModel) {
-            this.clear();
+            this.selection.clear();
+            this.remove(e.prevModel);
         }
 
         if (e.model) {
@@ -196,9 +197,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.lights.spotLight.position.set(3, 1, 5);
             this.lights.spotLight.rotateY(Math.PI / 3);
             this.lights.spotLight.lookAt(model.position);
-            this.add(model);
-            model.updateMatrix();
             this.lights.spotLightHelper.update();
+
+            this.add(model);
+
+            model.updateMatrix();
             model.visible = true;
         }
     }
@@ -210,7 +213,9 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private unregisterEvents() {
         window.removeEventListener("resize", () => this.resize());
-        this.modelFile.removeEventListener("changed", (e) => this.modelChanged(e));
+        this.modelFile.removeEventListener("changed", (e) =>
+            this.modelChanged(e),
+        );
     }
 
     dispose() {

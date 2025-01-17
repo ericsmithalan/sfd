@@ -1,4 +1,4 @@
-import { IOutlinerProject } from "../interface";
+import { IOutlinerModel, IOutlinerProject } from "../interface";
 
 export const projectOutlinerData: Array<IOutlinerProject> = [
     {
@@ -44,3 +44,14 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         ],
     },
 ];
+
+export const getProject = (projectId: string): IOutlinerProject | null => {
+    return projectOutlinerData.find((item) => item.id === projectId) || null;
+};
+
+export const getModel = (
+    project: IOutlinerProject,
+    modelId: string,
+): IOutlinerModel | null => {
+    return project.models.find((item) => item.id === modelId) || null;
+};

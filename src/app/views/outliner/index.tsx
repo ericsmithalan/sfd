@@ -1,8 +1,12 @@
 import clsx from "clsx";
-import { useState } from "react";
-import { Object3D } from "three";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import { Logo, OutlinerChild, Panel } from "../../../components";
-import { projectOutlinerData } from "../../../data/outliner";
+import {
+    getModel,
+    getProject,
+    projectOutlinerData,
+} from "../../../data/outliner";
 import { IOutlinerModel, IOutlinerProject } from "../../../interface";
 import { Viewport } from "../../../lib";
 import { setObjectVisibility } from "../../../utils";
@@ -10,15 +14,9 @@ import "./style.scss";
 
 type OutlinerViewProps = {
     viewport: Viewport;
-    object: Object3D | null;
-    model: Object3D | null;
 };
 
-export const OutlinerView = ({
-    viewport,
-    object,
-    model,
-}: OutlinerViewProps) => {
+export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
     const [rootOutliner] =
         useState<Array<IOutlinerProject>>(projectOutlinerData);
     const [projectOutliner, setProjectOutliner] =
@@ -28,12 +26,40 @@ export const OutlinerView = ({
     );
     const [projectOpen, setProjectOpen] = useState<boolean>(true);
     const [modelOpen, setModelOpen] = useState<boolean>(true);
+    const params = useParams();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const loadModel = async (project: IOutlinerProject | null) => {
+            if (project) {
+                if (params.modelId) {
+                    const model = getModel(project, params.modelId);
+                    if (model) {
+                        const loadedModel = await viewport.modelFile.load(
+                            model,
+                        );
+
+                        setModelOutliner(loadedModel.userData.outliner);
+                    }
+                }
+            }
+        };
+
+        if (params) {
+            if (params.projectId) {
+                const project = getProject(params.projectId);
+                setProjectOutliner(project);
+
+                loadModel(project);
+            }
+        }
+    }, [params, viewport.modelFile]);
 
     return (
         <Panel>
             <div className={clsx("outliner-tree")}>
                 <div className="logo-content">
-                    <Logo height={50} />
+                    <Logo height={60} />
                 </div>
                 {rootOutliner.map((item, i) => {
                     return (
@@ -69,20 +95,21 @@ export const OutlinerView = ({
                                             icon={"stack"}
                                             onClick={async (e) => {
                                                 if (
-                                                    modelOutliner?.id ===
-                                                    item2.id
+                                                    item2.id ===
+                                                    modelOutliner?.id
                                                 ) {
                                                     setModelOpen(!modelOpen);
                                                 } else {
-                                                    viewport.clear();
-
                                                     const file =
                                                         await viewport.modelFile.load(
                                                             item2,
                                                         );
+
+                                                    console.log("loading file");
                                                     setModelOutliner(
                                                         file.userData.outliner,
                                                     );
+                                                    setModelOpen(true);
                                                 }
                                             }}
                                         >

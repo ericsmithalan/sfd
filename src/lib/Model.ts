@@ -45,67 +45,58 @@ export class Model extends EventDispatcher<IModelEvent> {
         });
     }
 
-    reset() {
-        this.gtlf = null;
-        this.model = null;
-    }
-
     load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
-            if (!this.loading) {
-                this.dispatchEvent({ type: "load", model: this.model });
-                this.loading = true;
-                const objects: Array<IOutlinerObject> = [];
+            this.dispatchEvent({ type: "load", model: this.model });
+            this.loading = true;
+            const objects: Array<IOutlinerObject> = [];
 
-                this.loader.load(obj.url, (gltf) => {
-                    this.gtlf = null;
-                    this._model = null;
+            this.loader.load(obj.url, (gltf) => {
+                this.gtlf = null;
+                this.gtlf = gltf;
+                const model = gltf.scene;
+                model.visible = false;
+                model.castShadow = true;
+                model.receiveShadow = true;
 
-                    this.gtlf = gltf;
-                    const model = gltf.scene;
-                    model.visible = false;
-                    model.castShadow = true;
-                    model.receiveShadow = true;
+                console.log("model loaded", model);
 
-                    console.log("model loaded", model);
+                model.traverse((object: Object3D) => {
+                    if (object instanceof Mesh) {
+                        object.castShadow = true;
+                        object.receiveShadow = true;
 
-                    model.traverse((object: Object3D) => {
-                        if (object instanceof Mesh) {
-                            object.castShadow = true;
-                            object.receiveShadow = true;
+                        const outlinerUD: IOutlinerObject = {
+                            id: object.id,
+                            name: object.name,
+                        };
 
-                            const outlinerUD: IOutlinerObject = {
-                                id: object.id,
-                                name: object.name,
-                            };
+                        object.userData = new ObjectUserData<IOutlinerObject>({
+                            selectable: true,
+                            outliner: outlinerUD,
+                        });
 
-                            object.userData = new ObjectUserData<IOutlinerObject>({
-                                selectable: true,
-                                outliner: outlinerUD,
-                            });
-
-                            objects.push(outlinerUD);
-                        } else {
-                            object.layers.disableAll();
-                        }
-                    });
-
-                    model.userData = new ObjectUserData<IOutlinerModel>({
-                        selectable: true,
-                        outliner: {
-                            name: obj.name,
-                            id: obj.id,
-                            url: obj.url,
-                            children: objects,
-                        },
-                    });
-
-                    this.model = model;
-                    this.dispatchEvent({ type: "loaded", model: this.model });
-                    this.loading = false;
-                    resolve(this.model);
+                        objects.push(outlinerUD);
+                    } else {
+                        object.layers.disableAll();
+                    }
                 });
-            }
+
+                model.userData = new ObjectUserData<IOutlinerModel>({
+                    selectable: true,
+                    outliner: {
+                        name: obj.name,
+                        id: obj.id,
+                        url: obj.url,
+                        children: objects,
+                    },
+                });
+
+                this.model = model;
+                this.dispatchEvent({ type: "loaded", model: this.model });
+
+                resolve(this.model);
+            });
         });
     };
 }

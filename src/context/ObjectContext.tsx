@@ -1,49 +1,59 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Object3D } from "three";
-import { ISelectionEvent, Viewport } from "../lib";
+import { Loading } from "../components";
+import { IModelEvent, ISelectionEvent, Viewport } from "../lib";
 
-export interface IObjectContext<T extends Object3D = Object3D> extends ObjectState {
+export interface IObjectContext<T extends Object3D = Object3D> {
     object: T | null;
-    setObject: (object: T | null) => void;
+    model: Object3D | null;
+    loading: boolean;
 }
 
-export const ObjectContext = createContext<IObjectContext>({} as IObjectContext);
+export const ObjectContext = createContext<IObjectContext>(
+    {} as IObjectContext,
+);
 
 type ObjectProviderProps = {
     children?: ReactNode;
-    viewport: Viewport;
+    viewport: Viewport | null;
 };
-
-export type ObjectState = {};
 
 export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
     const [object, setObject] = useState<Object3D | null>(null);
-
-    const handleSetObject = <T extends Object3D | null>(obj: T) => {
-        setObject(obj);
-    };
+    const [model, setModel] = useState<Object3D | null>(null);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
-            handleSetObject(e.object);
-
-            // if (e.object) {
-            //     const outlinerUserData = getObjectUserData<IOutlinerObject>(viewport, e.object.id);
-
-            //     if (outlinerUserData) {
-            //         navigate(`/edit/${outlinerUserData.id}/${e.object.id}`);
-            //     } else {
-            //         navigate(`/edit`);
-            //     }
-            // } else {
-            //     navigate(`/edit`);
-            // }
+            setObject(e.object);
         };
 
-        viewport.selection.addEventListener("selectionChange", selectionChange);
+        const modelChanged = (e: IModelEvent["changed"]) => {
+            setModel(e.model);
+            setLoading(false);
+        };
+
+        const modelLoading = (e: IModelEvent["load"]) => {
+            setLoading(true);
+        };
+
+        if (viewport) {
+            viewport.selection.addEventListener(
+                "selectionChange",
+                selectionChange,
+            );
+            viewport.modelFile.addEventListener("changed", modelChanged);
+            viewport.modelFile.addEventListener("load", modelLoading);
+        }
 
         return () => {
-            viewport.selection.removeEventListener("selectionChange", selectionChange);
+            if (viewport) {
+                viewport.modelFile.removeEventListener("changed", modelChanged);
+                viewport.selection.removeEventListener(
+                    "selectionChange",
+                    selectionChange,
+                );
+            }
         };
     }, [viewport, object]);
 
@@ -51,9 +61,11 @@ export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
         <ObjectContext.Provider
             value={{
                 object: object,
-                setObject: handleSetObject,
+                model: model,
+                loading: loading,
             }}
         >
+            {loading && <Loading message="loading" />}
             {children}
         </ObjectContext.Provider>
     );
