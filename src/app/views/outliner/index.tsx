@@ -5,6 +5,7 @@ import { Logo, OutlinerChild, Panel } from "../../../components";
 import { projectOutlinerData } from "../../../data/outliner";
 import { IOutlinerModel, IOutlinerProject } from "../../../interface";
 import { Viewport } from "../../../lib";
+import { setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 type OutlinerViewProps = {
@@ -13,10 +14,18 @@ type OutlinerViewProps = {
     model: Object3D | null;
 };
 
-export const OutlinerView = ({ viewport, object, model }: OutlinerViewProps) => {
-    const [rootOutliner] = useState<Array<IOutlinerProject>>(projectOutlinerData);
-    const [projectOutliner, setProjectOutliner] = useState<IOutlinerProject | null>(null);
-    const [modelOutliner, setModelOutliner] = useState<IOutlinerModel | null>(null);
+export const OutlinerView = ({
+    viewport,
+    object,
+    model,
+}: OutlinerViewProps) => {
+    const [rootOutliner] =
+        useState<Array<IOutlinerProject>>(projectOutlinerData);
+    const [projectOutliner, setProjectOutliner] =
+        useState<IOutlinerProject | null>(null);
+    const [modelOutliner, setModelOutliner] = useState<IOutlinerModel | null>(
+        null,
+    );
     const [projectOpen, setProjectOpen] = useState<boolean>(true);
     const [modelOpen, setModelOpen] = useState<boolean>(true);
 
@@ -51,40 +60,61 @@ export const OutlinerView = ({ viewport, object, model }: OutlinerViewProps) => 
                                         <OutlinerChild
                                             key={`${item2.id}-${n}`}
                                             level={2}
-                                            active={modelOutliner?.id === item2.id}
+                                            active={
+                                                modelOutliner?.id === item2.id
+                                            }
                                             name={item2.name}
                                             open={modelOpen}
                                             href={`/viewer/${item.id}/${item2.id}`}
                                             icon={"stack"}
                                             onClick={async (e) => {
-                                                if (modelOutliner?.id === item2.id) {
+                                                if (
+                                                    modelOutliner?.id ===
+                                                    item2.id
+                                                ) {
                                                     setModelOpen(!modelOpen);
                                                 } else {
                                                     viewport.clear();
 
-                                                    const file = await viewport.modelFile.load(
-                                                        item2,
+                                                    const file =
+                                                        await viewport.modelFile.load(
+                                                            item2,
+                                                        );
+                                                    setModelOutliner(
+                                                        file.userData.outliner,
                                                     );
-                                                    setModelOutliner(file.userData.outliner);
                                                 }
                                             }}
                                         >
                                             {modelOutliner &&
                                                 modelOutliner.id === item2.id &&
-                                                modelOutliner.children.map((item3, h) => {
-                                                    return (
-                                                        <OutlinerChild
-                                                            key={`${item3.id}-${h}`}
-                                                            level={2}
-                                                            name={item3.name}
-                                                            href={`/viewer/${item.id}/${item2.id}/${item3.id}`}
-                                                            icon={"box"}
-                                                            onClick={async (e) => {
-                                                                // viewport.clear();
-                                                            }}
-                                                        />
-                                                    );
-                                                })}
+                                                modelOutliner.children.map(
+                                                    (item3, h) => {
+                                                        return (
+                                                            <OutlinerChild
+                                                                key={`${item3.id}-${h}`}
+                                                                level={3}
+                                                                name={
+                                                                    item3.name
+                                                                }
+                                                                href={`/viewer/${item.id}/${item2.id}/${item3.id}`}
+                                                                icon={"box"}
+                                                                onToolClick={(
+                                                                    tool,
+                                                                    visible,
+                                                                    e,
+                                                                ) => {
+                                                                    setObjectVisibility(
+                                                                        viewport,
+                                                                        item3.id,
+                                                                        visible,
+                                                                    );
+                                                                    // viewport.clear();
+                                                                }}
+                                                            ></OutlinerChild>
+                                                        );
+                                                    },
+                                                )}
                                         </OutlinerChild>
                                     );
                                 })}

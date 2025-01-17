@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { memo, MouseEvent, ReactNode } from "react";
+import { memo, MouseEvent, ReactNode, useState } from "react";
 import { IconName } from "../../types";
+import { Button } from "../button";
 import { NavLink } from "../nav-link";
 import "./style.scss";
 
@@ -13,9 +14,12 @@ type OutlinerChildProps = {
     icon: IconName;
     open?: boolean;
     onClick?: (e: MouseEvent) => void;
+    onToolClick?: (tool: "visible", visible: boolean, e: MouseEvent) => void;
 };
 
 export const OutlinerChild = memo((props: OutlinerChildProps) => {
+    const [objectVisible, setObjectVisible] = useState(true);
+
     return (
         <div className={clsx("outliner-child", `level-${props.level}`)}>
             <div className={clsx(`outline level-${props.level}`)}>
@@ -33,11 +37,33 @@ export const OutlinerChild = memo((props: OutlinerChildProps) => {
                         >
                             {props.name}
                         </NavLink>
+                        {props.level && props.level > 2 && (
+                            <div className="tools">
+                                <Button
+                                    variant="toolbar"
+                                    icon={objectVisible ? "visible" : "hidden"}
+                                    onClick={(e) => {
+                                        if (props.onToolClick) {
+                                            props.onToolClick(
+                                                "visible",
+                                                !objectVisible,
+                                                e,
+                                            );
+                                            setObjectVisible(!objectVisible);
+                                        }
+                                    }}
+                                />
+                            </div>
+                        )}
                     </div>
 
                     {props.open === true && props.children && (
                         <div className={clsx(`children level-${props.level}`)}>
-                            <div className={clsx(`scroller level-${props.level}`)}>
+                            <div
+                                className={clsx(
+                                    `scroller level-${props.level}`,
+                                )}
+                            >
                                 {props.children}
                             </div>
                         </div>
