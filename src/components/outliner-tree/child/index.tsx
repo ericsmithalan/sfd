@@ -1,6 +1,6 @@
-import { IconName } from "@/types";
 import clsx from "clsx";
 import { ReactNode } from "react";
+import { IconName } from "../../../types";
 import { NavLink } from "../../nav-link";
 import "./style.scss";
 

@@ -1,8 +1,8 @@
 import { FC, ReactNode } from "react";
 
-import { IconName } from "@/types";
 import clsx from "clsx";
 import { Link } from "react-router-dom";
+import { IconName } from "../../types";
 import { Icon } from "../icon";
 import "./style.scss";
 

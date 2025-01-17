@@ -13,7 +13,8 @@
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-6);
         border-radius: var(--radius-5);
-
+        flex: 1 1 auto;
+        
         &:hover {
             background-color: var(--color-white-6);
         }

@@ -1,10 +1,8 @@
-import { IObjectUserData, ObjectUserData, UserData, Viewport } from "@/lib";
-import { getObject } from "./getObject";
 import { Object3D } from "three";
+import { ObjectUserData, UserData, Viewport } from "../lib";
+import { getObject } from "./getObject";
 
-export const isUserDataType = <T extends UserData>(
-    obj: Record<string, any>
-): obj is T => {
+export const isUserDataType = <T extends UserData>(obj: Record<string, any>): obj is T => {
     if (obj["models"]) {
         return true;
     } else if (obj["url"]) {
@@ -19,7 +17,7 @@ export const isUserDataType = <T extends UserData>(
 
 export const getObjectUserData = <T extends UserData>(
     viewport: Viewport,
-    obj?: number | Object3D
+    obj?: number | Object3D,
 ): T | null => {
     if (obj) {
         const object = getObject(viewport, obj, false);

@@ -1,18 +1,10 @@
-import {
-    BoxHelper,
-    Camera,
-    EventDispatcher,
-    Object3D,
-    Raycaster,
-    Scene,
-    Vector2,
-} from "three";
+import { BoxHelper, Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from "three";
 
 import { Config } from "../Config";
 
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { SelectMode } from "../types";
 import { ObjectUserData } from "./";
-import { SelectMode } from "@/types";
 
 export interface ISelectionEvent {
     selectionChange: {
@@ -41,7 +33,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         container: HTMLElement,
         scene: Scene,
         camera: Camera,
-        orbitControls: OrbitControls
+        orbitControls: OrbitControls,
     ) {
         super();
 
@@ -90,6 +82,12 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
     resize() {}
 
+    clear() {
+        if (this.object) {
+            this.removeSelectionHelper();
+            this.object = null;
+        }
+    }
     animate = () => {
         // if UI hides object
         if (this.object && !this.object.visible) {
@@ -107,10 +105,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.removeSelectionHelper();
 
         if (this.object) {
-            this.selectHelper = new BoxHelper(
-                this.object,
-                Config.selection.borderColor
-            );
+            this.selectHelper = new BoxHelper(this.object, Config.selection.borderColor);
             this.selectHelper.name = Config.selection.helperName;
             this.selectHelper.material.vertexColors = false;
             this.selectHelper.material.transparent = true;
@@ -186,43 +181,28 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
         this.scene.traverseVisible((child) => {
             if (child.userData instanceof ObjectUserData) {
-                if (child.userData?.selectable) {
+                if (child.userData?.selectable === true) {
                     sceneChildren.push(child);
                 }
             }
         });
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
-        const objects = this.raycaster.intersectObjects(
-            sceneChildren as Object3D[],
-            false
-        );
+        const objects = this.raycaster.intersectObjects(sceneChildren as Object3D[], false);
 
         return objects;
     };
 
     private registerEvents() {
-        this.container.addEventListener("dblclick", (e: MouseEvent) =>
-            this.dblclick(e)
-        );
-        this.container.addEventListener("mousedown", (e: MouseEvent) =>
-            this.mouseDwn(e)
-        );
-        this.container.addEventListener("mouseup", (e: MouseEvent) =>
-            this.mouseUp(e)
-        );
+        this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
+        this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
+        this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     private unRegisterEvents() {
-        this.container.removeEventListener("dblclick", (e: MouseEvent) =>
-            this.dblclick(e)
-        );
-        this.container.removeEventListener("mousedown", (e: MouseEvent) =>
-            this.mouseDwn(e)
-        );
-        this.container.removeEventListener("mouseup", (e: MouseEvent) =>
-            this.mouseUp(e)
-        );
+        this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
+        this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
+        this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     dispose() {

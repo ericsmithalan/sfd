@@ -1,22 +1,15 @@
 import { Config } from "../Config";
 
-import {
-    AmbientLight,
-    CameraHelper,
-    EventDispatcher,
-    HemisphereLight,
-    HemisphereLightHelper,
-    Object3D,
-    PerspectiveCamera,
-    Scene,
-    WebGLRenderer,
-} from "three";
+import { EventDispatcher, Fog, Object3D, PerspectiveCamera, Scene, WebGLRenderer } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { fitCameraToObject } from "../utils";
+import { Floor } from "./Floor";
+import { Grid } from "./Grid";
+import { Lights } from "./Lights";
 import { IModelEvent, Model } from "./Model";
 import { ObjectUserData } from "./ObjectUserData";
 import { Selection } from "./Selection";
-import { Grid } from "./Grid";
 
 export interface IViewportEvent {
     resize: { type: string; size: IScreenSize };
@@ -41,6 +34,9 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
     readonly modelFile: Model;
+    readonly lights: Lights;
+    readonly grid: Grid;
+    readonly floor: Floor;
 
     size: IScreenSize = {
         width: 0,
@@ -48,10 +44,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         aspect: 0,
     };
 
-    constructor(
-        canvas: HTMLCanvasElement,
-        container: HTMLElement | null = null
-    ) {
+    constructor(canvas: HTMLCanvasElement, container: HTMLElement | null = null) {
         super();
 
         this.canvas = canvas;
@@ -62,6 +55,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene = new Scene();
         this.scene.name = Config.scene.name;
         this.scene.background = Config.scene.backgroundColor;
+        this.scene.fog = new Fog(0x000000, 1, 200);
         this.scene.userData = new ObjectUserData({
             selectable: false,
         });
@@ -70,7 +64,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             Config.camera.fov,
             this.size.aspect,
             Config.camera.near,
-            Config.camera.far
+            Config.camera.far,
         );
         this.camera.name = Config.camera.name;
         this.camera.up = Config.camera.up;
@@ -79,7 +73,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.position.set(
             Config.camera.defaultPosition.x,
             Config.camera.defaultPosition.y,
-            Config.camera.defaultPosition.z
+            Config.camera.defaultPosition.z,
         );
         this.camera.userData = new ObjectUserData({
             selectable: false,
@@ -106,14 +100,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 500;
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
+
         this.orbitControls.update();
 
-        this.selection = new Selection(
-            this.container,
-            this.scene,
-            this.camera,
-            this.orbitControls
-        );
+        this.selection = new Selection(this.container, this.scene, this.camera, this.orbitControls);
 
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
             placement: "bottom-right",
@@ -121,11 +111,21 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.gizmo.scale.set(0.7, 0.7, 0.7);
         this.gizmo.attachControls(this.orbitControls);
 
+        this.lights = new Lights();
+        this.floor = new Floor();
+        this.grid = new Grid();
+
+        this.add(
+            this.lights.ambient,
+            this.lights.directional,
+            this.lights.hemi,
+            this.floor,
+            this.grid,
+        );
+
         this.renderer.setAnimationLoop(() => this.animate());
 
         this.registerEvents();
-
-        this.initialize();
     }
 
     add(...object: Object3D[]) {
@@ -141,24 +141,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.remove(this.modelFile.model);
             this.modelFile.reset();
         }
-    }
-
-    private async initialize() {
-        const gridHelper = new Grid();
-
-        const hemiLight = new HemisphereLight(0xffffff, 1);
-        hemiLight.name = "Hemi Light";
-        hemiLight.userData = new ObjectUserData({
-            selectable: false,
-        });
-
-        const ambientLight = new AmbientLight(0xffffff, 1);
-        ambientLight.name = "Ambiant Light";
-        ambientLight.userData = new ObjectUserData({
-            selectable: false,
-        });
-
-        this.add(hemiLight, ambientLight, this.camera, gridHelper);
     }
 
     private animate = () => {
@@ -204,10 +186,19 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private modelChanged(e: IModelEvent["changed"]) {
         if (e.prevModel) {
-            this.remove(e.prevModel);
+            this.selection.clear();
+            this.clear();
         }
+
         if (e.model) {
-            this.add(e.model);
+            const model = e.model;
+            if (model.up.y === 1) {
+                model.rotateX(Math.PI / 2);
+            }
+
+            const updated = fitCameraToObject(model, this.scene, this.camera, this.orbitControls);
+            this.lights.directional.lookAt(updated.position);
+            this.add(updated);
         }
     }
 
@@ -218,9 +209,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private unregisterEvents() {
         window.removeEventListener("resize", () => this.resize());
-        this.modelFile.removeEventListener("changed", (e) =>
-            this.modelChanged(e)
-        );
+        this.modelFile.removeEventListener("changed", (e) => this.modelChanged(e));
     }
 
     dispose() {
@@ -229,7 +218,5 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.dispose();
         this.renderer.dispose();
         this.selection.dispose();
-
-        // this.orbitControls.dispose();
     }
 }

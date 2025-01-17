@@ -4,13 +4,12 @@
 
 @font-face {
     font-family: "halflap";
-    src: url("/assets/fonts/halflap/halflap.eot");
-    src: url("/assets/fonts/halflap/halflap.eot?#iefix")
-            format("embedded-opentype"),
-        url("/assets/fonts/halflap/halflap.woff2") format("woff2"),
-        url("/assets/fonts/halflap/halflap.woff") format("woff"),
-        url("/assets/fonts/halflap/halflap.ttf") format("truetype"),
-        url("/assets/fonts/halflap/halflap.svg#halflap") format("svg");
+    src: url("/assets/halflap/halflap.eot");
+    src: url("/assets/halflap/halflap.eot?#iefix") format("embedded-opentype"),
+        url("/assets/halflap/halflap.woff2") format("woff2"),
+        url("/assets/halflap/halflap.woff") format("woff"),
+        url("/assets/halflap/halflap.ttf") format("truetype"),
+        url("/assets/halflap/halflap.svg#halflap") format("svg");
     font-weight: normal;
     font-style: normal;
 }
@@ -18,7 +17,7 @@
 @media screen and (-webkit-min-device-pixel-ratio: 0) {
     @font-face {
         font-family: "halflap";
-        src: url("/assets/fonts/halflap/halflap.svg#halflap") format("svg");
+        src: url("/assets/halflap/halflap.svg#halflap") format("svg");
     }
 }
 

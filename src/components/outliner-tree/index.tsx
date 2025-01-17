@@ -1,13 +1,13 @@
-import { IModelOutliner, IObjectOutliner, IRootOutliner } from "@/interface";
 import clsx from "clsx";
 import { FC } from "react";
+import { IModelOutliner, IObjectOutliner, IProjectOutliner } from "../../lib";
 import { Logo } from "../logo";
 import { OutlinerChild } from "./child";
 import "./style.scss";
 
 type OutlinerTreeProps = {
-    rootOutliner: Array<IRootOutliner>;
-    project: IRootOutliner | null;
+    rootOutliner: Array<IProjectOutliner>;
+    project: IProjectOutliner | null;
     model: IModelOutliner | null;
     object: IObjectOutliner | null;
 };

@@ -1,5 +1,5 @@
-import { Viewport } from "@/lib";
-import { Mesh, Object3D } from "three";
+import { Object3D } from "three";
+import { Viewport } from "../lib";
 
 export const getObject = <T extends Object3D>(
     viewport: Viewport,

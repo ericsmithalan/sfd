@@ -1,12 +1,5 @@
-import { ObjectUserData } from "@/lib";
-import {
-    BufferGeometry,
-    Color,
-    LineBasicMaterial,
-    LineSegments,
-    Object3D,
-    Vector3,
-} from "three";
+import { BufferGeometry, Color, LineBasicMaterial, LineSegments, Object3D, Vector3 } from "three";
+import { ObjectUserData } from "./";
 
 export class Grid extends Object3D {
     private _size: number;

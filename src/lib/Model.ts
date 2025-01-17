@@ -1,6 +1,6 @@
-import { IModelOutliner, IObjectOutliner } from "@/interface";
 import { EventDispatcher, Mesh, Object3D } from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { IModelOutliner, IObjectOutliner } from "../lib";
 import { ObjectUserData } from "./ObjectUserData";
 
 export interface SFDCurrentFile {
@@ -22,6 +22,7 @@ export class Model extends EventDispatcher<IModelEvent> {
     private readonly loader: GLTFLoader;
     private _model: Object3D | null = null;
 
+    private loading = false;
     gtlf: GLTF | null = null;
 
     constructor() {
@@ -51,54 +52,61 @@ export class Model extends EventDispatcher<IModelEvent> {
 
     load = (obj: IModelOutliner): Promise<Object3D> => {
         return new Promise((resolve) => {
-            this.dispatchEvent({ type: "load", model: this.model });
-            const objects: Array<IObjectOutliner> = [];
+            if (!this.loading) {
+                this.loading = true;
+                this.dispatchEvent({ type: "load", model: this.model });
+                const objects: Array<IObjectOutliner> = [];
 
-            this.loader.load(obj.url, (gltf) => {
-                this.gtlf = null;
-                this._model = null;
+                this.loader.load(obj.url, (gltf) => {
+                    this.gtlf = null;
+                    this._model = null;
 
-                this.gtlf = gltf;
-                this.model = gltf.scene;
-                this.model.castShadow = true;
-                this.model.receiveShadow = true;
+                    this.gtlf = gltf;
+                    const model = gltf.scene;
+                    model.castShadow = true;
+                    model.receiveShadow = true;
 
-                this.model.traverse((object: Object3D) => {
-                    if (object instanceof Mesh) {
-                        object.castShadow = true;
-                        object.receiveShadow = true;
+                    console.log("model loaded", model);
 
-                        const outlinerUD: IObjectOutliner = {
-                            id: object.id,
-                            name: object.name,
-                            icon: "box",
-                            level: 1,
-                        };
+                    model.traverse((object: Object3D) => {
+                        if (object instanceof Mesh) {
+                            object.castShadow = true;
+                            object.receiveShadow = true;
 
-                        object.userData = new ObjectUserData<IObjectOutliner>({
-                            selectable: true,
-                            outliner: outlinerUD,
-                        });
+                            const outlinerUD: IObjectOutliner = {
+                                id: object.id,
+                                name: object.name,
+                                icon: "box",
+                                level: 1,
+                            };
 
-                        objects.push(outlinerUD);
-                    } else {
-                        object.layers.disableAll();
-                    }
+                            object.userData = new ObjectUserData<IObjectOutliner>({
+                                selectable: true,
+                                outliner: outlinerUD,
+                            });
+
+                            objects.push(outlinerUD);
+                        } else {
+                            object.layers.disableAll();
+                        }
+                    });
+
+                    model.userData = new ObjectUserData<IModelOutliner>({
+                        selectable: true,
+                        outliner: {
+                            name: obj.name,
+                            id: obj.id,
+                            url: obj.url,
+                            children: objects,
+                        },
+                    });
+
+                    this.model = model;
+                    this.dispatchEvent({ type: "loaded", model: this.model });
+                    this.loading = false;
+                    resolve(this.model);
                 });
-
-                this.model.userData = new ObjectUserData<IModelOutliner>({
-                    selectable: true,
-                    outliner: {
-                        name: obj.name,
-                        id: obj.id,
-                        url: obj.url,
-                        children: objects,
-                    },
-                });
-
-                this.dispatchEvent({ type: "loaded", model: this.model });
-                resolve(this.model);
-            });
+            }
         });
     };
 }

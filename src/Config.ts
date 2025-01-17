@@ -6,10 +6,10 @@ import {
     ToneMapping,
     Vector3,
 } from "three";
-import { IRootOutliner } from "./interface";
+import { IProjectOutliner } from "./lib";
 
 export interface IConfig {
-    rootOutliner: Array<IRootOutliner>;
+    rootOutliner: Array<IProjectOutliner>;
     scene: {
         name: string;
         backgroundColor: Color;
@@ -45,11 +45,11 @@ export interface IConfig {
 export const Config: IConfig = {
     rootOutliner: [
         {
-            id: "bunk_beds",
+            id: "bunks",
             name: "Bunk Beds",
             models: [
                 {
-                    url: "/models/bunks/beds.glb",
+                    url: "/models/bunks/bunks1.glb",
                     id: "beds",
                     name: "Beds",
                     children: [],
