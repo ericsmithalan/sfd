@@ -42,9 +42,6 @@ export const Viewer = () => {
                     <Outlet
                         context={{
                             viewport: viewport,
-                            projectOutliner: null,
-                            modelOutliner: null,
-                            objectOutliner: null,
                         }}
                     />
                 </Region>

@@ -8,14 +8,16 @@ import "./style.scss";
 
 type ImageViewerProps = {
     images: Array<string>;
-    imageId?: number;
+    image?: string;
     visible?: boolean;
+    onClosed?: () => void;
 };
 
 export const ImageViewer: FC<ImageViewerProps> = ({
     images,
     visible,
-    imageId,
+    image,
+    onClosed,
 }) => {
     const [selected, setSelected] = useState<string>();
     const [isVisible, setIsVisible] = useState(false);
@@ -29,12 +31,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({
             setIsVisible(visible);
         }
 
-        if (imageId) {
-            setSelected(images[imageId]?.replace("_thumb", ""));
+        if (image) {
+            setSelected(image.replace("_thumb", ""));
         } else {
             setSelected(images[0]?.replace("_thumb", ""));
         }
-    }, [images, imageId, visible, divRef]);
+    }, [images, image, visible, divRef]);
 
     return isVisible
         ? createPortal(
@@ -42,8 +44,10 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                   className={clsx("image-viewer")}
                   onClick={(e) => {
                       e.stopPropagation();
-                      console.log("clicked");
                       setIsVisible(false);
+                      if (onClosed) {
+                          onClosed();
+                      }
                   }}
               >
                   <div
@@ -55,11 +59,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                       <div className="selected">
                           <BgImage
                               size="cover"
-                              width={800}
+                              width={"100%"}
                               height={500}
                               src={selected || ""}
                           />
                       </div>
+
                       <Scroller className="images">
                           {images.map((img, i) => {
                               return (

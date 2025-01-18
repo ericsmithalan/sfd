@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { Outlet, useParams } from "react-router-dom";
+import { Outlet, useOutletContext, useParams } from "react-router-dom";
 import { BgImage, Button, Panel } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { Scroller } from "../../../components/scroller";
 import { getProject } from "../../../data";
 import { IOutlinerProject } from "../../../interface";
+import { Viewport } from "../../../lib";
 import "./style.scss";
 
 type ViewerState = {
     visible: boolean;
-    selected: number;
+    selected: string;
 };
 
 export const ProjectView = () => {
+    const context = useOutletContext<{ viewport: Viewport }>();
     const [project, setProject] = useState<IOutlinerProject | null>(null);
     const [images, setImages] = useState<Array<string>>([]);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
-        selected: 0,
+        selected: "",
     });
     const params = useParams();
 
@@ -41,21 +43,30 @@ export const ProjectView = () => {
 
     return (
         <>
-            <Panel className="project-view" title={project?.name} icon="folder">
-                <Scroller maxHeight={100} className="images">
+            <Panel
+                className="project-view"
+                title={"Project Images"}
+                icon="texture"
+            >
+                <Scroller minHeight={30} maxHeight={250} className="images">
                     {images.map((img, i) => {
                         return (
                             <Button
                                 variant="image"
                                 key={i}
                                 onClick={(e) => {
+                                    e.stopPropagation();
                                     setViewer({
                                         visible: true,
-                                        selected: i + 1,
+                                        selected: img,
                                     });
                                 }}
                             >
-                                <BgImage size="cover" src={img} />
+                                <BgImage
+                                    size="cover"
+                                    width={"100%"}
+                                    src={img}
+                                />
                             </Button>
                         );
                     })}
@@ -63,12 +74,17 @@ export const ProjectView = () => {
             </Panel>
 
             <ImageViewer
+                onClosed={() => {
+                    setViewer({ visible: false, selected: "" });
+                }}
                 visible={viewer.visible}
                 images={images}
-                imageId={viewer.selected}
+                image={viewer.selected}
             />
 
-            <Outlet />
+            <Outlet
+                context={{ viewport: context.viewport, project: project }}
+            />
         </>
     );
 };

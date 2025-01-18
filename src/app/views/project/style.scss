@@ -16,11 +16,11 @@
             flex-direction: row;
             flex-wrap: wrap;
             gap: var(--gap-5);
-            min-height: 200px;
 
             & > .button {
                 display: flex;
                 flex-direction: column;
+                flex: 1 1 auto;
 
                 & > .bg-image {
                     display: flex;
@@ -28,7 +28,7 @@
                     flex: 1 1 auto;
                     min-width: 4rem;
                     min-height: 5rem;
-
+                    width: 100%;
                     height: 100%;
                 }
             }

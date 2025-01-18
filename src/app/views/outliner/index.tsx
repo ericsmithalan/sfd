@@ -58,7 +58,7 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
         <Panel>
             <div className={clsx("outliner-tree")}>
                 <div className="logo-content">
-                    <Logo height={60} />
+                    <Logo height={45} />
                 </div>
                 <div className="title">Projects</div>
                 {rootOutliner.map((item, i) => {
