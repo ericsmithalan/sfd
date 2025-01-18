@@ -2,24 +2,13 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Logo, OutlinerChild, Panel } from "../../../components";
-import { getProject, projectOutlinerData } from "../../../data/outliner";
-import { IOutlinerModel, IOutlinerProject } from "../../../interface";
-import { Viewport } from "../../../lib";
+import { getProject } from "../../../data/outliner";
+import { useOutliner } from "../../../hooks";
 import { setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
-type OutlinerViewProps = {
-    viewport: Viewport;
-};
-
-export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
-    const [rootOutliner] =
-        useState<Array<IOutlinerProject>>(projectOutlinerData);
-    const [projectOutliner, setProjectOutliner] =
-        useState<IOutlinerProject | null>(null);
-    const [modelOutliner, setModelOutliner] = useState<IOutlinerModel | null>(
-        null,
-    );
+export const OutlinerView = () => {
+    const outliner = useOutliner();
     const [projectOpen, setProjectOpen] = useState<boolean>(true);
     const [modelOpen, setModelOpen] = useState<boolean>(true);
     const params = useParams();
@@ -28,10 +17,10 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
         if (params) {
             if (params.projectId) {
                 const project = getProject(params.projectId);
-                setProjectOutliner(project);
+                outliner.setProject(project);
             }
         }
-    }, [params, viewport.modelFile]);
+    }, [params, outliner]);
 
     return (
         <Panel>
@@ -40,33 +29,33 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                     <Logo height={45} />
                 </div>
 
-                {rootOutliner.map((item, i) => {
+                {outliner.root.map((item, i) => {
                     return (
                         <OutlinerChild
                             key={`${item.id}-${i}`}
                             icon="folder"
                             level={1}
                             open={projectOpen}
-                            active={projectOutliner?.id === item.id}
+                            active={outliner.project?.id === item.id}
                             href={`/viewer/${item.id}`}
                             name={item.name}
                             onClick={(e) => {
-                                if (projectOutliner?.id === item.id) {
+                                if (outliner.project?.id === item.id) {
                                     setProjectOpen(!projectOpen);
                                 } else {
-                                    setProjectOutliner(item);
+                                    outliner.setProject(item);
                                 }
                             }}
                         >
-                            {projectOutliner &&
-                                projectOutliner.id === item.id &&
+                            {outliner.project &&
+                                outliner.project.id === item.id &&
                                 item.models.map((item2, n) => {
                                     return (
                                         <OutlinerChild
                                             key={`${item2.id}-${n}`}
                                             level={2}
                                             active={
-                                                modelOutliner?.id === item2.id
+                                                outliner.model?.id === item2.id
                                             }
                                             name={item2.name}
                                             open={modelOpen}
@@ -75,7 +64,7 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                             onClick={async (e) => {
                                                 if (
                                                     item2.id ===
-                                                    modelOutliner?.id
+                                                    outliner.model?.id
                                                 ) {
                                                     setModelOpen(!modelOpen);
                                                 } else {
@@ -83,9 +72,10 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                                 }
                                             }}
                                         >
-                                            {modelOutliner &&
-                                                modelOutliner.id === item2.id &&
-                                                modelOutliner.children.map(
+                                            {outliner.model &&
+                                                outliner.model.id ===
+                                                    item2.id &&
+                                                outliner.model.children.map(
                                                     (item3, h) => {
                                                         return (
                                                             <OutlinerChild
@@ -102,7 +92,7 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                                                     e,
                                                                 ) => {
                                                                     setObjectVisibility(
-                                                                        viewport,
+                                                                        outliner.viewport,
                                                                         item3.id,
                                                                         visible,
                                                                     );

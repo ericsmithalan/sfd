@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Region } from "../../components";
-import { ObjectProvider } from "../../context";
+import { ObjectProvider, OutlinerProvider } from "../../context";
 import { Viewport } from "../../lib";
 import { OutlinerView } from "../views/outliner";
 import "./style.scss";
@@ -35,10 +35,12 @@ export const Viewer = () => {
 
     return (
         <div className="viewer">
+            <Region placement="left">
+                <OutlinerProvider viewport={viewport || null}>
+                    {viewport && <OutlinerView />}
+                </OutlinerProvider>
+            </Region>
             <ObjectProvider viewport={viewport || null}>
-                <Region placement="left">
-                    {viewport && <OutlinerView viewport={viewport} />}
-                </Region>
                 <Region placement="right">
                     <Outlet
                         context={{

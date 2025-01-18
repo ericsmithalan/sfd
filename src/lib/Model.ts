@@ -15,6 +15,7 @@ export interface IModelEvent {
         type: string;
         model: Object3D | null;
         prevModel: Object3D | null;
+        outliner: IOutlinerModel | null;
     };
 }
 
@@ -48,6 +49,7 @@ export class Model extends EventDispatcher<IModelEvent> {
             type: "changed",
             model: model,
             prevModel: prevModel,
+            outliner: this.modelOutliner,
         });
     }
 
@@ -71,9 +73,8 @@ export class Model extends EventDispatcher<IModelEvent> {
             const cached = this.getCache(obj.id);
 
             if (cached) {
-                this.model = cached.model;
-
                 this.modelOutliner = cached.outliner;
+                this.model = cached.model;
 
                 resolve(cached.model);
 
@@ -133,8 +134,9 @@ export class Model extends EventDispatcher<IModelEvent> {
                     model.rotateX(Math.PI / 2);
                 }
 
-                this.model = model;
                 this.setCache(obj.id, model, this.modelOutliner);
+
+                this.model = model;
                 this.dispatchEvent({ type: "loaded", model: this.model });
 
                 resolve(this.model);
