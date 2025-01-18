@@ -1,3 +1,9 @@
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
+
 .button {
     display: flex;
     flex-direction: row;
@@ -14,7 +20,7 @@
         outline: none;
     }
 
-    &.image {
+    &.btn-image {
         background-color: transparent;
         border: 2px solid transparent;
         padding: 0;
@@ -25,32 +31,31 @@
         }
     }
 
-    &.panel {
+    &.btn-panel {
         display: flex;
         flex-direction: row;
-        border: 1px solid transparent;
+        flex: 1 1 auto;
         background-color: transparent;
+        border: 1px solid transparent;
 
         gap: var(--gap-5);
-        border-radius: var(--radius-5);
 
         font-weight: bold;
         font-size: var(--font-6);
-        flex: 1 1 auto;
 
         & > .icon {
             color: var(--color-alt-1);
         }
     }
 
-    &.default {
+    &.btn-default {
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-4);
         border-radius: var(--radius-5);
         flex: 1 1 auto;
     }
 
-    &.toolbar {
+    &.btn-toolbar {
         border: 1px solid transparent;
         background-color: transparent;
         gap: var(--gap-5);

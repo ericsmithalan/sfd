@@ -27,7 +27,12 @@ export const Button: FC<ButtonProps> = ({
 }) => {
     return (
         <button
-            className={clsx("button", variant, active && "active", className)}
+            className={clsx(
+                "button",
+                `btn-${variant}`,
+                active && "active",
+                className,
+            )}
             onClick={onClick}
         >
             {icon && <Icon name={icon} fill={iconFill || active} />}
