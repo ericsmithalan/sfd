@@ -37,6 +37,12 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
                 name: "Case",
                 children: [],
             },
+            {
+                url: "/models/case-1/build.glb",
+                id: "build",
+                name: "Build",
+                children: [],
+            },
         ],
     },
     {
@@ -51,6 +57,22 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
                 url: "/models/desk/desk1.glb",
                 id: "desk",
                 name: "Desk",
+                children: [],
+            },
+        ],
+    },
+    {
+        id: "case2",
+        name: "Case",
+        image: {
+            count: 0,
+            path: "/models/john/images/",
+        },
+        models: [
+            {
+                url: "/models/john/case-1.glb",
+                id: "case-2",
+                name: "Case",
                 children: [],
             },
         ],

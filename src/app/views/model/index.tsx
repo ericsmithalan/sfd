@@ -15,11 +15,21 @@ export const ModelView = () => {
     const params = useParams();
 
     useEffect(() => {
-        if (params && params.modelId && context) {
+        const laodModel = async (modelOutliner: IOutlinerModel) => {
+            const loadedModel = await context.viewport.modelFile.load(
+                modelOutliner,
+            );
+
+            if (loadedModel) {
+                setModel(loadedModel.userData.outliner);
+            }
+        };
+
+        if (params && params.modelId && context.project) {
             const modelOutlner = getModel(context.project, params.modelId);
 
             if (modelOutlner) {
-                setModel(modelOutlner);
+                laodModel(modelOutlner);
             }
         }
     }, [params, context]);
@@ -28,7 +38,8 @@ export const ModelView = () => {
             <Panel className="model-view" title={model?.name} icon="stack">
                 Model Panel
             </Panel>
-            <Outlet context={{ viewport: context.viewport }} />
+
+            <Outlet context={context} />
         </>
     );
 };

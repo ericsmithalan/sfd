@@ -24,6 +24,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
     private loading = false;
     gtlf: GLTF | null = null;
+    private modelOutliner: IOutlinerModel | null = null;
 
     constructor() {
         super();
@@ -47,6 +48,9 @@ export class Model extends EventDispatcher<IModelEvent> {
 
     load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
+            if (obj.id === this.modelOutliner?.id) {
+                return this.model;
+            }
             this.dispatchEvent({ type: "load", model: this.model });
             this.loading = true;
             const objects: Array<IOutlinerObject> = [];
@@ -82,14 +86,16 @@ export class Model extends EventDispatcher<IModelEvent> {
                     }
                 });
 
+                this.modelOutliner = {
+                    name: obj.name,
+                    id: obj.id,
+                    url: obj.url,
+                    children: objects,
+                };
+
                 model.userData = new ObjectUserData<IOutlinerModel>({
                     selectable: true,
-                    outliner: {
-                        name: obj.name,
-                        id: obj.id,
-                        url: obj.url,
-                        children: objects,
-                    },
+                    outliner: this.modelOutliner,
                 });
 
                 this.model = model;

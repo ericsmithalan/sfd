@@ -105,7 +105,6 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                                             item2,
                                                         );
 
-                                                    console.log("loading file");
                                                     setModelOutliner(
                                                         file.userData.outliner,
                                                     );

@@ -33,7 +33,6 @@ export const ProjectView = () => {
                     arr.push(`${projectOutliner.image.path}${i + 1}_thumb.png`);
                 }
 
-                console.log(arr);
                 setImages(arr);
             }
 

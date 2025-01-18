@@ -12,7 +12,6 @@ export const ObjectView = () => {
     const params = useParams();
 
     useEffect(() => {
-        console.log(context, params);
         if (params && params.objectId && context.viewport) {
             const object = getObject(
                 context.viewport,
