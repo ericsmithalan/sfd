@@ -1,12 +1,12 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { Object3D } from "three";
 import { Loading } from "../components";
+import { IOutlinerModel } from "../interface";
 import { IModelEvent, ISelectionEvent, Viewport } from "../lib";
 
 export interface IObjectContext<T extends Object3D = Object3D> {
     object: T | null;
     model: Object3D | null;
-    loading: boolean;
 }
 
 export const ObjectContext = createContext<IObjectContext>(
@@ -21,7 +21,7 @@ type ObjectProviderProps = {
 export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
     const [object, setObject] = useState<Object3D | null>(null);
     const [model, setModel] = useState<Object3D | null>(null);
-    const [loading, setLoading] = useState<boolean>(false);
+    const [loading, setLoading] = useState<IOutlinerModel | null>(null);
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
@@ -30,11 +30,11 @@ export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
 
         const modelChanged = (e: IModelEvent["changed"]) => {
             setModel(e.model);
-            setLoading(false);
+            setLoading(null);
         };
 
         const modelLoading = (e: IModelEvent["load"]) => {
-            setLoading(true);
+            setLoading(e.outliner);
         };
 
         if (viewport) {
@@ -62,10 +62,9 @@ export const ObjectProvider = ({ children, viewport }: ObjectProviderProps) => {
             value={{
                 object: object,
                 model: model,
-                loading: loading,
             }}
         >
-            {loading && <Loading message="loading" />}
+            {loading && <Loading message={`loading ${loading.name}...`} />}
             {children}
         </ObjectContext.Provider>
     );

@@ -188,9 +188,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.remove(e.prevModel);
         }
 
+        console.log("model changed alsdjfalsdkjf;alksdjfalksdjf");
+
         if (e.model) {
             const model = e.model;
-         
 
             this.lights.spotLight.position.set(3, 1, 5);
             this.lights.spotLight.rotateY(Math.PI / 3);

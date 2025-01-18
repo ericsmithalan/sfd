@@ -10,7 +10,7 @@ export interface SFDCurrentFile {
 
 export interface IModelEvent {
     loaded: { type: string; model: Object3D | null };
-    load: { type: string; model: Object3D | null };
+    load: { type: string; model: Object3D | null; outliner: IOutlinerModel };
     changed: {
         type: string;
         model: Object3D | null;
@@ -80,7 +80,11 @@ export class Model extends EventDispatcher<IModelEvent> {
                 return;
             }
 
-            this.dispatchEvent({ type: "load", model: this.model });
+            this.dispatchEvent({
+                type: "load",
+                model: this.model,
+                outliner: obj,
+            });
 
             const objects: Array<IOutlinerObject> = [];
 

@@ -18,7 +18,7 @@ export const ObjectView = () => {
                 Number(params.objectId),
                 true,
             );
-
+            console.log(context.viewport.selection.object);
             setObject(object);
         }
     }, [params, context]);

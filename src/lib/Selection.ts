@@ -1,4 +1,12 @@
-import { BoxHelper, Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2 } from "three";
+import {
+    BoxHelper,
+    Camera,
+    EventDispatcher,
+    Object3D,
+    Raycaster,
+    Scene,
+    Vector2,
+} from "three";
 
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
@@ -82,7 +90,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
     clear() {
         if (this.object) {
-            this.removeSelectionHelper();
             this.object = null;
         }
     }
@@ -183,21 +190,32 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         });
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
-        const objects = this.raycaster.intersectObjects(sceneChildren as Object3D[], false);
+        const objects = this.raycaster.intersectObjects(
+            sceneChildren as Object3D[],
+            false,
+        );
 
         return objects;
     };
 
     private registerEvents() {
         // this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
-        this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
-        this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
+        this.container.addEventListener("mousedown", (e: MouseEvent) =>
+            this.mouseDwn(e),
+        );
+        this.container.addEventListener("mouseup", (e: MouseEvent) =>
+            this.mouseUp(e),
+        );
     }
 
     private unRegisterEvents() {
         // this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
-        this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
-        this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
+        this.container.removeEventListener("mousedown", (e: MouseEvent) =>
+            this.mouseDwn(e),
+        );
+        this.container.removeEventListener("mouseup", (e: MouseEvent) =>
+            this.mouseUp(e),
+        );
     }
 
     dispose() {

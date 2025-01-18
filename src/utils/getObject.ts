@@ -12,7 +12,7 @@ export const getObject = <T extends Object3D>(
         object = viewport.scene.getObjectById(obj) as T;
     }
 
-    if (object && select) {
+    if (object && select == true) {
         viewport.selection.object = object as T;
     }
 

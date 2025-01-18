@@ -16,12 +16,14 @@ export const ModelView = () => {
 
     useEffect(() => {
         const laodModel = async (modelOutliner: IOutlinerModel) => {
-            const loadedModel = await context.viewport.modelFile.load(
-                modelOutliner,
-            );
+            if (modelOutliner.id !== model?.id) {
+                const loadedModel = await context.viewport.modelFile.load(
+                    modelOutliner,
+                );
 
-            if (loadedModel) {
-                setModel(loadedModel.userData.outliner);
+                if (loadedModel) {
+                    setModel(loadedModel.userData.outliner);
+                }
             }
         };
 
@@ -32,7 +34,7 @@ export const ModelView = () => {
                 laodModel(modelOutlner);
             }
         }
-    }, [params, context]);
+    }, [params, context.viewport]);
     return (
         <>
             <Outlet context={context} />

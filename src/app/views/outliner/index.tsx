@@ -2,11 +2,7 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Logo, OutlinerChild, Panel } from "../../../components";
-import {
-    getModel,
-    getProject,
-    projectOutlinerData,
-} from "../../../data/outliner";
+import { getProject, projectOutlinerData } from "../../../data/outliner";
 import { IOutlinerModel, IOutlinerProject } from "../../../interface";
 import { Viewport } from "../../../lib";
 import { setObjectVisibility } from "../../../utils";
@@ -29,27 +25,10 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
     const params = useParams();
 
     useEffect(() => {
-        const loadModel = async (project: IOutlinerProject | null) => {
-            if (project) {
-                if (params.modelId) {
-                    const model = getModel(project, params.modelId);
-                    if (model) {
-                        const loadedModel = await viewport.modelFile.load(
-                            model,
-                        );
-
-                        setModelOutliner(loadedModel.userData.outliner);
-                    }
-                }
-            }
-        };
-
         if (params) {
             if (params.projectId) {
                 const project = getProject(params.projectId);
                 setProjectOutliner(project);
-
-                loadModel(project);
             }
         }
     }, [params, viewport.modelFile]);
@@ -100,14 +79,6 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                                 ) {
                                                     setModelOpen(!modelOpen);
                                                 } else {
-                                                    const file =
-                                                        await viewport.modelFile.load(
-                                                            item2,
-                                                        );
-
-                                                    setModelOutliner(
-                                                        file.userData.outliner,
-                                                    );
                                                     setModelOpen(true);
                                                 }
                                             }}
