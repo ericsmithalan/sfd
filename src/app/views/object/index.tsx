@@ -12,16 +12,16 @@ export const ObjectView = () => {
     const params = useParams();
 
     useEffect(() => {
-        if (params && params.objectId && context.viewport) {
+        if (params.objectId && context.viewport) {
             const object = getObject(
                 context.viewport,
                 Number(params.objectId),
                 true,
             );
-            console.log(context.viewport.selection.object);
+
             setObject(object);
         }
-    }, [params, context]);
+    }, [params.objectId, context.viewport]);
     return (
         <Panel className="object-view" title={object?.name} icon="box">
             object view

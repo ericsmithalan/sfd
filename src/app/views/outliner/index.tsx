@@ -1,8 +1,6 @@
 import clsx from "clsx";
-import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useState } from "react";
 import { Logo, OutlinerChild, Panel } from "../../../components";
-import { getProject } from "../../../data/outliner";
 import { useOutliner } from "../../../hooks";
 import { setObjectVisibility } from "../../../utils";
 import "./style.scss";
@@ -11,16 +9,6 @@ export const OutlinerView = () => {
     const outliner = useOutliner();
     const [projectOpen, setProjectOpen] = useState<boolean>(true);
     const [modelOpen, setModelOpen] = useState<boolean>(true);
-    const params = useParams();
-
-    useEffect(() => {
-        if (params) {
-            if (params.projectId) {
-                const project = getProject(params.projectId);
-                outliner.setProject(project);
-            }
-        }
-    }, [params, outliner]);
 
     return (
         <Panel>

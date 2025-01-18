@@ -38,7 +38,7 @@ export const ProjectView = () => {
 
             setProject(projectOutliner);
         }
-    }, [params]);
+    }, [params.projectId]);
 
     return (
         <>

@@ -15,6 +15,7 @@ import { ViewportGizmo } from "three-viewport-gizmo";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { IScreenSize } from "../interface";
+import { fitCameraToObject } from "../utils";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
@@ -188,8 +189,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.remove(e.prevModel);
         }
 
-        console.log("model changed alsdjfalsdkjf;alksdjfalksdjf");
-
         if (e.model) {
             const model = e.model;
 
@@ -197,6 +196,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.lights.spotLight.rotateY(Math.PI / 3);
             this.lights.spotLight.lookAt(model.position);
             this.lights.spotLightHelper.update();
+
+            fitCameraToObject(this.camera, this.orbitControls, [model]);
 
             this.add(model);
 

@@ -3,3 +3,4 @@ export * from "./getObject";
 export * from "./getObjectUserData";
 export * from "./isObjEmpty";
 export * from "./setObjectVisibility";
+export * from "./unitConversions";

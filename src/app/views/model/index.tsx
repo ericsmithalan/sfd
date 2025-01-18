@@ -34,7 +34,7 @@ export const ModelView = () => {
                 laodModel(modelOutlner);
             }
         }
-    }, [params, context.viewport]);
+    }, [params.modelId, context.viewport]);
     return (
         <>
             <Outlet context={context} />

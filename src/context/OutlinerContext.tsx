@@ -1,5 +1,6 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { projectOutlinerData } from "../data";
+import { useParams } from "react-router-dom";
+import { getProject, projectOutlinerData } from "../data";
 import {
     IOutlinerModel,
     IOutlinerObject,
@@ -34,6 +35,16 @@ export const OutlinerProvider = ({
     const [project, setProject] = useState<IOutlinerProject | null>(null);
     const [model, setModel] = useState<IOutlinerModel | null>(null);
     const [object, setObject] = useState<IOutlinerObject | null>(null);
+    const params = useParams();
+
+    useEffect(() => {
+        if (params) {
+            if (params.projectId) {
+                const project = getProject(params.projectId);
+                setProject(project);
+            }
+        }
+    }, [params.projectId]);
 
     useEffect(() => {
         const modelChanged = (e: IModelEvent["changed"]) => {
