@@ -16,6 +16,7 @@
         flex-direction: column;
         position: relative;
         max-width: 900px;
+        min-width: 900px;
 
         background-color: var(--color-black-2);
         backdrop-filter: var(--blur-3);
