@@ -6,7 +6,7 @@ import {
     IOutlinerObject,
     IOutlinerProject,
 } from "../interface";
-import { IModelEvent, Viewport } from "../lib";
+import { IModelEvent, ISelectionEvent, Viewport } from "../lib";
 
 export interface IOutlinerContext {
     viewport: Viewport | null;
@@ -50,8 +50,20 @@ export const OutlinerProvider = ({
         const modelChanged = (e: IModelEvent["changed"]) => {
             setModel(e.outliner);
         };
+
+        const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
+            if (e.object) {
+                setObject(e.object.userData.outliner);
+            } else {
+                setObject(null);
+            }
+        };
         if (viewport) {
             viewport.modelFile.addEventListener("changed", modelChanged);
+            viewport.selection.addEventListener(
+                "selectionChange",
+                selectionChange,
+            );
         }
         return () => {
             if (viewport) {

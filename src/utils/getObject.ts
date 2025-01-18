@@ -4,17 +4,18 @@ import { Viewport } from "../lib";
 export const getObject = <T extends Object3D>(
     viewport: Viewport,
     obj?: number | T,
-    select: boolean = true,
+    select: boolean = false,
 ): T | null => {
-    let object = obj;
+    let object = null;
 
     if (typeof obj === "number") {
-        object = viewport.scene.getObjectById(obj) as T;
+        object = viewport.scene.getObjectById(obj);
+        console.log(viewport.scene.children);
     }
 
     if (object && select == true) {
-        viewport.selection.object = object as T;
+        viewport.selection.object = object;
     }
 
-    return object as T;
+    return (object as T) || null;
 };

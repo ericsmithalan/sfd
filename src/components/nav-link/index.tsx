@@ -1,7 +1,7 @@
 import { FC, MouseEvent, ReactNode } from "react";
 
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import { NavLink as Link } from "react-router-dom";
 import { IconName } from "../../types";
 import { Icon } from "../icon";
 import "./style.scss";
@@ -26,9 +26,17 @@ export const NavLink: FC<NavLinkProps> = ({
     icon,
 }) => {
     return (
-        <Link onClick={onClick} className={clsx("link", active && "active", variant)} to={href}>
+        <Link
+            onClick={onClick}
+            className={clsx("link", active && "active", variant)}
+            to={href}
+        >
             {icon && <Icon name={icon} fill={active} />}
-            {children && <div className={clsx("content", !wrap && "no-wrap")}>{children}</div>}
+            {children && (
+                <div className={clsx("content", !wrap && "no-wrap")}>
+                    {children}
+                </div>
+            )}
         </Link>
     );
 };

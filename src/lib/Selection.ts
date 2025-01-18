@@ -26,7 +26,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly camera: Camera;
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
-    private readonly border: BorderEffect;
+    readonly borderEffect: BorderEffect;
     private selectEnabled: boolean = true;
 
     private _selectMode: SelectMode = "select";
@@ -48,7 +48,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.registerEvents();
-        this.border = new BorderEffect(scene, renderer, camera);
+        this.borderEffect = new BorderEffect(scene, renderer, camera);
     }
 
     get selectMode() {
@@ -75,9 +75,9 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             this._object = value;
 
             if (value !== null) {
-                this.border.objects = [value];
+                this.borderEffect.objects = [value];
             } else {
-                this.border.objects = [];
+                this.borderEffect.objects = [];
             }
             // this.createSelectionHelper();
             this.dispatchEvent({
@@ -89,7 +89,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     }
 
     resize() {
-        this.border.resize();
+        this.borderEffect.resize();
     }
 
     clear() {
@@ -103,7 +103,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             this.object = null;
         }
 
-        this.border.animate();
+        this.borderEffect.animate();
         this.raycaster.setFromCamera(this.mouse, this.camera);
     };
 

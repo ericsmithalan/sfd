@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useState } from "react";
 import { Logo, OutlinerChild, Panel } from "../../../components";
 import { useOutliner } from "../../../hooks";
-import { setObjectVisibility } from "../../../utils";
+import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const OutlinerView = () => {
@@ -74,11 +74,25 @@ export const OutlinerView = () => {
                                                                 }
                                                                 href={`/viewer/${item.id}/${item2.id}/${item3.id}`}
                                                                 icon={"box"}
+                                                                onClick={() => {
+                                                                    if (
+                                                                        outliner.viewport
+                                                                    ) {
+                                                                        getObject(
+                                                                            outliner.viewport,
+                                                                            item3.id,
+                                                                            true,
+                                                                        );
+                                                                    }
+                                                                }}
                                                                 onToolClick={(
                                                                     tool,
                                                                     visible,
                                                                     e,
                                                                 ) => {
+                                                                    console.log(
+                                                                        "clicked",
+                                                                    );
                                                                     setObjectVisibility(
                                                                         outliner.viewport,
                                                                         item3.id,

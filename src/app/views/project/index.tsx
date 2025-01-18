@@ -98,7 +98,11 @@ export const ProjectView = () => {
             </Panel>
 
             <Outlet
-                context={{ viewport: context.viewport, project: project }}
+                context={{
+                    viewport: context.viewport,
+                    project: project,
+                    params: params,
+                }}
             />
 
             <ImageViewer

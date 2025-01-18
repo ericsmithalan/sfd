@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Region } from "../../components";
-import { ObjectProvider, OutlinerProvider } from "../../context";
+import { OutlinerProvider } from "../../context";
 import { Viewport } from "../../lib";
 import { OutlinerView } from "../views/outliner";
 import "./style.scss";
@@ -40,15 +40,15 @@ export const Viewer = () => {
                     {viewport && <OutlinerView />}
                 </OutlinerProvider>
             </Region>
-            <ObjectProvider viewport={viewport || null}>
-                <Region placement="right">
-                    <Outlet
-                        context={{
-                            viewport: viewport,
-                        }}
-                    />
-                </Region>
-            </ObjectProvider>
+
+            <Region placement="right">
+                <Outlet
+                    context={{
+                        viewport: viewport,
+                    }}
+                />
+            </Region>
+
             <canvas className="canvas" ref={canvasRef} />
         </div>
     );

@@ -28,6 +28,7 @@ export class BorderEffect {
     private target: WebGLRenderTarget;
 
     private _objects: Array<Object3D> = [];
+    effectScene: Scene;
 
     constructor(scene: Scene, renderer: WebGLRenderer, camera: Camera) {
         this.target = new WebGLRenderTarget(
@@ -46,9 +47,9 @@ export class BorderEffect {
         this.composer.setPixelRatio(window.devicePixelRatio);
         this.composer.setSize(window.innerWidth, window.innerHeight);
 
-        const effectScene = new Scene();
+        this.effectScene = new Scene();
 
-        this.renderPass = new RenderPass(effectScene, camera);
+        this.renderPass = new RenderPass(this.effectScene, camera);
         this.renderPass.clearColor = new Color(0, 0, 0);
         this.renderPass.clearAlpha = 0;
         this.composer.addPass(this.renderPass);
