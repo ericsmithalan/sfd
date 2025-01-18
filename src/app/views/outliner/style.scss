@@ -1,0 +1,22 @@
+.outliner-tree {
+    display: flex;
+    flex-direction: column;
+    padding: var(--padding-3);
+
+    & > .title {
+        font-weight: 600;
+        font-size: var(--font-7);
+        margin-bottom: var(--margin-3);
+        padding-left: var(--padding-2);
+    }
+
+    & > .logo-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        flex: 1 1 auto;
+        padding-top: var(--padding-1);
+        padding-bottom: var(--padding-1);
+    }
+}

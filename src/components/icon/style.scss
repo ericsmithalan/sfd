@@ -1,6 +1,6 @@
-.img-icon {
-    mask-size: 100%;
-    -webkit-mask-repeat: no-repeat;
-    mask-repeat: no-repeat;
-    mask-position: center;
+.icon {
+    font-size: inherit;
+    color: inherit;
+    aspect-ratio: 1 / 1;
+    line-height: 0;
 }

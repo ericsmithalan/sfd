@@ -1,1 +1,1 @@
-export * from "./useContactInfo";
+export * from "./useObject";

@@ -1,0 +1,14 @@
+.scrollable {
+    display: flex;
+    flex: 1 1 auto;
+    flex-direction: column;
+    min-height: 100px;
+    position: relative;
+
+    & > .scroll {
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+    }
+}

@@ -1,37 +1,14 @@
-import { Flex } from "../flex";
-import classNames from "classnames";
-import { Icon } from "../icon";
+import { FC } from "react";
+import "./style.scss";
 
-interface LoadingProps {
-    className?: string;
-    iconClassName?: string;
-    loading?: boolean;
-    message?: string;
-}
+type LoadingProps = {
+    message: string;
+};
 
-export const Loading = ({
-    className,
-    iconClassName,
-    loading,
-    message,
-}: LoadingProps) => {
+export const Loading: FC<LoadingProps> = ({ message }) => {
     return (
-        <Flex
-            as="div"
-            dir="col"
-            align={["items", "center"]}
-            className={classNames("w-screen", !loading && "hidden", className)}
-        >
-            <Icon
-                title="loading..."
-                iconSize="xxxl"
-                icon="blade"
-                fill
-                className={classNames("animate-spin", iconClassName)}
-            />
-            <div className="text-xs mt-2">
-                {message ? message : "loading..."}
-            </div>
-        </Flex>
+        <div className="loading">
+            <div className="content">{message}</div>
+        </div>
     );
 };

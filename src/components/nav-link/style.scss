@@ -1,0 +1,41 @@
+.link {
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+
+    &.active {
+        color: var(--color-alt-3);
+    }
+
+    &.outliner {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap-5);
+        padding: var(--padding-5) var(--padding-4);
+        border-radius: var(--radius-5);
+        flex: 1 1 auto;
+        align-items: center;
+
+        &:hover {
+            background-color: var(--color-white-7);
+            color: var(--color-alt-1);
+        }
+
+        &.active {
+            color: var(--color-alt-1);
+            font-weight: 600;
+            background-color: var(--color-black-3);
+        }
+
+        & > .content {
+            display: flex;
+
+            &.no-wrap {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                max-width: 95%;
+            }
+        }
+    }
+}

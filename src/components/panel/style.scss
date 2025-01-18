@@ -1,0 +1,25 @@
+.panel {
+    display: flex;
+    flex-direction: column;
+    background-color: var(--color-black-2);
+    backdrop-filter: var(--blur-3);
+    box-shadow: var(--shadow-1);
+    border-radius: var(--radius-5);
+    border: 1px solid var(--color-dark-6);
+    padding-bottom: var(--padding-1);
+
+    & > .title {
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap-4);
+        padding: var(--padding-1);
+        font-weight: bold;
+        color: var(--color-alt-2);
+    }
+
+    & > .content {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: var(--padding-1);
+    }
+}

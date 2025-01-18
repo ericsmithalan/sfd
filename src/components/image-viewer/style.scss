@@ -1,0 +1,70 @@
+.image-viewer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 999;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--color-black-3);
+
+    & > .viewer {
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        max-width: 900px;
+        min-width: 900px;
+
+        background-color: var(--color-black-2);
+        backdrop-filter: var(--blur-3);
+        box-shadow: var(--shadow-3);
+        border-radius: var(--radius-5);
+        border: 1px solid var(--color-dark-4);
+        padding: var(--padding-1);
+        gap: 3px;
+
+        & > .selected {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            border-top-left-radius: var(--radius-5);
+            border-top-right-radius: var(--radius-5);
+
+            & > .bg-image {
+                border-top-left-radius: var(--radius-5);
+                border-top-right-radius: var(--radius-5);
+            }
+        }
+
+        & > .images {
+            position: relative;
+            display: flex;
+            flex-direction: row;
+
+            & > .scroll {
+                display: flex;
+                flex-direction: row;
+                min-height: 10px;
+
+                & > .button {
+                    display: flex;
+                    flex-direction: column;
+                    flex: 1 1 auto;
+                    padding: 0;
+
+                    & > .bg-image {
+                        display: flex;
+                        flex-direction: column;
+                        flex: 1 1 auto;
+                        min-width: 1rem;
+                        min-height: 5rem;
+                        border-radius: var(--radius-5);
+                    }
+                }
+            }
+        }
+    }
+}

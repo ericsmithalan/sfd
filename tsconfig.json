@@ -12,23 +12,8 @@
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "incremental": true,
-        "plugins": [
-            {
-                "name": "next"
-            }
-        ],
-        "paths": {
-            "@/*": ["./src/*"]
-        }
+        "incremental": true
     },
-    "include": [
-        "next-env.d.ts",
-        "./src/default.d.ts",
-        "**/*.ts",
-        "**/*.tsx",
-        ".next/types/**/*.ts",
-        "src/components/model/index.old"
-    ],
+    "include": ["next-env.d.ts", "./src/default.d.ts", "**/*.ts", "**/*.tsx", "src/views/outliner/index.old"],
     "exclude": ["node_modules"]
 }

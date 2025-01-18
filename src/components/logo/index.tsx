@@ -1,5 +1,5 @@
-import classNames from "classnames";
-import Link from "next/link";
+import clsx from "clsx";
+import { Link } from "react-router-dom";
 
 interface LogoProps {
     theme?: "dark" | "light";
@@ -22,8 +22,8 @@ export const Logo = ({
     return (
         <Link
             title="Home: Smith Furniture Design"
-            href="/"
-            className={classNames("inline-flex flex-1", className)}
+            to="/"
+            className={clsx("inline-flex flex-1", className)}
         >
             <svg
                 width={width || "100%"}
@@ -31,7 +31,7 @@ export const Logo = ({
                 viewBox="0 0 374 105"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
-                className={classNames(imageClassName)}
+                className={clsx(imageClassName)}
             >
                 <g opacity="0.4">
                     <path
