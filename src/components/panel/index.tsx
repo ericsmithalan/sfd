@@ -1,7 +1,7 @@
 import clsx from "clsx";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useState } from "react";
 import { IconName } from "../../types";
-import { Icon } from "../icon";
+import { Button } from "../button";
 import "./style.scss";
 
 type PanelProps = {
@@ -12,15 +12,25 @@ type PanelProps = {
 };
 
 export const Panel: FC<PanelProps> = ({ className, children, title, icon }) => {
+    const [open, setOpen] = useState(true);
+
     return (
-        <div className={clsx("panel")}>
+        <div className={clsx("panel", open && "open")}>
             {title && (
-                <div className="title">
-                    {icon && <Icon name={icon} fill={true} />}
-                    {title}
-                </div>
+                <Button
+                    iconFill={true}
+                    className="title"
+                    variant="panel"
+                    icon={icon}
+                    text={title}
+                    onClick={() => {
+                        setOpen(!open);
+                    }}
+                />
             )}
-            <div className={clsx("content", className)}>{children}</div>
+            {open && (
+                <div className={clsx("content", className)}>{children}</div>
+            )}
         </div>
     );
 };

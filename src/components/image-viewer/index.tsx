@@ -69,7 +69,11 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                           {images.map((img, i) => {
                               return (
                                   <Button
+                                      variant="image"
                                       key={i}
+                                      active={
+                                          img.replace("_thumb", "") === selected
+                                      }
                                       onClick={(e) => {
                                           setSelected(
                                               img.replace("_thumb", ""),

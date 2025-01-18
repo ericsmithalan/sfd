@@ -5,6 +5,7 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         id: "bunks",
         name: "Bunk Beds",
         image: {
+            primaryImg: 18,
             count: 18,
             path: "/models/bunks/images/",
         },
@@ -27,6 +28,7 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         id: "case1",
         name: "Case",
         image: {
+            primaryImg: 10,
             count: 10,
             path: "/models/case-1/images/",
         },
@@ -49,6 +51,7 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         id: "desk1",
         name: "Desk",
         image: {
+            primaryImg: 1,
             count: 3,
             path: "/models/desk/images/",
         },
@@ -61,22 +64,22 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
             },
         ],
     },
-    {
-        id: "case2",
-        name: "Case",
-        image: {
-            count: 0,
-            path: "/models/john/images/",
-        },
-        models: [
-            {
-                url: "/models/john/case-1.glb",
-                id: "case-2",
-                name: "Case",
-                children: [],
-            },
-        ],
-    },
+    // {
+    //     id: "case2",
+    //     name: "Case",
+    //     image: {
+    //         count: 0,
+    //         path: "/models/john/images/",
+    //     },
+    //     models: [
+    //         {
+    //             url: "/models/john/case-1.glb",
+    //             id: "case-2",
+    //             name: "Case",
+    //             children: [],
+    //         },
+    //     ],
+    // },
 ];
 
 export const getProject = (projectId: string): IOutlinerProject | null => {

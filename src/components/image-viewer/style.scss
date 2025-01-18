@@ -4,7 +4,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    z-index: 999;
+    z-index: 9999;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,10 +15,10 @@
         display: flex;
         flex-direction: column;
         position: relative;
-        max-width: 900px;
-        min-width: 900px;
+        max-width: 80%;
+        min-width: 80%;
 
-        background-color: var(--color-black-2);
+        background-color: var(--color-dark-5);
         backdrop-filter: var(--blur-3);
         box-shadow: var(--shadow-3);
         border-radius: var(--radius-5);
@@ -30,13 +30,6 @@
             position: relative;
             display: flex;
             flex-direction: column;
-            border-top-left-radius: var(--radius-5);
-            border-top-right-radius: var(--radius-5);
-
-            & > .bg-image {
-                border-top-left-radius: var(--radius-5);
-                border-top-right-radius: var(--radius-5);
-            }
         }
 
         & > .images {
@@ -47,21 +40,18 @@
             & > .scroll {
                 display: flex;
                 flex-direction: row;
-                min-height: 10px;
+                min-height: 1rem;
+                gap: 2px;
 
                 & > .button {
                     display: flex;
                     flex-direction: column;
                     flex: 1 1 auto;
-                    padding: 0;
 
                     & > .bg-image {
                         display: flex;
                         flex-direction: column;
                         flex: 1 1 auto;
-                        min-width: 1rem;
-                        min-height: 5rem;
-                        border-radius: var(--radius-5);
                     }
                 }
             }

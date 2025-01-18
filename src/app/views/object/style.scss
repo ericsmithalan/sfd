@@ -1,3 +1,7 @@
-.project {
+.object-view {
     display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    padding-left: var(--padding-1);
+    padding-right: var(--padding-1);
 }
