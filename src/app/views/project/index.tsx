@@ -42,6 +42,10 @@ export const ProjectView = () => {
 
     return (
         <>
+            <Outlet
+                context={{ viewport: context.viewport, project: project }}
+            />
+
             <Panel
                 className="project-view"
                 title={"Project Images"}
@@ -79,10 +83,6 @@ export const ProjectView = () => {
                 visible={viewer.visible}
                 images={images}
                 image={viewer.selected}
-            />
-
-            <Outlet
-                context={{ viewport: context.viewport, project: project }}
             />
         </>
     );

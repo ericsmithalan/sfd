@@ -27,6 +27,7 @@ export const Viewer = () => {
 
         return () => {
             if (vp) {
+                console.log("disposed");
                 vp.dispose();
             }
         };

@@ -4,7 +4,7 @@ import { Viewport } from "../lib";
 export const getObject = <T extends Object3D>(
     viewport: Viewport,
     obj?: number | T,
-    select: boolean = true
+    select: boolean = true,
 ): T | null => {
     let object = obj;
 
