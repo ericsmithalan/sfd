@@ -8,6 +8,7 @@ import {
     PerspectiveCamera,
     PMREMGenerator,
     Scene,
+    SRGBColorSpace,
     Vector3,
     WebGLRenderer,
 } from "three";
@@ -65,9 +66,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
         this.scene.fog = new Fog(new Color("#222222"), 1, 100);
-        this.scene.userData = new ObjectUserData({
-            selectable: false,
-        });
+        this.scene.userData = new ObjectUserData(false, null);
 
         this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
         this.camera.name = "Camera";
@@ -75,9 +74,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
         this.camera.position.set(5, 2, 4);
-        this.camera.userData = new ObjectUserData({
-            selectable: false,
-        });
+        this.camera.userData = new ObjectUserData(false, null);
 
         this.modelFile = new Model();
 
@@ -93,6 +90,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.size.width, this.size.height);
         this.renderer.shadowMap.type = PCFSoftShadowMap;
+        this.renderer.outputColorSpace = SRGBColorSpace;
+        this.renderer.autoClear = false;
 
         this.orbitControls = new OrbitControls(this.camera, this.canvas);
         this.orbitControls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
@@ -100,6 +99,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.screenSpacePanning = true;
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 3500;
+
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
 
         this.orbitControls.update();
@@ -108,7 +108,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.container,
             this.scene,
             this.camera,
-            this.orbitControls,
+            this.renderer,
         );
 
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
@@ -118,8 +118,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.gizmo.attachControls(this.orbitControls);
 
         this.lights = new Lights();
+
         this.floor = new Floor();
+        this.floor.userData = new ObjectUserData(false, null);
+
         this.grid = new Grid();
+        this.grid.userData = new ObjectUserData(false, null);
 
         const environment = new RoomEnvironment();
         const pmremGenerator = new PMREMGenerator(this.renderer);
@@ -127,7 +131,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         environment.dispose();
         pmremGenerator.dispose();
 
-        this.add(this.lights.dirLight, this.floor, this.grid);
+        this.add(
+            // this.lights.ambientLight,
+            this.lights.dirLight,
+            this.floor,
+            this.grid,
+        );
 
         this.renderer.setAnimationLoop(() => this.animate());
 
@@ -144,7 +153,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private animate = () => {
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
-
+        this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
 
         this.gizmo.render();

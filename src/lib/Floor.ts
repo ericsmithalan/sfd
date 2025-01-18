@@ -1,5 +1,4 @@
 import { Mesh, PlaneGeometry, ShadowMaterial } from "three";
-import { ObjectUserData } from "./";
 
 export class Floor extends Mesh {
     constructor() {
@@ -11,11 +10,6 @@ export class Floor extends Mesh {
         const geometry = new PlaneGeometry(2000, 2000);
 
         this.name = "Floor";
-
-        this.userData = new ObjectUserData({
-            selectable: false,
-            outliner: null,
-        });
 
         this.material = material;
         this.geometry = geometry;

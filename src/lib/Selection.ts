@@ -1,16 +1,15 @@
 import {
-    BoxHelper,
     Camera,
     EventDispatcher,
     Object3D,
     Raycaster,
     Scene,
     Vector2,
+    WebGLRenderer,
 } from "three";
 
-import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
-import { ObjectUserData } from "./";
+import { BorderEffect, ObjectUserData } from "./";
 
 export interface ISelectionEvent {
     selectionChange: {
@@ -27,9 +26,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly camera: Camera;
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
-    private readonly orbitControls: OrbitControls;
-
-    private selectHelper: BoxHelper | null = null;
+    private readonly border: BorderEffect;
     private selectEnabled: boolean = true;
 
     private _selectMode: SelectMode = "select";
@@ -39,19 +36,19 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         container: HTMLElement,
         scene: Scene,
         camera: Camera,
-        orbitControls: OrbitControls,
+        renderer: WebGLRenderer,
     ) {
         super();
 
         this.camera = camera;
         this.raycaster = new Raycaster();
         this.container = container;
-        this.orbitControls = orbitControls;
         this.scene = scene;
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.registerEvents();
+        this.border = new BorderEffect(scene, renderer, camera);
     }
 
     get selectMode() {
@@ -77,7 +74,12 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         if (value !== this.object) {
             this._object = value;
 
-            this.createSelectionHelper();
+            if (value !== null) {
+                this.border.objects = [value];
+            } else {
+                this.border.objects = [];
+            }
+            // this.createSelectionHelper();
             this.dispatchEvent({
                 type: "selectionChange",
                 object: value,
@@ -86,7 +88,9 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         }
     }
 
-    resize() {}
+    resize() {
+        this.border.resize();
+    }
 
     clear() {
         if (this.object) {
@@ -99,38 +103,9 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             this.object = null;
         }
 
-        if (this.selectHelper) {
-            this.selectHelper.update();
-        }
-
+        this.border.animate();
         this.raycaster.setFromCamera(this.mouse, this.camera);
     };
-
-    private createSelectionHelper() {
-        this.removeSelectionHelper();
-
-        if (this.object) {
-            this.selectHelper = new BoxHelper(this.object, "#F1D2AC");
-            this.selectHelper.name = "Selection Helper";
-            this.selectHelper.material.vertexColors = false;
-            this.selectHelper.material.transparent = true;
-
-            this.selectHelper.userData = new ObjectUserData({
-                selectable: false,
-            });
-
-            this.scene.add(this.selectHelper);
-        }
-    }
-
-    private removeSelectionHelper() {
-        if (this.selectHelper) {
-            this.selectHelper.visible = false;
-            this.selectHelper.dispose();
-            this.scene.remove(this.selectHelper);
-            this.selectHelper = null;
-        }
-    }
 
     private setMouse = (e: MouseEvent) => {
         const rect = this.container.getBoundingClientRect();
@@ -146,7 +121,11 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             this.setMouse(e);
 
             const objects = this.intersects(this.mouse.x, this.mouse.y);
-            this.object = objects[0].object || null;
+            if (objects) {
+                this.object = objects[0]?.object || null;
+            } else {
+                this.object = null;
+            }
         }
     }
 

@@ -106,10 +106,10 @@ export class Model extends EventDispatcher<IModelEvent> {
                             name: object.name,
                         };
 
-                        object.userData = new ObjectUserData<IOutlinerObject>({
-                            selectable: true,
-                            outliner: outlinerUD,
-                        });
+                        object.userData = new ObjectUserData<IOutlinerObject>(
+                            true,
+                            outlinerUD,
+                        );
 
                         objects.push(outlinerUD);
                     } else {
@@ -124,10 +124,10 @@ export class Model extends EventDispatcher<IModelEvent> {
                     children: objects,
                 };
 
-                model.userData = new ObjectUserData<IOutlinerModel>({
-                    selectable: true,
-                    outliner: this.modelOutliner,
-                });
+                model.userData = new ObjectUserData<IOutlinerModel>(
+                    true,
+                    this.modelOutliner,
+                );
 
                 if (model.up.y === 1) {
                     model.up.set(0, 0, 1);

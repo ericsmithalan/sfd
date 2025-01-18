@@ -1,5 +1,11 @@
-import { BufferGeometry, Color, LineBasicMaterial, LineSegments, Object3D, Vector3 } from "three";
-import { ObjectUserData } from "./";
+import {
+    BufferGeometry,
+    Color,
+    LineBasicMaterial,
+    LineSegments,
+    Object3D,
+    Vector3,
+} from "three";
 
 export class Grid extends Object3D {
     private _size: number;
@@ -23,10 +29,6 @@ export class Grid extends Object3D {
         // this.rotateX(Math.PI / 2);
 
         this.name = "Grid";
-
-        this.userData = new ObjectUserData({
-            selectable: false,
-        });
     }
 
     private update() {
