@@ -190,9 +190,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         if (e.model) {
             const model = e.model;
-            if (model.up.y === 1) {
-                model.rotateX(Math.PI / 2);
-            }
+         
 
             this.lights.spotLight.position.set(3, 1, 5);
             this.lights.spotLight.rotateY(Math.PI / 3);

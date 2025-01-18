@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { memo, MouseEvent, ReactNode, useState } from "react";
+import { MouseEvent, ReactNode, useState } from "react";
 import { IconName } from "../../types";
 import { Button } from "../button";
 import { NavLink } from "../nav-link";
@@ -17,7 +17,7 @@ type OutlinerChildProps = {
     onToolClick?: (tool: "visible", visible: boolean, e: MouseEvent) => void;
 };
 
-export const OutlinerChild = memo((props: OutlinerChildProps) => {
+export const OutlinerChild = (props: OutlinerChildProps) => {
     const [objectVisible, setObjectVisible] = useState(true);
 
     return (
@@ -72,6 +72,4 @@ export const OutlinerChild = memo((props: OutlinerChildProps) => {
             </div>
         </div>
     );
-});
-
-OutlinerChild.displayName = "OutlinerChild";
+};

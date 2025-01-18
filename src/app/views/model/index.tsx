@@ -35,11 +35,10 @@ export const ModelView = () => {
     }, [params, context]);
     return (
         <>
+            <Outlet context={context} />
             <Panel className="model-view" title={model?.name} icon="stack">
                 Model Panel
             </Panel>
-
-            <Outlet context={context} />
         </>
     );
 };

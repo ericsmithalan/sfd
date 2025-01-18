@@ -60,7 +60,7 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                 <div className="logo-content">
                     <Logo height={45} />
                 </div>
-                <div className="title">Projects</div>
+
                 {rootOutliner.map((item, i) => {
                     return (
                         <OutlinerChild
@@ -135,7 +135,6 @@ export const OutlinerView = ({ viewport }: OutlinerViewProps) => {
                                                                         item3.id,
                                                                         visible,
                                                                     );
-                                                                    // viewport.clear();
                                                                 }}
                                                             ></OutlinerChild>
                                                         );

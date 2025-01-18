@@ -9,6 +9,10 @@
         cursor: pointer;
     }
 
+    &:focus {
+        outline: none;
+    }
+
     &.image {
         background-color: transparent;
         border: 0;
@@ -25,7 +29,7 @@
 
     &.toolbar {
         border: 1px solid transparent;
-        background-color: var(--color-black-8);
+        background-color: transparent;
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-4);
         border-radius: var(--radius-5);

@@ -18,11 +18,16 @@ export interface IModelEvent {
     };
 }
 
+type Cache = {
+    model: Object3D;
+    outliner: IOutlinerModel;
+};
+
 export class Model extends EventDispatcher<IModelEvent> {
     private readonly loader: GLTFLoader;
     private _model: Object3D | null = null;
+    private cache: Map<string, Cache> = new Map();
 
-    private loading = false;
     gtlf: GLTF | null = null;
     private modelOutliner: IOutlinerModel | null = null;
 
@@ -46,24 +51,45 @@ export class Model extends EventDispatcher<IModelEvent> {
         });
     }
 
+    private getCache(outlinerId: string) {
+        return this.cache.get(outlinerId);
+    }
+
+    private setCache(
+        outlinerId: string,
+        obj: Object3D,
+        outliner: IOutlinerModel,
+    ) {
+        const cached = this.cache.get(outlinerId);
+        if (!cached) {
+            this.cache.set(outlinerId, { model: obj, outliner: outliner });
+        }
+    }
+
     load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
-            if (obj.id === this.modelOutliner?.id) {
-                return this.model;
+            const cached = this.getCache(obj.id);
+
+            if (cached) {
+                this.model = cached.model;
+
+                this.modelOutliner = cached.outliner;
+
+                resolve(cached.model);
+
+                return;
             }
+
             this.dispatchEvent({ type: "load", model: this.model });
-            this.loading = true;
+
             const objects: Array<IOutlinerObject> = [];
 
             this.loader.load(obj.url, (gltf) => {
                 this.gtlf = null;
                 this.gtlf = gltf;
                 const model = gltf.scene;
-                model.visible = false;
                 model.castShadow = true;
                 model.receiveShadow = true;
-
-                console.log("model loaded", model);
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
@@ -98,7 +124,13 @@ export class Model extends EventDispatcher<IModelEvent> {
                     outliner: this.modelOutliner,
                 });
 
+                if (model.up.y === 1) {
+                    model.up.set(0, 0, 1);
+                    model.rotateX(Math.PI / 2);
+                }
+
                 this.model = model;
+                this.setCache(obj.id, model, this.modelOutliner);
                 this.dispatchEvent({ type: "loaded", model: this.model });
 
                 resolve(this.model);

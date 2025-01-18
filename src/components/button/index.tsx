@@ -22,7 +22,11 @@ export const Button: FC<ButtonProps> = ({
     onClick,
 }) => {
     return (
-        <button className={clsx("button", variant)} onClick={onClick}>
+        <button
+            tabIndex={0}
+            className={clsx("button", variant)}
+            onClick={onClick}
+        >
             {text && <div className="text">{text}</div>}
             {icon && <Icon name={icon} fill={active} />}
             {children}
