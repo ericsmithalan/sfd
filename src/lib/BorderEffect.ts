@@ -46,12 +46,14 @@ export class BorderEffect {
         this.composer = new EffectComposer(renderer, this.target);
         this.composer.setPixelRatio(window.devicePixelRatio);
         this.composer.setSize(window.innerWidth, window.innerHeight);
+        // this.composer.renderTarget1.stencilBuffer = true;
+        // this.composer.renderTarget2.stencilBuffer = true;
 
         this.effectScene = new Scene();
 
         this.renderPass = new RenderPass(this.effectScene, camera);
-        this.renderPass.clearColor = new Color(0, 0, 0);
-        this.renderPass.clearAlpha = 0;
+        // this.renderPass.clearColor = new Color(0, 0, 0);
+        // this.renderPass.clearAlpha = 0;
         this.composer.addPass(this.renderPass);
 
         this.outlinePass = new OutlinePass(
@@ -61,12 +63,12 @@ export class BorderEffect {
         );
 
         this.outlinePass.edgeGlow = 0;
-        this.outlinePass.edgeThickness = 6;
-        this.outlinePass.edgeStrength = 15;
+        this.outlinePass.edgeThickness = 4;
+        this.outlinePass.edgeStrength = 10;
         this.outlinePass.pulsePeriod = 0;
 
-        this.outlinePass.visibleEdgeColor = new Color("#FFDDB3");
-        this.outlinePass.hiddenEdgeColor = new Color("#FFDDB3");
+        this.outlinePass.visibleEdgeColor.set(new Color(0xffddb3));
+        this.outlinePass.hiddenEdgeColor.set(new Color(0xffddb3));
         this.composer.addPass(this.outlinePass);
 
         this.outputPass = new OutputPass();

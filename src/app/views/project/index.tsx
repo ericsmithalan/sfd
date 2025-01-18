@@ -66,7 +66,7 @@ export const ProjectView = () => {
                     >
                         <BgImage
                             size="cover"
-                            height={200}
+                            height={150}
                             width={"100%"}
                             src={primaryImage}
                         />

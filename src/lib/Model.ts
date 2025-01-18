@@ -98,6 +98,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
+                        object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
 
