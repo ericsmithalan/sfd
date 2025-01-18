@@ -110,7 +110,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.removeSelectionHelper();
 
         if (this.object) {
-            this.selectHelper = new BoxHelper(this.object, "red");
+            this.selectHelper = new BoxHelper(this.object, "#F1D2AC");
             this.selectHelper.name = "Selection Helper";
             this.selectHelper.material.vertexColors = false;
             this.selectHelper.material.transparent = true;
