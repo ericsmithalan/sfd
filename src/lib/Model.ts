@@ -15,7 +15,6 @@ export interface IModelEvent {
     changed: {
         type: string;
         model: Object3D | null;
-        prevModel: Object3D | null;
         outliner: IOutlinerModel | null;
         edges: Group | null;
     };
@@ -46,13 +45,15 @@ export class Model extends EventDispatcher<IModelEvent> {
     }
 
     set model(model: Object3D | null) {
-        const prevModel = this._model;
+        if (this._model && this._model.parent) {
+            this._model.parent.remove(this._model);
+        }
+
         this._model = model;
 
         this.dispatchEvent({
             type: "changed",
             model: model,
-            prevModel: prevModel,
             outliner: this.modelOutliner,
             edges: this.edges,
         });
@@ -142,6 +143,10 @@ export class Model extends EventDispatcher<IModelEvent> {
                 }
 
                 this.setCache(obj.id, model, this.modelOutliner);
+
+                if (this.edges && this.edges.parent) {
+                    this.edges.parent.remove(this.edges);
+                }
 
                 this.edges = edges.edgeGroup;
 

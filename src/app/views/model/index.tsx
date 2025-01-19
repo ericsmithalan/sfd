@@ -16,18 +16,18 @@ export const ModelView = () => {
 
     return (
         <>
-            <Panel contentCss="model-view" title={outliner.model?.name} icon="stack">
+            <Panel contentCss="model-view" title={outliner.model?.name} icon="blender">
                 <Toolbar>
                     <Button
                         variant="toolbar"
+                        text={edges ? "Hide Edges" : "Show Edges"}
                         active={edges}
+                        icon={edges ? "shape" : "shape"}
                         onClick={(e) => {
                             outliner.viewport.showEdges = !edges;
                             setEdges(!edges);
                         }}
-                    >
-                        Show Edges
-                    </Button>
+                    />
                 </Toolbar>
             </Panel>
         </>

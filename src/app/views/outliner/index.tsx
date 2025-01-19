@@ -37,7 +37,7 @@ export const OutlinerView = () => {
                                         active={outliner.model?.id === item2.id}
                                         name={item2.name}
                                         href={`/${item.id}/${item2.id}`}
-                                        icon={"stack"}
+                                        icon={"blender"}
                                         onClick={(e) => {
                                             if (outliner.model?.id !== item2.id) {
                                                 outliner.setModel(item2);

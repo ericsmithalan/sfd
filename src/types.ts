@@ -403,6 +403,7 @@ export type IconName =
     | "checkbox-indeterminate"
     | "checkbox"
     | "checkbox-multiple-blank"
+    | "multi-image"
     | "checkbox-multiple-blank"
     | "checkbox-multiple"
     | "checkbox-multiple"

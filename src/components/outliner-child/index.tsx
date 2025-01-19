@@ -58,6 +58,7 @@ export const OutlinerChild = (props: OutlinerChildProps) => {
                             maxHeight={"60vh"}
                             minHeight={"0vh"}
                             height={"100%"}
+                            disable={props.level < 2}
                             className={clsx(`level-${props.level}`)}
                         >
                             <div className={clsx(`scroller level-${props.level}`)}>

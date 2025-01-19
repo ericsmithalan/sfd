@@ -4,10 +4,12 @@
     flex-direction: column;
     position: relative;
 
-    & > .scroller-scroll {
-        overflow: auto;
-        display: flex;
-        flex-direction: column;
-        position: relative;
+    &:not(.disabled) {
+        & > .scroller-scroll {
+            overflow: auto;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
     }
 }

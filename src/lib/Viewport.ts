@@ -45,7 +45,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly grid: Grid;
     readonly floor: Floor;
 
-    private _showEdges: boolean = false;
+    private _showEdges: boolean = true;
 
     size: IScreenSize = {
         width: 0,
@@ -209,11 +209,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     };
 
     private modelChanged(e: IModelEvent["changed"]) {
-        if (e.prevModel) {
-            this.selection.clear();
-            this.remove(e.prevModel);
-        }
-
         if (e.model) {
             const model = e.model;
 
@@ -226,6 +221,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
             this.add(model);
 
+            this.toggleEdges(this.showEdges);
             model.visible = true;
         }
     }

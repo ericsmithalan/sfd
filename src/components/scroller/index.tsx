@@ -11,6 +11,7 @@ type ScrollerProps = {
     minHeight?: number | string;
     maxWidth?: number | string;
     minWidth?: number | string;
+    disable?: boolean;
 };
 
 export const Scroller: FC<ScrollerProps> = ({
@@ -22,18 +23,19 @@ export const Scroller: FC<ScrollerProps> = ({
     maxHeight,
     className,
     children,
+    disable = false,
 }) => {
     return (
-        <div className={clsx("scroller", className)}>
+        <div className={clsx("scroller", disable && "disabled", className)}>
             <div
                 className={clsx("scroller-scroll")}
                 style={{
-                    width: width,
-                    height: height,
-                    maxHeight: maxHeight,
-                    maxWidth: maxWidth,
-                    minHeight: minHeight,
-                    minWidth: minWidth,
+                    width: (!disable && width) || undefined,
+                    height: (!disable && height) || undefined,
+                    maxHeight: (!disable && maxHeight) || undefined,
+                    maxWidth: (!disable && maxWidth) || undefined,
+                    minHeight: (!disable && minHeight) || undefined,
+                    minWidth: (!disable && minWidth) || undefined,
                 }}
             >
                 {children}
