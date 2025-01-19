@@ -2,7 +2,7 @@ import { IOutlinerModel, IOutlinerProject } from "../interface";
 
 export const projectOutlinerData: Array<IOutlinerProject> = [
     {
-        id: "bunks",
+        id: "bunks_6OG-1",
         name: "Bunk Beds",
         image: {
             primaryImg: 18,
@@ -12,20 +12,20 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         models: [
             {
                 url: "/models/bunks/bunks1.glb",
-                id: "main",
+                id: "main_K07vd",
                 name: "Final Model",
                 children: [],
             },
             {
                 url: "/models/bunks/mockups.glb",
-                id: "mockups",
+                id: "mockups_GDS96",
                 name: "Initial Mockups",
                 children: [],
             },
         ],
     },
     {
-        id: "case1",
+        id: "case_iQoJe",
         name: "Case",
         image: {
             primaryImg: 10,
@@ -35,20 +35,20 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         models: [
             {
                 url: "/models/case-1/final.glb",
-                id: "final",
+                id: "final_9F1h2",
                 name: "Final Model",
                 children: [],
             },
             {
                 url: "/models/case-1/build.glb",
-                id: "build",
+                id: "build_qoh-y",
                 name: "Build Steps",
                 children: [],
             },
         ],
     },
     {
-        id: "desk1",
+        id: "desk_-QO-V",
         name: "Desk",
         image: {
             primaryImg: 1,
@@ -58,7 +58,7 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         models: [
             {
                 url: "/models/desk/desk1.glb",
-                id: "main",
+                id: "main_yEix4",
                 name: "Final Model",
                 children: [],
             },

@@ -88,7 +88,6 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerProviderProps) 
         }
         return () => {
             if (viewport) {
-                console.log("outliner dispose");
                 viewport.selection.removeEventListener("selectionChange", selectionChange);
             }
         };

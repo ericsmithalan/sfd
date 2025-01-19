@@ -67,7 +67,6 @@ export const OutlinerView = () => {
                                                             }
                                                         }}
                                                         onToolClick={(tool, visible, e) => {
-                                                            console.log("clicked");
                                                             setObjectVisibility(
                                                                 outliner.viewport,
                                                                 item3.id,
