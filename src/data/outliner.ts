@@ -12,14 +12,14 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         models: [
             {
                 url: "/models/bunks/bunks1.glb",
-                id: "beds",
-                name: "Beds",
+                id: "main",
+                name: "Final Model",
                 children: [],
             },
             {
                 url: "/models/bunks/mockups.glb",
                 id: "mockups",
-                name: "Mockups",
+                name: "Initial Mockups",
                 children: [],
             },
         ],
@@ -36,13 +36,13 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
             {
                 url: "/models/case-1/final.glb",
                 id: "final",
-                name: "Case",
+                name: "Final Model",
                 children: [],
             },
             {
                 url: "/models/case-1/build.glb",
                 id: "build",
-                name: "Build",
+                name: "Build Steps",
                 children: [],
             },
         ],
@@ -58,8 +58,8 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
         models: [
             {
                 url: "/models/desk/desk1.glb",
-                id: "desk",
-                name: "Desk",
+                id: "main",
+                name: "Final Model",
                 children: [],
             },
         ],
@@ -86,9 +86,6 @@ export const getProject = (projectId: string): IOutlinerProject | null => {
     return projectOutlinerData.find((item) => item.id === projectId) || null;
 };
 
-export const getModel = (
-    project: IOutlinerProject,
-    modelId: string,
-): IOutlinerModel | null => {
+export const getModel = (project: IOutlinerProject, modelId: string): IOutlinerModel | null => {
     return project.models.find((item) => item.id === modelId) || null;
 };

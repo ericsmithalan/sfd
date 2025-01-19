@@ -7,7 +7,7 @@ import { ISelectionEvent, Viewport } from "../lib";
 import { getObject } from "../utils";
 
 export interface IOutlinerContext {
-    viewport: Viewport | null;
+    viewport: Viewport;
     root: Array<IOutlinerProject>;
     project: IOutlinerProject | null;
     model: IOutlinerModel | null;

@@ -1,6 +1,7 @@
-import { EventDispatcher, Mesh, Object3D } from "three";
+import { EventDispatcher, Group, Mesh, Object3D } from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { IOutlinerModel, IOutlinerObject } from "../interface";
+import { Edges } from "./Edges";
 import { ObjectUserData } from "./ObjectUserData";
 
 export interface SFDCurrentFile {
@@ -16,6 +17,7 @@ export interface IModelEvent {
         model: Object3D | null;
         prevModel: Object3D | null;
         outliner: IOutlinerModel | null;
+        edges: Group | null;
     };
 }
 
@@ -31,6 +33,8 @@ export class Model extends EventDispatcher<IModelEvent> {
 
     gtlf: GLTF | null = null;
     private modelOutliner: IOutlinerModel | null = null;
+
+    edges: Group | null = null;
 
     constructor() {
         super();
@@ -50,6 +54,7 @@ export class Model extends EventDispatcher<IModelEvent> {
             model: model,
             prevModel: prevModel,
             outliner: this.modelOutliner,
+            edges: this.edges,
         });
     }
 
@@ -91,6 +96,7 @@ export class Model extends EventDispatcher<IModelEvent> {
                 const model = gltf.scene;
                 model.castShadow = true;
                 model.receiveShadow = true;
+                const edges = new Edges();
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
@@ -107,6 +113,12 @@ export class Model extends EventDispatcher<IModelEvent> {
                         object.userData = new ObjectUserData<IOutlinerObject>(true, outlinerUD);
 
                         objects.push(outlinerUD);
+
+                        // if (object.geometry instanceof BufferGeometry) {
+                        //     object.geometry = edges.add(object);
+                        // }
+
+                        edges.add(object);
                     } else {
                         object.layers.disableAll();
                     }
@@ -124,9 +136,14 @@ export class Model extends EventDispatcher<IModelEvent> {
                 if (model.up.y === 1) {
                     model.up.set(0, 0, 1);
                     model.rotateX(Math.PI / 2);
+
+                    edges.edgeGroup.up.set(0, 0, 1);
+                    edges.edgeGroup.rotateX(Math.PI / 2);
                 }
 
                 this.setCache(obj.id, model, this.modelOutliner);
+
+                this.edges = edges.edgeGroup;
 
                 this.model = model;
                 this.dispatchEvent({ type: "loaded", model: this.model });

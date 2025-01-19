@@ -30,11 +30,11 @@
         box-shadow: var(--shadow-2);
         padding: var(--padding-1);
         border-radius: var(--radius-3);
-        border: 3px solid var(--color-alt-5);
+        border: 3px solid var(--color-alt-4);
         justify-content: center;
         align-items: center;
-        min-width: 10%;
-        min-height: 10%;
+        min-width: 20%;
+        min-height: 20%;
         gap: var(--gap-1);
 
         & > .loader {

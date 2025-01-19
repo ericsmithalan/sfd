@@ -15,7 +15,6 @@
         border-radius: var(--radius-5);
         border: 1px solid transparent;
         flex: 1 1 auto;
-        align-items: center;
 
         &:hover {
             background-color: var(--color-white-7);
@@ -32,14 +31,17 @@
             background-color: var(--color-black-3);
         }
 
-        & > .content {
+        & > .link-content {
             display: flex;
+            flex-direction: row;
+            flex: 1 1 auto;
 
             &.no-wrap {
                 text-overflow: ellipsis;
                 overflow: hidden;
                 white-space: nowrap;
-                max-width: 95%;
+                display: inline-block;
+                width: 100px;
             }
         }
     }

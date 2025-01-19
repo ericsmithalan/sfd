@@ -8,3 +8,4 @@ export * from "./outliner-child";
 export * from "./panel";
 export * from "./region";
 export * from "./scroller";
+export * from "./toolbar";

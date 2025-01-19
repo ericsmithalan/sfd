@@ -33,7 +33,7 @@ export const NavLink: FC<NavLinkProps> = ({
         >
             {icon && <Icon name={icon} fill={active} />}
             {children && (
-                <div className={clsx("content", !wrap && "no-wrap")}>
+                <div className={clsx("link-content", !wrap && "no-wrap")}>
                     {children}
                 </div>
             )}

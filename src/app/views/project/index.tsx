@@ -38,6 +38,12 @@ export const ProjectView = () => {
 
     return (
         <>
+            <Outlet
+                context={{
+                    outliner: outliner,
+                }}
+            />
+
             <Panel
                 contentCss="project-view"
                 title={`Project Images (${images.length - 1})`}
@@ -81,12 +87,6 @@ export const ProjectView = () => {
                     })}
                 </div>
             </Panel>
-
-            <Outlet
-                context={{
-                    outliner: outliner,
-                }}
-            />
 
             <ImageViewer
                 onClosed={() => {

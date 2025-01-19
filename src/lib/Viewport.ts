@@ -16,7 +16,6 @@ import { ViewportGizmo } from "three-viewport-gizmo";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { IScreenSize } from "../interface";
-import { fitCameraToObject } from "../utils";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
@@ -28,6 +27,7 @@ export interface IViewportEvent {
     resize: { type: string; size: IScreenSize };
     loading: { type: string; isLoading: boolean };
     updated: { type: string; object: Object3D };
+    showEdgesChange: { type: string; value: boolean };
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
@@ -44,6 +44,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly lights: Lights;
     readonly grid: Grid;
     readonly floor: Floor;
+
+    private _showEdges: boolean = false;
 
     size: IScreenSize = {
         width: 0,
@@ -143,6 +145,28 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene.remove(...object);
     }
 
+    get showEdges() {
+        return this._showEdges;
+    }
+
+    set showEdges(value: boolean) {
+        this._showEdges = value;
+        this.toggleEdges(value);
+        this.dispatchEvent({ type: "showEdgesChange", value: value });
+    }
+
+    toggleEdges(value: boolean) {
+        if (value === true) {
+            if (this.modelFile.edges) {
+                this.add(this.modelFile.edges);
+            }
+        } else {
+            if (this.modelFile.edges) {
+                this.remove(this.modelFile.edges);
+            }
+        }
+    }
+
     private animate = () => {
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
@@ -198,11 +222,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.lights.spotLight.lookAt(model.position);
             this.lights.spotLightHelper.update();
 
-            fitCameraToObject(this.camera, this.orbitControls, [model]);
+            // fitCameraToObject(this.camera, this.orbitControls, [model]);
 
             this.add(model);
 
-            model.updateMatrix();
             model.visible = true;
         }
     }
