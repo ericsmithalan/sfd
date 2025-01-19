@@ -47,7 +47,7 @@ export const ProjectView = () => {
             <Panel
                 contentCss="project-view"
                 title={`Project Images (${images.length - 1})`}
-                icon="texture"
+                icon="image"
             >
                 <div className="primary-image">
                     <Button

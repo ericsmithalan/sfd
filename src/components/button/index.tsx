@@ -10,7 +10,7 @@ type ButtonProps = {
     icon?: IconName;
     iconFill?: boolean;
     active?: boolean;
-    variant?: "toolbar" | "image" | "default" | "panel";
+    variant?: "toolbar" | "image" | "default" | "panel" | "clear";
     className?: string;
     onClick?: (e: MouseEvent) => void;
 };
@@ -27,12 +27,7 @@ export const Button: FC<ButtonProps> = ({
 }) => {
     return (
         <button
-            className={clsx(
-                "button",
-                `btn-${variant}`,
-                active && "active",
-                className,
-            )}
+            className={clsx("button", `btn-${variant}`, active && "active", className)}
             onClick={onClick}
         >
             {icon && <Icon name={icon} fill={iconFill || active} />}

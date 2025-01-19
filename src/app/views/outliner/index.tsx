@@ -54,7 +54,7 @@ export const OutlinerView = () => {
                                                         name={item3.name}
                                                         active={outliner.object?.id === item3.id}
                                                         href={``}
-                                                        icon={"box"}
+                                                        icon={"box-1"}
                                                         onClick={(e) => {
                                                             e.preventDefault();
                                                             if (outliner.object?.id !== item3.id) {

@@ -7,14 +7,18 @@ type IconProps = {
     name: IconName;
     className?: string;
     fill?: boolean;
+    active?: boolean;
 };
 
-export const Icon: FC<IconProps> = ({ name, fill = false, className }) => {
-    const filled = fill ? "-fill" : "";
-
+export const Icon: FC<IconProps> = ({ name, fill = false, active = false, className }) => {
     return (
         <div className={clsx("icon", className)}>
-            <i className={clsx(`hl-icon-${name}${filled}`)} />
+            <i
+                className={clsx(
+                    "ri-icon",
+                    name && `ri-${name}-${fill || active ? "fill" : "line"}`,
+                )}
+            />
         </div>
     );
 };

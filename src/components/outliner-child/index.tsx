@@ -40,8 +40,8 @@ export const OutlinerChild = (props: OutlinerChildProps) => {
                         {props.level && props.level > 2 && (
                             <div className="tools">
                                 <Button
-                                    variant="toolbar"
-                                    icon={objectVisible ? "visible" : "hidden"}
+                                    variant="clear"
+                                    icon={objectVisible ? "eye" : "eye-close"}
                                     onClick={(e) => {
                                         if (props.onToolClick) {
                                             props.onToolClick("visible", !objectVisible, e);
