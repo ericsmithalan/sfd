@@ -12,7 +12,6 @@ type OutlinerChildProps = {
     name: string;
     href: string;
     icon: IconName;
-    open?: boolean;
     onClick?: (e: MouseEvent) => void;
     onToolClick?: (tool: "visible", visible: boolean, e: MouseEvent) => void;
 };
@@ -57,7 +56,7 @@ export const OutlinerChild = (props: OutlinerChildProps) => {
                         )}
                     </div>
 
-                    {props.open === true && props.children && (
+                    {props.children && (
                         <div className={clsx(`children level-${props.level}`)}>
                             <div
                                 className={clsx(

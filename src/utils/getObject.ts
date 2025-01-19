@@ -10,7 +10,6 @@ export const getObject = <T extends Object3D>(
 
     if (typeof obj === "number") {
         object = viewport.scene.getObjectById(obj);
-        console.log(viewport.scene.children);
     }
 
     if (object && select == true) {

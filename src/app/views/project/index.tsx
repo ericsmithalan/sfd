@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Outlet, useOutletContext, useParams } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import { BgImage, Button, Panel } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
-import { getProject } from "../../../data";
-import { IOutlinerProject } from "../../../interface";
+import { useOutliner } from "../../../hooks";
 import { Viewport } from "../../../lib";
 import "./style.scss";
 
@@ -14,37 +13,30 @@ type ViewerState = {
 
 export const ProjectView = () => {
     const context = useOutletContext<{ viewport: Viewport }>();
-    const [project, setProject] = useState<IOutlinerProject | null>(null);
     const [images, setImages] = useState<Array<string>>([]);
     const [primaryImage, setPrimaryImage] = useState("");
+    const outliner = useOutliner();
 
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
         selected: "",
     });
-    const params = useParams();
 
     useEffect(() => {
-        if (params && params.projectId) {
-            const projectOutliner = getProject(params.projectId);
+        if (outliner.project) {
+            const img = outliner.project.image;
 
-            if (projectOutliner) {
-                const img = projectOutliner.image;
-
-                const arr: Array<string> = [];
-                for (let i = 0; i < img.count; i++) {
-                    if (i + 1 === img.primaryImg) {
-                        setPrimaryImage(`${img.path}${i + 1}_thumb.png`);
-                    }
-                    arr.push(`${img.path}${i + 1}_thumb.png`);
+            const arr: Array<string> = [];
+            for (let i = 0; i < img.count; i++) {
+                if (i + 1 === img.primaryImg) {
+                    setPrimaryImage(`${img.path}${i + 1}_thumb.png`);
                 }
-
-                setImages(arr);
+                arr.push(`${img.path}${i + 1}_thumb.png`);
             }
 
-            setProject(projectOutliner);
+            setImages(arr);
         }
-    }, [params.projectId]);
+    }, [outliner.project]);
 
     return (
         <>
@@ -66,7 +58,7 @@ export const ProjectView = () => {
                     >
                         <BgImage
                             size="cover"
-                            height={150}
+                            height={100}
                             width={"100%"}
                             src={primaryImage}
                         />
@@ -100,8 +92,7 @@ export const ProjectView = () => {
             <Outlet
                 context={{
                     viewport: context.viewport,
-                    project: project,
-                    params: params,
+                    outliner: outliner,
                 }}
             />
 

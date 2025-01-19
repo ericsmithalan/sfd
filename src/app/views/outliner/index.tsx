@@ -1,14 +1,11 @@
 import clsx from "clsx";
-import { useState } from "react";
 import { Logo, OutlinerChild, Panel } from "../../../components";
 import { useOutliner } from "../../../hooks";
-import { getObject, setObjectVisibility } from "../../../utils";
+import { setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const OutlinerView = () => {
     const outliner = useOutliner();
-    const [projectOpen, setProjectOpen] = useState<boolean>(true);
-    const [modelOpen, setModelOpen] = useState<boolean>(true);
 
     return (
         <Panel>
@@ -23,16 +20,11 @@ export const OutlinerView = () => {
                             key={`${item.id}-${i}`}
                             icon="folder"
                             level={1}
-                            open={projectOpen}
                             active={outliner.project?.id === item.id}
-                            href={`/viewer/${item.id}`}
+                            href={`/${item.id}`}
                             name={item.name}
-                            onClick={(e) => {
-                                if (outliner.project?.id === item.id) {
-                                    setProjectOpen(!projectOpen);
-                                } else {
-                                    outliner.setProject(item);
-                                }
+                            onClick={() => {
+                                outliner.setProject(item);
                             }}
                         >
                             {outliner.project &&
@@ -46,18 +38,10 @@ export const OutlinerView = () => {
                                                 outliner.model?.id === item2.id
                                             }
                                             name={item2.name}
-                                            open={modelOpen}
-                                            href={`/viewer/${item.id}/${item2.id}`}
+                                            href={`/${item.id}/${item2.id}`}
                                             icon={"stack"}
-                                            onClick={async (e) => {
-                                                if (
-                                                    item2.id ===
-                                                    outliner.model?.id
-                                                ) {
-                                                    setModelOpen(!modelOpen);
-                                                } else {
-                                                    setModelOpen(true);
-                                                }
+                                            onClick={(e) => {
+                                                outliner.setModel(item2);
                                             }}
                                         >
                                             {outliner.model &&
@@ -72,18 +56,12 @@ export const OutlinerView = () => {
                                                                 name={
                                                                     item3.name
                                                                 }
-                                                                href={`/viewer/${item.id}/${item2.id}/${item3.id}`}
+                                                                href={`/${item.id}/${item2.id}/${item3.id}`}
                                                                 icon={"box"}
                                                                 onClick={() => {
-                                                                    if (
-                                                                        outliner.viewport
-                                                                    ) {
-                                                                        getObject(
-                                                                            outliner.viewport,
-                                                                            item3.id,
-                                                                            true,
-                                                                        );
-                                                                    }
+                                                                    outliner.setObject(
+                                                                        item3,
+                                                                    );
                                                                 }}
                                                                 onToolClick={(
                                                                     tool,

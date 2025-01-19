@@ -35,19 +35,21 @@ export const Viewer = () => {
 
     return (
         <div className="viewer">
-            <Region placement="left">
-                <OutlinerProvider viewport={viewport || null}>
-                    {viewport && <OutlinerView />}
-                </OutlinerProvider>
-            </Region>
+            {viewport && (
+                <OutlinerProvider viewport={viewport}>
+                    <Region placement="left">
+                        {viewport && <OutlinerView />}
+                    </Region>
 
-            <Region placement="right">
-                <Outlet
-                    context={{
-                        viewport: viewport,
-                    }}
-                />
-            </Region>
+                    <Region placement="right">
+                        <Outlet
+                            context={{
+                                viewport: viewport,
+                            }}
+                        />
+                    </Region>
+                </OutlinerProvider>
+            )}
 
             <canvas className="canvas" ref={canvasRef} />
         </div>
