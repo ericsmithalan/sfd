@@ -57,11 +57,7 @@ export class Model extends EventDispatcher<IModelEvent> {
         return this.cache.get(outlinerId);
     }
 
-    private setCache(
-        outlinerId: string,
-        obj: Object3D,
-        outliner: IOutlinerModel,
-    ) {
+    private setCache(outlinerId: string, obj: Object3D, outliner: IOutlinerModel) {
         const cached = this.cache.get(outlinerId);
         if (!cached) {
             this.cache.set(outlinerId, { model: obj, outliner: outliner });
@@ -98,6 +94,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
+                        // object.computeBoundingBox();
                         object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
@@ -107,10 +104,7 @@ export class Model extends EventDispatcher<IModelEvent> {
                             name: object.name,
                         };
 
-                        object.userData = new ObjectUserData<IOutlinerObject>(
-                            true,
-                            outlinerUD,
-                        );
+                        object.userData = new ObjectUserData<IOutlinerObject>(true, outlinerUD);
 
                         objects.push(outlinerUD);
                     } else {
@@ -125,10 +119,7 @@ export class Model extends EventDispatcher<IModelEvent> {
                     children: objects,
                 };
 
-                model.userData = new ObjectUserData<IOutlinerModel>(
-                    true,
-                    this.modelOutliner,
-                );
+                model.userData = new ObjectUserData<IOutlinerModel>(true, this.modelOutliner);
 
                 if (model.up.y === 1) {
                     model.up.set(0, 0, 1);
@@ -144,4 +135,6 @@ export class Model extends EventDispatcher<IModelEvent> {
             });
         });
     };
+
+    dispose() {}
 }

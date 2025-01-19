@@ -12,7 +12,7 @@
         padding-bottom: var(--padding-1);
     }
 
-    & > .title {
+    & > .panel-title {
         display: flex;
         flex-direction: row;
         gap: var(--gap-5);
@@ -20,7 +20,7 @@
         position: relative;
     }
 
-    & > .content {
+    & > .panel-content {
         display: flex;
         flex-direction: column;
         padding-bottom: var(--padding-1);

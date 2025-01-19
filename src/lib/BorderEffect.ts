@@ -31,17 +31,13 @@ export class BorderEffect {
     effectScene: Scene;
 
     constructor(scene: Scene, renderer: WebGLRenderer, camera: Camera) {
-        this.target = new WebGLRenderTarget(
-            window.innerWidth,
-            window.innerHeight,
-            {
-                minFilter: LinearFilter,
-                magFilter: LinearFilter,
-                format: RGBAFormat,
-                colorSpace: SRGBColorSpace,
-                stencilBuffer: true,
-            },
-        );
+        this.target = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
+            minFilter: LinearFilter,
+            magFilter: LinearFilter,
+            format: RGBAFormat,
+            colorSpace: SRGBColorSpace,
+            stencilBuffer: true,
+        });
 
         this.composer = new EffectComposer(renderer, this.target);
         this.composer.setPixelRatio(window.devicePixelRatio);
@@ -104,5 +100,13 @@ export class BorderEffect {
 
     animate() {
         this.composer.render();
+    }
+
+    dispose() {
+        this.target.dispose();
+        this.renderPass.dispose();
+        this.composer.dispose();
+        this.outlinePass.dispose();
+        this.outputPass.dispose();
     }
 }

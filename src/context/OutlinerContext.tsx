@@ -1,12 +1,8 @@
 import { createContext, ReactNode, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { NavigateFunction, Params, useNavigate, useParams } from "react-router-dom";
 import { Loading } from "../components";
 import { getModel, getProject, projectOutlinerData } from "../data";
-import {
-    IOutlinerModel,
-    IOutlinerObject,
-    IOutlinerProject,
-} from "../interface";
+import { IOutlinerModel, IOutlinerObject, IOutlinerProject } from "../interface";
 import { ISelectionEvent, Viewport } from "../lib";
 import { getObject } from "../utils";
 
@@ -16,24 +12,21 @@ export interface IOutlinerContext {
     project: IOutlinerProject | null;
     model: IOutlinerModel | null;
     object: IOutlinerObject | null;
+    params: Params<string>;
+    navigate: NavigateFunction;
     setModel: (value: IOutlinerModel | null) => void;
     setProject: (value: IOutlinerProject | null) => void;
     setObject: (value: IOutlinerObject | null) => void;
 }
 
-export const OutlinerContext = createContext<IOutlinerContext>(
-    {} as IOutlinerContext,
-);
+export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerContext);
 
 type OutlinerProviderProps = {
     children?: ReactNode;
     viewport: Viewport;
 };
 
-export const OutlinerProvider = ({
-    children,
-    viewport,
-}: OutlinerProviderProps) => {
+export const OutlinerProvider = ({ children, viewport }: OutlinerProviderProps) => {
     const [root] = useState<Array<IOutlinerProject>>(projectOutlinerData);
     const [project, setProject] = useState<IOutlinerProject | null>(null);
     const [model, setModel] = useState<IOutlinerModel | null>(null);
@@ -54,37 +47,47 @@ export const OutlinerProvider = ({
     useEffect(() => {
         let p: IOutlinerProject | null = null;
         let m: IOutlinerModel | null = null;
+        const { projectId, modelId, objectId } = params;
 
-        if (params.projectId && project?.id !== params.projectId) {
-            p = getProject(params.projectId);
+        if (projectId && project?.id !== projectId) {
+            p = getProject(projectId);
             setProject(p);
         }
 
-        if (params.modelId && model?.id !== params.modelId && p) {
-            m = getModel(p, params.modelId);
+        if (modelId && model?.id !== modelId && p) {
+            m = getModel(p, modelId);
             handleSetModel(m);
         } else {
-            if (!params.modelId) {
+            if (!modelId) {
                 setModel(null);
+                viewport.modelFile.model = null;
             }
         }
 
-        if (params.objectId && object?.id !== Number(params.objectId) && m) {
+        if (objectId && object?.id !== Number(objectId) && m) {
             const obj = getObject(viewport, Number(params.id), true);
             setObject(obj?.userData.outliner);
+        } else {
+            if (!objectId) {
+                if (object) {
+                    viewport.selection.object = null;
+                }
+
+                setObject(null);
+            }
         }
     }, [params.projectId, params.modelId, params.objectId]);
 
     useEffect(() => {
         if (object) {
-            if (object.id !== Number(params.objectId))
+            if (object.id !== Number(params.objectId) && project && model && object)
                 navigate(`/${project?.id}/${model?.id}/${object.id}`);
         } else {
-            if (params.objectId) {
+            if (project && model) {
                 navigate(`/${project?.id}/${model?.id}`);
             }
         }
-    }, [object, params.objectId]);
+    }, [object, params.objectId, model, project]);
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
@@ -92,18 +95,12 @@ export const OutlinerProvider = ({
         };
 
         if (viewport) {
-            viewport.selection.addEventListener(
-                "selectionChange",
-                selectionChange,
-            );
+            viewport.selection.addEventListener("selectionChange", selectionChange);
         }
         return () => {
             if (viewport) {
                 console.log("outliner dispose");
-                viewport.selection.removeEventListener(
-                    "selectionChange",
-                    selectionChange,
-                );
+                viewport.selection.removeEventListener("selectionChange", selectionChange);
             }
         };
     }, [viewport]);
@@ -115,13 +112,15 @@ export const OutlinerProvider = ({
                 project: project,
                 model: model,
                 object: object,
+                params: params,
+                navigate: navigate,
                 setProject: setProject,
                 setObject: setObject,
                 setModel: handleSetModel,
                 viewport: viewport,
             }}
         >
-            {loading && <Loading message="loading" />}
+            {loading && <Loading message="loading model..." />}
             {children}
         </OutlinerContext.Provider>
     );

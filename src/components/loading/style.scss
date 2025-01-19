@@ -1,3 +1,15 @@
+@keyframes l16 {
+    0% {
+        background-position: -150% 0, -150% 0;
+    }
+    66% {
+        background-position: 250% 0, -150% 0;
+    }
+    100% {
+        background-position: 250% 0, 250% 0;
+    }
+}
+
 .loading {
     position: absolute;
     top: 0;
@@ -13,10 +25,25 @@
     & > .content {
         display: flex;
         flex-direction: column;
-        background-color: var(--color-white-6);
+        background-color: var(--color-black-2);
         backdrop-filter: var(--blur-4);
         box-shadow: var(--shadow-2);
         padding: var(--padding-1);
         border-radius: var(--radius-3);
+        border: 3px solid var(--color-alt-5);
+        justify-content: center;
+        align-items: center;
+        min-width: 10%;
+        min-height: 10%;
+        gap: var(--gap-1);
+
+        & > .loader {
+            height: 4px;
+            width: 130px;
+            --c: no-repeat linear-gradient(var(--color-alt-1) 0 0);
+            background: var(--c), var(--c), var(--color-white-6);
+            background-size: 60% 100%;
+            animation: l16 3s infinite;
+        }
     }
 }

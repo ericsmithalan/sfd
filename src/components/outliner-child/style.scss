@@ -31,35 +31,24 @@
                 }
             }
 
-            & > .children {
+            & > .scroller {
                 display: flex;
                 flex-direction: column;
                 flex: 1 1 auto;
                 position: relative;
                 margin-left: 0.9rem;
                 gap: 1px;
-
-                &.level-2 {
-                    & > .scroller {
-                        display: flex;
-                        flex-direction: column;
-
-                        overflow: auto;
-                        max-height: 20rem;
-                        min-height: 1rem;
-                    }
-                }
             }
         }
 
         &.level-2,
         &.level-3 {
             & > .v-line {
-                border-left: 1px dashed var(--color-alt-3);
+                border-left: 1px dashed var(--color-alt-5);
 
                 & > .content {
                     & > .h-line {
-                        border-bottom: 1px dashed var(--color-alt-3);
+                        border-bottom: 1px dashed var(--color-alt-5);
                     }
                 }
             }

@@ -5,25 +5,31 @@ import "./style.scss";
 type ScrollerProps = {
     children?: ReactNode;
     className?: string;
-    maxHeight?: number;
-    minHeight?: number;
-    maxWidth?: number;
-    minWidth?: number;
+    width?: number | string;
+    height?: number | string;
+    maxHeight?: number | string;
+    minHeight?: number | string;
+    maxWidth?: number | string;
+    minWidth?: number | string;
 };
 
 export const Scroller: FC<ScrollerProps> = ({
-    maxHeight,
+    width,
+    height = "100%",
     maxWidth,
-    minHeight,
     minWidth,
+    minHeight,
+    maxHeight,
     className,
     children,
 }) => {
     return (
-        <div className={clsx("scrollable", className)}>
+        <div className={clsx("scroller", className)}>
             <div
-                className={clsx("scroll")}
+                className={clsx("scroller-scroll")}
                 style={{
+                    width: width,
+                    height: height,
                     maxHeight: maxHeight,
                     maxWidth: maxWidth,
                     minHeight: minHeight,

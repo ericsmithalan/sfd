@@ -8,7 +8,7 @@ import { ProjectView } from "./views/project";
 export const App = () => {
     return (
         <Routes>
-            <Route path="*" element={<Viewer />}>
+            <Route path="/" element={<Viewer />}>
                 <Route path=":projectId" element={<ProjectView />}>
                     <Route path=":modelId" element={<ModelView />}>
                         <Route path=":objectId" element={<ObjectView />} />

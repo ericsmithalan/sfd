@@ -13,12 +13,7 @@ type ImageViewerProps = {
     onClosed?: () => void;
 };
 
-export const ImageViewer: FC<ImageViewerProps> = ({
-    images,
-    visible,
-    image,
-    onClosed,
-}) => {
+export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onClosed }) => {
     const [selected, setSelected] = useState<string>();
     const [isVisible, setIsVisible] = useState(false);
     const divRef = useRef<HTMLDivElement>(null);
@@ -59,8 +54,8 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                       <div className="selected">
                           <BgImage
                               size="cover"
-                              width={"100%"}
-                              height={500}
+                              minHeight={300}
+                              maxHeight={1000}
                               src={selected || ""}
                           />
                       </div>
@@ -71,21 +66,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                                   <Button
                                       variant="image"
                                       key={i}
-                                      active={
-                                          img.replace("_thumb", "") === selected
-                                      }
+                                      active={img.replace("_thumb", "") === selected}
                                       onClick={(e) => {
-                                          setSelected(
-                                              img.replace("_thumb", ""),
-                                          );
+                                          setSelected(img.replace("_thumb", ""));
                                       }}
                                   >
-                                      <BgImage
-                                          width={100}
-                                          height={100}
-                                          size="cover"
-                                          src={img}
-                                      />
+                                      <BgImage width={100} height={100} size="cover" src={img} />
                                   </Button>
                               );
                           })}

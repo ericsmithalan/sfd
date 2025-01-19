@@ -8,9 +8,7 @@ export interface IObjectContext<T extends Object3D = Object3D> {
     object: T | null;
 }
 
-export const ObjectContext = createContext<IObjectContext>(
-    {} as IObjectContext,
-);
+export const ObjectContext = createContext<IObjectContext>({} as IObjectContext);
 
 type ObjectProviderProps = {
     children?: ReactNode;

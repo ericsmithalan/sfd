@@ -3,6 +3,7 @@ import { MouseEvent, ReactNode, useState } from "react";
 import { IconName } from "../../types";
 import { Button } from "../button";
 import { NavLink } from "../nav-link";
+import { Scroller } from "../scroller";
 import "./style.scss";
 
 type OutlinerChildProps = {
@@ -43,11 +44,7 @@ export const OutlinerChild = (props: OutlinerChildProps) => {
                                     icon={objectVisible ? "visible" : "hidden"}
                                     onClick={(e) => {
                                         if (props.onToolClick) {
-                                            props.onToolClick(
-                                                "visible",
-                                                !objectVisible,
-                                                e,
-                                            );
+                                            props.onToolClick("visible", !objectVisible, e);
                                             setObjectVisible(!objectVisible);
                                         }
                                     }}
@@ -57,15 +54,16 @@ export const OutlinerChild = (props: OutlinerChildProps) => {
                     </div>
 
                     {props.children && (
-                        <div className={clsx(`children level-${props.level}`)}>
-                            <div
-                                className={clsx(
-                                    `scroller level-${props.level}`,
-                                )}
-                            >
+                        <Scroller
+                            maxHeight={"60vh"}
+                            minHeight={"0vh"}
+                            height={"100%"}
+                            className={clsx(`level-${props.level}`)}
+                        >
+                            <div className={clsx(`scroller level-${props.level}`)}>
                                 {props.children}
                             </div>
-                        </div>
+                        </Scroller>
                     )}
                 </div>
             </div>

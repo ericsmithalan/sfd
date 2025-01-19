@@ -17,6 +17,10 @@
         position: relative;
         max-width: 80%;
         min-width: 80%;
+        max-height: 90%;
+        min-height: 90%;
+
+        flex: 1 1 auto;
 
         background-color: var(--color-dark-5);
         backdrop-filter: var(--blur-3);
@@ -27,9 +31,18 @@
         gap: 3px;
 
         & > .selected {
-            position: relative;
             display: flex;
             flex-direction: column;
+            flex: 1 1 auto;
+            position: relative;
+
+            & > .bg-image {
+                display: flex;
+                flex-direction: column;
+                flex: 1 1 auto;
+                width: 100%;
+                height: 100%;
+            }
         }
 
         & > .images {
@@ -40,18 +53,15 @@
             & > .scroll {
                 display: flex;
                 flex-direction: row;
-                min-height: 1rem;
                 gap: 2px;
 
                 & > .button {
                     display: flex;
                     flex-direction: column;
-                    flex: 1 1 auto;
 
                     & > .bg-image {
                         display: flex;
                         flex-direction: column;
-                        flex: 1 1 auto;
                     }
                 }
             }

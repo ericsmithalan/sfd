@@ -9,17 +9,18 @@ type PanelProps = {
     children?: ReactNode;
     title?: string;
     icon?: IconName;
+    contentCss?: string;
 };
 
-export const Panel: FC<PanelProps> = ({ className, children, title, icon }) => {
+export const Panel: FC<PanelProps> = ({ className, children, title, contentCss, icon }) => {
     const [open, setOpen] = useState(true);
 
     return (
-        <div className={clsx("panel", open && "open")}>
+        <div className={clsx("panel", open && "open", className)}>
             {title && (
                 <Button
                     iconFill={true}
-                    className="title"
+                    className="panel-title"
                     variant="panel"
                     icon={icon}
                     text={title}
@@ -28,9 +29,7 @@ export const Panel: FC<PanelProps> = ({ className, children, title, icon }) => {
                     }}
                 />
             )}
-            {open && (
-                <div className={clsx("content", className)}>{children}</div>
-            )}
+            {open && <div className={clsx("panel-content", contentCss)}>{children}</div>}
         </div>
     );
 };

@@ -3,7 +3,7 @@
     display: flex;
     flex-direction: column;
     z-index: 100;
-    width: 18rem;
+
     gap: var(--gap-4);
 
     &.left {
@@ -11,6 +11,11 @@
         flex-direction: column;
         left: 1rem;
         top: 1rem;
+        min-width: 15rem;
+        max-width: 18rem;
+        width: 20%;
+        bottom: 1rem;
+        flex: 1 1 auto;
     }
 
     &.right {
@@ -18,5 +23,8 @@
         flex-direction: column;
         right: 1rem;
         top: 1rem;
+        min-width: 20rem;
+        width: 30%;
+        bottom: 1rem;
     }
 }

@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-import { Outlet, useOutletContext } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import { BgImage, Button, Panel } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
-import { Viewport } from "../../../lib";
 import "./style.scss";
 
 type ViewerState = {
@@ -12,7 +11,6 @@ type ViewerState = {
 };
 
 export const ProjectView = () => {
-    const context = useOutletContext<{ viewport: Viewport }>();
     const [images, setImages] = useState<Array<string>>([]);
     const [primaryImage, setPrimaryImage] = useState("");
     const outliner = useOutliner();
@@ -41,7 +39,7 @@ export const ProjectView = () => {
     return (
         <>
             <Panel
-                className="project-view"
+                contentCss="project-view"
                 title={`Project Images (${images.length - 1})`}
                 icon="texture"
             >
@@ -56,12 +54,7 @@ export const ProjectView = () => {
                             });
                         }}
                     >
-                        <BgImage
-                            size="cover"
-                            height={100}
-                            width={"100%"}
-                            src={primaryImage}
-                        />
+                        <BgImage size="cover" height={200} width={"100%"} src={primaryImage} />
                     </Button>
                 </div>
                 <div className="images">
@@ -91,7 +84,6 @@ export const ProjectView = () => {
 
             <Outlet
                 context={{
-                    viewport: context.viewport,
                     outliner: outliner,
                 }}
             />

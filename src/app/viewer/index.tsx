@@ -27,7 +27,6 @@ export const Viewer = () => {
 
         return () => {
             if (vp) {
-                console.log("disposed");
                 vp.dispose();
             }
         };
@@ -38,15 +37,11 @@ export const Viewer = () => {
             {viewport && (
                 <OutlinerProvider viewport={viewport}>
                     <Region placement="left">
-                        {viewport && <OutlinerView />}
+                        <OutlinerView />
                     </Region>
 
                     <Region placement="right">
-                        <Outlet
-                            context={{
-                                viewport: viewport,
-                            }}
-                        />
+                        <Outlet />
                     </Region>
                 </OutlinerProvider>
             )}

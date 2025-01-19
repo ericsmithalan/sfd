@@ -51,10 +51,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         aspect: 0,
     };
 
-    constructor(
-        canvas: HTMLCanvasElement,
-        container: HTMLElement | null = null,
-    ) {
+    constructor(canvas: HTMLCanvasElement, container: HTMLElement | null = null) {
         super();
 
         this.canvas = canvas;
@@ -104,12 +101,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.orbitControls.update();
 
-        this.selection = new Selection(
-            this.container,
-            this.scene,
-            this.camera,
-            this.renderer,
-        );
+        this.selection = new Selection(this.container, this.scene, this.camera, this.renderer);
 
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
             placement: "bottom-right",
@@ -222,16 +214,14 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private unregisterEvents() {
         window.removeEventListener("resize", () => this.resize());
-        this.modelFile.removeEventListener("changed", (e) =>
-            this.modelChanged(e),
-        );
+        this.modelFile.removeEventListener("changed", (e) => this.modelChanged(e));
     }
 
     dispose() {
         this.unregisterEvents();
-
+        this.selection.dispose();
+        this.modelFile.dispose();
         this.orbitControls.dispose();
         this.renderer.dispose();
-        this.selection.dispose();
     }
 }

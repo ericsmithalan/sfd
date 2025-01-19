@@ -1,12 +1,4 @@
-import {
-    Camera,
-    EventDispatcher,
-    Object3D,
-    Raycaster,
-    Scene,
-    Vector2,
-    WebGLRenderer,
-} from "three";
+import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2, WebGLRenderer } from "three";
 
 import { SelectMode } from "../types";
 import { BorderEffect, ObjectUserData } from "./";
@@ -27,17 +19,12 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
     readonly borderEffect: BorderEffect;
-    private selectEnabled: boolean = true;
 
+    private selectEnabled: boolean = true;
     private _selectMode: SelectMode = "select";
     private _object: Object3D | null = null;
 
-    constructor(
-        container: HTMLElement,
-        scene: Scene,
-        camera: Camera,
-        renderer: WebGLRenderer,
-    ) {
+    constructor(container: HTMLElement, scene: Scene, camera: Camera, renderer: WebGLRenderer) {
         super();
 
         this.camera = camera;
@@ -169,35 +156,25 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         });
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
-        const objects = this.raycaster.intersectObjects(
-            sceneChildren as Object3D[],
-            true,
-        );
+        const objects = this.raycaster.intersectObjects(sceneChildren as Object3D[], true);
 
         return objects;
     };
 
     private registerEvents() {
         // this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
-        this.container.addEventListener("mousedown", (e: MouseEvent) =>
-            this.mouseDwn(e),
-        );
-        this.container.addEventListener("mouseup", (e: MouseEvent) =>
-            this.mouseUp(e),
-        );
+        this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
+        this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     private unRegisterEvents() {
         // this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
-        this.container.removeEventListener("mousedown", (e: MouseEvent) =>
-            this.mouseDwn(e),
-        );
-        this.container.removeEventListener("mouseup", (e: MouseEvent) =>
-            this.mouseUp(e),
-        );
+        this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
+        this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     dispose() {
         this.unRegisterEvents();
+        this.borderEffect.dispose();
     }
 }

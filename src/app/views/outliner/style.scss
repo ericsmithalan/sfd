@@ -1,7 +1,19 @@
-.outliner-tree {
+.outliner-panel {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+
+    & > .panel-content {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+.outliner-content {
     display: flex;
     flex-direction: column;
     padding: var(--padding-3);
+    flex: 1 1 auto;
 
     & > .title {
         font-weight: 600;
@@ -13,9 +25,6 @@
     & > .logo-content {
         display: flex;
         flex-direction: column;
-        align-items: center;
-        justify-content: center;
-        flex: 1 1 auto;
         padding-top: var(--padding-1);
         padding-bottom: var(--padding-1);
     }
