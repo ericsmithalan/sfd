@@ -79,17 +79,6 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerProviderProps) 
     }, [params.projectId, params.modelId, params.objectId]);
 
     useEffect(() => {
-        if (object) {
-            if (object.id !== Number(params.objectId) && project && model && object)
-                navigate(`/${project?.id}/${model?.id}/${object.id}`);
-        } else {
-            if (project && model) {
-                navigate(`/${project?.id}/${model?.id}`);
-            }
-        }
-    }, [object, params.objectId, model, project]);
-
-    useEffect(() => {
         const selectionChange = (e: ISelectionEvent["selectionChange"]) => {
             setObject(e.object?.userData.outliner || null);
         };

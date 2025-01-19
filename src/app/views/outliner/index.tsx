@@ -52,9 +52,11 @@ export const OutlinerView = () => {
                                                         key={`${item3.id}-${h}`}
                                                         level={3}
                                                         name={item3.name}
-                                                        href={`/${item.id}/${item2.id}/${item3.id}`}
+                                                        active={outliner.object?.id === item3.id}
+                                                        href={``}
                                                         icon={"box"}
-                                                        onClick={() => {
+                                                        onClick={(e) => {
+                                                            e.preventDefault();
                                                             if (outliner.object?.id !== item3.id) {
                                                                 outliner.setObject(item3);
                                                             }
