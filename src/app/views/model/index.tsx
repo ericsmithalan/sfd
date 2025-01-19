@@ -29,6 +29,10 @@ export const ModelView = () => {
                         }}
                     />
                 </Toolbar>
+
+                {/* {outliner.object && defaultTexture && (
+                    <TexturePicker viewport={outliner.viewport} object={outliner.object} />
+                )} */}
             </Panel>
         </>
     );

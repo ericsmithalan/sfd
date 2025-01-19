@@ -9,19 +9,20 @@
     },
     "dependencies": {
         "clsx": "^2.1.1",
-        "react": "^18",
-        "react-dom": "^18",
+        "react": "^19.0.0",
+        "react-dom": "^19.0.0",
         "react-router-dom": "^7.1.2",
         "react-scripts": "^5.0.1",
         "three": "^0.172.0",
-        "three-viewport-gizmo": "^2.0.2"
+        "three-viewport-gizmo": "^2.0.2",
+        "xatlas-three": "^0.2.1"
     },
     "packageManager": "yarn@1.22.22",
     "devDependencies": {
         "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
         "@types/node": "^20",
-        "@types/react": "^18",
-        "@types/react-dom": "^18",
+        "@types/react": "^19.0.7",
+        "@types/react-dom": "^19.0.3",
         "@types/three": "^0.172.0",
         "eslint": "^8",
         "eslint-config-next": "14.2.6",

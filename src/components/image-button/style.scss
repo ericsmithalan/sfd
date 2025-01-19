@@ -1,0 +1,25 @@
+.image-button {
+    display: flex;
+    flex-direction: row;
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    flex: 1 1 auto;
+
+    background-color: transparent;
+    border: 2px solid transparent;
+
+    padding: 0;
+    margin: 0;
+
+    & > .bg-image {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+    }
+
+    &.active {
+        border: 2px solid var(--color-alt-1);
+    }
+}

@@ -21,7 +21,7 @@ type BgImageProps = {
 export const BgImage: FC<BgImageProps> = ({
     src,
     className,
-    size = "contain",
+    size = "cover",
     title,
     children,
     height,

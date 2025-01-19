@@ -1,6 +1,7 @@
 export * from "./bg-image";
 export * from "./button";
 export * from "./icon";
+export * from "./image-button";
 export * from "./loading";
 export * from "./logo";
 export * from "./nav-link";
@@ -8,4 +9,5 @@ export * from "./outliner-child";
 export * from "./panel";
 export * from "./region";
 export * from "./scroller";
+export * from "./texture-picker";
 export * from "./toolbar";

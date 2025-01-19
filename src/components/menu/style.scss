@@ -1,0 +1,27 @@
+.menu {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    position: absolute;
+
+    background-color: var(--color-black-2);
+    border-radius: var(--radius-4);
+    box-shadow: var(--shadow-2);
+    backdrop-filter: var(--blur-2);
+    border: 1px solid var(--color-black-2);
+
+    padding: var(--padding-5);
+    color: var(--color-white-3);
+    gap: var(--gap-6);
+    z-index: 999999;
+}
+
+.menu-wrapper {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: rgba(255, 255, 255, 0.01);
+    z-index: 99999;
+}

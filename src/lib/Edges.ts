@@ -7,17 +7,16 @@ export class Edges {
 
     constructor() {
         this.edgeGroup = new Group();
-        this.threshold = 45;
+        this.threshold = 20;
     }
 
     add(mesh: Object3D) {
         let line: LineSegments;
-        const thresholdAngle = 45;
 
         //@ts-ignore
-        const edges = new EdgesGeometry(mesh.geometry, thresholdAngle);
+        const edges = new EdgesGeometry(mesh.geometry, this.threshold);
 
-        line = new LineSegments(edges, new LineBasicMaterial({ color: "black" }));
+        line = new LineSegments(edges, new LineBasicMaterial({ color: "black", linewidth: 3 }));
         line.userData = new ObjectUserData(false, null, mesh.id);
 
         this.edgeGroup.add(line);

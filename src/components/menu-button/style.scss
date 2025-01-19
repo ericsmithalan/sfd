@@ -1,0 +1,7 @@
+.menu-button {
+    & > .image {
+        .icon {
+            margin-right: var(--margin-4);
+        }
+    }
+}
