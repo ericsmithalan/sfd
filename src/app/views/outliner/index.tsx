@@ -1,6 +1,6 @@
 import { Logo, OutlinerChild, Panel } from "../../../components";
 import { useOutliner } from "../../../hooks";
-import { setObjectVisibility } from "../../../utils";
+import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const OutlinerView = () => {
@@ -59,6 +59,11 @@ export const OutlinerView = () => {
                                                             e.preventDefault();
                                                             if (outliner.object?.id !== item3.id) {
                                                                 outliner.setObject(item3);
+                                                                getObject(
+                                                                    outliner.viewport,
+                                                                    item3.id,
+                                                                    true,
+                                                                );
                                                             }
                                                         }}
                                                         onToolClick={(tool, visible, e) => {

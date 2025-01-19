@@ -49,6 +49,12 @@ export class Model extends EventDispatcher<IModelEvent> {
             this._model.parent.remove(this._model);
         }
 
+        if (model === null) {
+            if (this.edges && this.edges.parent) {
+                this.edges.parent.remove(this.edges);
+            }
+        }
+
         this._model = model;
 
         this.dispatchEvent({
@@ -114,10 +120,6 @@ export class Model extends EventDispatcher<IModelEvent> {
                         object.userData = new ObjectUserData<IOutlinerObject>(true, outlinerUD);
 
                         objects.push(outlinerUD);
-
-                        // if (object.geometry instanceof BufferGeometry) {
-                        //     object.geometry = edges.add(object);
-                        // }
 
                         edges.add(object);
                     } else {

@@ -16,6 +16,7 @@ import { ViewportGizmo } from "three-viewport-gizmo";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { IScreenSize } from "../interface";
+import { fitCameraToObject } from "../utils";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
@@ -217,7 +218,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.lights.spotLight.lookAt(model.position);
             this.lights.spotLightHelper.update();
 
-            // fitCameraToObject(this.camera, this.orbitControls, [model]);
+            fitCameraToObject(this.camera, this.orbitControls, [model]);
 
             this.add(model);
 
