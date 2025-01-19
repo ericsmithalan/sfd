@@ -56,6 +56,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
                               size="cover"
                               minHeight={300}
                               maxHeight={1000}
+                              height={"100%"}
                               src={selected || ""}
                           />
                       </div>
