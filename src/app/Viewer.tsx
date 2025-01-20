@@ -2,9 +2,11 @@
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
 import { Region } from "../components";
-import { OutlinerProvider } from "../context";
+import { ModelProvider, OutlinerProvider } from "../context";
 import { Viewport } from "../lib";
+import { ProjectPanel } from "./panels/project";
 import "./style.scss";
+import { Toolbar } from "./toolbar";
 
 export interface IOutletContenxt {
     viewport: Viewport;
@@ -38,6 +40,14 @@ export const Viewer = () => {
                         <OutlinerProvider viewport={viewport}>
                             <Outlet />
                         </OutlinerProvider>
+                    </Region>
+                    <Region placement="top">
+                        <Toolbar viewport={viewport} />
+                    </Region>
+                    <Region placement="right">
+                        <ModelProvider viewport={viewport}>
+                            <ProjectPanel />
+                        </ModelProvider>
                     </Region>
                 </>
             )}

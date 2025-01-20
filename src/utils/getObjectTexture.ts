@@ -1,8 +1,8 @@
 import { Object3D } from "three";
+import { getTextureById } from "../data";
 import { ITexture } from "../interface/ITexture";
 import { ObjectUserData, Viewport } from "../lib";
 import { getObject } from "./getObject";
-import { getTextureById } from "./getTextureById";
 
 export const getObjectTexture = (
     viewport: Viewport,

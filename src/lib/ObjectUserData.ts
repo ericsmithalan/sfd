@@ -1,10 +1,10 @@
 import { IOutliner } from "../interface";
 
-interface IEdgeInfo {
+export interface IEdgeInfo {
     objectId: number;
 }
 
-interface ITextureInfo {
+export interface ITextureInfo {
     textureId: string | null;
     unwrapped: boolean;
 }

@@ -1,9 +1,11 @@
 import { createContext, useState } from "react";
+import { rootOutliner } from "../data";
 import { IOutliner } from "../interface";
 import { Viewport } from "../lib";
 
 export interface IOutletContenxt {
-    root: IOutliner;
+    viewport: Viewport;
+    root: Array<IOutliner>;
 }
 
 export const OutlinerContext = createContext<IOutletContenxt>({} as IOutletContenxt);
@@ -14,7 +16,11 @@ type OutlinerContextProps = {
 };
 
 export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
-    const [root, setRoot] = useState<IOutliner>({} as IOutliner);
+    const [root] = useState<Array<IOutliner>>(rootOutliner);
 
-    return <OutlinerContext.Provider value={{ root: root }}>{children}</OutlinerContext.Provider>;
+    return (
+        <OutlinerContext.Provider value={{ viewport: viewport, root: root }}>
+            {children}
+        </OutlinerContext.Provider>
+    );
 };

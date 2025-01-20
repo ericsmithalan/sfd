@@ -10,14 +10,12 @@ export interface SFDCurrentFile {
 }
 
 export interface IModelEvent {
-    loaded: { type: string; model: Object3D | null };
-    load: { type: string; model: Object3D | null; outliner: IOutliner };
-    materialChanged: { type: string; materials: Map<string, IObjectMaterial> };
-    changed: {
+    model: {
         type: string;
         model: Object3D | null;
         outliner: IOutliner | null;
         edges: Group | null;
+        materials: Map<string, IObjectMaterial>;
     };
 }
 
@@ -67,10 +65,11 @@ export class Model extends EventDispatcher<IModelEvent> {
         this._model = model;
 
         this.dispatchEvent({
-            type: "changed",
+            type: "model",
             model: model,
             outliner: this.outliner,
             edges: this.edges,
+            materials: this.materials,
         });
     }
 
@@ -98,21 +97,12 @@ export class Model extends EventDispatcher<IModelEvent> {
 
     load = (obj: IOutliner): Promise<Object3D> => {
         return new Promise((resolve) => {
-            this.dispatchEvent({
-                type: "load",
-                model: this.model,
-                outliner: obj,
-            });
-
             const cached = this.getCache(obj.id);
             if (cached) {
                 this.outliner = cached.outliner;
                 this.model = cached.model;
                 this.edges = cached.edges;
                 this.materials = cached.materials;
-
-                this.dispatchEvent({ type: "materialChanged", materials: cached.materials });
-                this.dispatchEvent({ type: "loaded", model: this.model });
 
                 resolve(cached.model);
 
@@ -121,7 +111,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
             this.materials.clear();
 
-            const objects: Array<IOutliner> = [];
+            const modelChildrenOutliner: Array<IOutliner> = [];
 
             if (obj.modelUrl) {
                 this.loader.load(obj.modelUrl, (gltf) => {
@@ -129,7 +119,9 @@ export class Model extends EventDispatcher<IModelEvent> {
                     model.castShadow = true;
                     model.receiveShadow = true;
 
-                    const edges = new Edges();
+                    const objectEdges = new Edges();
+                    let modelOutliner: IOutliner;
+                    const modelMaterials: Map<string, IObjectMaterial> = new Map();
 
                     model.traverse((object: Object3D) => {
                         if (object instanceof Mesh) {
@@ -140,9 +132,9 @@ export class Model extends EventDispatcher<IModelEvent> {
 
                             if (object.material) {
                                 if (object.material.name?.indexOf("wood") !== -1) {
-                                    const mat = this.materials.get(object.material.name);
+                                    const mat = modelMaterials.get(object.material.name);
                                     if (!mat) {
-                                        this.materials.set(object.material.name, {
+                                        modelMaterials.set(object.material.name, {
                                             objects: [object.id],
                                             material: object.material,
                                         });
@@ -159,16 +151,15 @@ export class Model extends EventDispatcher<IModelEvent> {
                             };
 
                             object.userData = new ObjectUserData(outlinerUD);
+                            modelChildrenOutliner.push(outlinerUD);
 
-                            objects.push(outlinerUD);
-
-                            edges.add(object);
+                            objectEdges.add(object);
                         } else {
                             object.layers.disableAll();
                         }
                     });
 
-                    this.outliner = {
+                    modelOutliner = {
                         level: obj.level,
                         categories: obj.categories,
                         models: obj.models,
@@ -176,28 +167,36 @@ export class Model extends EventDispatcher<IModelEvent> {
                         name: obj.name,
                         id: obj.id,
                         modelUrl: obj.modelUrl,
-                        children: objects,
+                        children: modelChildrenOutliner,
                     };
 
-                    model.userData = new ObjectUserData(this.outliner);
+                    model.userData = new ObjectUserData(modelOutliner);
 
                     if (model.up.y === 1) {
                         model.up.set(0, 0, 1);
                         model.rotateX(Math.PI / 2);
 
-                        edges.edgeGroup.up.set(0, 0, 1);
-                        edges.edgeGroup.rotateX(Math.PI / 2);
+                        objectEdges.edgeGroup.up.set(0, 0, 1);
+                        objectEdges.edgeGroup.rotateX(Math.PI / 2);
                     }
 
-                    this.edges = edges.edgeGroup;
+                    this.outliner = modelOutliner;
+                    this.materials = modelMaterials;
+
+                    this.edges = objectEdges.edgeGroup;
+
+                    //needs to be last (I think);
                     this.model = model;
 
-                    this.setCache(obj.id, model, this.outliner, edges.edgeGroup, this.materials);
+                    this.setCache(
+                        obj.id,
+                        model,
+                        modelOutliner,
+                        objectEdges.edgeGroup,
+                        modelMaterials,
+                    );
 
-                    this.dispatchEvent({ type: "materialChanged", materials: this.materials });
-                    this.dispatchEvent({ type: "loaded", model: this.model });
-
-                    resolve(this.model);
+                    resolve(model);
                 });
             }
         });

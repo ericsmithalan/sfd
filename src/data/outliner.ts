@@ -1,6 +1,6 @@
 import { IOutliner } from "../interface";
 
-export const projectOutlinerData: Array<IOutliner> = [
+export const rootOutliner: Array<IOutliner> = [
     {
         id: 10001000,
         name: "Bunk Beds",

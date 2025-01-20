@@ -16,7 +16,7 @@ export const Panel: FC<PanelProps> = ({ className, children, title, contentCss, 
     const [open, setOpen] = useState(true);
 
     return (
-        <div className={clsx("panel", open && "open", className)}>
+        <div className={clsx("panel", open && "panel-open", className)}>
             {title && (
                 <Button
                     iconFill={true}

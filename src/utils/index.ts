@@ -4,7 +4,6 @@ export * from "./getObject";
 export * from "./getObjectsById";
 export * from "./getObjectTexture";
 export * from "./getObjectUserData";
-export * from "./getTextureById";
 export * from "./isObjEmpty";
 export * from "./mapTextureToMenu";
 export * from "./mapWoodTexture";

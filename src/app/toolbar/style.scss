@@ -1,0 +1,39 @@
+.app-toolbar-panel {
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 auto;
+
+    & > .panel-content {
+        display: flex;
+        flex-direction: row;
+        gap: 1px;
+
+        & > .button {
+            border-radius: 0;
+
+            & > .bg-image {
+                border-radius: 0;
+            }
+        }
+
+        & > .button:first-of-type {
+            border-top-left-radius: var(--radius-5);
+            border-bottom-left-radius: var(--radius-5);
+
+            & > .bg-image {
+                border-top-left-radius: var(--radius-5);
+                border-bottom-left-radius: var(--radius-5);
+            }
+        }
+
+        & > .button:last-of-type {
+            border-top-right-radius: var(--radius-5);
+            border-bottom-right-radius: var(--radius-5);
+
+            & > .bg-image {
+                border-top-right-radius: var(--radius-5);
+                border-bottom-right-radius: var(--radius-5);
+            }
+        }
+    }
+}

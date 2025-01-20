@@ -28,15 +28,11 @@ export const NavLink: FC<NavLinkProps> = ({
     return (
         <Link
             onClick={onClick}
-            className={clsx("link", active && "active", variant)}
+            className={clsx("link", active && "active", `lnk-${variant}`)}
             to={href}
         >
             {icon && <Icon name={icon} fill={active} />}
-            {children && (
-                <div className={clsx("link-content", !wrap && "no-wrap")}>
-                    {children}
-                </div>
-            )}
+            {children && <div className={clsx("link-content", !wrap && "no-wrap")}>{children}</div>}
         </Link>
     );
 };

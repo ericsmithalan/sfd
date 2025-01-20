@@ -58,9 +58,11 @@ input::-moz-focus-inner {
     &.btn-toolbar {
         border: 1px solid transparent;
         background-color: var(--color-white-8);
-        gap: var(--gap-5);
-        padding: var(--padding-5) var(--padding-4);
         border-radius: var(--radius-5);
+        justify-content: center;
+        align-items: center;
+        width: var(--toolbar-height);
+        height: var(--toolbar-height);
         flex: 1 1 auto;
 
         &:hover {

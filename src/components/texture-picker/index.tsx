@@ -1,88 +1,65 @@
-import { FC, MouseEvent, useEffect, useState } from "react";
-import { Mesh, Object3D } from "three";
-import { IMenuItem } from "../../interface";
+import { FC, MouseEvent, useEffect, useRef, useState } from "react";
+import { createPortal } from "react-dom";
+
 import { ITexture } from "../../interface/ITexture";
-import { ObjectUserData, Viewport } from "../../lib";
-import {
-    createSingleWoodMaterials,
-    defaultTexture,
-    getObjectsById,
-    getTextureById,
-    mapTextureToMenu,
-} from "../../utils";
-import { MenuButton } from "../menu-button";
+import { TextureMenu } from "./menu";
 import "./style.scss";
+import { TextureButton } from "./texture-button";
 
 type TexturePickerProps = {
     label?: string;
-    viewport: Viewport;
-    objects: Array<number>;
-    onLoading?: (loading: boolean) => void;
+    items: Array<ITexture>;
+    text?: string;
+    texture?: ITexture | null;
+    onItemClick?: (value: ITexture, e: MouseEvent) => void;
 };
 
-export const TexturePicker: FC<TexturePickerProps> = ({ objects, onLoading, label, viewport }) => {
-    const [selectedVlaue, setSelectedValue] = useState<ITexture | null>(defaultTexture);
-    const [materialObjects, setMaterialObjects] = useState<Array<Object3D>>([]);
+export const TexturePicker: FC<TexturePickerProps> = ({
+    items,
+    label,
+    texture,
+    text,
+    onItemClick,
+}) => {
+    const [open, setOpen] = useState(false);
+    const [selected, setSelected] = useState<ITexture | null>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        if (objects.length > 0) {
-            const objs = getObjectsById(viewport, objects);
-            setMaterialObjects(objs);
-        }
-    }, [objects, viewport]);
-
-    const handleItemClick = async (texture: ITexture | null, e: MouseEvent) => {
-        if (texture) {
-            if (onLoading) {
-                onLoading(true);
-            }
-            const materials = await createSingleWoodMaterials(texture);
-
-            for (const obj of materialObjects) {
-                if (obj instanceof Mesh) {
-                    if (obj.userData instanceof ObjectUserData) {
-                        obj.userData.textureInfo?.textureId === texture.id;
-                    }
-
-                    obj.castShadow = true;
-                    obj.receiveShadow = true;
-                    obj.material = materials;
-
-                    setSelectedValue(texture);
-                }
-            }
-
-            if (onLoading) {
-                onLoading(false);
-            }
-        }
-    };
-
-    const getSelectedMenuItem = (): IMenuItem | null => {
-        if (selectedVlaue) {
-            return {
-                name: selectedVlaue.displayName,
-                id: selectedVlaue.id,
-                image: selectedVlaue.thumbnail,
-            };
-        }
-
-        return null;
-    };
+        setSelected(texture || null);
+    }, [texture]);
 
     return (
-        <div className="texture-picker">
-            <div className="label">{label}</div>
-            <MenuButton
-                items={mapTextureToMenu()}
-                selected={getSelectedMenuItem()}
-                onItemClick={(value, e) => {
-                    if (value && value.id) {
-                        const texture = getTextureById(value.id);
-                        handleItemClick(texture, e);
-                    }
+        <>
+            <TextureButton
+                ref={buttonRef}
+                active={open}
+                className="menu-button"
+                image={selected?.thumbnail}
+                onClick={(e: MouseEvent) => {
+                    setOpen(!open);
                 }}
             />
-        </div>
+            {open &&
+                createPortal(
+                    <TextureMenu
+                        open={open}
+                        selected={selected}
+                        items={items}
+                        onItemClick={(value, e) => {
+                            if (onItemClick) {
+                                onItemClick(value, e);
+                            }
+                            setSelected(value);
+                            setOpen(!open);
+                        }}
+                        onHide={() => {
+                            setOpen(false);
+                        }}
+                        targetRef={buttonRef}
+                    />,
+                    document.body,
+                )}
+        </>
     );
 };

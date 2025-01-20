@@ -11,7 +11,7 @@ export const mapWoodTexture = (
     return {
         id: id,
         type: type,
-        displayName: displayName,
+        name: displayName,
         thumbnail: `${basePath}/${type}/${type}-${variant}-thumb.png`,
         faceUrl: `${basePath}/${type}/${type}-${variant}-face-${size}.png`,
         endUrl: `${basePath}/${type}/${type}-${variant}-end-${size}.png`,
