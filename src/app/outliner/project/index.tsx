@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Outlet, useOutletContext, useParams } from "react-router-dom";
-import useBreadcrumbs, { BreadcrumbData } from "use-react-router-breadcrumbs";
+import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { Breadcrumb, NavLink } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import { rootOutliner } from "../../../data";
@@ -9,7 +9,6 @@ import "./style.scss";
 export const ProjectOutliner = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
-        crumbs: BreadcrumbData[];
     }>();
 
     const params = useParams();
@@ -39,9 +38,7 @@ export const ProjectOutliner = () => {
             })}
             <Outlet
                 context={{
-                    params: params,
                     outliner: outliner,
-                    crumbs: crumbs,
                 }}
             />
         </div>
