@@ -16,7 +16,7 @@ export const RootOutliner = () => {
                         variant="outliner"
                         key={i}
                         href={String(item.id)}
-                        icon="folder"
+                        icon="sofa"
                         text={item.name}
                     />
                 );

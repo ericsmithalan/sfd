@@ -1,6 +1,6 @@
 import { Outlet, useOutletContext } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
-import { Breadcrumb, NavLink } from "../../../components";
+import { Breadcrumb, Icon, NavLink } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import "./style.scss";
 
@@ -14,14 +14,17 @@ export const ProjectOutliner = () => {
     return (
         <div className="outliner-project">
             <Breadcrumb crumbs={crumbs} />
-            <div className="title">{outliner.project?.name}</div>
+            <div className="title">
+                <Icon name="sofa" />
+                {outliner.project?.name}
+            </div>
             {outliner.project?.models?.map((item, i) => {
                 return (
                     <NavLink
                         variant="outliner"
                         key={i}
                         href={String(item.id)}
-                        icon="folder"
+                        icon="blender"
                         text={item.name}
                     />
                 );
