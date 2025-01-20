@@ -10,13 +10,12 @@ export const ModelView = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
     }>();
-    const [edges, setEdges] = useState(false);
+    const [edges, setEdges] = useState(true);
     const [materials, setMaterials] = useState<Map<string, IObjectMaterial>>(new Map());
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        setEdges(outliner.viewport.showEdges);
-
+        setEdges(outliner.viewport.edgesVisible);
         const materialChanged = (e: IModelEvent["materialChanged"]) => {
             setMaterials(e.materials);
         };
@@ -39,8 +38,14 @@ export const ModelView = () => {
                         active={edges}
                         icon={edges ? "shape" : "shape"}
                         onClick={(e) => {
-                            outliner.viewport.showEdges = !edges;
-                            setEdges(!edges);
+                            const show = !edges;
+                            if (show) {
+                                outliner.viewport.showEdges();
+                            } else {
+                                outliner.viewport.hideEdges();
+                            }
+
+                            setEdges(show);
                         }}
                     />
                 </Toolbar>

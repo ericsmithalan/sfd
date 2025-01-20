@@ -1,6 +1,5 @@
 import { Logo, OutlinerChild, Panel } from "../../../components";
 import { useOutliner } from "../../../hooks";
-import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const OutlinerView = () => {
@@ -44,7 +43,7 @@ export const OutlinerView = () => {
                                             }
                                         }}
                                     >
-                                        {outliner.model &&
+                                        {/* {outliner.model &&
                                             outliner.model.id === item2.id &&
                                             outliner.model.children.map((item3, h) => {
                                                 return (
@@ -75,7 +74,7 @@ export const OutlinerView = () => {
                                                         }}
                                                     />
                                                 );
-                                            })}
+                                            })} */}
                                     </OutlinerChild>
                                 );
                             })}

@@ -45,8 +45,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly lights: Lights;
     readonly grid: Grid;
     readonly floor: Floor;
-
-    private _showEdges: boolean = true;
+    edgesVisible: boolean = true;
 
     size: IScreenSize = {
         width: 0,
@@ -146,25 +145,17 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene.remove(...object);
     }
 
-    get showEdges() {
-        return this._showEdges;
-    }
+    showEdges = () => {
+        if (this.modelFile.edges && !this.modelFile.edges.parent) {
+            this.add(this.modelFile.edges);
+            this.edgesVisible = true;
+        }
+    };
 
-    set showEdges(value: boolean) {
-        this._showEdges = value;
-        this.toggleEdges(value);
-        this.dispatchEvent({ type: "showEdgesChange", value: value });
-    }
-
-    toggleEdges(value: boolean) {
-        if (value === true) {
-            if (this.modelFile.edges) {
-                this.add(this.modelFile.edges);
-            }
-        } else {
-            if (this.modelFile.edges) {
-                this.remove(this.modelFile.edges);
-            }
+    hideEdges() {
+        if (this.modelFile.edges && this.modelFile.edges.parent) {
+            this.remove(this.modelFile.edges);
+            this.edgesVisible = false;
         }
     }
 
@@ -220,10 +211,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
             fitCameraToObject(this.camera, this.orbitControls, [model]);
 
-            this.add(model);
+            if (this.edgesVisible) {
+                this.showEdges();
+            }
 
-            this.toggleEdges(this.showEdges);
-            model.visible = true;
+            this.add(model);
+            console.log(e.edges);
         }
     }
 

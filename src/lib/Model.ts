@@ -1,5 +1,5 @@
 import { EventDispatcher, Group, Mesh, Object3D } from "three";
-import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
+import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
 import { IObjectMaterial, IOutlinerModel, IOutlinerObject } from "../interface";
 import { Edges } from "./Edges";
 import { ObjectUserData } from "./ObjectUserData";
@@ -24,23 +24,35 @@ export interface IModelEvent {
 type Cache = {
     model: Object3D;
     outliner: IOutlinerModel;
+    edges: Group;
+    materials: Map<string, IObjectMaterial>;
 };
 
 export class Model extends EventDispatcher<IModelEvent> {
     private readonly loader: GLTFLoader;
     private _model: Object3D | null = null;
-    private cache: Map<string, Cache> = new Map();
+    private _edges: Group | null = null;
 
+    private readonly cache: Map<string, Cache> = new Map();
+
+    modelOutliner: IOutlinerModel | null = null;
     materials: Map<string, IObjectMaterial> = new Map();
-
-    gtlf: GLTF | null = null;
-    private modelOutliner: IOutlinerModel | null = null;
-
-    edges: Group | null = null;
 
     constructor() {
         super();
         this.loader = new GLTFLoader();
+    }
+
+    get edges(): Group | null {
+        return this._edges;
+    }
+
+    set edges(value: Group | null) {
+        if (this._edges && this._edges.parent) {
+            this._edges.parent.remove(this._edges);
+        }
+
+        this._edges = value;
     }
 
     get model() {
@@ -48,14 +60,8 @@ export class Model extends EventDispatcher<IModelEvent> {
     }
 
     set model(model: Object3D | null) {
-        if (this._model && this._model.parent) {
-            this._model.parent.remove(this._model);
-        }
-
-        if (model === null) {
-            if (this.edges && this.edges.parent) {
-                this.edges.parent.remove(this.edges);
-            }
+        if (this._model) {
+            this._model.parent?.remove(this._model);
         }
 
         this._model = model;
@@ -72,41 +78,56 @@ export class Model extends EventDispatcher<IModelEvent> {
         return this.cache.get(outlinerId);
     }
 
-    private setCache(outlinerId: string, obj: Object3D, outliner: IOutlinerModel) {
+    private setCache(
+        outlinerId: string,
+        obj: Object3D,
+        outliner: IOutlinerModel,
+        edges: Group,
+        materials: Map<string, IObjectMaterial>,
+    ) {
         const cached = this.cache.get(outlinerId);
         if (!cached) {
-            this.cache.set(outlinerId, { model: obj, outliner: outliner });
+            this.cache.set(outlinerId, {
+                model: obj,
+                outliner: outliner,
+                edges: edges,
+                materials: materials,
+            });
         }
     }
 
     load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
-            const cached = this.getCache(obj.id);
-            this.materials.clear();
-
-            if (cached) {
-                this.modelOutliner = cached.outliner;
-                this.model = cached.model;
-
-                resolve(cached.model);
-
-                return;
-            }
-
             this.dispatchEvent({
                 type: "load",
                 model: this.model,
                 outliner: obj,
             });
 
+            const cached = this.getCache(obj.id);
+            if (cached) {
+                this.modelOutliner = cached.outliner;
+                this.model = cached.model;
+                this.edges = cached.edges;
+                this.materials = cached.materials;
+
+                this.dispatchEvent({ type: "materialChanged", materials: cached.materials });
+                this.dispatchEvent({ type: "loaded", model: this.model });
+
+                resolve(cached.model);
+
+                return;
+            }
+
+            this.materials.clear();
+
             const objects: Array<IOutlinerObject> = [];
 
             this.loader.load(obj.url, (gltf) => {
-                this.gtlf = null;
-                this.gtlf = gltf;
                 const model = gltf.scene;
                 model.castShadow = true;
                 model.receiveShadow = true;
+
                 const edges = new Edges();
 
                 model.traverse((object: Object3D) => {
@@ -162,18 +183,14 @@ export class Model extends EventDispatcher<IModelEvent> {
                     edges.edgeGroup.rotateX(Math.PI / 2);
                 }
 
-                this.setCache(obj.id, model, this.modelOutliner);
-
-                if (this.edges && this.edges.parent) {
-                    this.edges.parent.remove(this.edges);
-                }
-
                 this.edges = edges.edgeGroup;
-
                 this.model = model;
+
+                this.setCache(obj.id, model, this.modelOutliner, edges.edgeGroup, this.materials);
+
                 this.dispatchEvent({ type: "materialChanged", materials: this.materials });
                 this.dispatchEvent({ type: "loaded", model: this.model });
-                console.log(this.materials);
+
                 resolve(this.model);
             });
         });
