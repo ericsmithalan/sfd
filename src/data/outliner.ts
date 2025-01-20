@@ -1,64 +1,72 @@
-import { IOutlinerModel, IOutlinerProject } from "../interface";
+import { IOutliner } from "../interface";
 
-export const projectOutlinerData: Array<IOutlinerProject> = [
+export const projectOutlinerData: Array<IOutliner> = [
     {
-        id: "bunks_6OG-1",
+        id: 10001000,
         name: "Bunk Beds",
-        image: {
+        level: 1,
+        imageResouce: {
             primaryImg: 18,
             count: 18,
             path: "/models/bunks/images/",
         },
         models: [
             {
-                url: "/models/bunks/bunks1.glb",
-                id: "main_K07vd",
+                id: 10001001,
+                level: 2,
+                modelUrl: "/models/bunks/bunks1.glb",
                 name: "Final Model",
                 children: [],
             },
             {
-                url: "/models/bunks/mockups.glb",
-                id: "mockups_GDS96",
+                id: 10001002,
+                modelUrl: "/models/bunks/mockups.glb",
+                level: 2,
                 name: "Initial Mockups",
                 children: [],
             },
         ],
     },
     {
-        id: "case_iQoJe",
+        id: 10001003,
         name: "Case",
-        image: {
+        level: 1,
+        imageResouce: {
             primaryImg: 10,
             count: 10,
             path: "/models/case-1/images/",
         },
         models: [
             {
-                url: "/models/case-1/final.glb",
-                id: "final_9F1h2",
+                modelUrl: "/models/case-1/final.glb",
+                level: 3,
+                id: 10001004,
                 name: "Final Model",
                 children: [],
             },
             {
-                url: "/models/case-1/build.glb",
-                id: "build_qoh-y",
+                modelUrl: "/models/case-1/build.glb",
+                level: 3,
+                id: 10001005,
                 name: "Build Steps",
                 children: [],
             },
         ],
     },
     {
-        id: "desk_-QO-V",
+        id: 10001006,
         name: "Desk",
-        image: {
+        level: 1,
+        imageResouce: {
             primaryImg: 1,
             count: 3,
             path: "/models/desk/images/",
         },
         models: [
             {
-                url: "/models/desk/desk1.glb",
-                id: "main_yEix4",
+                modelUrl: "/models/desk/desk1.glb",
+                level: 2,
+                id: 10001007,
                 name: "Final Model",
                 children: [],
             },
@@ -82,10 +90,10 @@ export const projectOutlinerData: Array<IOutlinerProject> = [
     // },
 ];
 
-export const getProject = (projectId: string): IOutlinerProject | null => {
-    return projectOutlinerData.find((item) => item.id === projectId) || null;
-};
+// export const getProject = (projectId: string): IOutlinerProject | null => {
+//     return projectOutlinerData.find((item) => item.id === projectId) || null;
+// };
 
-export const getModel = (project: IOutlinerProject, modelId: string): IOutlinerModel | null => {
-    return project.models.find((item) => item.id === modelId) || null;
-};
+// // export const getModel = (project: IOutliner, modelId: string): IOutlinerModel | null => {
+//     return project.models.find((item) => item.id === modelId) || null;
+// };

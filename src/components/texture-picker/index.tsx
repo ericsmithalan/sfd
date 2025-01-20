@@ -41,13 +41,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({ objects, onLoading, labe
             for (const obj of materialObjects) {
                 if (obj instanceof Mesh) {
                     if (obj.userData instanceof ObjectUserData) {
-                        obj.userData.textureId = texture.id;
-
-                        if (!obj.userData.unwrapped) {
-                            // const geo = await unwrapGeometry(obj.geometry);
-                            // obj.geometry = geo;
-                            // obj.userData.unwrapped = true;
-                        }
+                        obj.userData.textureInfo?.textureId === texture.id;
                     }
 
                     obj.castShadow = true;

@@ -1,10 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Region } from "../../components";
-import { OutlinerProvider } from "../../context";
-import { Viewport } from "../../lib";
-import { OutlinerView } from "../views/outliner";
+import { Region } from "../components";
+import { OutlinerProvider } from "../context";
+import { Viewport } from "../lib";
 import "./style.scss";
 
 export interface IOutletContenxt {
@@ -17,7 +16,6 @@ export const Viewer = () => {
 
     useEffect(() => {
         let vp: Viewport;
-
         if (canvasRef) {
             if (canvasRef.current) {
                 vp = new Viewport(canvasRef.current);
@@ -35,15 +33,13 @@ export const Viewer = () => {
     return (
         <div className="viewer">
             {viewport && (
-                <OutlinerProvider viewport={viewport}>
+                <>
                     <Region placement="left">
-                        <OutlinerView />
+                        <OutlinerProvider viewport={viewport}>
+                            <Outlet />
+                        </OutlinerProvider>
                     </Region>
-
-                    <Region placement="right">
-                        <Outlet />
-                    </Region>
-                </OutlinerProvider>
+                </>
             )}
 
             <canvas className="canvas" ref={canvasRef} />

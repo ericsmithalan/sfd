@@ -13,8 +13,8 @@ export const getObjectTexture = (
         const object = getObject(viewport, obj);
         if (object) {
             if (object.userData instanceof ObjectUserData) {
-                if (object.userData.textureId) {
-                    const woodTexture = getTextureById(object.userData.textureId);
+                if (object.userData.textureInfo?.textureId) {
+                    const woodTexture = getTextureById(object.userData.textureInfo?.textureId);
                     return woodTexture;
                 }
             }

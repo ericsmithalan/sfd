@@ -1,6 +1,6 @@
 import { EventDispatcher, Group, Mesh, Object3D } from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { IObjectMaterial, IOutlinerModel, IOutlinerObject } from "../interface";
+import { IObjectMaterial, IOutliner } from "../interface";
 import { Edges } from "./Edges";
 import { ObjectUserData } from "./ObjectUserData";
 
@@ -11,19 +11,19 @@ export interface SFDCurrentFile {
 
 export interface IModelEvent {
     loaded: { type: string; model: Object3D | null };
-    load: { type: string; model: Object3D | null; outliner: IOutlinerModel };
+    load: { type: string; model: Object3D | null; outliner: IOutliner };
     materialChanged: { type: string; materials: Map<string, IObjectMaterial> };
     changed: {
         type: string;
         model: Object3D | null;
-        outliner: IOutlinerModel | null;
+        outliner: IOutliner | null;
         edges: Group | null;
     };
 }
 
 type Cache = {
     model: Object3D;
-    outliner: IOutlinerModel;
+    outliner: IOutliner;
     edges: Group;
     materials: Map<string, IObjectMaterial>;
 };
@@ -33,9 +33,9 @@ export class Model extends EventDispatcher<IModelEvent> {
     private _model: Object3D | null = null;
     private _edges: Group | null = null;
 
-    private readonly cache: Map<string, Cache> = new Map();
+    private readonly cache: Map<number, Cache> = new Map();
 
-    modelOutliner: IOutlinerModel | null = null;
+    outliner: IOutliner | null = null;
     materials: Map<string, IObjectMaterial> = new Map();
 
     constructor() {
@@ -69,19 +69,19 @@ export class Model extends EventDispatcher<IModelEvent> {
         this.dispatchEvent({
             type: "changed",
             model: model,
-            outliner: this.modelOutliner,
+            outliner: this.outliner,
             edges: this.edges,
         });
     }
 
-    private getCache(outlinerId: string) {
+    private getCache(outlinerId: number) {
         return this.cache.get(outlinerId);
     }
 
     private setCache(
-        outlinerId: string,
+        outlinerId: number,
         obj: Object3D,
-        outliner: IOutlinerModel,
+        outliner: IOutliner,
         edges: Group,
         materials: Map<string, IObjectMaterial>,
     ) {
@@ -96,7 +96,7 @@ export class Model extends EventDispatcher<IModelEvent> {
         }
     }
 
-    load = (obj: IOutlinerModel): Promise<Object3D> => {
+    load = (obj: IOutliner): Promise<Object3D> => {
         return new Promise((resolve) => {
             this.dispatchEvent({
                 type: "load",
@@ -106,7 +106,7 @@ export class Model extends EventDispatcher<IModelEvent> {
 
             const cached = this.getCache(obj.id);
             if (cached) {
-                this.modelOutliner = cached.outliner;
+                this.outliner = cached.outliner;
                 this.model = cached.model;
                 this.edges = cached.edges;
                 this.materials = cached.materials;
@@ -121,78 +121,85 @@ export class Model extends EventDispatcher<IModelEvent> {
 
             this.materials.clear();
 
-            const objects: Array<IOutlinerObject> = [];
+            const objects: Array<IOutliner> = [];
 
-            this.loader.load(obj.url, (gltf) => {
-                const model = gltf.scene;
-                model.castShadow = true;
-                model.receiveShadow = true;
+            if (obj.modelUrl) {
+                this.loader.load(obj.modelUrl, (gltf) => {
+                    const model = gltf.scene;
+                    model.castShadow = true;
+                    model.receiveShadow = true;
 
-                const edges = new Edges();
+                    const edges = new Edges();
 
-                model.traverse((object: Object3D) => {
-                    if (object instanceof Mesh) {
-                        // object.computeBoundingBox();
-                        object.geometry.computeBoundingSphere();
-                        object.castShadow = true;
-                        object.receiveShadow = true;
+                    model.traverse((object: Object3D) => {
+                        if (object instanceof Mesh) {
+                            // object.computeBoundingBox();
+                            object.geometry.computeBoundingSphere();
+                            object.castShadow = true;
+                            object.receiveShadow = true;
 
-                        if (object.material) {
-                            if (object.material.name?.indexOf("wood") !== -1) {
-                                const mat = this.materials.get(object.material.name);
-                                if (!mat) {
-                                    this.materials.set(object.material.name, {
-                                        objects: [object.id],
-                                        material: object.material,
-                                    });
-                                } else {
-                                    mat.objects.push(object.id);
+                            if (object.material) {
+                                if (object.material.name?.indexOf("wood") !== -1) {
+                                    const mat = this.materials.get(object.material.name);
+                                    if (!mat) {
+                                        this.materials.set(object.material.name, {
+                                            objects: [object.id],
+                                            material: object.material,
+                                        });
+                                    } else {
+                                        mat.objects.push(object.id);
+                                    }
                                 }
                             }
+
+                            const outlinerUD: IOutliner = {
+                                id: object.id,
+                                level: 3,
+                                name: object.name,
+                            };
+
+                            object.userData = new ObjectUserData(outlinerUD);
+
+                            objects.push(outlinerUD);
+
+                            edges.add(object);
+                        } else {
+                            object.layers.disableAll();
                         }
+                    });
 
-                        const outlinerUD: IOutlinerObject = {
-                            id: object.id,
-                            name: object.name,
-                        };
+                    this.outliner = {
+                        level: obj.level,
+                        categories: obj.categories,
+                        models: obj.models,
+                        imageResouce: obj.imageResouce,
+                        name: obj.name,
+                        id: obj.id,
+                        modelUrl: obj.modelUrl,
+                        children: objects,
+                    };
 
-                        object.userData = new ObjectUserData<IOutlinerObject>(true, outlinerUD);
+                    model.userData = new ObjectUserData(this.outliner);
 
-                        objects.push(outlinerUD);
+                    if (model.up.y === 1) {
+                        model.up.set(0, 0, 1);
+                        model.rotateX(Math.PI / 2);
 
-                        edges.add(object);
-                    } else {
-                        object.layers.disableAll();
+                        edges.edgeGroup.up.set(0, 0, 1);
+                        edges.edgeGroup.rotateX(Math.PI / 2);
                     }
+
+                    this.edges = edges.edgeGroup;
+                    this.model = model;
+
+                    this.setCache(obj.id, model, this.outliner, edges.edgeGroup, this.materials);
+
+                    this.dispatchEvent({ type: "materialChanged", materials: this.materials });
+                    this.dispatchEvent({ type: "loaded", model: this.model });
+
+                    resolve(this.model);
                 });
-
-                this.modelOutliner = {
-                    name: obj.name,
-                    id: obj.id,
-                    url: obj.url,
-                    children: objects,
-                };
-
-                model.userData = new ObjectUserData<IOutlinerModel>(true, this.modelOutliner);
-
-                if (model.up.y === 1) {
-                    model.up.set(0, 0, 1);
-                    model.rotateX(Math.PI / 2);
-
-                    edges.edgeGroup.up.set(0, 0, 1);
-                    edges.edgeGroup.rotateX(Math.PI / 2);
-                }
-
-                this.edges = edges.edgeGroup;
-                this.model = model;
-
-                this.setCache(obj.id, model, this.modelOutliner, edges.edgeGroup, this.materials);
-
-                this.dispatchEvent({ type: "materialChanged", materials: this.materials });
-                this.dispatchEvent({ type: "loaded", model: this.model });
-
-                resolve(this.model);
-            });
+            }
         });
     };
 

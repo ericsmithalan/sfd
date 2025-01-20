@@ -1,16 +1,3 @@
-import { IOutlinerModel, IOutlinerObject, IOutlinerProject } from "./interface";
-
-export type ViewportSpace = "world" | "local";
-export type SelectMode = "select" | "edit";
-export type PickPropertiesType<T> = Pick<
-    T,
-    {
-        [K in keyof T]: T[K] extends Function ? never : K;
-    }[keyof T]
->;
-
-export type UserData = IOutlinerProject | IOutlinerModel | IOutlinerObject;
-
 export type RegionPlacement = "left" | "right" | "top" | "bottom";
 export type IconName =
     | "24-hours"
