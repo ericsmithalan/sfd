@@ -20,6 +20,7 @@ import { loadModel } from "../utils/loadModel";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
+import { Selection } from "./Selection";
 
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
@@ -33,6 +34,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly camera: PerspectiveCamera;
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
+    readonly selection: Selection;
 
     readonly lights: Lights;
     readonly grid: Grid;
@@ -88,6 +90,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 3500;
 
+        this.selection = new Selection(this.canvas, this.scene, this.camera, this.renderer);
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
 
         this.orbitControls.update();
@@ -177,7 +180,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
-
+        this.selection.animate();
         this.gizmo.render();
         this.orbitControls.update();
     };
@@ -201,6 +204,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(this.size.width, this.size.height);
+        this.selection.resize();
         this.gizmo.update();
     };
 
@@ -216,5 +220,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.unregisterEvents();
         this.orbitControls.dispose();
         this.renderer.dispose();
+        this.selection.dispose();
     }
 }

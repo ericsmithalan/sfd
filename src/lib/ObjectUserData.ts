@@ -9,6 +9,10 @@ export interface ITextureInfo {
     unwrapped: boolean;
 }
 
+export interface IViewportInfo {
+    selectable: boolean;
+}
+
 export interface IObjectUserData {
     outliner: IOutliner | null;
     edgeInfo: IEdgeInfo | null;
@@ -18,6 +22,7 @@ export interface IObjectUserData {
 export class ObjectUserData implements IObjectUserData {
     constructor(
         public outliner: IOutliner | null = null,
+        public viewportInfo: IViewportInfo | null,
         public edgeInfo: IEdgeInfo | null = null,
         public textureInfo: ITextureInfo | null = null,
     ) {

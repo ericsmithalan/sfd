@@ -42,14 +42,14 @@ export class BorderEffect {
         this.composer = new EffectComposer(renderer, this.target);
         this.composer.setPixelRatio(window.devicePixelRatio);
         this.composer.setSize(window.innerWidth, window.innerHeight);
-        // this.composer.renderTarget1.stencilBuffer = true;
-        // this.composer.renderTarget2.stencilBuffer = true;
+        this.composer.renderTarget1.stencilBuffer = true;
+        this.composer.renderTarget2.stencilBuffer = true;
 
         this.effectScene = new Scene();
 
         this.renderPass = new RenderPass(this.effectScene, camera);
-        // this.renderPass.clearColor = new Color(0, 0, 0);
-        // this.renderPass.clearAlpha = 0;
+        this.renderPass.clearColor = new Color(0, 0, 0);
+        this.renderPass.clearAlpha = 0;
         this.composer.addPass(this.renderPass);
 
         this.outlinePass = new OutlinePass(

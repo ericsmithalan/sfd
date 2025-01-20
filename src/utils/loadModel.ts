@@ -46,7 +46,7 @@ export const loadModel = (outliner: IOutliner): Promise<IModel> => {
                             name: object.name,
                         };
 
-                        object.userData = new ObjectUserData(outlinerUD);
+                        object.userData = new ObjectUserData(outlinerUD, { selectable: true });
                         modelChildrenOutliner.push(outlinerUD);
 
                         edges.add(object);
@@ -57,7 +57,7 @@ export const loadModel = (outliner: IOutliner): Promise<IModel> => {
 
                 outliner.children = modelChildrenOutliner;
 
-                model.userData = new ObjectUserData(outliner);
+                model.userData = new ObjectUserData(outliner, { selectable: true });
 
                 if (model.up.y === 1) {
                     model.up.set(0, 0, 1);
