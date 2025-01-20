@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { IOutletContenxt, OutlinerContext } from "../context";
+import { IOutlinerContext, OutlinerContext } from "../context";
 
-export const useOutliner = (): IOutletContenxt => {
+export const useOutliner = (): IOutlinerContext => {
     const context = useContext(OutlinerContext);
 
     return context;

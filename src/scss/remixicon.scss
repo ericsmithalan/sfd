@@ -22,7 +22,7 @@
 [class^="ri-"],
 [class*=" ri-"] {
     font-family: "remixicon" !important;
-    font-size: 16px;
+    font-size: inherit;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -7906,12 +7906,19 @@
 .ri-folder-cloud-line:before {
     content: "\f442";
 }
-.ri-gallery-view-2:before {
+.ri-gallery-view-2-line:before {
     content: "\f443";
 }
-.ri-gallery-view:before {
+.ri-gallery-view-line:before {
     content: "\f444";
 }
+.ri-gallery-view-2-fill:before {
+    content: "\f443";
+}
+.ri-gallery-view-fill:before {
+    content: "\f444";
+}
+
 .ri-hand:before {
     content: "\f445";
 }

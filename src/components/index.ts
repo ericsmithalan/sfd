@@ -1,4 +1,5 @@
 export * from "./bg-image";
+export * from "./breadcrumb";
 export * from "./button";
 export * from "./icon";
 export * from "./loading";

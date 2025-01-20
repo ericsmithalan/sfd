@@ -1,0 +1,25 @@
+.breadcrumbs {
+    display: flex;
+    flex-direction: row;
+    color: inherit;
+    gap: var(--gap-6);
+    align-items: center;
+
+    & > .crumb {
+        display: flex;
+        flex-direction: row;
+        color: var(--color-white-5);
+
+        & > a {
+            font-family: inherit;
+            font-size: inherit;
+            color: inherit;
+            text-decoration: none;
+        }
+
+        & > .selected {
+            font-weight: 600;
+            color: var(--color-white-1);
+        }
+    }
+}
