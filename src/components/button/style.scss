@@ -52,6 +52,48 @@ input::-moz-focus-inner {
         flex: 1 1 auto;
     }
 
+    &.btn-outliner {
+        background-color: transparent;
+        border: 1px solid transparent;
+
+        display: flex;
+        flex-direction: row;
+        gap: var(--gap-5);
+        padding: var(--padding-5) var(--padding-4);
+        border-radius: var(--radius-5);
+        border: 1px solid transparent;
+        flex: 1 1 auto;
+
+        &:hover {
+            background-color: var(--color-white-7);
+            color: var(--color-alt-1);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &.active {
+            color: var(--color-alt-1);
+            font-weight: 600;
+            background-color: var(--color-black-3);
+        }
+
+        & > .link-content {
+            display: flex;
+            flex-direction: row;
+            flex: 1 1 auto;
+
+            &.no-wrap {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                display: inline-block;
+                width: 100px;
+            }
+        }
+    }
+
     &.btn-toolbar {
         border: 1px solid transparent;
         background-color: var(--color-white-8);
@@ -61,6 +103,10 @@ input::-moz-focus-inner {
         width: var(--toolbar-height);
         height: var(--toolbar-height);
         flex: 1 1 auto;
+
+        &.active {
+            color: var(--color-alt-2);
+        }
 
         &:hover {
             background-color: var(--color-white-7);

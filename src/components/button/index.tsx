@@ -10,7 +10,7 @@ type ButtonProps = {
     icon?: IconName;
     iconFill?: boolean;
     active?: boolean;
-    variant?: "toolbar" | "image" | "default" | "panel" | "clear";
+    variant?: "toolbar" | "image" | "panel" | "outliner";
     className?: string;
     onClick?: (e: MouseEvent) => void;
 };

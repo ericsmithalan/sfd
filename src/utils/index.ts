@@ -10,4 +10,3 @@ export * from "./mapWoodTexture";
 export * from "./popupHelpers";
 export * from "./setObjectVisibility";
 export * from "./unitConversions";
-export * from "./unwrapGeometry";

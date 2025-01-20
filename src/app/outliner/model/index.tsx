@@ -1,7 +1,6 @@
-import { useEffect } from "react";
-import { useOutletContext, useParams } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
-import { Breadcrumb } from "../../../components";
+import { Breadcrumb, Button, Scroller } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import "./style.scss";
 
@@ -10,26 +9,17 @@ export const ModelOutliner = () => {
         outliner: IOutlinerContext;
     }>();
 
-    const params = useParams();
-
-    useEffect(() => {
-        if (params.modelId) {
-            if (outliner.project) {
-                const model = outliner.project.models?.find(
-                    (item) => item.id === Number(params.modelId),
-                );
-
-                outliner.setModel(model || null);
-            }
-        }
-    }, [outliner, outliner.project, params]);
-
     const crumbs = useBreadcrumbs();
 
     return (
         <div className="outliner-model">
             <Breadcrumb crumbs={crumbs} />
-            Model Outliner
+            <div className="title">{outliner.model?.name}</div>
+            <Scroller maxHeight={600}>
+                {outliner.model?.children?.map((item, i) => {
+                    return <Button variant="outliner" key={i} icon="folder" text={item.name} />;
+                })}
+            </Scroller>
         </div>
     );
 };

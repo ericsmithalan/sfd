@@ -3,7 +3,6 @@ import {
     EventDispatcher,
     Fog,
     NeutralToneMapping,
-    Object3D,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
@@ -15,14 +14,16 @@ import {
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import { IScreenSize } from "../interface";
+import { IOutliner, IScreenSize } from "../interface";
+import { IModel } from "../interface/IModel";
+import { loadModel } from "../utils/loadModel";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
-import { Model } from "./Model";
 
 export interface IViewportEvent {
-    modelChanged: { type: string; model: Model | null };
+    loading: { type: string; value: boolean };
+    modelChanged: { type: string; model: IModel | null };
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
@@ -37,7 +38,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly grid: Grid;
     readonly floor: Floor;
 
-    private _model: Model | null = null;
+    private _model: IModel | null = null;
+    private _edges: boolean = true;
 
     size: IScreenSize = {
         width: 0,
@@ -109,7 +111,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         environment.dispose();
         pmremGenerator.dispose();
 
-        this.add(
+        this.scene.add(
             // this.lights.ambientLight,
             this.lights.dirLight,
             this.floor,
@@ -121,20 +123,54 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.registerEvents();
     }
 
+    get edges() {
+        return this._edges;
+    }
+
+    set edges(value: boolean) {
+        console.log("edges", value);
+        if (this.model) {
+            this.model.edges.visible = value;
+            this._edges = value;
+        }
+    }
+
     get model() {
         return this._model;
     }
 
-    set model(value: Model | null) {
+    private clearModel() {
+        if (this._model) {
+            if (this._model.object.parent) {
+                this.scene.remove(this._model.object);
+            }
+            if (this._model.edges.parent) {
+                this.scene.remove(this._model.edges);
+            }
+        }
+    }
+
+    private addModel(model: IModel | null) {
+        this.clearModel();
+
+        if (model) {
+            this.scene.add(model.object);
+            this.scene.add(model.edges);
+            model.edges.visible = this.edges;
+        }
+    }
+
+    set model(value: IModel | null) {
+        this.addModel(value);
         this._model = value;
+        this.dispatchEvent({ type: "modelChanged", model: value });
     }
 
-    add(...object: Object3D[]) {
-        this.scene.add(...object);
-    }
-
-    remove(...object: Object3D[]) {
-        this.scene.remove(...object);
+    async loadModel(outliner: IOutliner) {
+        this.dispatchEvent({ type: "loading", value: true });
+        const model = await loadModel(outliner);
+        this.model = model;
+        this.dispatchEvent({ type: "loading", value: false });
     }
 
     private animate = () => {

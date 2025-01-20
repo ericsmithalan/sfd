@@ -14,6 +14,14 @@
         "jsx": "preserve",
         "incremental": true
     },
-    "include": ["next-env.d.ts", "./src/default.d.ts", "**/*.ts", "**/*.tsx", "src/views/outliner/index.old", "src/utils/edgesGeometry"],
+    "include": [
+        "next-env.d.ts",
+        "./src/default.d.ts",
+        "**/*.ts",
+        "**/*.tsx",
+        "src/views/outliner/index.old",
+        "src/utils/edgesGeometry",
+        "src/lib/Model.old"
+    ],
     "exclude": ["node_modules"]
 }

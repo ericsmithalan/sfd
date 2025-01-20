@@ -1,9 +1,9 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { Outlet } from "react-router-dom";
-import { Region } from "../components";
+import { Loading, Region } from "../components";
 import { ModelProvider, OutlinerProvider } from "../context";
-import { Viewport } from "../lib";
+import { IViewportEvent, Viewport } from "../lib";
 import { ProjectPanel } from "./panels/project";
 import "./style.scss";
 import { Toolbar } from "./toolbar";
@@ -14,13 +14,19 @@ export interface IOutletContenxt {
 
 export const Viewer = () => {
     const [viewport, setViewport] = useState<Viewport>();
+    const [loading, setLoading] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
         let vp: Viewport;
+        const loading = (e: IViewportEvent["loading"]) => {
+            setLoading(e.value);
+        };
+
         if (canvasRef) {
             if (canvasRef.current) {
                 vp = new Viewport(canvasRef.current);
+                vp.addEventListener("loading", loading);
                 setViewport(vp);
             }
         }
@@ -28,6 +34,7 @@ export const Viewer = () => {
         return () => {
             if (vp) {
                 console.log("disposed viewport");
+                vp.removeEventListener("loading", loading);
                 vp.dispose();
             }
         };
@@ -35,6 +42,7 @@ export const Viewer = () => {
 
     return (
         <div className="viewer">
+            {loading && <Loading message="Loading" />}
             {viewport && (
                 <>
                     <Region placement="left">
