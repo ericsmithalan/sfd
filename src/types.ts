@@ -85,6 +85,7 @@ export type IconName =
     | "gallery-view-2"
     | "sofa"
     | "armchair"
+    | "arrow-left-long"
     | "gallery-view"
     | "arrow-drop-right"
     | "arrow-drop-right"

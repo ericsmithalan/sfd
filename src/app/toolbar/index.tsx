@@ -1,6 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Button, Panel, TexturePicker } from "../../components";
 import { defaultTexture, woodTextures } from "../../data";
+import { useModel } from "../../hooks";
 import { Viewport } from "../../lib";
 import "./style.scss";
 
@@ -9,13 +10,23 @@ type ToolbarProps = {
 };
 
 export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
+    const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
+    const model = useModel();
 
     useEffect(() => {
         setEdges(viewport.edges);
     }, [viewport]);
 
-    return (
+    useEffect(() => {
+        if (model.model) {
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }, [model]);
+
+    return visible ? (
         <Panel className="app-toolbar-panel" contentCss="app-toolbar">
             <Button
                 variant="toolbar"
@@ -30,5 +41,5 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
             <TexturePicker texture={defaultTexture} items={woodTextures} />
             <TexturePicker texture={defaultTexture} items={woodTextures} />
         </Panel>
-    );
+    ) : null;
 };

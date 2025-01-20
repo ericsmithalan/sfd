@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Loading, Region } from "../components";
 import { ModelProvider, OutlinerProvider } from "../context";
 import { IViewportEvent, Viewport } from "../lib";
-import { ProjectPanel } from "./panels/project";
+import { ImagesPanel } from "./panels/images";
 import "./style.scss";
 import { Toolbar } from "./toolbar";
 
@@ -45,17 +45,17 @@ export const Viewer = () => {
             {loading && <Loading message="Loading" />}
             {viewport && (
                 <>
-                    <Region placement="left">
-                        <OutlinerProvider viewport={viewport}>
+                    <OutlinerProvider viewport={viewport}>
+                        <Region placement="left">
                             <Outlet />
-                        </OutlinerProvider>
-                    </Region>
+                        </Region>
+                        <Region placement="right">
+                            <ImagesPanel />
+                        </Region>
+                    </OutlinerProvider>
                     <Region placement="top">
-                        <Toolbar viewport={viewport} />
-                    </Region>
-                    <Region placement="right">
                         <ModelProvider viewport={viewport}>
-                            <ProjectPanel />
+                            <Toolbar viewport={viewport} />
                         </ModelProvider>
                     </Region>
                 </>

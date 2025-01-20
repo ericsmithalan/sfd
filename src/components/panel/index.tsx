@@ -30,6 +30,7 @@ export const Panel: FC<PanelProps> = ({ className, children, title, contentCss, 
                 />
             )}
             {open && <div className={clsx("panel-content", contentCss)}>{children}</div>}
+            <div className="inner-border"></div>
         </div>
     );
 };

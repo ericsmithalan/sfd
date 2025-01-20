@@ -4,11 +4,12 @@
     color: inherit;
     gap: var(--gap-6);
     align-items: center;
+    color: var(--color-white-4);
+    font-size: var(--font-7);
 
     & > .crumb {
         display: flex;
         flex-direction: row;
-        color: var(--color-white-5);
 
         & > a {
             font-family: inherit;

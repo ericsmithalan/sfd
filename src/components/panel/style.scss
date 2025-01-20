@@ -3,10 +3,22 @@
     flex-direction: column;
     background-color: var(--color-black-2);
     backdrop-filter: var(--blur-3);
-    box-shadow: var(--shadow-2);
-    border-radius: var(--radius-5);
-    border: 1px solid var(--color-dark-6);
+    box-shadow: var(--shadow-3);
+    border-radius: var(--radius-4);
+    border: 1px solid var(--color-dark-3);
     padding: var(--padding-1);
+    position: relative;
+
+    & > .inner-border {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid var(--color-white-8);
+        border-radius: var(--radius-4);
+        z-index: 0;
+    }
 
     &.panel-open {
     }
@@ -15,13 +27,17 @@
         display: flex;
         flex-direction: row;
         gap: var(--gap-5);
-        font-size: var(--font-5);
+        font-size: var(--font-6);
         font-weight: bold;
+        position: relative;
+        z-index: 1;
     }
 
     & > .panel-content {
-        border-radius: var(--radius-5);
+        border-radius: var(--radius-4);
         display: flex;
         flex-direction: column;
+        position: relative;
+        z-index: 1;
     }
 }

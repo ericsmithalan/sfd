@@ -1,5 +1,6 @@
 export * from "./createWoodMaterials";
 export * from "./fitCameraToObject";
+export * from "./generateImageResource";
 export * from "./getObject";
 export * from "./getObjectsById";
 export * from "./getObjectTexture";

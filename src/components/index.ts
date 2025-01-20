@@ -5,6 +5,7 @@ export * from "./icon";
 export * from "./loading";
 export * from "./logo";
 export * from "./nav-link";
+export * from "./outliner-title";
 export * from "./panel";
 export * from "./region";
 export * from "./scroller";
