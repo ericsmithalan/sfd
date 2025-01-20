@@ -1,6 +1,7 @@
 import { FC, MouseEvent, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
+import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
 import { TextureMenu } from "./menu";
 import "./style.scss";
@@ -8,16 +9,18 @@ import { TextureButton } from "./texture-button";
 
 type TexturePickerProps = {
     label?: string;
+    material: IObjectMaterial;
     items: Array<ITexture>;
     text?: string;
     texture?: ITexture | null;
-    onItemClick?: (value: ITexture, e: MouseEvent) => void;
+    onItemClick?: (value: ITexture, material: IObjectMaterial, e: MouseEvent) => void;
 };
 
 export const TexturePicker: FC<TexturePickerProps> = ({
     items,
     label,
     texture,
+    material,
     text,
     onItemClick,
 }) => {
@@ -48,7 +51,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
                         items={items}
                         onItemClick={(value, e) => {
                             if (onItemClick) {
-                                onItemClick(value, e);
+                                onItemClick(value, material, e);
                             }
                             setSelected(value);
                             setOpen(!open);
