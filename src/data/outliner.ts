@@ -2,7 +2,7 @@ import { IOutliner } from "../interface";
 
 export const rootOutliner: Array<IOutliner> = [
     {
-        id: 10001000,
+        id: 11000,
         name: "Bunk Beds",
         level: 1,
         imageResouce: {
@@ -12,14 +12,14 @@ export const rootOutliner: Array<IOutliner> = [
         },
         models: [
             {
-                id: 10001001,
+                id: 11001,
                 level: 2,
                 modelUrl: "/models/bunks/bunks1.glb",
                 name: "Final Model",
                 children: [],
             },
             {
-                id: 10001002,
+                id: 11002,
                 modelUrl: "/models/bunks/mockups.glb",
                 level: 2,
                 name: "Initial Mockups",
@@ -28,7 +28,7 @@ export const rootOutliner: Array<IOutliner> = [
         ],
     },
     {
-        id: 10001003,
+        id: 11003,
         name: "Case",
         level: 1,
         imageResouce: {
@@ -40,21 +40,21 @@ export const rootOutliner: Array<IOutliner> = [
             {
                 modelUrl: "/models/case-1/final.glb",
                 level: 3,
-                id: 10001004,
+                id: 11004,
                 name: "Final Model",
                 children: [],
             },
             {
                 modelUrl: "/models/case-1/build.glb",
                 level: 3,
-                id: 10001005,
+                id: 11005,
                 name: "Build Steps",
                 children: [],
             },
         ],
     },
     {
-        id: 10001006,
+        id: 11006,
         name: "Desk",
         level: 1,
         imageResouce: {
@@ -66,7 +66,7 @@ export const rootOutliner: Array<IOutliner> = [
             {
                 modelUrl: "/models/desk/desk1.glb",
                 level: 2,
-                id: 10001007,
+                id: 11007,
                 name: "Final Model",
                 children: [],
             },
@@ -90,10 +90,10 @@ export const rootOutliner: Array<IOutliner> = [
     // },
 ];
 
-// export const getProject = (projectId: string): IOutlinerProject | null => {
-//     return projectOutlinerData.find((item) => item.id === projectId) || null;
-// };
+export const outlinerIdToName = (
+    outliner: Array<IOutliner> = rootOutliner,
+): Record<string, string> => {
+    return outliner.reduce((obj, item) => Object.assign(obj, { [`${item.id}`]: item.name }), {});
+};
 
-// // export const getModel = (project: IOutliner, modelId: string): IOutlinerModel | null => {
-//     return project.models.find((item) => item.id === modelId) || null;
-// };
+export const outlinerNameMapper: Record<string, string> = outlinerIdToName();

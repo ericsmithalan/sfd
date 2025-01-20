@@ -15,7 +15,6 @@ export const ProjectOutliner = () => {
     const crumbs = useBreadcrumbs();
 
     useEffect(() => {
-        console.log(crumbs);
         if (params.projectId) {
             const project = rootOutliner.find((item) => item.id === Number(params.projectId));
             outliner.setProject(project || null);

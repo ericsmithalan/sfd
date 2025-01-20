@@ -13,7 +13,6 @@ export const ModelOutliner = () => {
     const params = useParams();
 
     useEffect(() => {
-        console.log(params);
         if (params.modelId) {
             if (outliner.project) {
                 const model = outliner.project.models?.find(

@@ -8,8 +8,10 @@ export const OutlinerView = () => {
 
     return (
         <Panel title="Projects" icon="gallery-view-2">
-            
+
             <Outlet context={{ outliner: outliner }} />
         </Panel>
     );
 };
+
+
