@@ -23,6 +23,7 @@ const createWoodTexture = (
 
 const getAllWoodTextures = (size = 1024): Array<ITexture> => {
     return [
+        createWoodTexture("0a875cc1-3233-4896-a0b8-b8b3b1b7c59b", "none", 1, "None", size),
         createWoodTexture("0a875cc1-ed33-4896-a0b8-b8b3b1b7c59b", "oak", 1, "Oak", size),
         createWoodTexture("1d0fb485-375c-4721-9f36-890e6826c638", "cherry", 1, "Cherry", size),
         createWoodTexture("5b3e1243-f4a9-4480-8b5e-a663971762ed", "walnut", 1, "Walnut", size),

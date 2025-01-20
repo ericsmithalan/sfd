@@ -5,6 +5,7 @@ export interface IObjectUserData<T extends UserData> {
     outliner: T | null;
     edgeId: number | null;
     textureId: string | null;
+    unwrapped: boolean;
 }
 
 export class ObjectUserData<T extends UserData> implements IObjectUserData<T> {
@@ -13,10 +14,12 @@ export class ObjectUserData<T extends UserData> implements IObjectUserData<T> {
         public outliner: T | null = null,
         public edgeId: number | null = null,
         public textureId: string | null = null,
+        public unwrapped: boolean = false,
     ) {
         this.selectable = selectable;
         this.outliner = outliner;
         this.edgeId = edgeId;
         this.textureId = textureId;
+        this.unwrapped = unwrapped;
     }
 }

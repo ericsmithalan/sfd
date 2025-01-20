@@ -1,5 +1,9 @@
 .menu-button {
-    & > .image {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    & > .bg-image {
         .icon {
             margin-right: var(--margin-4);
         }

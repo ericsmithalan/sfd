@@ -19,14 +19,14 @@ export const unwrapGeometry = async (
     const defaultChartOptions = {
         fixWinding: true,
         maxBoundaryLength: 0,
-        maxChartArea: 0,
+        maxChartArea: 1024,
         maxCost: 3,
         maxIterations: 1,
         normalDeviationWeight: 2,
         normalSeamWeight: 4,
         roundnessWeight: 0.001,
         straightnessWeight: 6,
-        textureSeamWeight: 0.5,
+        textureSeamWeight: 4,
         useInputMeshUvs: false,
     };
 
@@ -37,7 +37,7 @@ export const unwrapGeometry = async (
         createImage: false,
         maxChartSize: 0,
         padding: 2,
-        resolution: 0,
+        resolution: 1024,
         rotateCharts: true,
         rotateChartsToAxis: true,
         texelsPerUnit: 0,

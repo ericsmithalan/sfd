@@ -6,4 +6,4 @@ export const getTextureById = (id: string): ITexture | null => {
     return result || null;
 };
 
-export const defaultTexture = getTextureById("6b436d8e-87a9-49c0-80b7-422f3e3b2fea");
+export const defaultTexture = getTextureById("0a875cc1-3233-4896-a0b8-b8b3b1b7c59b");

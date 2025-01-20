@@ -35,7 +35,7 @@ export const MenuButton: FC<MenuButtonProps> = ({
         <>
             <ImageButton
                 ref={buttonRef}
-                active={open}
+                active={true}
                 text={selectedValue?.name || text}
                 className="menu-button"
                 image={selected?.image}
@@ -43,7 +43,7 @@ export const MenuButton: FC<MenuButtonProps> = ({
                     setOpen(!open);
                 }}
             >
-                <Icon name="arrow-down" />
+                <Icon fill={true} name={open ? "arrow-up-s" : "arrow-down-s"} />
             </ImageButton>
             {open &&
                 createPortal(

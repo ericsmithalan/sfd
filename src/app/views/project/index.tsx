@@ -54,7 +54,7 @@ export const ProjectView = () => {
                             });
                         }}
                     >
-                        <BgImage size="cover" height={200} width={"100%"} src={primaryImage} />
+                        <BgImage size="cover" height={120} width={"100%"} src={primaryImage} />
                     </Button>
                 </div>
                 <div className="images">

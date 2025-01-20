@@ -1,6 +1,6 @@
 import { EventDispatcher, Group, Mesh, Object3D } from "three";
 import { GLTF, GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { IOutlinerModel, IOutlinerObject } from "../interface";
+import { IObjectMaterial, IOutlinerModel, IOutlinerObject } from "../interface";
 import { Edges } from "./Edges";
 import { ObjectUserData } from "./ObjectUserData";
 
@@ -12,6 +12,7 @@ export interface SFDCurrentFile {
 export interface IModelEvent {
     loaded: { type: string; model: Object3D | null };
     load: { type: string; model: Object3D | null; outliner: IOutlinerModel };
+    materialChanged: { type: string; materials: Map<string, IObjectMaterial> };
     changed: {
         type: string;
         model: Object3D | null;
@@ -29,6 +30,8 @@ export class Model extends EventDispatcher<IModelEvent> {
     private readonly loader: GLTFLoader;
     private _model: Object3D | null = null;
     private cache: Map<string, Cache> = new Map();
+
+    materials: Map<string, IObjectMaterial> = new Map();
 
     gtlf: GLTF | null = null;
     private modelOutliner: IOutlinerModel | null = null;
@@ -79,6 +82,7 @@ export class Model extends EventDispatcher<IModelEvent> {
     load = (obj: IOutlinerModel): Promise<Object3D> => {
         return new Promise((resolve) => {
             const cached = this.getCache(obj.id);
+            this.materials.clear();
 
             if (cached) {
                 this.modelOutliner = cached.outliner;
@@ -111,6 +115,20 @@ export class Model extends EventDispatcher<IModelEvent> {
                         object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
+
+                        if (object.material) {
+                            if (object.material.name?.indexOf("wood") !== -1) {
+                                const mat = this.materials.get(object.material.name);
+                                if (!mat) {
+                                    this.materials.set(object.material.name, {
+                                        objects: [object.id],
+                                        material: object.material,
+                                    });
+                                } else {
+                                    mat.objects.push(object.id);
+                                }
+                            }
+                        }
 
                         const outlinerUD: IOutlinerObject = {
                             id: object.id,
@@ -153,8 +171,9 @@ export class Model extends EventDispatcher<IModelEvent> {
                 this.edges = edges.edgeGroup;
 
                 this.model = model;
+                this.dispatchEvent({ type: "materialChanged", materials: this.materials });
                 this.dispatchEvent({ type: "loaded", model: this.model });
-
+                console.log(this.materials);
                 resolve(this.model);
             });
         });

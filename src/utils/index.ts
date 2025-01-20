@@ -2,6 +2,7 @@ export * from "./createWoodMaterials";
 export * from "./fitCameraToObject";
 export * from "./getEdge";
 export * from "./getObject";
+export * from "./getObjectsById";
 export * from "./getObjectTexture";
 export * from "./getObjectUserData";
 export * from "./getTextureById";

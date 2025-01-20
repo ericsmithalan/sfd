@@ -1,4 +1,10 @@
-import { MeshBasicMaterial, RepeatWrapping, SRGBColorSpace, TextureLoader } from "three";
+import {
+    MeshBasicMaterial,
+    MeshStandardMaterial,
+    RepeatWrapping,
+    SRGBColorSpace,
+    TextureLoader,
+} from "three";
 import { ITexture } from "../interface/ITexture";
 
 export const createWoodMaterials = (texture: ITexture): Promise<MeshBasicMaterial[]> => {
@@ -30,5 +36,19 @@ export const createWoodMaterials = (texture: ITexture): Promise<MeshBasicMateria
         ];
 
         resolve(cubeMaterials);
+    });
+};
+
+export const createSingleWoodMaterials = (texture: ITexture): Promise<MeshStandardMaterial> => {
+    return new Promise(async (resolve) => {
+        const loader = new TextureLoader();
+        const face = await loader.loadAsync(texture.faceUrl);
+        face.wrapS = RepeatWrapping;
+        face.wrapT = RepeatWrapping;
+        face.colorSpace = SRGBColorSpace;
+
+        const material = new MeshStandardMaterial({ map: face });
+
+        resolve(material);
     });
 };
