@@ -2,27 +2,40 @@ import { Vector3 } from "three";
 
 const METERS_TO_INCHES = 39.3700787402;
 
-export const metersToInches = (vector: Vector3): Vector3 => {
-    const x = vector.x;
-    const y = vector.y;
-    const z = vector.z;
+export const convertMeterToInch = (vector: Vector3): Vector3 => {
+    const arr: Array<number> = [vector.x, vector.y, vector.z].sort((a, b) => a - b);
+
+    const thickness = arr[0];
+    const width = arr[1];
+    const length = arr[2];
 
     return new Vector3(
-        x * METERS_TO_INCHES,
-        y * METERS_TO_INCHES,
-        z * METERS_TO_INCHES,
+        Number((width * METERS_TO_INCHES).toFixed(3)),
+        Number((length * METERS_TO_INCHES).toFixed(3)),
+        Number((thickness * METERS_TO_INCHES).toFixed(3)),
     );
 };
 
-export const inchesToMeters = (vector: Vector3): Vector3 => {
+export const convertToBordFeet = (vector: Vector3) => {
+    // board feet = length (ft) × width (in) × thickness (in) / 12
+    const arr: Array<number> = [vector.x, vector.y, vector.z].sort((a, b) => a - b);
+
+    const thickness = arr[0];
+    const width = arr[1];
+    const length = arr[2];
+
+    return Number((((length / 12) * width * thickness) / 12).toFixed(3));
+};
+
+export const convertInchToMeter = (vector: Vector3): Vector3 => {
     const x = vector.x;
     const y = vector.y;
     const z = vector.z;
 
     return new Vector3(
-        x / METERS_TO_INCHES,
-        y / METERS_TO_INCHES,
-        z / METERS_TO_INCHES,
+        Number((x / METERS_TO_INCHES).toFixed(3)),
+        Number((y / METERS_TO_INCHES).toFixed(3)),
+        Number((z / METERS_TO_INCHES).toFixed(3)),
     );
 };
 
@@ -32,11 +45,8 @@ interface Vector3Fraction {
     z: Fraction;
 }
 
-export const toFraction = (
-    vector: Vector3,
-    lowestD: number = 32,
-): Vector3Fraction => {
-    const vect = metersToInches(vector);
+export const toFraction = (vector: Vector3, lowestD: number = 32): Vector3Fraction => {
+    const vect = convertMeterToInch(vector);
     return {
         x: getFraction(vect.x, lowestD),
         y: getFraction(vect.y, lowestD),

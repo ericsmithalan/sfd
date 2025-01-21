@@ -1,0 +1,11 @@
+.object-panel {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--padding-1);
+
+    & > .stats {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: var(--gap-5);
+    }
+}

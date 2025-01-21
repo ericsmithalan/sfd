@@ -28,7 +28,7 @@ export const ImagesPanel = () => {
     return visisble ? (
         <Panel title="Images" icon="multi-image" contentCss="images-panel">
             <Button variant="image">
-                <BgImage minHeight={300} src={primaryImage} />
+                <BgImage minHeight={200} src={primaryImage} />
             </Button>
             <div className="image-list">
                 {images.map((item, i) => {
