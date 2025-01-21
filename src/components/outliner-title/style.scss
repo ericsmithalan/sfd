@@ -7,17 +7,34 @@
         margin-bottom: var(--margin-6);
     }
 
+    & > .subtitle {
+        font-size: var(--font-7);
+        text-transform: uppercase;
+        color: var(--color-alt-1);
+        font-weight: 600;
+        margin-top: var(--margin-6);
+    }
+
     & > .title-content {
         display: flex;
         flex-direction: row;
-        gap: var(--gap-6);
         font-weight: 600;
         font-size: var(--font-6);
-        color: var(--color-alt-1);
         align-items: center;
+        margin-bottom: var(--margin-2);
 
-        & > .btn-back {
-            margin-right: var(--margin-4);
+        & > .header {
+            display: flex;
+            flex-direction: row;
+            gap: var(--gap-6);
+            margin-left: var(--margin-3);
+
+            & > .icon {
+                color: var(--color-alt-1);
+            }
+        }
+
+        & > .lnk-back {
         }
 
         & > .outliner-title-text {

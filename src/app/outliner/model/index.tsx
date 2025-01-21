@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useOutletContext } from "react-router-dom";
+import { useOutletContext } from "react-router-dom";
 import { Object3D } from "three";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { OutlinerTitle, Scroller } from "../../../components";
@@ -14,7 +14,7 @@ export const ModelOutliner = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
     }>();
-    const navigate = useNavigate();
+
     const crumbs = useBreadcrumbs();
 
     useEffect(() => {
@@ -31,13 +31,12 @@ export const ModelOutliner = () => {
     return (
         <div className="outliner-model">
             <OutlinerTitle
+                subTitle="Objects"
                 crumbs={crumbs}
-                onBack={() => {
-                    navigate(-1);
-                }}
                 title={outliner.model?.name}
                 iconName="blender"
             />
+
             <Scroller scrollTo={object ? `obj_${object.id}` : undefined}>
                 {outliner.model?.children?.map((item, i) => {
                     return (

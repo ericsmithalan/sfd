@@ -1,0 +1,11 @@
+.outliner-root {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--padding-3);
+
+    & > .outliner-category-children {
+        display: flex;
+        flex-direction: column;
+        margin-left: var(--margin-3);
+    }
+}

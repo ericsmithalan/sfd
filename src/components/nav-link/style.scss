@@ -7,6 +7,21 @@
         color: var(--color-alt-3);
     }
 
+    &.lnk-back {
+        border: 1px solid transparent;
+        background-color: transparent;
+        padding: var(--padding-4) var(--padding-4);
+
+        color: var(--color-white-4);
+        border-right: 1px dashed var(--color-white-7);
+
+        &:hover {
+            background-color: var(--color-white-7);
+            color: var(--color-alt-2);
+            border-right: 1px solid transparent;
+        }
+    }
+
     &.lnk-outliner {
         display: flex;
         flex-direction: row;

@@ -6,7 +6,8 @@ import { Viewport } from "../lib";
 
 export interface IOutlinerContext {
     viewport: Viewport;
-    root: Array<IOutliner>;
+    categories: Array<IOutliner>;
+    category: IOutliner | null;
     project: IOutliner | null;
     model: IOutliner | null;
 }
@@ -19,21 +20,32 @@ type OutlinerContextProps = {
 };
 
 export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
-    const [root] = useState<Array<IOutliner>>(rootOutliner);
+    const [categories] = useState<Array<IOutliner>>(rootOutliner);
+    const [category, setCategory] = useState<IOutliner | null>(null);
     const [project, setProject] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);
     const params = useParams();
 
     useEffect(() => {
-        if (params.projectId) {
-            const project = rootOutliner.find((item) => item.id === Number(params.projectId));
+        if (params.categoryId) {
+            const item = categories.find((item) => item.id === Number(params.categoryId));
+            setCategory(item || null);
+        }
+        if (category && !params.categoryId) {
+            setCategory(null);
+        }
+    }, [categories, params.categoryId]);
+
+    useEffect(() => {
+        if (category && params.projectId) {
+            const project = category.children?.find((item) => item.id === Number(params.projectId));
             setProject(project || null);
         }
 
         if (project && !params.projectId) {
             setProject(null);
         }
-    }, [params.projectId, project]);
+    }, [params.projectId, project, category]);
 
     useEffect(() => {
         const loadModel = async (obj: IOutliner) => {
@@ -41,7 +53,7 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
         };
 
         if (params.modelId && project) {
-            const model = project.models?.find((item) => item.id === Number(params.modelId));
+            const model = project.children?.find((item) => item.id === Number(params.modelId));
 
             setModel(model || null);
             if (model) {
@@ -59,9 +71,10 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
         <OutlinerContext.Provider
             value={{
                 viewport: viewport,
-                root: root,
+                categories: categories,
                 project: project,
                 model: model,
+                category: category,
             }}
         >
             {children}

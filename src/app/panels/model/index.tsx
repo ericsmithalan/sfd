@@ -21,17 +21,28 @@ export const ModelPanel = () => {
 
     useEffect(() => {
         if (outliner.project) {
-            const imgResource = generateImageResource(outliner.project.imageResouce);
+            const resources = outliner.project.imageResouce;
 
-            if (imgResource) {
-                setImages(imgResource.images);
+            if (resources) {
+                const imgResource = generateImageResource(outliner.project.imageResouce);
+
+                if (imgResource) {
+                    setImages(imgResource.images);
+                }
+            } else {
+                setImages([]);
+                setViewer({ visible: false, selected: "" });
             }
 
-            setVisible(true);
+            if (!outliner.model && !resources) {
+                setVisible(false);
+            } else {
+                setVisible(true);
+            }
         } else {
             setVisible(false);
         }
-    }, [outliner.project]);
+    }, [outliner.project, outliner.model]);
 
     return visisble ? (
         <>
@@ -58,7 +69,8 @@ export const ModelPanel = () => {
                         })}
                     </div>
                 )}
-                <Stats stats={outliner.model?.stats || []} />
+
+                {outliner.model?.stats && <Stats stats={outliner.model?.stats || []} />}
             </Panel>
             <ImageViewer
                 onClosed={() => {

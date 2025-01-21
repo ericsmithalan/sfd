@@ -1,4 +1,4 @@
-import { Outlet, useNavigate, useOutletContext } from "react-router-dom";
+import { Outlet, useOutletContext } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { NavLink, OutlinerTitle } from "../../../components";
 import { IOutlinerContext } from "../../../context";
@@ -8,7 +8,6 @@ export const ProjectOutliner = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
     }>();
-    const navigate = useNavigate();
     const crumbs = useBreadcrumbs();
 
     return (
@@ -16,12 +15,10 @@ export const ProjectOutliner = () => {
             <OutlinerTitle
                 crumbs={crumbs}
                 title={outliner.project?.name}
+                subTitle="Models"
                 iconName="sofa"
-                onBack={() => {
-                    navigate(-1);
-                }}
             />
-            {outliner.project?.models?.map((item, i) => {
+            {outliner.project?.children?.map((item, i) => {
                 return (
                     <NavLink
                         variant="outliner"
