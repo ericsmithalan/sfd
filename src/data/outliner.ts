@@ -58,7 +58,27 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
-
+    {
+        id: 233,
+        name: "Tables",
+        level: 1,
+        children: [
+            {
+                id: 3441,
+                level: 2,
+                name: "Shaker Table",
+                children: [
+                    {
+                        id: 3320,
+                        modelUrl: "/models/shaker-table/shaker-table.glb",
+                        level: 3,
+                        name: "Final Model",
+                        children: [],
+                    },
+                ],
+            },
+        ],
+    },
     {
         id: 653,
         name: "Sideboards",
