@@ -30,6 +30,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
 
     useEffect(() => {
         setSelected(texture || null);
+        console.log(texture, items);
     }, [texture]);
 
     return (

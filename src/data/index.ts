@@ -1,2 +1,3 @@
+export * from "./fabricTextures";
 export * from "./outliner";
-export * from "./textures";
+export * from "./woodTextures";

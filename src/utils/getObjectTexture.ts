@@ -1,5 +1,5 @@
 import { Object3D } from "three";
-import { getTextureById } from "../data";
+import { getWoodTextureById } from "../data";
 import { ITexture } from "../interface/ITexture";
 import { ObjectUserData, Viewport } from "../lib";
 import { getObject } from "./getObject";
@@ -14,7 +14,7 @@ export const getObjectTexture = (
         if (object) {
             if (object.userData instanceof ObjectUserData) {
                 if (object.userData.textureInfo?.textureId) {
-                    const woodTexture = getTextureById(object.userData.textureInfo?.textureId);
+                    const woodTexture = getWoodTextureById(object.userData.textureInfo?.textureId);
                     return woodTexture;
                 }
             }

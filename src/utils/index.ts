@@ -9,7 +9,6 @@ export * from "./getObjectTexture";
 export * from "./getObjectUserData";
 export * from "./isObjEmpty";
 export * from "./mapTextureToMenu";
-export * from "./mapWoodTexture";
 export * from "./popupHelpers";
 export * from "./setObjectVisibility";
 export * from "./unitConversions";

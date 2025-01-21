@@ -1,7 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
-import { defaultTexture, woodTextures } from "../../data";
+import { defaultFabricTexture, defaultWoodTexture, fabricTextures, woodTextures } from "../../data";
 import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
@@ -73,8 +73,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                             onItemClick={(texture, material, e) =>
                                 handleTextureClick(texture, material)
                             }
-                            texture={defaultTexture}
-                            items={woodTextures}
+                            texture={
+                                value.type === "wood" ? defaultWoodTexture : defaultFabricTexture
+                            }
+                            items={value.type === "wood" ? woodTextures : fabricTextures}
                         />
                     );
                 })}

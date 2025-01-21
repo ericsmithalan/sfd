@@ -1,10 +1,9 @@
 export interface ITexture {
     id: string;
     resolution: number;
-    type: string;
+    type: "wood" | "fabric" | "hardware";
     name: string;
+    displayName: string;
     thumbnail: string;
-    faceUrl: string;
-    endUrl: string;
-    sideUrl: string;
+    textureUrl: string;
 }

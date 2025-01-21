@@ -7,16 +7,20 @@ import { getObjectDimensions } from "./getObjectDimensions";
 
 const loader: GLTFLoader = new GLTFLoader();
 
-const isValidMaterial = (material: MeshStandardMaterial) => {
+const getMaterialType = (material: MeshStandardMaterial): string | null => {
     const wood = material.name?.indexOf("wood") !== -1;
     const primary = material.name?.indexOf("primary") !== -1;
     const contrast = material.name?.indexOf("contrast") !== -1;
+    const fabric = material.name?.indexOf("fabric") !== -1;
 
     if (wood || primary || contrast) {
-        return true;
+        return "wood";
+    } else {
+        if (fabric) {
+            return "fabric";
+        }
     }
-
-    return false;
+    return null;
 };
 
 export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IModel> => {
@@ -40,10 +44,13 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
                         object.receiveShadow = true;
 
                         if (object.material) {
-                            if (isValidMaterial(object.material)) {
+                            const matType = getMaterialType(object.material);
+
+                            if (matType) {
                                 const mat = materials.get(object.material.name);
                                 if (!mat) {
                                     materials.set(object.material.name, {
+                                        type: matType,
                                         objects: [object.id],
                                         material: object.material,
                                     });

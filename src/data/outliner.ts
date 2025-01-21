@@ -135,6 +135,27 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
+    {
+        id: 3223,
+        name: "Mockups",
+        level: 1,
+        children: [
+            {
+                id: 433,
+                level: 2,
+                name: "Living Room Set",
+                children: [
+                    {
+                        id: 4262,
+                        modelUrl: "/models/living-room-set/chair.glb",
+                        level: 3,
+                        name: "Chair",
+                        children: [],
+                    },
+                ],
+            },
+        ],
+    },
 ];
 
 export const outlinerIdToName = (
