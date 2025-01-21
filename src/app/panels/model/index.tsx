@@ -13,7 +13,7 @@ type ViewerState = {
 export const ModelPanel = () => {
     const [visisble, setVisible] = useState(false);
     const [images, setImages] = useState<Array<string>>([]);
-    const [primaryImage, setPrimaryImage] = useState<string>("");
+    const [primaryImage, setPrimaryImage] = useState<string | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
         selected: "",
@@ -30,6 +30,9 @@ export const ModelPanel = () => {
                 if (imgResource) {
                     setImages(imgResource.images);
                     setPrimaryImage(imgResource.primary);
+                } else {
+                    setImages([]);
+                    setPrimaryImage(null);
                 }
             } else {
                 setImages([]);
@@ -38,6 +41,8 @@ export const ModelPanel = () => {
 
             if (!outliner.model && !resources) {
                 setVisible(false);
+                setImages([]);
+                setPrimaryImage(null);
             } else {
                 setVisible(true);
             }
