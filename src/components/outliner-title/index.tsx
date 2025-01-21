@@ -27,7 +27,7 @@ export const OutlinerTitle = ({ title, iconName, crumbs, onBack }: OutlinerTitle
                     }}
                     icon="arrow-left-long"
                     variant="back"
-                ></Button>
+                />
                 {iconName && <Icon name={iconName} />}
                 {title && <div className="outliner-title-text">{title}</div>}
             </div>
