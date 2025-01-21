@@ -1,6 +1,7 @@
 import { Object3D } from "three";
 import { Viewport } from "../lib";
 
+import { getEdge } from "./getEdge";
 import { getObject } from "./getObject";
 
 export const setObjectVisibility = (
@@ -12,6 +13,15 @@ export const setObjectVisibility = (
         let object = getObject(viewport, obj, false);
 
         if (object) {
+            let edge = getEdge(viewport, object.id);
+            if (edge) {
+                edge.visible = visible;
+            }
+
+            if (viewport.selection.object?.id === object.id) {
+                viewport.selection.object = null;
+            }
+
             object.visible = visible;
         }
 

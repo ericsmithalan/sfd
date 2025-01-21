@@ -2,10 +2,11 @@ import { useEffect, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { Object3D } from "three";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
-import { Button, OutlinerTitle, Scroller } from "../../../components";
+import { OutlinerTitle, Scroller } from "../../../components";
+import { OutlinerButton } from "../../../components/outliner-button";
 import { IOutlinerContext } from "../../../context";
 import { ISelectionEvent } from "../../../lib/Selection";
-import { getObject } from "../../../utils";
+import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const ModelOutliner = () => {
@@ -40,13 +41,14 @@ export const ModelOutliner = () => {
             <Scroller scrollTo={object ? `obj_${object.id}` : undefined}>
                 {outliner.model?.children?.map((item, i) => {
                     return (
-                        <Button
+                        <OutlinerButton
                             id={`obj_${item.id}`}
-                            variant="outliner"
                             key={i}
                             active={object?.id === item.id}
-                            icon="box-1"
                             text={item.name}
+                            onVisible={(visible, e) => {
+                                setObjectVisibility(outliner.viewport, item.id, visible);
+                            }}
                             onClick={(e) => {
                                 getObject(outliner.viewport, item.id, true);
                             }}
