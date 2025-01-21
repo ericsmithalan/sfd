@@ -30,7 +30,6 @@ export const ObjectPanel = () => {
         }
 
         return () => {
-            console.log("dispose objec tpana");
             outliner.viewport.selection.removeEventListener("change", selectionChange);
         };
     }, [outliner.model, outliner.viewport]);
