@@ -1,6 +1,6 @@
 .texture-button {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     font-size: inherit;
     color: inherit;
     text-decoration: none;
@@ -8,7 +8,7 @@
     flex: 1 1 auto;
     align-items: center;
 
-    background-color: transparent;
+    background-color: var(--color-white-8);
 
     padding: 0;
     margin: 0;
@@ -20,11 +20,15 @@
     height: var(--toolbar-height);
     width: var(--toolbar-height);
 
+    & > .text {
+        font-size: var(--font-7);
+        padding: var(--padding-5);
+    }
+
     & > .bg-image {
         display: flex;
         flex-direction: column;
         flex: 1 1 auto;
-        height: var(--toolbar-height);
         width: var(--toolbar-height);
         border-radius: var(--radius-5);
     }

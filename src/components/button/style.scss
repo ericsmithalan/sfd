@@ -38,7 +38,7 @@ input::-moz-focus-inner {
         background-color: transparent;
         border: 1px solid transparent;
 
-        gap: var(--gap-5);
+        gap: var(--gap-6);
 
         & > .icon {
             color: var(--color-alt-1);
@@ -103,6 +103,7 @@ input::-moz-focus-inner {
         width: var(--toolbar-height);
         height: var(--toolbar-height);
         flex: 1 1 auto;
+        font-size: var(--font-3);
 
         &.active {
             color: var(--color-alt-2);

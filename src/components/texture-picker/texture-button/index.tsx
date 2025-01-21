@@ -15,6 +15,7 @@ type TextureButtonProps = {
 
 export const TextureButton: FC<TextureButtonProps> = ({
     disable = false,
+    text,
     active = false,
     className,
     ref,
@@ -39,6 +40,7 @@ export const TextureButton: FC<TextureButtonProps> = ({
             )}
         >
             {image && <BgImage src={image} />}
+            {text && <div className="text">{text}</div>}
         </button>
     );
 };

@@ -10,11 +10,15 @@
     & > .title-content {
         display: flex;
         flex-direction: row;
-        gap: var(--gap-5);
+        gap: var(--gap-6);
         font-weight: 600;
         font-size: var(--font-5);
         color: var(--color-alt-1);
         align-items: center;
+
+        & > .btn-back {
+            margin-right: var(--margin-4);
+        }
 
         & > .outliner-title-text {
             display: flex;

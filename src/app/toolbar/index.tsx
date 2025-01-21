@@ -70,6 +70,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                     return (
                         <TexturePicker
                             key={i}
+                            label={`color-${i + 1}`}
                             material={value}
                             onItemClick={(texture, material, e) =>
                                 handleTextureClick(texture, material)

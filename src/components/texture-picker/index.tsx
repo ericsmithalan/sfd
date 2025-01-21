@@ -37,6 +37,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
             <TextureButton
                 ref={buttonRef}
                 active={open}
+                text={label}
                 className="menu-button"
                 image={selected?.thumbnail}
                 onClick={(e: MouseEvent) => {
