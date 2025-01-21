@@ -36,9 +36,9 @@ export const ModelPanel = () => {
     return visisble ? (
         <>
             <Panel title={outliner.project?.name} icon="blender" contentCss="images-panel">
-                <div className="image-list">
-                    {images.length > 0 &&
-                        images.map((item, i) => {
+                {images.length > 0 && (
+                    <div className="image-list">
+                        {images.map((item, i) => {
                             if (i < 3) {
                                 return (
                                     <Button
@@ -56,7 +56,8 @@ export const ModelPanel = () => {
                                 );
                             }
                         })}
-                </div>
+                    </div>
+                )}
                 <Stats stats={outliner.model?.stats || []} />
             </Panel>
             <ImageViewer

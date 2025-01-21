@@ -84,7 +84,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.autoClear = false;
 
         this.orbitControls = new OrbitControls(this.camera, this.canvas);
-        this.orbitControls.enableDamping = true; // an animation loop is required when either damping or auto-rotation are enabled
+        this.orbitControls.enableDamping = false; // an animation loop is required when either damping or auto-rotation are enabled
         this.orbitControls.dampingFactor = 0.05;
         this.orbitControls.screenSpacePanning = true;
         this.orbitControls.minDistance = 0.1;

@@ -24,7 +24,9 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
     private _object: Object3D | null = null;
     private _mode: SelectMode = "select";
+    private timer: any = null;
 
+    dragging = false;
     enabled: boolean = true;
 
     constructor(
@@ -89,28 +91,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         }
     }
 
-    // dblclick(e: MouseEvent) {
-    //     console.log("doubleclick");
-    //     if (this.enabled) {
-    //         this.setMouse(e);
-
-    //         const objects = this.intersects(this.mouse.x, this.mouse.y);
-    //         let obj = null;
-
-    //         if (objects && objects[0]) {
-    //             obj = objects[0].object;
-    //         }
-
-    //         if (obj) {
-    //             this.mode = "edit";
-    //             this.transform.show(obj);
-    //         } else {
-    //             this.mode = "select";
-    //             this.transform.hide();
-    //         }
-    //     }
-    // }
-
     resize() {
         this.borderEffect.resize();
     }
@@ -141,19 +121,39 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
     private mouseDwn(e: MouseEvent) {
         this.setMouse(e);
-        if (this.enabled) {
-            // if in edit mode just remove tranforms
-            if (this.mode === "edit") {
-                this.mode = "select";
+        const self = this;
+        if (self.enabled) {
+            const objects = self.intersects(self.mouse.x, self.mouse.y);
+
+            if (objects) {
+                self.object = objects[0]?.object || null;
+            } else {
+                self.object = null;
             }
 
-            const objects = this.intersects(this.mouse.x, this.mouse.y);
-            if (objects) {
-                this.object = objects[0]?.object || null;
-            } else {
-                this.object = null;
-            }
+            clearTimeout(self.timer);
+            self.timer = null;
         }
+
+        // if (this.timer) {
+        //     clearTimeout(this.timer);
+        //     this.timer = null;
+        // }
+
+        // this.timer = setTimeout(() => {
+        //     if (self.enabled) {
+        //         const objects = self.intersects(self.mouse.x, self.mouse.y);
+
+        //         if (objects) {
+        //             self.object = objects[0]?.object || null;
+        //         } else {
+        //             self.object = null;
+        //         }
+
+        //         clearTimeout(self.timer);
+        //         self.timer = null;
+        //     }
+        // }, 200);
     }
 
     private mouseUp(e: MouseEvent) {
@@ -179,30 +179,19 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         return objects;
     };
 
-    // private transformMouseUp(e: ITransformEvent["mouseUp"]) {
-    //     this.enabled = true;
-    //     this.orbitControls.enabled = true;
-
-    //     /// expample of texture  update
-    // }
-
-    // private transformMouseDown(e: ITransformEvent["mouseDown"]) {
-    //     this.enabled = false;
-    //     this.orbitControls.enabled = false;
-    // }
-
     private registerEvents() {
-        // this.transform.addEventListener("mouseDown", (e) => this.transformMouseDown(e));
-        // this.transform.addEventListener("mouseUp", (e) => this.transformMouseUp(e));
-        // this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
+        this.orbitControls.addEventListener("change", () => {
+            if (this.timer) {
+                clearTimeout(this.timer);
+                this.timer = null;
+            }
+        });
+
         this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     private unRegisterEvents() {
-        // this.transform.removeEventListener("mouseDown", (e) => this.transformMouseDown(e));
-        // this.transform.removeEventListener("mouseUp", (e) => this.transformMouseUp(e));
-        // this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
         this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
