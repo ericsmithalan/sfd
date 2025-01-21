@@ -115,6 +115,20 @@ input::-moz-focus-inner {
         }
     }
 
+    &.btn-close {
+        background-color: var(--color-black-2);
+        border-radius: var(--radius-5);
+        font-size: var(--font-3);
+        border: 1px solid transparent;
+        color: var(--color-white-4);
+
+        &:hover {
+            background-color: var(--color-black-1);
+            color: var(--color-alt-2);
+            border-right: 1px solid transparent;
+        }
+    }
+
     &.btn-back {
         border: 1px solid transparent;
         background-color: transparent;

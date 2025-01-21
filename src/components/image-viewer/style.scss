@@ -30,6 +30,13 @@
         padding: var(--padding-1);
         gap: 3px;
 
+        & > .close {
+            position: absolute;
+            right: 1.5rem;
+            top: 1.5rem;
+            z-index: 100;
+        }
+
         & > .selected {
             display: flex;
             flex-direction: column;

@@ -1,5 +1,5 @@
 import { Outlet } from "react-router-dom";
-import { Panel } from "../../components";
+import { Logo, Panel } from "../../components";
 import { useOutliner } from "../../hooks";
 import "./style.scss";
 
@@ -7,11 +7,9 @@ export const OutlinerView = () => {
     const outliner = useOutliner();
 
     return (
-        <Panel title="Projects" icon="gallery-view-2">
-
+        <Panel contentCss="outliner-base">
+            <Logo height={40} />
             <Outlet context={{ outliner: outliner }} />
         </Panel>
     );
 };
-
-

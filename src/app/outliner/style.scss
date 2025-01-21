@@ -1,31 +1,10 @@
-.outliner-panel {
+.outliner-base {
     display: flex;
     flex-direction: column;
     flex: 1 1 auto;
 
-    & > .panel-content {
-        display: flex;
-        flex-direction: column;
-    }
-}
-
-.outliner-content {
-    display: flex;
-    flex-direction: column;
-    padding: var(--padding-3);
-    flex: 1 1 auto;
-
-    & > .title {
-        font-weight: 600;
-        font-size: var(--font-7);
-        margin-bottom: var(--margin-3);
-        padding-left: var(--padding-2);
-    }
-
-    & > .logo-content {
-        display: flex;
-        flex-direction: column;
-        padding-top: var(--padding-1);
+    & > .logo {
         padding-bottom: var(--padding-1);
+        border-bottom: 1px solid var(--color-white-7);
     }
 }

@@ -51,6 +51,17 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
                           e.stopPropagation();
                       }}
                   >
+                      <Button
+                          className="close"
+                          icon="close"
+                          variant="close"
+                          onClick={() => {
+                              setIsVisible(false);
+                              if (onClosed) {
+                                  onClosed();
+                              }
+                          }}
+                      />
                       <div className="selected">
                           <BgImage
                               size="cover"
