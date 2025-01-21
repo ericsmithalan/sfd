@@ -13,6 +13,7 @@ type ScrollerProps = {
     maxWidth?: number | string;
     minWidth?: number | string;
     disable?: boolean;
+    scrollTo?: string;
 };
 
 export const Scroller: FC<ScrollerProps> = ({
@@ -25,7 +26,7 @@ export const Scroller: FC<ScrollerProps> = ({
     maxHeight,
     className,
     children,
-
+    scrollTo,
     disable = false,
 }) => {
     const [scrolling, setScrolling] = useState(false);
@@ -65,6 +66,15 @@ export const Scroller: FC<ScrollerProps> = ({
             }
         };
     }, [scrollerRef, scrolling, showShadow]);
+
+    useEffect(() => {
+        if (scrollTo && scrollerRef.current) {
+            const element = document.getElementById(scrollTo);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }
+    }, [scrollTo, scrollerRef]);
 
     return (
         <div

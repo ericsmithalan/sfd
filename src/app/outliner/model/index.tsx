@@ -37,10 +37,11 @@ export const ModelOutliner = () => {
                 title={outliner.model?.name}
                 iconName="blender"
             />
-            <Scroller>
+            <Scroller scrollTo={object ? `obj_${object.id}` : undefined}>
                 {outliner.model?.children?.map((item, i) => {
                     return (
                         <Button
+                            id={`obj_${item.id}`}
                             variant="outliner"
                             key={i}
                             active={object?.id === item.id}

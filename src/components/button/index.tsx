@@ -5,6 +5,7 @@ import { Icon } from "../icon";
 import "./style.scss";
 
 type ButtonProps = {
+    id?: string;
     text?: string;
     children?: ReactNode;
     icon?: IconName;
@@ -17,6 +18,7 @@ type ButtonProps = {
 
 export const Button: FC<ButtonProps> = ({
     children,
+    id,
     icon,
     text,
     active = false,
@@ -27,6 +29,7 @@ export const Button: FC<ButtonProps> = ({
 }) => {
     return (
         <button
+            id={id}
             className={clsx("button", `btn-${variant}`, active && "active", className)}
             onClick={onClick}
         >
