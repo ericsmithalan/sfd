@@ -49,17 +49,19 @@ export const ModelPanel = () => {
     return visisble ? (
         <>
             <Panel title={outliner.project?.name} icon="blender" contentCss="images-panel">
-                <Button
-                    variant="image"
-                    onClick={() => {
-                        setViewer({
-                            visible: true,
-                            selected: primaryImage,
-                        });
-                    }}
-                >
-                    <BgImage minHeight={140} src={primaryImage} />
-                </Button>
+                {primaryImage && (
+                    <Button
+                        variant="image"
+                        onClick={() => {
+                            setViewer({
+                                visible: true,
+                                selected: primaryImage,
+                            });
+                        }}
+                    >
+                        <BgImage minHeight={140} src={primaryImage} />
+                    </Button>
+                )}
 
                 {images.length > 0 && (
                     <div className="image-list">
