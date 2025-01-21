@@ -4,16 +4,27 @@
     flex: 1 1 auto;
     position: absolute;
 
-    background-color: var(--color-black-2);
+    background-color: var(--color-black-1);
+    backdrop-filter: var(--blur-3);
+    box-shadow: var(--shadow-3);
     border-radius: var(--radius-4);
-    box-shadow: var(--shadow-2);
-    backdrop-filter: var(--blur-2);
-    border: 1px solid var(--color-black-2);
+    border: 1px solid var(--color-dark-3);
 
-    padding: var(--padding-7);
+    padding: var(--padding-3);
     color: var(--color-white-3);
     gap: 1px;
     z-index: 999999;
+
+    & > .inner-border {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        border: 1px solid var(--color-white-8);
+        border-radius: var(--radius-4);
+        z-index: 0;
+    }
 
     & > .scroller {
         & > .scroller-scroll {
@@ -21,6 +32,7 @@
             flex-direction: row;
             flex-wrap: wrap;
             max-height: calc(100vh - 200px);
+            gap: 2px;
 
             & > .texture-button {
                 width: 30%;

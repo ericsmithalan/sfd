@@ -74,7 +74,7 @@ export const rootOutliner: Array<IOutliner> = [
     },
     {
         id: 11023,
-        name: "Desk",
+        name: "Desk 2",
         level: 1,
         models: [
             {

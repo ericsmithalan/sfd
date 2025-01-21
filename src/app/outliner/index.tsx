@@ -8,7 +8,7 @@ export const OutlinerView = () => {
 
     return (
         <Panel contentCss="outliner-base">
-            <Logo height={40} />
+            <Logo height={45} />
             <Outlet context={{ outliner: outliner }} />
         </Panel>
     );

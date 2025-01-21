@@ -20,8 +20,7 @@ export const fitCameraToObject = (
     box.getCenter(center);
 
     const maxSize = Math.max(size.x, size.y, size.z);
-    const fitHeightDistance =
-        maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
+    const fitHeightDistance = maxSize / (2 * Math.atan((Math.PI * camera.fov) / 360));
     const fitWidthDistance = fitHeightDistance / camera.aspect;
     const distance = fitOffset * Math.max(fitHeightDistance, fitWidthDistance);
 
@@ -34,7 +33,7 @@ export const fitCameraToObject = (
     controls.maxDistance = distance * 10;
     controls.target.copy(center);
 
-    camera.near = distance / 100;
+    camera.near = 0.1;
     camera.far = distance * 100;
     camera.updateProjectionMatrix();
 

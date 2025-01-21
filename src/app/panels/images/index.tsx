@@ -51,7 +51,7 @@ export const ImagesPanel = () => {
                 </Button>
                 <div className="image-list">
                     {images.map((item, i) => {
-                        if (i < 4) {
+                        if (i < 3) {
                             return (
                                 <Button
                                     variant="image"
@@ -63,7 +63,7 @@ export const ImagesPanel = () => {
                                         });
                                     }}
                                 >
-                                    <BgImage minHeight={50} src={item} />
+                                    <BgImage minHeight={90} src={item} />
                                 </Button>
                             );
                         }

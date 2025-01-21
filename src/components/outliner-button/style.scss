@@ -6,5 +6,15 @@
     & > .button:first-of-type {
         flex: 1 1 auto;
         width: 100%;
+        align-self: flex-start;
+
+        & > .text {
+            max-width: 8rem;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            text-align: left;
+            width: 100%;
+            white-space: nowrap;
+        }
     }
 }

@@ -47,6 +47,7 @@ export const TextureMenu = ({
                 className={clsx("menu")}
                 style={{ left: position?.x, top: position?.y, width: position.width }}
             >
+                <div className="inner-border"></div>
                 <Scroller>
                     {items.map((item, i) => (
                         <TextureButton

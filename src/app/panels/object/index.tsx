@@ -32,14 +32,22 @@ export const ObjectPanel = () => {
     return object ? (
         <Panel title={object.name} icon="box-1" contentCss="object-panel">
             <div className="stats">
-                <div>WIDTH</div>
-                <div>{size.x} in</div>
-                <div>LENGTH</div>
-                <div>{size.y} in</div>
-                <div>THICKNESS</div>
-                <div>{size.z} in</div>
-                <div>BF</div>
-                <div>{convertToBordFeet(size)}</div>
+                <div className="col-1">WIDTH</div>
+                <div className="col-2">
+                    {size.x} <span className="unit">in</span>
+                </div>
+                <div className="col-1">LENGTH</div>
+                <div className="col-2">
+                    {size.y} <span className="unit">in</span>
+                </div>
+                <div className="col-1">THICKNESS</div>
+                <div className="col-2">
+                    {size.z} <span className="unit">in</span>
+                </div>
+                <div className="col-1">BF</div>
+                <div className="col-2">
+                    {convertToBordFeet(size)} <span className="unit">bf</span>
+                </div>
             </div>
         </Panel>
     ) : null;

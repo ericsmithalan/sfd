@@ -1,10 +1,22 @@
-import { Mesh, Object3D } from "three";
+import { Mesh, MeshStandardMaterial, Object3D } from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { IObjectMaterial, IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { Edges, ObjectUserData } from "../lib";
 
 const loader: GLTFLoader = new GLTFLoader();
+
+const isValidMaterial = (material: MeshStandardMaterial) => {
+    const wood = material.name?.indexOf("wood") !== -1;
+    const primary = material.name?.indexOf("primary") !== -1;
+    const contrast = material.name?.indexOf("contrast") !== -1;
+
+    if (wood || primary || contrast) {
+        return true;
+    }
+
+    return false;
+};
 
 export const loadModel = (outliner: IOutliner): Promise<IModel> => {
     return new Promise((resolve) => {
@@ -27,7 +39,7 @@ export const loadModel = (outliner: IOutliner): Promise<IModel> => {
                         object.receiveShadow = true;
 
                         if (object.material) {
-                            if (object.material.name?.indexOf("wood") !== -1) {
+                            if (isValidMaterial(object.material)) {
                                 const mat = materials.get(object.material.name);
                                 if (!mat) {
                                     materials.set(object.material.name, {

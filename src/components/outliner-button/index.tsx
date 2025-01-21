@@ -16,6 +16,7 @@ export const OutlinerButton = ({ id, text, active, onClick, onVisible }: Outline
     return (
         <div id={id} className="outliner-button">
             <Button
+                title={text}
                 variant="outliner"
                 active={active}
                 icon="box-1"
@@ -27,6 +28,7 @@ export const OutlinerButton = ({ id, text, active, onClick, onVisible }: Outline
                 }}
             />
             <Button
+                title={"Toggle Visibility"}
                 variant="outliner"
                 onClick={(e) => {
                     e.stopPropagation();
