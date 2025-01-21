@@ -70,7 +70,7 @@ export const Scroller: FC<ScrollerProps> = ({
     useEffect(() => {
         if (scrollTo && scrollerRef.current) {
             const element = document.getElementById(scrollTo);
-            console.log(element);
+
             if (element) {
                 element.scrollIntoView({ behavior: "smooth", block: "nearest" });
             }

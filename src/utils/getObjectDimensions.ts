@@ -10,7 +10,7 @@ export const getObjectDimensions = (
 ): Vector3 | null => {
     if (obj) {
         const object = getObject(viewport, obj);
-        console.log(object);
+
         if (object && object instanceof Mesh) {
             let sizeX = object.geometry.parameters?.width;
             let sizeY = object.geometry.parameters?.depth;
@@ -21,8 +21,6 @@ export const getObjectDimensions = (
             } else {
                 const box = new Box3().setFromObject(object);
                 const size = box.getSize(new Vector3());
-
-                console.log("has sizes");
 
                 const converted = convertMeterToInch(size);
                 return new Vector3(converted.x, converted.y, converted.z);

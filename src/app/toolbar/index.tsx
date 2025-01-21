@@ -24,8 +24,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
 
     useEffect(() => {
         if (model) {
-            console.log(model.materials);
-
             setVisible(true);
         } else {
             setVisible(false);
@@ -49,7 +47,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 }
             }
         }
-        console.log(texture);
     };
 
     return visible ? (

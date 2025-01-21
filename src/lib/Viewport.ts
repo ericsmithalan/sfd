@@ -137,7 +137,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     }
 
     set edges(value: boolean) {
-        console.log("edges", value);
         if (this.model) {
             this.model.edges.visible = value;
             this._edges = value;

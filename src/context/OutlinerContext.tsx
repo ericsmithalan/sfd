@@ -27,7 +27,6 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
     useEffect(() => {
         if (params.projectId) {
             const project = rootOutliner.find((item) => item.id === Number(params.projectId));
-            console.log(project);
             setProject(project || null);
         }
 

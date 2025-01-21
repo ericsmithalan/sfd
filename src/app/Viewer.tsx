@@ -34,7 +34,6 @@ export const Viewer = () => {
 
         return () => {
             if (vp) {
-                console.log("disposed viewport");
                 vp.removeEventListener("loading", loading);
                 vp.dispose();
             }
