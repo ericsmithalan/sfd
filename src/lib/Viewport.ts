@@ -16,6 +16,7 @@ import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { IOutliner, IScreenSize } from "../interface";
 import { IModel } from "../interface/IModel";
+import { fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
@@ -66,7 +67,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.up = new Vector3(0, 0, 1);
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
-        this.camera.position.set(0, 10, 2);
+        this.camera.position.set(20, 10, 9);
 
         this.renderer = new WebGLRenderer({
             canvas: canvas,
@@ -120,12 +121,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         environment.dispose();
         pmremGenerator.dispose();
 
-        this.scene.add(
-            // this.lights.ambientLight,
-            this.lights.dirLight,
-            this.floor,
-            this.grid,
-        );
+        this.scene.add(this.lights.ambientLight, this.lights.dirLight, this.floor, this.grid);
 
         this.renderer.setAnimationLoop(() => this.animate());
 
@@ -177,6 +173,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     async loadModel(outliner: IOutliner) {
         this.dispatchEvent({ type: "loading", value: true });
         const model = await loadModel(outliner, this);
+
+        if (model.object) {
+            fitCameraToObject(this.camera, this.orbitControls, [model.object], 2);
+        }
+
         this.model = model;
         this.dispatchEvent({ type: "loading", value: false });
     }

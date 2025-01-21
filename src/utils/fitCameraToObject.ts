@@ -9,7 +9,7 @@ export const fitCameraToObject = (
     camera: PerspectiveCamera,
     controls: OrbitControls,
     selection: Object3D[],
-    fitOffset = 1.2,
+    fitOffset = 0,
 ) => {
     box.makeEmpty();
     for (const object of selection) {
