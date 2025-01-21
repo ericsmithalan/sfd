@@ -33,7 +33,7 @@ export const OutlinerTitle = ({
                     icon="arrow-left-long"
                     variant="back"
                 />
-                <div className="header">
+                <div title={title} className="header">
                     {iconName && <Icon name={iconName} fill={true} />}
                     {title && <div className="outliner-title-text">{title}</div>}
                 </div>

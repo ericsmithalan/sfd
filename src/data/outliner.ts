@@ -137,7 +137,7 @@ export const rootOutliner: Array<IOutliner> = [
     },
     {
         id: 3223,
-        name: "Mockups",
+        name: "Experiments",
         level: 1,
         children: [
             {
@@ -146,10 +146,24 @@ export const rootOutliner: Array<IOutliner> = [
                 name: "Living Room Set",
                 children: [
                     {
+                        id: 3244,
+                        modelUrl: "/models/living-room-set/sofa.glb",
+                        level: 3,
+                        name: "Sofa",
+                        children: [],
+                    },
+                    {
                         id: 4262,
                         modelUrl: "/models/living-room-set/chair.glb",
                         level: 3,
                         name: "Chair",
+                        children: [],
+                    },
+                    {
+                        id: 3211,
+                        modelUrl: "/models/living-room-set/end-table.glb",
+                        level: 3,
+                        name: "End Table",
                         children: [],
                     },
                 ],
