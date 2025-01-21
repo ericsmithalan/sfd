@@ -3,14 +3,8 @@
     flex-direction: row;
     align-items: center;
 
-    & > .text {
-        display: flex;
-        flex-direction: row;
+    & > .button:first-of-type {
         flex: 1 1 auto;
         width: 100%;
-    }
-
-    & > .button {
-        color: var(--color-white-6);
     }
 }

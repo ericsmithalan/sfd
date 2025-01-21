@@ -17,6 +17,11 @@
 
     & > .texture-button {
         width: 100%;
+        border-radius: 0;
+
+        & > .bg-image {
+            border-radius: 0;
+        }
     }
 }
 

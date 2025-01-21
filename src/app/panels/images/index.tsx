@@ -27,9 +27,8 @@ export const ImagesPanel = () => {
             if (imgResource) {
                 setPrimaryImage(imgResource.primary);
                 setImages(imgResource.images);
+                setVisible(true);
             }
-
-            setVisible(true);
         } else {
             setVisible(false);
         }

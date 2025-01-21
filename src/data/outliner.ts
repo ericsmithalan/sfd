@@ -72,22 +72,20 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
-    // {
-    //     id: "case2",
-    //     name: "Case",
-    //     image: {
-    //         count: 0,
-    //         path: "/models/john/images/",
-    //     },
-    //     models: [
-    //         {
-    //             url: "/models/john/case-1.glb",
-    //             id: "case-2",
-    //             name: "Case",
-    //             children: [],
-    //         },
-    //     ],
-    // },
+    {
+        id: 11023,
+        name: "Desk",
+        level: 1,
+        models: [
+            {
+                modelUrl: "/models/desk-2/desk-2.glb",
+                level: 2,
+                id: 11022,
+                name: "Final Model",
+                children: [],
+            },
+        ],
+    },
 ];
 
 export const outlinerIdToName = (

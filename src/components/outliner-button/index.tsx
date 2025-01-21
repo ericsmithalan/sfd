@@ -14,19 +14,18 @@ export const OutlinerButton = ({ id, text, active, onClick, onVisible }: Outline
     const [visible, setVisible] = useState(true);
 
     return (
-        <Button
-            className="outliner-button"
-            id={`obj_${id}`}
-            variant="outliner"
-            active={active}
-            icon="box-1"
-            text={text}
-            onClick={(e) => {
-                if (onClick) {
-                    onClick(e);
-                }
-            }}
-        >
+        <div id={id} className="outliner-button">
+            <Button
+                variant="outliner"
+                active={active}
+                icon="box-1"
+                text={text}
+                onClick={(e) => {
+                    if (onClick) {
+                        onClick(e);
+                    }
+                }}
+            />
             <Button
                 variant="outliner"
                 onClick={(e) => {
@@ -38,6 +37,6 @@ export const OutlinerButton = ({ id, text, active, onClick, onVisible }: Outline
                 }}
                 icon={visible ? "eye" : "eye-close"}
             />
-        </Button>
+        </div>
     );
 };

@@ -34,7 +34,7 @@ export const TextureMenu = ({
 
             if (targetCoords && menuCoords && containerCoords) {
                 const pos = getPopupPosition(targetCoords, menuCoords, containerCoords, "bottom");
-                setPosition({ x: pos.x, y: pos.y, width: targetCoords.width });
+                setPosition({ x: pos.x - 15, y: pos.y, width: targetCoords.width + 30 });
             }
         }
     }, [targetRef]);
