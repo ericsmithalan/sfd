@@ -33,7 +33,7 @@ export const ObjectPanel = () => {
             console.log("dispose objec tpana");
             outliner.viewport.selection.removeEventListener("change", selectionChange);
         };
-    }, [outliner.viewport]);
+    }, [outliner.model, outliner.viewport]);
 
     return object ? (
         <Panel title={object.name} icon="box-1" contentCss="object-panel">

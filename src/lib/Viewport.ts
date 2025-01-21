@@ -66,7 +66,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.up = new Vector3(0, 0, 1);
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
-        this.camera.position.set(5, 2, 4);
+        this.camera.position.set(0, 10, 2);
 
         this.renderer = new WebGLRenderer({
             canvas: canvas,
