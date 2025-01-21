@@ -2,8 +2,9 @@ import { IImageResource } from "./IImageResource";
 import { IStat } from "./IStats";
 
 export interface IOutliner {
+    group?: boolean;
     id: number;
-    level: number;
+    level?: number;
     name: string;
     modelUrl?: string;
     imageResouce?: IImageResource;

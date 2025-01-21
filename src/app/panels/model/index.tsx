@@ -13,6 +13,7 @@ type ViewerState = {
 export const ModelPanel = () => {
     const [visisble, setVisible] = useState(false);
     const [images, setImages] = useState<Array<string>>([]);
+    const [primaryImage, setPrimaryImage] = useState<string>("");
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
         selected: "",
@@ -28,6 +29,7 @@ export const ModelPanel = () => {
 
                 if (imgResource) {
                     setImages(imgResource.images);
+                    setPrimaryImage(imgResource.primary);
                 }
             } else {
                 setImages([]);
@@ -47,6 +49,18 @@ export const ModelPanel = () => {
     return visisble ? (
         <>
             <Panel title={outliner.project?.name} icon="blender" contentCss="images-panel">
+                <Button
+                    variant="image"
+                    onClick={() => {
+                        setViewer({
+                            visible: true,
+                            selected: primaryImage,
+                        });
+                    }}
+                >
+                    <BgImage minHeight={140} src={primaryImage} />
+                </Button>
+
                 {images.length > 0 && (
                     <div className="image-list">
                         {images.map((item, i) => {

@@ -19,7 +19,11 @@ export const ProjectOutliner = () => {
                 iconName="sofa"
             />
             {outliner.project?.children?.map((item, i) => {
-                return (
+                return item.group ? (
+                    <div key={i} className="outliner-group">
+                        {item.name}
+                    </div>
+                ) : (
                     <NavLink
                         variant="outliner"
                         key={i}

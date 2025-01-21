@@ -2,6 +2,11 @@ import { IOutliner } from "../interface";
 
 export const rootOutliner: Array<IOutliner> = [
     {
+        group: true,
+        name: "Completed",
+        id: 1,
+    },
+    {
         id: 100,
         name: "Desks",
         level: 1,
@@ -20,34 +25,6 @@ export const rootOutliner: Array<IOutliner> = [
                         id: 11001,
                         level: 3,
                         modelUrl: "/models/desk/desk1.glb",
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
-            },
-            {
-                id: 3332,
-                name: "Desk 2",
-                level: 2,
-                children: [
-                    {
-                        id: 11002,
-                        modelUrl: "/models/desk-2/desk-2.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
-            },
-            {
-                id: 21,
-                name: "Desk 3",
-                level: 2,
-                children: [
-                    {
-                        id: 11002,
-                        modelUrl: "/models/desk-3/desk-3.glb",
-                        level: 3,
                         name: "Final Model",
                         children: [],
                     },
@@ -81,27 +58,7 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
-    {
-        id: 9873,
-        name: "Display Cases",
-        level: 1,
-        children: [
-            {
-                id: 8983,
-                level: 2,
-                name: "Case 1",
-                children: [
-                    {
-                        id: 5672,
-                        modelUrl: "/models/john/case-1.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
-            },
-        ],
-    },
+
     {
         id: 653,
         name: "Sideboards",
@@ -136,10 +93,69 @@ export const rootOutliner: Array<IOutliner> = [
         ],
     },
     {
-        id: 3223,
-        name: "Experiments",
+        group: true,
+        name: "In Process",
+        id: 2,
+    },
+    {
+        id: 9873,
+        name: "Display Cases",
         level: 1,
         children: [
+            {
+                id: 8983,
+                level: 2,
+                name: "Case 1",
+                children: [
+                    {
+                        id: 5672,
+                        modelUrl: "/models/john/case-1.glb",
+                        level: 3,
+                        name: "Final Model",
+                        children: [],
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        group: true,
+        name: "Misc",
+        id: 2,
+    },
+    {
+        id: 3223,
+        name: "Designs",
+        level: 1,
+        children: [
+            {
+                id: 3332,
+                name: "Desk 2",
+                level: 2,
+                children: [
+                    {
+                        id: 11002,
+                        modelUrl: "/models/desk-2/desk-2.glb",
+                        level: 3,
+                        name: "Final Model",
+                        children: [],
+                    },
+                ],
+            },
+            {
+                id: 21,
+                name: "Desk 3",
+                level: 2,
+                children: [
+                    {
+                        id: 11002,
+                        modelUrl: "/models/desk-3/desk-3.glb",
+                        level: 3,
+                        name: "Final Model",
+                        children: [],
+                    },
+                ],
+            },
             {
                 id: 433,
                 level: 2,
