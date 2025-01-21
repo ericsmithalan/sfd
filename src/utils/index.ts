@@ -1,4 +1,4 @@
-export * from "./createWoodMaterials";
+export * from "./createTextureMaterials";
 export * from "./fitCameraToObject";
 export * from "./generateImageResource";
 export * from "./getEdge";

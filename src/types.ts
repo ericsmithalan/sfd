@@ -1,6 +1,8 @@
 export type TransformMode = "translate" | "rotate" | "scale";
 export type SelectMode = "select" | "edit";
 
+export type TextureType = "wood" | "fabric" | "metal" | "hardware";
+
 export type RegionPlacement = "left" | "right" | "top" | "bottom";
 export type IconName =
     | "24-hours"

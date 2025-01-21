@@ -1,12 +1,20 @@
 import { FC, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
-import { defaultFabricTexture, defaultWoodTexture, fabricTextures, woodTextures } from "../../data";
+import {
+    defaultFabricTexture,
+    defaultMetalexture,
+    defaultWoodTexture,
+    fabricTextures,
+    metalTextures,
+    woodTextures,
+} from "../../data";
 import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
 import { ObjectUserData, Viewport } from "../../lib";
-import { createSingleWoodMaterials, getObjectsById } from "../../utils";
+import { TextureType } from "../../types";
+import { createTextureMaterials, getObjectsById } from "../../utils";
 import "./style.scss";
 
 type ToolbarProps = {
@@ -30,9 +38,36 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
         }
     }, [model]);
 
+    const getTexture = (
+        type: TextureType,
+    ): { selected: ITexture | null; textures: Array<ITexture> } => {
+        switch (type) {
+            case "fabric":
+                return {
+                    selected: defaultFabricTexture,
+                    textures: fabricTextures,
+                };
+            case "wood":
+                return {
+                    selected: defaultWoodTexture,
+                    textures: woodTextures,
+                };
+            case "hardware":
+                return {
+                    selected: defaultMetalexture,
+                    textures: metalTextures,
+                };
+            case "metal":
+                return {
+                    selected: defaultMetalexture,
+                    textures: metalTextures,
+                };
+        }
+    };
+
     const handleTextureClick = async (texture: ITexture, material: IObjectMaterial) => {
         if (model && model.materials) {
-            const materials = await createSingleWoodMaterials(texture);
+            const materials = await createTextureMaterials(texture);
             const objs = getObjectsById(viewport, material.objects);
 
             for (const obj of objs) {
@@ -65,6 +100,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 .entries()
                 .toArray()
                 .map(([key, value], i) => {
+                    const textr = getTexture(value.type);
                     return (
                         <TexturePicker
                             key={i}
@@ -73,10 +109,8 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                             onItemClick={(texture, material, e) =>
                                 handleTextureClick(texture, material)
                             }
-                            texture={
-                                value.type === "wood" ? defaultWoodTexture : defaultFabricTexture
-                            }
-                            items={value.type === "wood" ? woodTextures : fabricTextures}
+                            texture={textr.selected}
+                            items={textr.textures}
                         />
                     );
                 })}

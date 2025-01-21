@@ -52,6 +52,7 @@ export const TextureMenu = ({
                     {items.map((item, i) => (
                         <TextureButton
                             key={i}
+                            color={item.color}
                             active={item.id === selected?.id}
                             image={item.thumbnail}
                             text={item.name}

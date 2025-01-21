@@ -3,22 +3,27 @@ import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { IObjectMaterial, IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { Edges, ObjectUserData, Viewport } from "../lib";
+import { TextureType } from "../types";
 import { getObjectDimensions } from "./getObjectDimensions";
 
 const loader: GLTFLoader = new GLTFLoader();
 
-const getMaterialType = (material: MeshStandardMaterial): string | null => {
+const getMaterialType = (material: MeshStandardMaterial): TextureType | null => {
     const wood = material.name?.indexOf("wood") !== -1;
     const primary = material.name?.indexOf("primary") !== -1;
     const contrast = material.name?.indexOf("contrast") !== -1;
     const fabric = material.name?.indexOf("fabric") !== -1;
+    const metal = material.name?.indexOf("metal") !== -1;
+    const hardware = material.name?.indexOf("hardware") !== -1;
 
     if (wood || primary || contrast) {
         return "wood";
-    } else {
-        if (fabric) {
-            return "fabric";
-        }
+    }
+    if (fabric) {
+        return "fabric";
+    }
+    if (metal || hardware) {
+        return "metal";
     }
     return null;
 };

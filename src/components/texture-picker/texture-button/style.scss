@@ -20,6 +20,28 @@
     min-height: var(--toolbar-height);
     width: var(--toolbar-height);
 
+    & > .color {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+
+        height: 100%;
+        width: 100%;
+
+        &.green {
+            background-color: green;
+        }
+        &.blue {
+            background-color: blue;
+        }
+        &.white {
+            background-color: white;
+        }
+        &.black {
+            background-color: black;
+        }
+    }
+
     & > .text {
         font-size: var(--font-7);
         padding: var(--padding-5);
