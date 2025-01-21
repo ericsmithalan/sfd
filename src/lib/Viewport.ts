@@ -176,7 +176,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     async loadModel(outliner: IOutliner) {
         this.dispatchEvent({ type: "loading", value: true });
-        const model = await loadModel(outliner);
+        const model = await loadModel(outliner, this);
         this.model = model;
         this.dispatchEvent({ type: "loading", value: false });
     }

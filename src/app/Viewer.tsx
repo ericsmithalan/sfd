@@ -4,7 +4,7 @@ import { Outlet } from "react-router-dom";
 import { Loading, Region } from "../components";
 import { ModelProvider, OutlinerProvider } from "../context";
 import { IViewportEvent, Viewport } from "../lib";
-import { ImagesPanel } from "./panels/images";
+import { ModelPanel } from "./panels/model";
 import { ObjectPanel } from "./panels/object";
 import "./style.scss";
 import { Toolbar } from "./toolbar";
@@ -50,7 +50,7 @@ export const Viewer = () => {
                             <Outlet />
                         </Region>
                         <Region placement="right">
-                            <ImagesPanel />
+                            <ModelPanel />
                             <ObjectPanel />
                         </Region>
                     </OutlinerProvider>

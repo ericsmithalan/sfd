@@ -1,0 +1,72 @@
+import { useEffect, useState } from "react";
+import { BgImage, Button, Panel, Stats } from "../../../components";
+import { ImageViewer } from "../../../components/image-viewer";
+import { useOutliner } from "../../../hooks";
+import { generateImageResource } from "../../../utils";
+import "./style.scss";
+
+type ViewerState = {
+    visible: boolean;
+    selected: string;
+};
+
+export const ModelPanel = () => {
+    const [visisble, setVisible] = useState(false);
+    const [images, setImages] = useState<Array<string>>([]);
+    const [viewer, setViewer] = useState<ViewerState>({
+        visible: false,
+        selected: "",
+    });
+    const outliner = useOutliner();
+
+    useEffect(() => {
+        if (outliner.project) {
+            const imgResource = generateImageResource(outliner.project.imageResouce);
+
+            if (imgResource) {
+                setImages(imgResource.images);
+            }
+
+            setVisible(true);
+        } else {
+            setVisible(false);
+        }
+    }, [outliner.project]);
+
+    return visisble ? (
+        <>
+            <Panel title={outliner.project?.name} icon="blender" contentCss="images-panel">
+                <div className="image-list">
+                    {images.length > 0 &&
+                        images.map((item, i) => {
+                            if (i < 3) {
+                                return (
+                                    <Button
+                                        variant="image"
+                                        key={i}
+                                        onClick={() => {
+                                            setViewer({
+                                                visible: true,
+                                                selected: item,
+                                            });
+                                        }}
+                                    >
+                                        <BgImage minHeight={90} src={item} />
+                                    </Button>
+                                );
+                            }
+                        })}
+                </div>
+                <Stats stats={outliner.model?.stats || []} />
+            </Panel>
+            <ImageViewer
+                onClosed={() => {
+                    setViewer({ visible: false, selected: "" });
+                }}
+                visible={viewer.visible}
+                images={images}
+                image={viewer.selected}
+            />
+        </>
+    ) : null;
+};

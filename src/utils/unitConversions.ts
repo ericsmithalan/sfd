@@ -10,9 +10,21 @@ export const convertMeterToInch = (vector: Vector3): Vector3 => {
     const length = arr[2];
 
     return new Vector3(
-        Number((width * METERS_TO_INCHES).toFixed(3)),
-        Number((length * METERS_TO_INCHES).toFixed(3)),
-        Number((thickness * METERS_TO_INCHES).toFixed(3)),
+        Number((width * METERS_TO_INCHES).toFixed(2)),
+        Number((length * METERS_TO_INCHES).toFixed(2)),
+        Number((thickness * METERS_TO_INCHES).toFixed(2)),
+    );
+};
+
+export const convertMeterToInchRaw = (vector: Vector3): Vector3 => {
+    const x = vector.x;
+    const y = vector.y;
+    const z = vector.z;
+
+    return new Vector3(
+        Number((x * METERS_TO_INCHES).toFixed(2)),
+        Number((y * METERS_TO_INCHES).toFixed(2)),
+        Number((z * METERS_TO_INCHES).toFixed(2)),
     );
 };
 
@@ -24,7 +36,7 @@ export const convertToBordFeet = (vector: Vector3) => {
     const width = arr[1];
     const length = arr[2];
 
-    return Number((((length / 12) * width * thickness) / 12).toFixed(3));
+    return Number((((length / 12) * width * thickness) / 12).toFixed(1));
 };
 
 export const convertInchToMeter = (vector: Vector3): Vector3 => {
@@ -33,9 +45,9 @@ export const convertInchToMeter = (vector: Vector3): Vector3 => {
     const z = vector.z;
 
     return new Vector3(
-        Number((x / METERS_TO_INCHES).toFixed(3)),
-        Number((y / METERS_TO_INCHES).toFixed(3)),
-        Number((z / METERS_TO_INCHES).toFixed(3)),
+        Number((x / METERS_TO_INCHES).toFixed(2)),
+        Number((y / METERS_TO_INCHES).toFixed(2)),
+        Number((z / METERS_TO_INCHES).toFixed(2)),
     );
 };
 

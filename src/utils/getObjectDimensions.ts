@@ -1,15 +1,31 @@
-import { Box3, Mesh, Object3D, Vector3 } from "three";
+import { Box3, Group, Mesh, Object3D, Vector3 } from "three";
 
 import { Viewport } from "../lib";
 import { getObject } from "./getObject";
-import { convertMeterToInch } from "./unitConversions";
+import { convertMeterToInch, convertMeterToInchRaw } from "./unitConversions";
 
 export const getObjectDimensions = (
     viewport: Viewport,
-    obj?: number | Object3D,
+    obj: number | Object3D,
+    raw: boolean = false,
 ): Vector3 | null => {
     if (obj) {
         const object = getObject(viewport, obj);
+
+        if (object && object instanceof Group) {
+            const box = new Box3().setFromObject(object);
+            const size = box.getSize(new Vector3());
+
+            let converted;
+
+            if (raw) {
+                converted = convertMeterToInchRaw(size);
+            } else {
+                converted = convertMeterToInch(size);
+            }
+
+            return new Vector3(converted.x, converted.y, converted.z);
+        }
 
         if (object && object instanceof Mesh) {
             let sizeX = object.geometry.parameters?.width;
@@ -21,8 +37,14 @@ export const getObjectDimensions = (
             } else {
                 const box = new Box3().setFromObject(object);
                 const size = box.getSize(new Vector3());
+                let converted;
 
-                const converted = convertMeterToInch(size);
+                if (raw) {
+                    converted = convertMeterToInchRaw(size);
+                } else {
+                    converted = convertMeterToInch(size);
+                }
+
                 return new Vector3(converted.x, converted.y, converted.z);
             }
         }

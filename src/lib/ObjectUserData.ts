@@ -17,17 +17,24 @@ export interface IObjectUserData {
     outliner: IOutliner | null;
     edgeInfo: IEdgeInfo | null;
     textureInfo: ITextureInfo | null;
+    viewportInfo: IViewportInfo | null;
 }
 
 export class ObjectUserData implements IObjectUserData {
+    outliner: IOutliner | null;
+    edgeInfo: IEdgeInfo | null;
+    textureInfo: ITextureInfo | null;
+    viewportInfo: IViewportInfo | null;
+
     constructor(
-        public outliner: IOutliner | null = null,
-        public viewportInfo: IViewportInfo | null,
-        public edgeInfo: IEdgeInfo | null = null,
-        public textureInfo: ITextureInfo | null = null,
+        outliner: IOutliner | null = null,
+        viewportInfo: IViewportInfo | null,
+        edgeInfo: IEdgeInfo | null = null,
+        textureInfo: ITextureInfo | null = null,
     ) {
         this.outliner = outliner;
         this.edgeInfo = edgeInfo;
         this.textureInfo = textureInfo;
+        this.viewportInfo = viewportInfo;
     }
 }

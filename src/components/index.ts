@@ -9,4 +9,5 @@ export * from "./outliner-title";
 export * from "./panel";
 export * from "./region";
 export * from "./scroller";
+export * from "./stats";
 export * from "./texture-picker";

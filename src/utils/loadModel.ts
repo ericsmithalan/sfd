@@ -2,7 +2,8 @@ import { Mesh, MeshStandardMaterial, Object3D } from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { IObjectMaterial, IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
-import { Edges, ObjectUserData } from "../lib";
+import { Edges, ObjectUserData, Viewport } from "../lib";
+import { getObjectDimensions } from "./getObjectDimensions";
 
 const loader: GLTFLoader = new GLTFLoader();
 
@@ -18,7 +19,7 @@ const isValidMaterial = (material: MeshStandardMaterial) => {
     return false;
 };
 
-export const loadModel = (outliner: IOutliner): Promise<IModel> => {
+export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IModel> => {
     return new Promise((resolve) => {
         const modelChildrenOutliner: Array<IOutliner> = [];
 
@@ -69,7 +70,31 @@ export const loadModel = (outliner: IOutliner): Promise<IModel> => {
 
                 outliner.children = modelChildrenOutliner;
 
-                model.userData = new ObjectUserData(outliner, { selectable: true });
+                const size = getObjectDimensions(viewport, model, true);
+
+                outliner.stats = [
+                    {
+                        name: "parts",
+                        value: String(modelChildrenOutliner.length),
+                    },
+                    {
+                        name: "Width",
+                        value: String(size?.x || 0),
+                        unit: "in",
+                    },
+                    {
+                        name: "Length",
+                        unit: "in",
+                        value: String(size?.z || 0),
+                    },
+                    {
+                        name: "Height",
+                        value: String(size?.y || 0),
+                        unit: "in",
+                    },
+                ];
+
+                model.userData = new ObjectUserData(outliner, { selectable: true }, null, null);
 
                 if (model.up.y === 1) {
                     model.up.set(0, 0, 1);

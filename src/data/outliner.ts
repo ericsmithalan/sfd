@@ -86,6 +86,34 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
+    {
+        id: 11323,
+        name: "Desk 3",
+        level: 1,
+        models: [
+            {
+                modelUrl: "/models/desk-3/desk-3.glb",
+                level: 2,
+                id: 11322,
+                name: "Final Model",
+                children: [],
+            },
+        ],
+    },
+    {
+        id: 12323,
+        name: "Case 2",
+        level: 1,
+        models: [
+            {
+                modelUrl: "/models/john/case-1.glb",
+                level: 2,
+                id: 12322,
+                name: "Final Model",
+                children: [],
+            },
+        ],
+    },
 ];
 
 export const outlinerIdToName = (
