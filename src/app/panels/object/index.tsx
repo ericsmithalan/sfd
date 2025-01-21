@@ -22,9 +22,15 @@ export const ObjectPanel = () => {
 
             setObject(e.object);
         };
-        outliner.viewport.selection.addEventListener("change", selectionChange);
+        if (outliner.model) {
+            outliner.viewport.selection.addEventListener("change", selectionChange);
+        } else {
+            setObject(null);
+            setSize(new Vector3());
+        }
 
         return () => {
+            console.log("dispose objec tpana");
             outliner.viewport.selection.removeEventListener("change", selectionChange);
         };
     }, [outliner.viewport]);
