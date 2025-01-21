@@ -1,15 +1,5 @@
-import { IOutlinerModel, IOutlinerObject, IOutlinerProject } from "./interface";
-
-export type ViewportSpace = "world" | "local";
+export type TransformMode = "translate" | "rotate" | "scale";
 export type SelectMode = "select" | "edit";
-export type PickPropertiesType<T> = Pick<
-    T,
-    {
-        [K in keyof T]: T[K] extends Function ? never : K;
-    }[keyof T]
->;
-
-export type UserData = IOutlinerProject | IOutlinerModel | IOutlinerObject;
 
 export type RegionPlacement = "left" | "right" | "top" | "bottom";
 export type IconName =
@@ -95,6 +85,11 @@ export type IconName =
     | "arrow-drop-down"
     | "arrow-drop-left"
     | "arrow-drop-left"
+    | "gallery-view-2"
+    | "sofa"
+    | "armchair"
+    | "arrow-left-long"
+    | "gallery-view"
     | "arrow-drop-right"
     | "arrow-drop-right"
     | "arrow-drop-up"

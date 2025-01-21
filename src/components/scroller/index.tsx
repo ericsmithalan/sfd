@@ -1,10 +1,11 @@
 import clsx from "clsx";
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import "./style.scss";
 
 type ScrollerProps = {
     children?: ReactNode;
     className?: string;
+    showShadow?: boolean;
     width?: number | string;
     height?: number | string;
     maxHeight?: number | string;
@@ -12,22 +13,75 @@ type ScrollerProps = {
     maxWidth?: number | string;
     minWidth?: number | string;
     disable?: boolean;
+    scrollTo?: string;
 };
 
 export const Scroller: FC<ScrollerProps> = ({
     width,
     height = "100%",
     maxWidth,
+    showShadow = true,
     minWidth,
     minHeight,
     maxHeight,
     className,
     children,
+    scrollTo,
     disable = false,
 }) => {
+    const [scrolling, setScrolling] = useState(false);
+
+    const scrollerRef = useRef<HTMLDivElement>(null);
+
+    useEffect(() => {
+        const el = scrollerRef.current;
+
+        const handleScroll = (e: Event) => {
+            const scrollEl = e.target as HTMLDivElement;
+
+            if (scrollEl) {
+                const top = scrollEl.scrollTop;
+                if (top && Number(top)) {
+                    if (top < 20) {
+                        if (scrolling) {
+                            setScrolling(false);
+                        }
+                    } else {
+                        if (top > 20) {
+                            if (!scrolling) {
+                                setScrolling(true);
+                            }
+                        }
+                    }
+                }
+            }
+        };
+        if (el && showShadow) {
+            el.addEventListener("scroll", handleScroll);
+        }
+
+        () => {
+            if (el && showShadow) {
+                el.addEventListener("scroll", handleScroll);
+            }
+        };
+    }, [scrollerRef, scrolling, showShadow]);
+
+    useEffect(() => {
+        if (scrollTo && scrollerRef.current) {
+            const element = document.getElementById(scrollTo);
+            if (element) {
+                element.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            }
+        }
+    }, [scrollTo, scrollerRef]);
+
     return (
-        <div className={clsx("scroller", disable && "disabled", className)}>
+        <div
+            className={clsx("scroller", disable && "disabled", scrolling && "scrolling", className)}
+        >
             <div
+                ref={scrollerRef}
                 className={clsx("scroller-scroll")}
                 style={{
                     width: (!disable && width) || undefined,

@@ -6,13 +6,13 @@ const createWoodTexture = (
     id: string,
     type: string,
     variant: number,
-    displayName: string,
+    name: string,
     size: number,
 ): ITexture => {
     return {
         id: id,
         type: type,
-        displayName: displayName,
+        name: name,
         thumbnail: `${BASE_TEXTURE_URL}/${type}/${type}-${variant}-thumb.png`,
         faceUrl: `${BASE_TEXTURE_URL}/${type}/${type}-${variant}-face-${size}.png`,
         endUrl: `${BASE_TEXTURE_URL}/${type}/${type}-${variant}-end-${size}.png`,
@@ -33,3 +33,10 @@ const getAllWoodTextures = (size = 1024): Array<ITexture> => {
 };
 
 export const woodTextures = getAllWoodTextures();
+
+export const getTextureById = (id: string): ITexture | null => {
+    const result = woodTextures.find((texture) => texture.id === id);
+    return result || null;
+};
+
+export const defaultTexture = getTextureById("0a875cc1-3233-4896-a0b8-b8b3b1b7c59b");

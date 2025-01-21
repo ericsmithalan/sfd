@@ -1,15 +1,15 @@
 import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2, WebGLRenderer } from "three";
 
+import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
-import { BorderEffect, ObjectUserData } from "./";
+import { BorderEffect, ObjectUserData, Transform } from "./";
 
 export interface ISelectionEvent {
-    selectionChange: {
+    change: {
         type: string;
         object: Object3D | null;
-        selectMode: SelectMode;
     };
-    selectModeChange: { type: string; mode: SelectMode };
+    mode: { type: string; mode: SelectMode };
 }
 
 export class Selection extends EventDispatcher<ISelectionEvent> {
@@ -18,19 +18,31 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly camera: Camera;
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
+    private readonly transform: Transform;
+    private readonly orbitControls: OrbitControls;
     readonly borderEffect: BorderEffect;
 
-    private selectEnabled: boolean = true;
-    private _selectMode: SelectMode = "select";
     private _object: Object3D | null = null;
+    private _mode: SelectMode = "select";
 
-    constructor(container: HTMLElement, scene: Scene, camera: Camera, renderer: WebGLRenderer) {
+    enabled: boolean = true;
+
+    constructor(
+        container: HTMLElement,
+        scene: Scene,
+        camera: Camera,
+        renderer: WebGLRenderer,
+        orbitControls: OrbitControls,
+    ) {
         super();
 
         this.camera = camera;
         this.raycaster = new Raycaster();
         this.container = container;
         this.scene = scene;
+        this.orbitControls = orbitControls;
+
+        this.transform = new Transform(camera, scene, container);
 
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
@@ -38,18 +50,21 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.borderEffect = new BorderEffect(scene, renderer, camera);
     }
 
-    get selectMode() {
-        return this._selectMode;
+    get mode() {
+        return this._mode;
     }
 
-    set selectMode(value: SelectMode) {
-        if (value !== this._selectMode) {
-            this._selectMode = value;
+    set mode(value: SelectMode) {
+        if (value !== this._mode) {
+            this._mode = value;
 
-            this.dispatchEvent({
-                type: "selectModeChange",
-                mode: value,
-            });
+            if (value === "edit") {
+                this.borderEffect.enabled = false;
+            } else {
+                this.borderEffect.enabled = true;
+            }
+
+            this.dispatchEvent({ type: "mode", mode: value });
         }
     }
 
@@ -66,14 +81,35 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             } else {
                 this.borderEffect.objects = [];
             }
-            // this.createSelectionHelper();
+
             this.dispatchEvent({
-                type: "selectionChange",
+                type: "change",
                 object: value,
-                selectMode: this._selectMode,
             });
         }
     }
+
+    // dblclick(e: MouseEvent) {
+    //     console.log("doubleclick");
+    //     if (this.enabled) {
+    //         this.setMouse(e);
+
+    //         const objects = this.intersects(this.mouse.x, this.mouse.y);
+    //         let obj = null;
+
+    //         if (objects && objects[0]) {
+    //             obj = objects[0].object;
+    //         }
+
+    //         if (obj) {
+    //             this.mode = "edit";
+    //             this.transform.show(obj);
+    //         } else {
+    //             this.mode = "select";
+    //             this.transform.hide();
+    //         }
+    //     }
+    // }
 
     resize() {
         this.borderEffect.resize();
@@ -104,8 +140,12 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     };
 
     private mouseDwn(e: MouseEvent) {
-        if (this.selectEnabled) {
-            this.setMouse(e);
+        this.setMouse(e);
+        if (this.enabled) {
+            // if in edit mode just remove tranforms
+            if (this.mode === "edit") {
+                this.mode = "select";
+            }
 
             const objects = this.intersects(this.mouse.x, this.mouse.y);
             if (objects) {
@@ -117,29 +157,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     }
 
     private mouseUp(e: MouseEvent) {
-        if (this.selectEnabled) {
-            this.setMouse(e);
-        }
-    }
-
-    private dblclick(e: MouseEvent) {
-        if (this.selectEnabled) {
-            this.setMouse(e);
-
-            const objects = this.intersects(this.mouse.x, this.mouse.y);
-            let obj = null;
-
-            if (objects && objects[0]) {
-                obj = objects[0].object;
-            }
-
-            if (obj) {
-                this.selectMode = "edit";
-            } else {
-                this.selectMode = "select";
-                this.object = null;
-            }
-        }
+        this.setMouse(e);
     }
 
     private intersects = (x: number, y: number) => {
@@ -149,7 +167,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
         this.scene.traverseVisible((child) => {
             if (child.userData instanceof ObjectUserData) {
-                if (child.userData?.selectable === true) {
+                if (child.userData?.viewportInfo?.selectable === true) {
                     sceneChildren.push(child);
                 }
             }
@@ -161,13 +179,29 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         return objects;
     };
 
+    // private transformMouseUp(e: ITransformEvent["mouseUp"]) {
+    //     this.enabled = true;
+    //     this.orbitControls.enabled = true;
+
+    //     /// expample of texture  update
+    // }
+
+    // private transformMouseDown(e: ITransformEvent["mouseDown"]) {
+    //     this.enabled = false;
+    //     this.orbitControls.enabled = false;
+    // }
+
     private registerEvents() {
+        // this.transform.addEventListener("mouseDown", (e) => this.transformMouseDown(e));
+        // this.transform.addEventListener("mouseUp", (e) => this.transformMouseUp(e));
         // this.container.addEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
         this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
     private unRegisterEvents() {
+        // this.transform.removeEventListener("mouseDown", (e) => this.transformMouseDown(e));
+        // this.transform.removeEventListener("mouseUp", (e) => this.transformMouseUp(e));
         // this.container.removeEventListener("dblclick", (e: MouseEvent) => this.dblclick(e));
         this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));

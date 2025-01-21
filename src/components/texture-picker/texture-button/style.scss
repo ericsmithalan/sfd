@@ -1,0 +1,38 @@
+.texture-button {
+    display: flex;
+    flex-direction: row;
+    font-size: inherit;
+    color: inherit;
+    text-decoration: none;
+    position: relative;
+    flex: 1 1 auto;
+    align-items: center;
+
+    background-color: transparent;
+
+    padding: 0;
+    margin: 0;
+
+    border: 0;
+
+    border-radius: var(--radius-5);
+
+    height: var(--toolbar-height);
+    width: var(--toolbar-height);
+
+    & > .bg-image {
+        display: flex;
+        flex-direction: column;
+        flex: 1 1 auto;
+        height: var(--toolbar-height);
+        width: var(--toolbar-height);
+        border-radius: var(--radius-5);
+    }
+
+    &.active {
+    }
+
+    &:hover {
+        cursor: pointer;
+    }
+}

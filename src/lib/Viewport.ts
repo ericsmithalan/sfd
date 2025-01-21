@@ -3,7 +3,6 @@ import {
     EventDispatcher,
     Fog,
     NeutralToneMapping,
-    Object3D,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
@@ -15,37 +14,34 @@ import {
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
 import { OrbitControls } from "three/examples/jsm/Addons.js";
-import { IScreenSize } from "../interface";
-import { fitCameraToObject } from "../utils";
+import { IOutliner, IScreenSize } from "../interface";
+import { IModel } from "../interface/IModel";
+import { loadModel } from "../utils/loadModel";
 import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
-import { IModelEvent, Model } from "./Model";
-import { ObjectUserData } from "./ObjectUserData";
 import { Selection } from "./Selection";
 
 export interface IViewportEvent {
-    resize: { type: string; size: IScreenSize };
-    loading: { type: string; isLoading: boolean };
-    updated: { type: string; object: Object3D };
-    showEdgesChange: { type: string; value: boolean };
+    loading: { type: string; value: boolean };
+    modelChanged: { type: string; model: IModel | null };
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
     private readonly gizmo: ViewportGizmo;
-
-    readonly selection: Selection;
-    readonly container: HTMLElement;
     readonly renderer: WebGLRenderer;
     readonly scene: Scene;
     readonly camera: PerspectiveCamera;
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
-    readonly modelFile: Model;
+    readonly selection: Selection;
+
     readonly lights: Lights;
     readonly grid: Grid;
     readonly floor: Floor;
-    edgesVisible: boolean = true;
+
+    private _model: IModel | null = null;
+    private _edges: boolean = true;
 
     size: IScreenSize = {
         width: 0,
@@ -53,11 +49,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         aspect: 0,
     };
 
-    constructor(canvas: HTMLCanvasElement, container: HTMLElement | null = null) {
+    constructor(canvas: HTMLCanvasElement) {
         super();
 
         this.canvas = canvas;
-        this.container = container || canvas;
 
         this.setSize();
 
@@ -65,7 +60,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
         this.scene.fog = new Fog(new Color("#222222"), 1, 100);
-        this.scene.userData = new ObjectUserData(false, null);
 
         this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
         this.camera.name = "Camera";
@@ -73,9 +67,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
         this.camera.position.set(5, 2, 4);
-        this.camera.userData = new ObjectUserData(false, null);
-
-        this.modelFile = new Model();
 
         this.renderer = new WebGLRenderer({
             canvas: canvas,
@@ -99,25 +90,29 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 3500;
 
+        this.selection = new Selection(
+            this.canvas,
+            this.scene,
+            this.camera,
+            this.renderer,
+            this.orbitControls,
+        );
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
 
         this.orbitControls.update();
 
-        this.selection = new Selection(this.container, this.scene, this.camera, this.renderer);
-
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
             placement: "bottom-right",
         });
+
         this.gizmo.scale.set(0.7, 0.7, 0.7);
         this.gizmo.attachControls(this.orbitControls);
 
         this.lights = new Lights();
 
         this.floor = new Floor();
-        this.floor.userData = new ObjectUserData(false, null);
 
         this.grid = new Grid();
-        this.grid.userData = new ObjectUserData(false, null);
 
         const environment = new RoomEnvironment();
         const pmremGenerator = new PMREMGenerator(this.renderer);
@@ -125,7 +120,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         environment.dispose();
         pmremGenerator.dispose();
 
-        this.add(
+        this.scene.add(
             // this.lights.ambientLight,
             this.lights.dirLight,
             this.floor,
@@ -137,35 +132,62 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.registerEvents();
     }
 
-    add(...object: Object3D[]) {
-        this.scene.add(...object);
+    get edges() {
+        return this._edges;
     }
 
-    remove(...object: Object3D[]) {
-        this.scene.remove(...object);
+    set edges(value: boolean) {
+        console.log("edges", value);
+        if (this.model) {
+            this.model.edges.visible = value;
+            this._edges = value;
+        }
     }
 
-    showEdges = () => {
-        if (this.modelFile.edges && !this.modelFile.edges.parent) {
-            this.add(this.modelFile.edges);
-            this.edgesVisible = true;
-        }
-    };
+    get model() {
+        return this._model;
+    }
 
-    hideEdges() {
-        if (this.modelFile.edges && this.modelFile.edges.parent) {
-            this.remove(this.modelFile.edges);
-            this.edgesVisible = false;
+    private clearModel() {
+        if (this._model) {
+            if (this._model.object.parent) {
+                this.scene.remove(this._model.object);
+            }
+            if (this._model.edges.parent) {
+                this.scene.remove(this._model.edges);
+            }
         }
+    }
+
+    private addModel(model: IModel | null) {
+        this.clearModel();
+
+        if (model) {
+            this.scene.add(model.object);
+            this.scene.add(model.edges);
+            model.edges.visible = this.edges;
+        }
+    }
+
+    set model(value: IModel | null) {
+        this.addModel(value);
+        this._model = value;
+        this.dispatchEvent({ type: "modelChanged", model: value });
+    }
+
+    async loadModel(outliner: IOutliner) {
+        this.dispatchEvent({ type: "loading", value: true });
+        const model = await loadModel(outliner);
+        this.model = model;
+        this.dispatchEvent({ type: "loading", value: false });
     }
 
     private animate = () => {
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
-
-        this.gizmo.render();
         this.selection.animate();
+        this.gizmo.render();
         this.orbitControls.update();
     };
 
@@ -173,14 +195,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         let width: number = 0;
         let height: number = 0;
 
-        if (this.container && this.container.tagName !== "CANVAS") {
-            const bounds = this.container.getBoundingClientRect();
-            width = bounds.width;
-            height = bounds.height;
-        } else {
-            width = window.innerWidth;
-            height = window.innerHeight;
-        }
+        width = window.innerWidth;
+        height = window.innerHeight;
 
         this.size.aspect = width / height;
         this.size.width = width;
@@ -194,47 +210,22 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize(this.size.width, this.size.height);
-        this.gizmo.update();
-        this.dispatchEvent({ type: "resize", size: this.size });
-
         this.selection.resize();
+        this.gizmo.update();
     };
-
-    private modelChanged(e: IModelEvent["changed"]) {
-        if (e.model) {
-            const model = e.model;
-
-            this.lights.spotLight.position.set(3, 1, 5);
-            this.lights.spotLight.rotateY(Math.PI / 3);
-            this.lights.spotLight.lookAt(model.position);
-            this.lights.spotLightHelper.update();
-
-            fitCameraToObject(this.camera, this.orbitControls, [model]);
-
-            if (this.edgesVisible) {
-                this.showEdges();
-            }
-
-            this.add(model);
-            console.log(e.edges);
-        }
-    }
 
     private registerEvents() {
         window.addEventListener("resize", () => this.resize());
-        this.modelFile.addEventListener("changed", (e) => this.modelChanged(e));
     }
 
     private unregisterEvents() {
         window.removeEventListener("resize", () => this.resize());
-        this.modelFile.removeEventListener("changed", (e) => this.modelChanged(e));
     }
 
     dispose() {
         this.unregisterEvents();
-        this.selection.dispose();
-        this.modelFile.dispose();
         this.orbitControls.dispose();
         this.renderer.dispose();
+        this.selection.dispose();
     }
 }

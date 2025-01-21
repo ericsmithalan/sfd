@@ -2,6 +2,8 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
 
 :root {
+    --toolbar-height: 3.5rem;
+
     // SHADOW
     --shadow-1: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
     --shadow-2: rgba(0, 0, 0, 0.15) 0px 3px 8px;
@@ -128,7 +130,7 @@
 
 body,
 html {
-    font-size: 14px;
+    font-size: 16px;
     color: var(--color-white-3);
     background-color: var(--color-black-2);
     font-family: "Inter", serif;

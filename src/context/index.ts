@@ -1,2 +1,2 @@
-export * from "./ObjectContext";
+export * from "./ModelContext";
 export * from "./OutlinerContext";

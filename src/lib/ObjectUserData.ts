@@ -1,25 +1,33 @@
-import { UserData } from "../types";
+import { IOutliner } from "../interface";
 
-export interface IObjectUserData<T extends UserData> {
-    selectable: boolean;
-    outliner: T | null;
-    edgeId: number | null;
+export interface IEdgeInfo {
+    objectId: number;
+}
+
+export interface ITextureInfo {
     textureId: string | null;
     unwrapped: boolean;
 }
 
-export class ObjectUserData<T extends UserData> implements IObjectUserData<T> {
+export interface IViewportInfo {
+    selectable: boolean;
+}
+
+export interface IObjectUserData {
+    outliner: IOutliner | null;
+    edgeInfo: IEdgeInfo | null;
+    textureInfo: ITextureInfo | null;
+}
+
+export class ObjectUserData implements IObjectUserData {
     constructor(
-        public selectable: boolean,
-        public outliner: T | null = null,
-        public edgeId: number | null = null,
-        public textureId: string | null = null,
-        public unwrapped: boolean = false,
+        public outliner: IOutliner | null = null,
+        public viewportInfo: IViewportInfo | null,
+        public edgeInfo: IEdgeInfo | null = null,
+        public textureInfo: ITextureInfo | null = null,
     ) {
-        this.selectable = selectable;
         this.outliner = outliner;
-        this.edgeId = edgeId;
-        this.textureId = textureId;
-        this.unwrapped = unwrapped;
+        this.edgeInfo = edgeInfo;
+        this.textureInfo = textureInfo;
     }
 }

@@ -29,6 +29,7 @@ export class BorderEffect {
 
     private _objects: Array<Object3D> = [];
     effectScene: Scene;
+    enabled: boolean = true;
 
     constructor(scene: Scene, renderer: WebGLRenderer, camera: Camera) {
         this.target = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
@@ -42,14 +43,14 @@ export class BorderEffect {
         this.composer = new EffectComposer(renderer, this.target);
         this.composer.setPixelRatio(window.devicePixelRatio);
         this.composer.setSize(window.innerWidth, window.innerHeight);
-        // this.composer.renderTarget1.stencilBuffer = true;
-        // this.composer.renderTarget2.stencilBuffer = true;
+        this.composer.renderTarget1.stencilBuffer = true;
+        this.composer.renderTarget2.stencilBuffer = true;
 
         this.effectScene = new Scene();
 
         this.renderPass = new RenderPass(this.effectScene, camera);
-        // this.renderPass.clearColor = new Color(0, 0, 0);
-        // this.renderPass.clearAlpha = 0;
+        this.renderPass.clearColor = new Color(0, 0, 0);
+        this.renderPass.clearAlpha = 0;
         this.composer.addPass(this.renderPass);
 
         this.outlinePass = new OutlinePass(
@@ -78,6 +79,8 @@ export class BorderEffect {
         this.effectFXAA.renderToScreen = true;
         this.effectFXAA.material.transparent = true; //
         this.composer.addPass(this.effectFXAA);
+
+        // scene.add(this.effectScene);
     }
 
     get objects() {
@@ -99,7 +102,9 @@ export class BorderEffect {
     }
 
     animate() {
-        this.composer.render();
+        if (this.enabled) {
+            this.composer.render();
+        }
     }
 
     dispose() {

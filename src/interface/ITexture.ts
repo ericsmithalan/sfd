@@ -2,7 +2,7 @@ export interface ITexture {
     id: string;
     resolution: number;
     type: string;
-    displayName: string;
+    name: string;
     thumbnail: string;
     faceUrl: string;
     endUrl: string;

@@ -40,9 +40,6 @@ input::-moz-focus-inner {
 
         gap: var(--gap-5);
 
-        font-weight: bold;
-        font-size: var(--font-6);
-
         & > .icon {
             color: var(--color-alt-1);
         }
@@ -55,13 +52,61 @@ input::-moz-focus-inner {
         flex: 1 1 auto;
     }
 
-    &.btn-toolbar {
+    &.btn-outliner {
+        background-color: transparent;
         border: 1px solid transparent;
-        background-color: var(--color-white-8);
+
+        display: flex;
+        flex-direction: row;
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-4);
         border-radius: var(--radius-5);
+        border: 1px solid transparent;
         flex: 1 1 auto;
+
+        &:hover {
+            background-color: var(--color-white-7);
+            color: var(--color-alt-1);
+        }
+
+        &:focus {
+            outline: none;
+        }
+
+        &.active {
+            color: var(--color-alt-1);
+            font-weight: 600;
+            background-color: var(--color-black-3);
+        }
+
+        & > .link-content {
+            display: flex;
+            flex-direction: row;
+            flex: 1 1 auto;
+
+            &.no-wrap {
+                text-overflow: ellipsis;
+                overflow: hidden;
+                white-space: nowrap;
+                display: inline-block;
+                width: 100px;
+            }
+        }
+    }
+
+    &.btn-toolbar {
+        border: 1px solid transparent;
+        background-color: var(--color-white-8);
+        border-radius: var(--radius-5);
+        justify-content: center;
+        align-items: center;
+        width: var(--toolbar-height);
+        height: var(--toolbar-height);
+        flex: 1 1 auto;
+
+        &.active {
+            color: var(--color-alt-2);
+        }
 
         &:hover {
             background-color: var(--color-white-7);
@@ -69,17 +114,19 @@ input::-moz-focus-inner {
         }
     }
 
-    &.btn-clear {
+    &.btn-back {
         border: 1px solid transparent;
         background-color: transparent;
         gap: var(--gap-5);
         padding: var(--padding-5) var(--padding-4);
         border-radius: var(--radius-5);
-        flex: 1 1 auto;
+        color: var(--color-white-4);
+        border-right: 1px solid var(--color-white-7);
 
         &:hover {
             background-color: var(--color-white-7);
             color: var(--color-alt-2);
+            border-right: 1px solid transparent;
         }
     }
 }

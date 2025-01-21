@@ -6,7 +6,6 @@ import {
     SpotLight,
     SpotLightHelper,
 } from "three";
-import { ObjectUserData } from "./ObjectUserData";
 
 export class Lights {
     dirLight: DirectionalLight;
@@ -23,13 +22,6 @@ export class Lights {
         this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 1);
         this.spotLight = new SpotLight(0xffffff, 100);
         this.spotLightHelper = new SpotLightHelper(this.spotLight);
-
-        this.dirLight.userData = new ObjectUserData(false, null);
-        this.hemiLight.userData = new ObjectUserData(false, null);
-        this.ambientLight.userData = new ObjectUserData(false, null);
-        this.dirLightHelper.userData = new ObjectUserData(false, null);
-        this.spotLight.userData = new ObjectUserData(false, null);
-        this.spotLightHelper.userData = new ObjectUserData(false, null);
 
         this.init();
     }

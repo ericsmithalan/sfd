@@ -1,0 +1,11 @@
+.outliner-model {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--padding-2);
+
+    & > .scroller {
+        max-height: calc(100vh - 200px);
+        min-height: 10px;
+        height: 100%;
+    }
+}

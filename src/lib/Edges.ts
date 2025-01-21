@@ -17,7 +17,7 @@ export class Edges {
         const edges = new EdgesGeometry(mesh.geometry, this.threshold);
 
         line = new LineSegments(edges, new LineBasicMaterial({ color: "black", linewidth: 3 }));
-        line.userData = new ObjectUserData(false, null, mesh.id);
+        line.userData = new ObjectUserData(null, null, { objectId: mesh.id });
 
         this.edgeGroup.add(line);
 

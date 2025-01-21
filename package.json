@@ -15,7 +15,7 @@
         "react-scripts": "^5.0.1",
         "three": "^0.172.0",
         "three-viewport-gizmo": "^2.0.2",
-        "xatlas-three": "^0.2.1"
+        "use-react-router-breadcrumbs": "^4.0.1"
     },
     "packageManager": "yarn@1.22.22",
     "devDependencies": {
