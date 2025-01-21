@@ -37,7 +37,7 @@ export const ModelOutliner = () => {
                 title={outliner.model?.name}
                 iconName="blender"
             />
-            <Scroller maxHeight={600}>
+            <Scroller>
                 {outliner.model?.children?.map((item, i) => {
                     return (
                         <Button

@@ -8,6 +8,7 @@ import "./style.scss";
 
 type OutlinerTitleProps = {
     title?: string;
+
     crumbs?: BreadcrumbData[];
     iconName?: IconName;
     onBack?: (e: MouseEvent) => void;

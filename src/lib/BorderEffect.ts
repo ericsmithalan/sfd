@@ -29,6 +29,7 @@ export class BorderEffect {
 
     private _objects: Array<Object3D> = [];
     effectScene: Scene;
+    enabled: boolean = true;
 
     constructor(scene: Scene, renderer: WebGLRenderer, camera: Camera) {
         this.target = new WebGLRenderTarget(window.innerWidth, window.innerHeight, {
@@ -78,6 +79,8 @@ export class BorderEffect {
         this.effectFXAA.renderToScreen = true;
         this.effectFXAA.material.transparent = true; //
         this.composer.addPass(this.effectFXAA);
+
+        // scene.add(this.effectScene);
     }
 
     get objects() {
@@ -99,7 +102,9 @@ export class BorderEffect {
     }
 
     animate() {
-        this.composer.render();
+        if (this.enabled) {
+            this.composer.render();
+        }
     }
 
     dispose() {

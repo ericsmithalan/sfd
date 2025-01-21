@@ -90,7 +90,13 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 3500;
 
-        this.selection = new Selection(this.canvas, this.scene, this.camera, this.renderer);
+        this.selection = new Selection(
+            this.canvas,
+            this.scene,
+            this.camera,
+            this.renderer,
+            this.orbitControls,
+        );
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
 
         this.orbitControls.update();
