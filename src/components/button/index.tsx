@@ -7,6 +7,7 @@ import "./style.scss";
 type ButtonProps = {
     id?: string;
     text?: string;
+    title?: string;
     children?: ReactNode;
     icon?: IconName;
     iconFill?: boolean;
@@ -19,6 +20,7 @@ type ButtonProps = {
 export const Button: FC<ButtonProps> = ({
     children,
     id,
+    title,
     icon,
     text,
     active = false,
@@ -29,6 +31,7 @@ export const Button: FC<ButtonProps> = ({
 }) => {
     return (
         <button
+            title={title}
             id={id}
             className={clsx("button", `btn-${variant}`, active && "active", className)}
             onClick={onClick}

@@ -52,6 +52,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     return visible ? (
         <Panel className="app-toolbar-panel" contentCss="app-toolbar">
             <Button
+                title="Toggle Edges"
                 variant="toolbar"
                 icon="shape-2"
                 active={edges}
