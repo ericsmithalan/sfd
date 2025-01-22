@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { FC, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
@@ -21,7 +22,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     const [edges, setEdges] = useState(false);
     const [highdef, setHighdef] = useState(false);
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
-    const { model } = useModel();
+    const { model, setLoading } = useModel();
 
     useEffect(() => {
         setEdges(viewport.edges);
@@ -75,39 +76,46 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     };
 
     useEffect(() => {
-        if (selected) {
-            const loadMaterials = async (sel: SelectedTextureState) => {
-                selected
-                    .entries()
-                    .toArray()
-                    .map(async ([key, value], i) => {
-                        const materials = await createTextureMaterials(
-                            value.texture,
-                            viewport.environment,
-                            highdef,
-                        );
+        //TODO: only load the one that changed
+        const loadMaterials = async (sel: SelectedTextureState) => {
+            selected
+                .entries()
+                .toArray()
+                .map(async ([key, value], i) => {
+                    if (value.material) {
+                        value.material.dispose();
+                    }
 
-                        const objs = getObjectsById(viewport, value.objects);
+                    const materials = await createTextureMaterials(
+                        value.texture,
+                        viewport.environment,
+                        highdef,
+                    );
 
-                        for (const obj of objs) {
-                            if (obj instanceof Mesh) {
-                                if (obj.userData instanceof ObjectUserData) {
-                                    obj.userData.textureInfo = {
-                                        textureId: Number(value.texture.id),
-                                        unwrapped: false,
-                                    };
-                                }
+                    value.material = materials;
+                    const objs = getObjectsById(viewport, value.objects);
 
-                                obj.castShadow = true;
-                                obj.receiveShadow = true;
-                                obj.material = materials;
+                    for (const obj of objs) {
+                        if (obj instanceof Mesh) {
+                            if (obj.userData instanceof ObjectUserData) {
+                                obj.userData.textureInfo = {
+                                    textureId: Number(value.texture.id),
+                                    unwrapped: false,
+                                };
                             }
-                        }
-                    });
-            };
 
-            loadMaterials(selected);
-        }
+                            obj.castShadow = true;
+                            obj.receiveShadow = true;
+                            obj.material = materials;
+                        }
+                    }
+
+                    setLoading(false);
+                });
+        };
+
+        setLoading(true);
+        loadMaterials(selected);
     }, [selected, highdef]);
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
@@ -117,6 +125,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
         const sel = selected.get(key);
 
         if (sel) {
+            sel.material?.dispose();
             selected.delete(key);
         }
 
@@ -124,46 +133,51 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
         setSelected(new Map([...selected, ...map]));
     };
 
-    return visible ? (
-        <Panel className="app-toolbar-panel" contentCss="app-toolbar">
-            <Button
-                title="Toggle Edges"
-                variant="toolbar"
-                icon="shape-2"
-                active={edges}
-                onClick={(e) => {
-                    viewport.edges = !edges;
-                    setEdges(!edges);
-                }}
-            />
-            <Button
-                title="Toggle Edges"
-                variant="toolbar"
-                icon="hd"
-                active={highdef}
-                onClick={(e) => {
-                    setHighdef(!highdef);
-                }}
-            />
-            {model?.materials
-                .entries()
-                .toArray()
-                .map(([key, value], i) => {
-                    const textr = getTexture(value.type);
+    return (
+        <>
+            <Panel
+                className={clsx("app-toolbar-panel", !visible && "hidden")}
+                contentCss="app-toolbar"
+            >
+                <Button
+                    title="Toggle Edges"
+                    variant="toolbar"
+                    icon="shape-2"
+                    active={edges}
+                    onClick={(e) => {
+                        viewport.edges = !edges;
+                        setEdges(!edges);
+                    }}
+                />
+                <Button
+                    title="Toggle Edges"
+                    variant="toolbar"
+                    icon="hd"
+                    active={highdef}
+                    onClick={(e) => {
+                        setHighdef(!highdef);
+                    }}
+                />
+                {model?.materials
+                    .entries()
+                    .toArray()
+                    .map(([key, value], i) => {
+                        const textr = getTexture(value.type);
 
-                    return (
-                        <TexturePicker
-                            highDef={highdef}
-                            key={i}
-                            label={key}
-                            material={value}
-                            onItemClick={(material, e) => {
-                                handleTextureClick(key, material);
-                            }}
-                            textures={textr.textures}
-                        />
-                    );
-                })}
-        </Panel>
-    ) : null;
+                        return (
+                            <TexturePicker
+                                highDef={highdef}
+                                key={i}
+                                label={key}
+                                material={value}
+                                onItemClick={(material, e) => {
+                                    handleTextureClick(key, material);
+                                }}
+                                textures={textr.textures}
+                            />
+                        );
+                    })}
+            </Panel>
+        </>
+    );
 };

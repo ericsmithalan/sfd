@@ -31,5 +31,5 @@ const createMetalTexture = (
 };
 
 export const getAllMetalTextures = (): Array<ITexture> => {
-    return [createMetalTexture(982111, "bronze", "Bronze", 1, false)];
+    return [createMetalTexture(982111, "iron", "Iron", 1, false)];
 };

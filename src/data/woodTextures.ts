@@ -34,7 +34,7 @@ const createWoodTexture = (
 export const getAllWoodTextures = (): Array<ITexture> => {
     return [
         createWoodTexture(92382, "dark", "Dark", 1, false),
-        createWoodTexture(92382, "bark", "Bark", 1, false),
+
         // createWoodTexture(73623, "oak", "Oak", 2),
         // createWoodTexture(46289, "cherry", "Cherry", 1),
         // createWoodTexture(93282, "cherry", "Cherry", 2),

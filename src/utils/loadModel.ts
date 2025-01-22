@@ -74,6 +74,7 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
                                         type: matType,
                                         objects: [object.id],
                                         texture: textr,
+                                        material: null,
                                     });
                                 } else {
                                     mat.objects.push(object.id);

@@ -15,11 +15,12 @@ import {
 import { ITexture } from "../interface/ITexture";
 const loader = new TextureLoader();
 const formatUrl = (url: string, highDef: boolean) => {
+    const resolution = highDef ? "3k" : "1k";
     if (highDef) {
-        return `${url}-${1024}.png`;
+        return `${url}-${resolution}.png`;
     }
 
-    return `${url}-${1024}.png`;
+    return `${url}-${resolution}.png`;
 };
 
 export const createTextureMaterials = async (
@@ -42,9 +43,11 @@ export const createTextureMaterials = async (
             material = new MeshStandardMaterial({
                 map: textr,
                 metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
-                roughness: 0.1,
+                roughness: 0.4,
                 shadowSide: DoubleSide,
             });
+
+            textr.dispose();
             resolve(material);
         }
     });
@@ -123,9 +126,6 @@ const getPBRTexture = async (
             ao.needsUpdate = true;
         }
 
-        if (texture.pbr.normalBump) {
-        }
-
         const material = new MeshPhysicalMaterial({
             map: color,
             envMap: environment,
@@ -145,6 +145,13 @@ const getPBRTexture = async (
             aoMapIntensity: ao ? 1 : 0,
             shadowSide: DoubleSide,
         });
+
+        rough.dispose();
+        normal.dispose();
+        color.dispose();
+        bump.dispose();
+        ao?.dispose();
+        metal?.dispose();
 
         resolve(material);
     });
