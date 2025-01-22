@@ -62,11 +62,17 @@ export const rootOutliner: Array<IOutliner> = [
         id: 233,
         name: "Tables",
         level: 1,
+
         children: [
             {
                 id: 3441,
                 level: 2,
                 name: "Shaker Table",
+                imageResouce: {
+                    primaryImg: 1,
+                    count: 3,
+                    path: "/models/shaker-table/images/",
+                },
                 children: [
                     {
                         id: 3320,

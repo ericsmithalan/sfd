@@ -27,9 +27,9 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
         }
 
         if (image) {
-            setSelected(image.replace("_thumb", ""));
+            setSelected(image);
         } else {
-            setSelected(images[0]?.replace("_thumb", ""));
+            setSelected(images[0]);
         }
     }, [images, image, visible, divRef]);
 
@@ -68,7 +68,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
                               minHeight={300}
                               maxHeight={1000}
                               height={"100%"}
-                              src={selected || ""}
+                              src={`${selected}.png`}
                           />
                       </div>
 
@@ -83,7 +83,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
                                           setSelected(img.replace("_thumb", ""));
                                       }}
                                   >
-                                      <BgImage width={100} height={100} size="cover" src={img} />
+                                      <BgImage
+                                          width={100}
+                                          height={100}
+                                          size="cover"
+                                          src={`${img}_thumb.png`}
+                                      />
                                   </Button>
                               );
                           })}

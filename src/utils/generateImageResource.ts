@@ -14,9 +14,10 @@ export const generateImageResource = (img?: IImageResource): ImageResource | nul
 
         for (let i = 0; i < img.count; i++) {
             if (i + 1 === img.primaryImg) {
-                result.primary = `${img.path}${i + 1}_thumb.png`;
+                result.primary;
+                result.primary = `${img.path}${i + 1}`;
             }
-            result.images.push(`${img.path}${i + 1}_thumb.png`);
+            result.images.push(`${img.path}${i + 1}`);
         }
 
         return result;

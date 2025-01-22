@@ -18,7 +18,7 @@ export const ModelPanel = () => {
         visible: false,
         selected: "",
     });
-   
+
     const outliner = useOutliner();
 
     useEffect(() => {
@@ -65,7 +65,7 @@ export const ModelPanel = () => {
                             });
                         }}
                     >
-                        <BgImage minHeight={140} src={primaryImage} />
+                        <BgImage minHeight={140} src={`${primaryImage}_thumb.png`} />
                     </Button>
                 )}
 
@@ -84,7 +84,7 @@ export const ModelPanel = () => {
                                             });
                                         }}
                                     >
-                                        <BgImage minHeight={90} src={item} />
+                                        <BgImage minHeight={90} src={`${item}_thumb.png`} />
                                     </Button>
                                 );
                             }

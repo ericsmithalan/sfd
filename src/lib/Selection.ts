@@ -2,7 +2,7 @@ import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2, WebGLRend
 
 import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
-import { BorderEffect, ObjectUserData, Transform } from "./";
+import { BorderEffect, ObjectUserData } from "./";
 
 export interface ISelectionEvent {
     change: {
@@ -18,7 +18,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly camera: Camera;
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
-    private readonly transform: Transform;
     private readonly orbitControls: OrbitControls;
     readonly borderEffect: BorderEffect;
 
@@ -43,9 +42,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.container = container;
         this.scene = scene;
         this.orbitControls = orbitControls;
-
-        this.transform = new Transform(camera, scene, container);
-
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.registerEvents();

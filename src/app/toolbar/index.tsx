@@ -39,6 +39,8 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 });
 
             setSelected(map);
+        } else {
+            setSelected(new Map());
         }
 
         if (model) {

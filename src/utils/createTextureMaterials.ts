@@ -23,13 +23,13 @@ const formatUrl = (url: string, resolution: TextureResolution) => {
 const getRepeat = (resolution: TextureResolution): Vector2 => {
     switch (resolution) {
         case "1k":
-            return new Vector2(10, 24);
+            return new Vector2(1, 1);
         case "2k":
-            return new Vector2(20, 48);
+            return new Vector2(1, 1);
         case "3k":
-            return new Vector2(30, 72);
+            return new Vector2(1, 1);
         case "4k":
-            return new Vector2(40, 96);
+            return new Vector2(1, 1);
     }
 };
 
@@ -41,6 +41,7 @@ export const createTextureMaterials = async (
     return new Promise(async (resolve) => {
         let material: Material;
         let repeat = getRepeat(resolution);
+
         if (resolution !== "1k") {
             material = await getPBRTexture(texture, environment, resolution);
             resolve(material);
@@ -112,8 +113,6 @@ const getPBRTexture = async (
 
         let ao: Texture | null = null;
         let metal: Texture | null = null;
-        let normalBump: Texture | null = null;
-        let normalRough: Texture | null = null;
 
         if (texture.pbr.metal) {
             metal = await loader.loadAsync(formatUrl(texture.pbr.metal, resolution));
@@ -145,7 +144,7 @@ const getPBRTexture = async (
             roughnessMap: rough,
             roughness: 1,
             normalMap: normal,
-            normalScale: new Vector2(0.2, 0.2),
+            normalScale: new Vector2(0.15, 0.15),
             bumpMap: bump,
             specularColor: new Color("#ffffff"),
             specularIntensity: 1,
