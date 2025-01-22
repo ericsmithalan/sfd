@@ -9,7 +9,6 @@ import "./style.scss";
 
 type TextureMenuProps = {
     items: Array<ITexture>;
-    highDef: boolean;
     selected: ITexture | null;
     targetRef: RefObject<any>;
     open?: boolean;
@@ -21,7 +20,6 @@ export const TextureMenu = ({
     items = [],
     targetRef,
     onItemClick,
-    highDef,
     onHide,
     open,
     selected,

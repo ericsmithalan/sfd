@@ -10,7 +10,6 @@ import { TextureButton } from "./texture-button";
 type TexturePickerProps = {
     label?: string;
     material: IObjectMaterial;
-    highDef: boolean;
     textures: Array<ITexture>;
     onItemClick?: (material: IObjectMaterial, e: MouseEvent) => void;
 };
@@ -19,7 +18,6 @@ export const TexturePicker: FC<TexturePickerProps> = ({
     textures,
     label,
     material,
-    highDef,
     onItemClick,
 }) => {
     const [open, setOpen] = useState(false);
@@ -48,7 +46,6 @@ export const TexturePicker: FC<TexturePickerProps> = ({
                 createPortal(
                     <TextureMenu
                         open={open}
-                        highDef={highDef}
                         selected={selected}
                         items={textures}
                         onItemClick={(value, e) => {

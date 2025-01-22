@@ -7,8 +7,6 @@ export interface IPBRTexture {
     metal?: string;
     rough: string;
     normal: string;
-    normalRough: string;
-    normalBump: string;
 }
 
 export interface IBasicTexture {

@@ -7,7 +7,7 @@ import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
 import { ObjectUserData, Viewport } from "../../lib";
-import { TextureType } from "../../types";
+import { TextureResolution, TextureType } from "../../types";
 import { createTextureMaterials, getObjectsById } from "../../utils";
 import "./style.scss";
 
@@ -20,7 +20,7 @@ type SelectedTextureState = Map<string, IObjectMaterial>;
 export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
-    const [highdef, setHighdef] = useState(false);
+    const [resolution, setResolution] = useState<TextureResolution>("1k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model, setLoading } = useModel();
 
@@ -89,7 +89,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                     const materials = await createTextureMaterials(
                         value.texture,
                         viewport.environment,
-                        highdef,
+                        resolution,
                     );
 
                     value.material = materials;
@@ -118,7 +118,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
             setLoading(true);
             loadMaterials(selected);
         }
-    }, [selected, highdef]);
+    }, [selected, resolution]);
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
         const map: SelectedTextureState = new Map();
@@ -149,7 +149,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
 
                         return (
                             <TexturePicker
-                                highDef={highdef}
                                 key={i}
                                 label={key}
                                 material={value}
@@ -176,9 +175,13 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                     title="Toggle Edges"
                     variant="toolbar"
                     icon="hd"
-                    active={highdef}
+                    active={resolution !== "1k"}
                     onClick={(e) => {
-                        setHighdef(!highdef);
+                        if (resolution === "2k") {
+                            setResolution("1k");
+                        } else {
+                            setResolution("2k");
+                        }
                     }}
                 />
             </Panel>

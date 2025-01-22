@@ -13,29 +13,39 @@ import {
     Vector2,
 } from "three";
 import { ITexture } from "../interface/ITexture";
-const loader = new TextureLoader();
-const formatUrl = (url: string, highDef: boolean) => {
-    const resolution = highDef ? "3k" : "1k";
-    if (highDef) {
-        return `${url}-${resolution}.png`;
-    }
+import { TextureResolution } from "../types";
 
+const loader = new TextureLoader();
+const formatUrl = (url: string, resolution: TextureResolution) => {
     return `${url}-${resolution}.png`;
+};
+
+const getRepeat = (resolution: TextureResolution): Vector2 => {
+    switch (resolution) {
+        case "1k":
+            return new Vector2(10, 24);
+        case "2k":
+            return new Vector2(20, 48);
+        case "3k":
+            return new Vector2(30, 72);
+        case "4k":
+            return new Vector2(40, 96);
+    }
 };
 
 export const createTextureMaterials = async (
     texture: ITexture,
     environment: Texture | null,
-    highDef: boolean,
+    resolution: TextureResolution,
 ): Promise<Material> => {
     return new Promise(async (resolve) => {
         let material: Material;
-        let repeat = highDef ? new Vector2(30, 72) : new Vector2(10, 24);
-        if (highDef) {
-            material = await getPBRTexture(texture, environment, highDef);
+        let repeat = getRepeat(resolution);
+        if (resolution !== "1k") {
+            material = await getPBRTexture(texture, environment, resolution);
             resolve(material);
         } else {
-            const textr = await loader.loadAsync(formatUrl(texture.basic.url, highDef));
+            const textr = await loader.loadAsync(formatUrl(texture.basic.url, resolution));
             textr.wrapS = RepeatWrapping;
             textr.wrapT = RepeatWrapping;
             textr.colorSpace = SRGBColorSpace;
@@ -57,14 +67,14 @@ export const createTextureMaterials = async (
 const getPBRTexture = async (
     texture: ITexture,
     environment: Texture | null,
-    highDef: boolean,
+    resolution: TextureResolution,
 ): Promise<Material> => {
     return new Promise(async (resolve) => {
         const anisotropy = 0.3;
         const wrap = RepeatWrapping;
-        let repeat = highDef ? new Vector2(30, 72) : new Vector2(10, 24);
+        let repeat = getRepeat(resolution);
 
-        const color = await loader.loadAsync(formatUrl(texture.pbr.color, highDef));
+        const color = await loader.loadAsync(formatUrl(texture.pbr.color, resolution));
         color.format = RGBAFormat;
         color.wrapS = wrap;
         color.wrapT = wrap;
@@ -73,7 +83,7 @@ const getPBRTexture = async (
         color.colorSpace = SRGBColorSpace;
         color.needsUpdate = true;
 
-        const bump = await loader.loadAsync(formatUrl(texture.pbr.bump, highDef));
+        const bump = await loader.loadAsync(formatUrl(texture.pbr.bump, resolution));
         bump.format = RGBAFormat;
         bump.wrapS = wrap;
         bump.wrapT = wrap;
@@ -82,7 +92,7 @@ const getPBRTexture = async (
         bump.needsUpdate = true;
         bump.colorSpace = NoColorSpace;
 
-        const normal = await loader.loadAsync(formatUrl(texture.pbr.normal, highDef));
+        const normal = await loader.loadAsync(formatUrl(texture.pbr.normal, resolution));
         normal.format = RGBAFormat;
         normal.wrapS = wrap;
         normal.wrapT = wrap;
@@ -91,7 +101,7 @@ const getPBRTexture = async (
         normal.needsUpdate = true;
         normal.colorSpace = NoColorSpace;
 
-        const rough = await loader.loadAsync(formatUrl(texture.pbr.rough, highDef));
+        const rough = await loader.loadAsync(formatUrl(texture.pbr.rough, resolution));
         rough.format = RGBAFormat;
         rough.wrapS = wrap;
         rough.wrapT = wrap;
@@ -106,7 +116,7 @@ const getPBRTexture = async (
         let normalRough: Texture | null = null;
 
         if (texture.pbr.metal) {
-            metal = await loader.loadAsync(formatUrl(texture.pbr.metal, highDef));
+            metal = await loader.loadAsync(formatUrl(texture.pbr.metal, resolution));
             metal.format = RGBAFormat;
             metal.wrapS = wrap;
             metal.wrapT = wrap;
@@ -117,7 +127,7 @@ const getPBRTexture = async (
         }
 
         if (texture.pbr.ao) {
-            ao = await loader.loadAsync(formatUrl(texture.pbr.ao, highDef));
+            ao = await loader.loadAsync(formatUrl(texture.pbr.ao, resolution));
             ao.format = RGBAFormat;
             ao.wrapS = wrap;
             ao.wrapT = wrap;
