@@ -2,7 +2,7 @@ import { ColorRepresentation } from "three";
 import { TextureType } from "../types";
 
 export interface ITexture {
-    id: string;
+    id: number;
     resolution: number;
     type: TextureType;
     name: string;

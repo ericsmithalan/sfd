@@ -3,10 +3,14 @@ import {
     DirectionalLight,
     DirectionalLightHelper,
     HemisphereLight,
+    PMREMGenerator,
+    Scene,
     SpotLight,
     SpotLightHelper,
+    WebGLRenderer,
 } from "three";
-
+import { RGBELoader } from "three/examples/jsm/Addons.js";
+import hdr from "../assets/env/1.hdr";
 export class Lights {
     dirLight: DirectionalLight;
     hemiLight: HemisphereLight;
@@ -18,9 +22,10 @@ export class Lights {
     constructor() {
         this.dirLight = new DirectionalLight(0xffffff, 1);
         this.hemiLight = new HemisphereLight(0xffffff, 0x000000, 1);
-        this.ambientLight = new AmbientLight(0xffffff, 2);
+        this.ambientLight = new AmbientLight(0xffffff, 1 * Math.PI);
         this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 3);
-        this.spotLight = new SpotLight(0xffffff, 100);
+        this.spotLight = new SpotLight(0xffffff, 2);
+
         this.spotLightHelper = new SpotLightHelper(this.spotLight);
 
         this.init();
@@ -34,13 +39,25 @@ export class Lights {
         this.spotLightHelper.update();
     }
 
+    async loadEnvirontment(scene: Scene, renderer: WebGLRenderer) {
+        const pmremGenerator = new PMREMGenerator(renderer);
+
+        const hdriLoader = new RGBELoader();
+        const texture = await hdriLoader.loadAsync(hdr);
+        const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+        texture.dispose();
+
+        scene.environment = envMap;
+        scene.backgroundBlurriness = 0.5;
+    }
+
     private setAmbient() {
         this.ambientLight.name = "Ambient Light";
     }
 
     private setSpotLight() {
         this.spotLight.castShadow = true;
-        this.spotLight.angle = Math.PI / 8;
+        this.spotLight.angle = 0.3;
         this.spotLight.shadow.mapSize.width = 1024;
         this.spotLight.shadow.mapSize.height = 1024;
         this.spotLight.shadow.camera.near = 5;
@@ -48,6 +65,11 @@ export class Lights {
         this.spotLight.shadow.camera.near = 10;
         this.spotLight.shadow.camera.far = 100;
 
+        //  intensity={2} shadow-bias={-0.0001}
+        this.spotLight.intensity = 4;
+        this.spotLight.position.set(3, 10, -8);
+        this.spotLight.shadow.bias = -0.0001;
+        this.spotLight.penumbra = 1;
         this.spotLight.shadow.focus = 1;
     }
     private setDirectional() {

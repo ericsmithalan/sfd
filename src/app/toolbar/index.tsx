@@ -73,7 +73,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
             for (const obj of objs) {
                 if (obj instanceof Mesh) {
                     if (obj.userData instanceof ObjectUserData) {
-                        obj.userData.textureInfo = { textureId: texture.id, unwrapped: false };
+                        obj.userData.textureInfo = {
+                            textureId: Number(texture.id),
+                            unwrapped: false,
+                        };
                     }
 
                     obj.castShadow = true;

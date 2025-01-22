@@ -60,12 +60,12 @@ export class BorderEffect {
         );
 
         this.outlinePass.edgeGlow = 0;
-        this.outlinePass.edgeThickness = 8;
-        this.outlinePass.edgeStrength = 10;
+        this.outlinePass.edgeThickness = 3;
+        this.outlinePass.edgeStrength = 8;
         this.outlinePass.pulsePeriod = 0;
 
-        this.outlinePass.visibleEdgeColor.set(new Color(0xfad7a0));
-        this.outlinePass.hiddenEdgeColor.set(new Color(0xfad7a0));
+        this.outlinePass.visibleEdgeColor.set(new Color(0xf6c482));
+        this.outlinePass.hiddenEdgeColor.set(new Color(0xf6c482));
         this.composer.addPass(this.outlinePass);
 
         this.outputPass = new OutputPass();

@@ -112,6 +112,28 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
+    // {
+    //     id: 4329,
+    //     name: "Cabinets",
+    //     level: 1,
+    //     children: [
+    //         {
+    //             id: 8883,
+    //             level: 2,
+    //             name: "Cabinet",
+    //             children: [
+    //                 {
+    //                     id: 9483,
+    //                     modelUrl: "/models/cabinet/cabinet-1.glb",
+    //                     level: 3,
+    //                     name: "Cabinet",
+    //                     children: [],
+    //                 },
+    //             ],
+    //         },
+    //     ],
+    // },
+
     {
         group: true,
         name: "In Process",

@@ -126,6 +126,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.setAnimationLoop(() => this.animate());
 
         this.registerEvents();
+
+        this.lights.loadEnvirontment(this.scene, this.renderer);
     }
 
     get edges() {
