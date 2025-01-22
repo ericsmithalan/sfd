@@ -1,4 +1,5 @@
 export * from "./createTextureMaterials";
+export * from "./dispose";
 export * from "./fitCameraToObject";
 export * from "./generateImageResource";
 export * from "./getEdge";
