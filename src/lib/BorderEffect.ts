@@ -79,8 +79,6 @@ export class BorderEffect {
         this.effectFXAA.renderToScreen = true;
         this.effectFXAA.material.transparent = true; //
         this.composer.addPass(this.effectFXAA);
-
-        // scene.add(this.effectScene);
     }
 
     get objects() {

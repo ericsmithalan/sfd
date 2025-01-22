@@ -132,10 +132,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         const hdriLoader = new RGBELoader();
         const texture = await hdriLoader.loadAsync(hdr);
         this.environment = pmremGenerator.fromEquirectangular(texture).texture;
+        this.scene.environment = this.environment;
 
         texture.dispose();
-
-        this.scene.environment = this.environment;
+        pmremGenerator.dispose();
     }
 
     get edges() {
