@@ -2,7 +2,12 @@ import {
     Color,
     EventDispatcher,
     Fog,
+    Group,
+    Material,
+    Mesh,
+    MeshStandardMaterial,
     NeutralToneMapping,
+    Object3D,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
@@ -153,31 +158,88 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         return this._model;
     }
 
-    private clearModel() {
-        if (this._model) {
-            if (this._model.object.parent) {
-                this.scene.remove(this._model.object);
-            }
-            if (this._model.edges.parent) {
-                this.scene.remove(this._model.edges);
-            }
-        }
-    }
-
-    private addModel(model: IModel | null) {
-        this.clearModel();
-
-        if (model) {
-            this.scene.add(model.object);
-            this.scene.add(model.edges);
-            model.edges.visible = this.edges;
-        }
-    }
-
     set model(value: IModel | null) {
-        this.addModel(value);
+        if (this._model) {
+            if (this._model.object) {
+                this.delete(this._model.object);
+            }
+            if (this._model.edges) {
+                this.delete(this._model.edges);
+            }
+        }
+
+        if (value) {
+            this.scene.add(value.object);
+            this.scene.add(value.edges);
+            value.edges.visible = this.edges;
+        }
+
         this._model = value;
         this.dispatchEvent({ type: "modelChanged", model: value });
+    }
+
+    deleteMaterial(material: Material | Material[]) {
+        if (material) {
+            if (Array.isArray(material)) {
+                material.forEach((tex: Material) => {
+                    if (tex instanceof MeshStandardMaterial) {
+                        tex.map?.dispose();
+                        tex.normalMap?.dispose();
+                        tex.bumpMap?.dispose();
+                        tex.aoMap?.dispose();
+                        tex.metalnessMap?.dispose();
+                        tex.envMap?.dispose();
+                        tex.roughnessMap?.dispose();
+                        tex.dispose();
+                    } else {
+                        tex.dispose();
+                    }
+                });
+            } else {
+                if (material instanceof MeshStandardMaterial) {
+                    material.map?.dispose();
+                    material.normalMap?.dispose();
+                    material.bumpMap?.dispose();
+                    material.aoMap?.dispose();
+                    material.metalnessMap?.dispose();
+                    material.envMap?.dispose();
+                    material.roughnessMap?.dispose();
+                    material.dispose();
+                } else {
+                    material.dispose();
+                }
+            }
+        }
+    }
+
+    delete(obj: Object3D) {
+        const disposables: Array<Object3D> = [];
+        disposables.push(obj);
+
+        if (obj instanceof Mesh) {
+            if (obj.children) {
+                obj.children.forEach((item) => {
+                    disposables.push(item);
+                });
+            }
+        }
+
+        if (obj instanceof Group) {
+            obj.traverse((item) => {
+                disposables.push(item);
+            });
+        }
+
+        disposables.forEach((child: Object3D) => {
+            if (child) {
+                child.parent?.remove(child);
+
+                // @ts-ignore
+                this.deleteMaterial(child.material);
+                // @ts-ignore
+                child.geometry?.dispose();
+            }
+        });
     }
 
     async loadModel(outliner: IOutliner) {
@@ -192,7 +254,17 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.dispatchEvent({ type: "loading", value: false });
     }
 
+    geometries = 0;
+    textures = 0;
     private animate = () => {
+        if (this.renderer.info.memory.geometries !== this.geometries) {
+            this.geometries = this.renderer.info.memory.geometries;
+            console.log("geometries", this.renderer.info.memory.geometries);
+        }
+        if (this.renderer.info.memory.textures !== this.textures) {
+            this.textures = this.renderer.info.memory.textures;
+            console.log("textures", this.renderer.info.memory.geometries);
+        }
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);

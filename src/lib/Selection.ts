@@ -134,26 +134,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
             clearTimeout(self.timer);
             self.timer = null;
         }
-
-        // if (this.timer) {
-        //     clearTimeout(this.timer);
-        //     this.timer = null;
-        // }
-
-        // this.timer = setTimeout(() => {
-        //     if (self.enabled) {
-        //         const objects = self.intersects(self.mouse.x, self.mouse.y);
-
-        //         if (objects) {
-        //             self.object = objects[0]?.object || null;
-        //         } else {
-        //             self.object = null;
-        //         }
-
-        //         clearTimeout(self.timer);
-        //         self.timer = null;
-        //     }
-        // }, 200);
     }
 
     private mouseUp(e: MouseEvent) {

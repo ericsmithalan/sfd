@@ -21,6 +21,8 @@ export class Edges {
 
         this.edgeGroup.add(line);
 
+        edges.dispose();
+
         return line;
     }
 }

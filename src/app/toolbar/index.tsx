@@ -81,25 +81,27 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
             selected
                 .entries()
                 .toArray()
-                .map(async ([key, value], i) => {
-                    if (value.material) {
-                        value.material.dispose();
+                .map(async ([key, matObj], i) => {
+                    if (matObj.material) {
+                        matObj.material.dispose();
                     }
 
                     const materials = await createTextureMaterials(
-                        value.texture,
+                        matObj.texture,
                         viewport.environment,
                         resolution,
                     );
 
-                    value.material = materials;
-                    const objs = getObjectsById(viewport, value.objects);
+                    matObj.material = materials;
+                    const objs = getObjectsById(viewport, matObj.objects);
 
                     for (const obj of objs) {
                         if (obj instanceof Mesh) {
+                            obj.material.dispose();
+
                             if (obj.userData instanceof ObjectUserData) {
                                 obj.userData.textureInfo = {
-                                    textureId: Number(value.texture.id),
+                                    textureId: Number(matObj.texture.id),
                                     unwrapped: false,
                                 };
                             }
@@ -110,6 +112,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                         }
                     }
 
+                    materials.dispose();
                     setLoading(false);
                 });
         };
