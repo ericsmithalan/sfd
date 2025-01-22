@@ -10,8 +10,9 @@
     & > .subtitle {
         font-size: var(--font-7);
         text-transform: uppercase;
-        color: var(--color-alt-1);
+        color: var(--color-alt-3);
         font-weight: 600;
+
         margin-top: var(--margin-6);
     }
 
@@ -30,7 +31,7 @@
             margin-left: var(--margin-3);
 
             & > .icon {
-                color: var(--color-alt-1);
+                color: var(--color-alt-3);
             }
 
             & > .outliner-title-text {
