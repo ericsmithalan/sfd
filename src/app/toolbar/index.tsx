@@ -139,25 +139,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 className={clsx("app-toolbar-panel", !visible && "hidden")}
                 contentCss="app-toolbar"
             >
-                <Button
-                    title="Toggle Edges"
-                    variant="toolbar"
-                    icon="shape-2"
-                    active={edges}
-                    onClick={(e) => {
-                        viewport.edges = !edges;
-                        setEdges(!edges);
-                    }}
-                />
-                <Button
-                    title="Toggle Edges"
-                    variant="toolbar"
-                    icon="hd"
-                    active={highdef}
-                    onClick={(e) => {
-                        setHighdef(!highdef);
-                    }}
-                />
                 {model?.materials
                     .entries()
                     .toArray()
@@ -177,6 +158,27 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                             />
                         );
                     })}
+
+                <Button
+                    title="Toggle Edges"
+                    variant="toolbar"
+                    icon="shape-2"
+                    active={edges}
+                    onClick={(e) => {
+                        viewport.edges = !edges;
+                        setEdges(!edges);
+                    }}
+                />
+
+                <Button
+                    title="Toggle Edges"
+                    variant="toolbar"
+                    icon="hd"
+                    active={highdef}
+                    onClick={(e) => {
+                        setHighdef(!highdef);
+                    }}
+                />
             </Panel>
         </>
     );

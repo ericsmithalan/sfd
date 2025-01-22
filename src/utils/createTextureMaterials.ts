@@ -30,7 +30,7 @@ export const createTextureMaterials = async (
 ): Promise<Material> => {
     return new Promise(async (resolve) => {
         let material: Material;
-
+        let repeat = highDef ? new Vector2(30, 72) : new Vector2(10, 24);
         if (highDef) {
             material = await getPBRTexture(texture, environment, highDef);
             resolve(material);
@@ -39,6 +39,7 @@ export const createTextureMaterials = async (
             textr.wrapS = RepeatWrapping;
             textr.wrapT = RepeatWrapping;
             textr.colorSpace = SRGBColorSpace;
+            textr.repeat.set(repeat.x, repeat.y);
 
             material = new MeshStandardMaterial({
                 map: textr,
@@ -61,7 +62,7 @@ const getPBRTexture = async (
     return new Promise(async (resolve) => {
         const anisotropy = 0.3;
         const wrap = RepeatWrapping;
-        const repeat = new Vector2(10, 24);
+        let repeat = highDef ? new Vector2(30, 72) : new Vector2(10, 24);
 
         const color = await loader.loadAsync(formatUrl(texture.pbr.color, highDef));
         color.format = RGBAFormat;
