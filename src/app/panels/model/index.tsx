@@ -18,6 +18,7 @@ export const ModelPanel = () => {
         visible: false,
         selected: "",
     });
+   
     const outliner = useOutliner();
 
     useEffect(() => {

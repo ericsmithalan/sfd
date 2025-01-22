@@ -114,8 +114,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 });
         };
 
-        setLoading(true);
-        loadMaterials(selected);
+        if (selected.size > 0) {
+            setLoading(true);
+            loadMaterials(selected);
+        }
     }, [selected, highdef]);
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
