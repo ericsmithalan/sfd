@@ -1,6 +1,5 @@
 import clsx from "clsx";
 import { createRef, FC, MouseEvent, Ref } from "react";
-import { ColorRepresentation } from "three";
 import { BgImage } from "../../bg-image";
 import "./style.scss";
 
@@ -8,7 +7,6 @@ type TextureButtonProps = {
     className?: string;
     disable?: boolean;
     active?: boolean;
-    color?: ColorRepresentation;
     text?: string;
     image?: string;
     ref?: Ref<HTMLButtonElement>;
@@ -20,7 +18,6 @@ export const TextureButton: FC<TextureButtonProps> = ({
     text,
     active = false,
     className,
-    color,
     ref,
     image,
     onClick,
@@ -43,12 +40,6 @@ export const TextureButton: FC<TextureButtonProps> = ({
             )}
         >
             {image && <BgImage src={image} />}
-            {color && (
-                <div
-                    className={clsx("color", color)}
-                    style={{ backgroundColor: String(color) }}
-                ></div>
-            )}
             {text && <div className="text">{text}</div>}
         </button>
     );

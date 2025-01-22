@@ -5,8 +5,7 @@ const createWoodTexture = (
     name: string,
     displayName: string,
     variant: number,
-    size: number,
-    pbr: boolean,
+    hasAo: boolean,
 ): ITexture => {
     const BASE_WOOD_TEXTURE_URL = "/textures/wood";
 
@@ -15,45 +14,37 @@ const createWoodTexture = (
         type: "wood",
         displayName: displayName,
         name: name,
-        thumbnail: `${BASE_WOOD_TEXTURE_URL}/${pbr ? "pbr" : "basic"}/${name}/${variant}-thumb.png`,
-        textureUrl: `${BASE_WOOD_TEXTURE_URL}/${
-            pbr ? "pbr" : "basic"
-        }/${name}/${variant}-${size}.png`,
-        resolution: size,
+        thumbnail: `${BASE_WOOD_TEXTURE_URL}/${name}/${variant}-thumb.png`,
+        basic: {
+            url: `${BASE_WOOD_TEXTURE_URL}/${name}/basic/${variant}-color`,
+        },
+        pbr: {
+            color: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-color`,
+            ao: hasAo ? `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-ao` : undefined,
+            bump: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-bump`,
+            metal: undefined,
+            normalBump: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-normal-bump`,
+            normalRough: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-normal-rough`,
+            normal: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-normal`,
+            rough: `${BASE_WOOD_TEXTURE_URL}/${name}/pbr/${variant}-rough`,
+        },
     };
 };
 
-const getAllWoodTextures = (pbr: boolean = false, size = 1024): Array<ITexture> => {
+export const getAllWoodTextures = (): Array<ITexture> => {
     return [
-        createWoodTexture(34023, "none", "None", 1, size, pbr),
-        createWoodTexture(92382, "oak", "Oak", 1, size, pbr),
-        createWoodTexture(73623, "oak", "Oak", 2, size, pbr),
-        createWoodTexture(46289, "cherry", "Cherry", 1, size, pbr),
-        createWoodTexture(93282, "cherry", "Cherry", 2, size, pbr),
-        createWoodTexture(52372, "walnut", "Walnut", 1, size, pbr),
-        createWoodTexture(63292, "walnut", "Walnut", 2, size, pbr),
-        createWoodTexture(40239, "walnut", "Walnut", 3, size, pbr),
-        createWoodTexture(12121, "maple", "Maple", 1, size, pbr),
-        createWoodTexture(
-            32323,
-            "applewood",
-            "Applewood",
-            1,
-
-            size,
-            pbr,
-        ),
-        createWoodTexture(34343, "hickory", "Hickory", 1, size, pbr),
-        createWoodTexture(98989, "wenge", "Wenge", 1, size, pbr),
-        createWoodTexture(67676, "wenge", "Wenge", 2, size, pbr),
+        createWoodTexture(92382, "dark", "Dark", 1, false),
+        createWoodTexture(92382, "bark", "Bark", 1, false),
+        // createWoodTexture(73623, "oak", "Oak", 2),
+        // createWoodTexture(46289, "cherry", "Cherry", 1),
+        // createWoodTexture(93282, "cherry", "Cherry", 2),
+        // createWoodTexture(52372, "walnut", "Walnut", 1),
+        // createWoodTexture(63292, "walnut", "Walnut", 2),
+        // createWoodTexture(40239, "walnut", "Walnut", 3),
+        // createWoodTexture(12121, "maple", "Maple", 1),
+        // createWoodTexture(32323, "applewood", "Applewood", 1),
+        // createWoodTexture(34343, "hickory", "Hickory", 1),
+        // createWoodTexture(98989, "wenge", "Wenge", 1),
+        // createWoodTexture(67676, "wenge", "Wenge", 2),
     ];
 };
-
-export const woodTextures = getAllWoodTextures(false, 1024);
-
-export const getWoodTextureById = (id: number): ITexture | null => {
-    const result = woodTextures.find((texture) => texture.id === id);
-    return result || null;
-};
-
-export const defaultWoodTexture = getWoodTextureById(34023);

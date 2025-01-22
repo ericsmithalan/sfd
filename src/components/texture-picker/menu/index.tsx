@@ -9,6 +9,7 @@ import "./style.scss";
 
 type TextureMenuProps = {
     items: Array<ITexture>;
+    highDef: boolean;
     selected: ITexture | null;
     targetRef: RefObject<any>;
     open?: boolean;
@@ -20,6 +21,7 @@ export const TextureMenu = ({
     items = [],
     targetRef,
     onItemClick,
+    highDef,
     onHide,
     open,
     selected,
@@ -49,21 +51,22 @@ export const TextureMenu = ({
             >
                 <div className="inner-border"></div>
                 <Scroller>
-                    {items.map((item, i) => (
-                        <TextureButton
-                            key={i}
-                            color={item.color}
-                            active={item.id === selected?.id}
-                            image={item.thumbnail}
-                            text={item.name}
-                            data-id={item.id}
-                            onClick={(e) => {
-                                if (onItemClick) {
-                                    onItemClick(item, e);
-                                }
-                            }}
-                        />
-                    ))}
+                    {items.map((item, i) => {
+                        return (
+                            <TextureButton
+                                key={i}
+                                active={item.id === selected?.id}
+                                image={item.thumbnail}
+                                text={item.name}
+                                data-id={item.id}
+                                onClick={(e) => {
+                                    if (onItemClick) {
+                                        onItemClick(item, e);
+                                    }
+                                }}
+                            />
+                        );
+                    })}
                 </Scroller>
             </div>
             <div

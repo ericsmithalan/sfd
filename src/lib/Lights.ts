@@ -3,14 +3,37 @@ import {
     DirectionalLight,
     DirectionalLightHelper,
     HemisphereLight,
-    PMREMGenerator,
-    Scene,
     SpotLight,
     SpotLightHelper,
-    WebGLRenderer,
 } from "three";
-import { RGBELoader } from "three/examples/jsm/Addons.js";
-import hdr from "../assets/env/1.hdr";
+
+// ref for lumens: http://www.power-sure.com/lumens.htm
+const bulbLuminousPowers: Record<string, number> = {
+    "110000 lm (1000W)": 110000,
+    "3500 lm (300W)": 3500,
+    "1700 lm (100W)": 1700,
+    "800 lm (60W)": 800,
+    "400 lm (40W)": 400,
+    "180 lm (25W)": 180,
+    "20 lm (4W)": 20,
+    Off: 0,
+};
+
+// ref for solar irradiances: https://en.wikipedia.org/wiki/Lux
+const hemiLuminousIrradiances: Record<string, number> = {
+    "0.0001 lx (Moonless Night)": 0.0001,
+    "0.002 lx (Night Airglow)": 0.002,
+    "0.5 lx (Full Moon)": 0.5,
+    "3.4 lx (City Twilight)": 3.4,
+    "50 lx (Living Room)": 50,
+    "100 lx (Very Overcast)": 100,
+    "350 lx (Office Room)": 350,
+    "400 lx (Sunrise/Sunset)": 400,
+    "1000 lx (Overcast)": 1000,
+    "18000 lx (Daylight)": 18000,
+    "50000 lx (Direct Sun)": 50000,
+};
+
 export class Lights {
     dirLight: DirectionalLight;
     hemiLight: HemisphereLight;
@@ -39,18 +62,6 @@ export class Lights {
         this.spotLightHelper.update();
     }
 
-    async loadEnvirontment(scene: Scene, renderer: WebGLRenderer) {
-        const pmremGenerator = new PMREMGenerator(renderer);
-
-        const hdriLoader = new RGBELoader();
-        const texture = await hdriLoader.loadAsync(hdr);
-        const envMap = pmremGenerator.fromEquirectangular(texture).texture;
-        texture.dispose();
-
-        scene.environment = envMap;
-        scene.backgroundBlurriness = 0.5;
-    }
-
     private setAmbient() {
         this.ambientLight.name = "Ambient Light";
     }
@@ -64,6 +75,7 @@ export class Lights {
         this.spotLight.shadow.camera.far = 100;
         this.spotLight.shadow.camera.near = 10;
         this.spotLight.shadow.camera.far = 100;
+        this.spotLight.power = bulbLuminousPowers["110000 lm (1000W)"];
 
         //  intensity={2} shadow-bias={-0.0001}
         this.spotLight.intensity = 4;
@@ -85,5 +97,6 @@ export class Lights {
     private setHemi() {
         this.hemiLight.name = "Hemi Light";
         this.hemiLight.position.set(10, 20, 0);
+        this.hemiLight.intensity = hemiLuminousIrradiances["350 lx (Office Room)"];
     }
 }

@@ -1,13 +1,26 @@
-import { ColorRepresentation } from "three";
 import { TextureType } from "../types";
+
+export interface IPBRTexture {
+    color: string;
+    ao?: string;
+    bump: string;
+    metal?: string;
+    rough: string;
+    normal: string;
+    normalRough: string;
+    normalBump: string;
+}
+
+export interface IBasicTexture {
+    url: string;
+}
 
 export interface ITexture {
     id: number;
-    resolution: number;
     type: TextureType;
     name: string;
-    displayName: string;
     thumbnail: string;
-    textureUrl: string;
-    color?: ColorRepresentation;
+    displayName: string;
+    pbr: IPBRTexture;
+    basic: IBasicTexture;
 }

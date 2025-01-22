@@ -8,12 +8,13 @@ import {
     PMREMGenerator,
     Scene,
     SRGBColorSpace,
+    Texture,
     Vector3,
     WebGLRenderer,
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
-import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
-import { OrbitControls } from "three/examples/jsm/Addons.js";
+import { OrbitControls, RGBELoader } from "three/examples/jsm/Addons.js";
+import hdr from "../assets/env/1.hdr";
 import { IOutliner, IScreenSize } from "../interface";
 import { IModel } from "../interface/IModel";
 import { fitCameraToObject } from "../utils";
@@ -43,6 +44,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
+
+    environment: Texture | null = null;
 
     size: IScreenSize = {
         width: 0,
@@ -115,19 +118,24 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.grid = new Grid();
 
-        const environment = new RoomEnvironment();
-        const pmremGenerator = new PMREMGenerator(this.renderer);
-        this.scene.environment = pmremGenerator.fromScene(environment).texture;
-        environment.dispose();
-        pmremGenerator.dispose();
-
-        this.scene.add(this.lights.ambientLight, this.lights.dirLight, this.floor, this.grid);
+        this.scene.add(this.lights.dirLight, this.floor, this.grid);
 
         this.renderer.setAnimationLoop(() => this.animate());
 
         this.registerEvents();
+        this.setupEnvironment();
+    }
 
-        this.lights.loadEnvirontment(this.scene, this.renderer);
+    async setupEnvironment() {
+        const pmremGenerator = new PMREMGenerator(this.renderer);
+
+        const hdriLoader = new RGBELoader();
+        const texture = await hdriLoader.loadAsync(hdr);
+        this.environment = pmremGenerator.fromEquirectangular(texture).texture;
+
+        texture.dispose();
+
+        this.scene.environment = this.environment;
     }
 
     get edges() {

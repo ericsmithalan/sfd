@@ -1,7 +1,9 @@
 import { Mesh, MeshStandardMaterial, Object3D } from "three";
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
+import { DATA } from "../data";
 import { IObjectMaterial, IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
+import { ITexture } from "../interface/ITexture";
 import { Edges, ObjectUserData, Viewport } from "../lib";
 import { TextureType } from "../types";
 import { getObjectDimensions } from "./getObjectDimensions";
@@ -26,6 +28,19 @@ const getMaterialType = (material: MeshStandardMaterial): TextureType | null => 
         return "metal";
     }
     return null;
+};
+
+const getDefaultTexture = (type: TextureType): ITexture => {
+    switch (type) {
+        case "fabric":
+            return DATA.defaultFabricTexture;
+        case "hardware":
+            return DATA.defaultMetalTexture;
+        case "metal":
+            return DATA.defaultMetalTexture;
+        case "wood":
+            return DATA.defaultWoodTexture;
+    }
 };
 
 export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IModel> => {
@@ -53,11 +68,12 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
 
                             if (matType) {
                                 const mat = materials.get(object.material.name);
+                                const textr = getDefaultTexture(matType);
                                 if (!mat) {
                                     materials.set(object.material.name, {
                                         type: matType,
                                         objects: [object.id],
-                                        material: object.material,
+                                        texture: textr,
                                     });
                                 } else {
                                     mat.objects.push(object.id);

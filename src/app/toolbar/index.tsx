@@ -1,14 +1,7 @@
 import { FC, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
-import {
-    defaultFabricTexture,
-    defaultMetalexture,
-    defaultWoodTexture,
-    fabricTextures,
-    metalTextures,
-    woodTextures,
-} from "../../data";
+import { DATA } from "../../data";
 import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
@@ -21,9 +14,13 @@ type ToolbarProps = {
     viewport: Viewport;
 };
 
+type SelectedTextureState = Map<string, IObjectMaterial>;
+
 export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
+    const [highdef, setHighdef] = useState(false);
+    const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model } = useModel();
 
     useEffect(() => {
@@ -31,6 +28,18 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     }, [viewport]);
 
     useEffect(() => {
+        if (model?.materials) {
+            const map: SelectedTextureState = new Map();
+            model?.materials
+                .entries()
+                .toArray()
+                .map(([key, value], i) => {
+                    map.set(key, value);
+                });
+
+            setSelected(map);
+        }
+
         if (model) {
             setVisible(true);
         } else {
@@ -44,47 +53,75 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
         switch (type) {
             case "fabric":
                 return {
-                    selected: defaultFabricTexture,
-                    textures: fabricTextures,
+                    selected: DATA.defaultFabricTexture,
+                    textures: DATA.fabricTextures,
                 };
             case "wood":
                 return {
-                    selected: defaultWoodTexture,
-                    textures: woodTextures,
+                    selected: DATA.defaultWoodTexture,
+                    textures: DATA.woodTextures,
                 };
             case "hardware":
                 return {
-                    selected: defaultMetalexture,
-                    textures: metalTextures,
+                    selected: DATA.defaultMetalTexture,
+                    textures: DATA.metalTextures,
                 };
             case "metal":
                 return {
-                    selected: defaultMetalexture,
-                    textures: metalTextures,
+                    selected: DATA.defaultMetalTexture,
+                    textures: DATA.metalTextures,
                 };
         }
     };
 
-    const handleTextureClick = async (texture: ITexture, material: IObjectMaterial) => {
-        if (model && model.materials) {
-            const materials = await createTextureMaterials(texture);
-            const objs = getObjectsById(viewport, material.objects);
+    useEffect(() => {
+        if (selected) {
+            const loadMaterials = async (sel: SelectedTextureState) => {
+                selected
+                    .entries()
+                    .toArray()
+                    .map(async ([key, value], i) => {
+                        const materials = await createTextureMaterials(
+                            value.texture,
+                            viewport.environment,
+                            highdef,
+                        );
 
-            for (const obj of objs) {
-                if (obj instanceof Mesh) {
-                    if (obj.userData instanceof ObjectUserData) {
-                        obj.userData.textureInfo = {
-                            textureId: Number(texture.id),
-                            unwrapped: false,
-                        };
-                    }
+                        const objs = getObjectsById(viewport, value.objects);
 
-                    obj.castShadow = true;
-                    obj.receiveShadow = true;
-                    obj.material = materials;
-                }
-            }
+                        for (const obj of objs) {
+                            if (obj instanceof Mesh) {
+                                if (obj.userData instanceof ObjectUserData) {
+                                    obj.userData.textureInfo = {
+                                        textureId: Number(value.texture.id),
+                                        unwrapped: false,
+                                    };
+                                }
+
+                                obj.castShadow = true;
+                                obj.receiveShadow = true;
+                                obj.material = materials;
+                            }
+                        }
+                    });
+            };
+
+            loadMaterials(selected);
         }
+    }, [selected, highdef]);
+
+    const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
+        const map: SelectedTextureState = new Map();
+        map.set(key, materialObj);
+
+        const sel = selected.get(key);
+
+        if (sel) {
+            selected.delete(key);
+        }
+
+        // @ts-ignore
+        setSelected(new Map([...selected, ...map]));
     };
 
     return visible ? (
@@ -99,21 +136,31 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                     setEdges(!edges);
                 }}
             />
+            <Button
+                title="Toggle Edges"
+                variant="toolbar"
+                icon="hd"
+                active={highdef}
+                onClick={(e) => {
+                    setHighdef(!highdef);
+                }}
+            />
             {model?.materials
                 .entries()
                 .toArray()
                 .map(([key, value], i) => {
                     const textr = getTexture(value.type);
+
                     return (
                         <TexturePicker
+                            highDef={highdef}
                             key={i}
                             label={key}
                             material={value}
-                            onItemClick={(texture, material, e) =>
-                                handleTextureClick(texture, material)
-                            }
-                            texture={textr.selected}
-                            items={textr.textures}
+                            onItemClick={(material, e) => {
+                                handleTextureClick(key, material);
+                            }}
+                            textures={textr.textures}
                         />
                     );
                 })}

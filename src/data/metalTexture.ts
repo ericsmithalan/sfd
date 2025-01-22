@@ -1,39 +1,35 @@
-import { ColorRepresentation } from "three";
 import { ITexture } from "../interface/ITexture";
 
 const createMetalTexture = (
     id: number,
-    color: ColorRepresentation,
     name: string,
     displayName: string,
     variant: number,
-    size: number,
+    hasAo: boolean,
 ): ITexture => {
+    const BASE_METAL_TEXTURE_URL = "/textures/metal";
     return {
         id: id,
         type: "metal",
         displayName: displayName,
+        thumbnail: `${BASE_METAL_TEXTURE_URL}/${name}/${variant}-thumb.png`,
         name: name,
-        thumbnail: "",
-        textureUrl: "",
-        resolution: size,
-        color: color,
+        basic: {
+            url: `${BASE_METAL_TEXTURE_URL}/${name}/basic/${variant}-color`,
+        },
+        pbr: {
+            color: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-color`,
+            ao: hasAo ? `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-ao` : undefined,
+            bump: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-bump`,
+            metal: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-metal`,
+            normal: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-normal`,
+            normalBump: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-normal-bump`,
+            normalRough: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-normal-rough`,
+            rough: `${BASE_METAL_TEXTURE_URL}/${name}/pbr/${variant}-rough`,
+        },
     };
 };
 
-const getAllMetalTextures = (size = 1024): Array<ITexture> => {
-    return [
-        createMetalTexture(982139, "#000000", "black", "Black", 1, size),
-        createMetalTexture(982111, "#555555", "white", "White", 1, size),
-        createMetalTexture(236139, "#ffffff", "white", "White", 1, size),
-    ];
+export const getAllMetalTextures = (): Array<ITexture> => {
+    return [createMetalTexture(982111, "bronze", "Bronze", 1, false)];
 };
-
-export const metalTextures = getAllMetalTextures();
-
-export const getMetalTextureById = (id: number): ITexture | null => {
-    const result = metalTextures.find((texture) => texture.id === id);
-    return result || null;
-};
-
-export const defaultMetalexture = getMetalTextureById(982139);

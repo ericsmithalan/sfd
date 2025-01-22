@@ -1,6 +1,6 @@
 import { createContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { rootOutliner } from "../data";
+import { DATA } from "../data";
 import { IOutliner } from "../interface";
 import { Viewport } from "../lib";
 
@@ -20,7 +20,7 @@ type OutlinerContextProps = {
 };
 
 export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
-    const [categories] = useState<Array<IOutliner>>(rootOutliner);
+    const [categories] = useState<Array<IOutliner>>(DATA.rootOutliner);
     const [category, setCategory] = useState<IOutliner | null>(null);
     const [project, setProject] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);

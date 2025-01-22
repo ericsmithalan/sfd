@@ -10,18 +10,16 @@ import { TextureButton } from "./texture-button";
 type TexturePickerProps = {
     label?: string;
     material: IObjectMaterial;
-    items: Array<ITexture>;
-    text?: string;
-    texture?: ITexture | null;
-    onItemClick?: (value: ITexture, material: IObjectMaterial, e: MouseEvent) => void;
+    highDef: boolean;
+    textures: Array<ITexture>;
+    onItemClick?: (material: IObjectMaterial, e: MouseEvent) => void;
 };
 
 export const TexturePicker: FC<TexturePickerProps> = ({
-    items,
+    textures,
     label,
-    texture,
     material,
-    text,
+    highDef,
     onItemClick,
 }) => {
     const [open, setOpen] = useState(false);
@@ -29,31 +27,34 @@ export const TexturePicker: FC<TexturePickerProps> = ({
     const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        setSelected(texture || null);
-    }, [texture]);
+        setSelected(material.texture || null);
+    }, [material.texture]);
 
     return (
         <>
-            <TextureButton
-                ref={buttonRef}
-                active={open}
-                text={label}
-                color={selected?.color}
-                className="menu-button"
-                image={selected?.thumbnail}
-                onClick={(e: MouseEvent) => {
-                    setOpen(!open);
-                }}
-            />
+            {selected && (
+                <TextureButton
+                    ref={buttonRef}
+                    active={open}
+                    text={label}
+                    className="menu-button"
+                    image={selected.thumbnail}
+                    onClick={(e: MouseEvent) => {
+                        setOpen(!open);
+                    }}
+                />
+            )}
             {open &&
                 createPortal(
                     <TextureMenu
                         open={open}
+                        highDef={highDef}
                         selected={selected}
-                        items={items}
+                        items={textures}
                         onItemClick={(value, e) => {
                             if (onItemClick) {
-                                onItemClick(value, material, e);
+                                material.texture = value;
+                                onItemClick(material, e);
                             }
                             setSelected(value);
                             setOpen(!open);
