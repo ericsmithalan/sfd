@@ -60,7 +60,7 @@ export class BorderEffect {
         );
 
         this.outlinePass.edgeGlow = 0;
-        this.outlinePass.edgeThickness = 5;
+        this.outlinePass.edgeThickness = 8;
         this.outlinePass.edgeStrength = 10;
         this.outlinePass.pulsePeriod = 0;
 

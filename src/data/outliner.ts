@@ -204,6 +204,20 @@ export const rootOutliner: Array<IOutliner> = [
                     },
                 ],
             },
+            {
+                id: 4444,
+                level: 2,
+                name: "Kitchen Table",
+                children: [
+                    {
+                        id: 3333,
+                        modelUrl: "/models/kitchen-table/kitchen-table.glb",
+                        level: 3,
+                        name: "Table",
+                        children: [],
+                    },
+                ],
+            },
         ],
     },
 ];
