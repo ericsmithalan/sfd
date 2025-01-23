@@ -1,4 +1,4 @@
-import { Group, Material, Mesh, MeshStandardMaterial, Object3D } from "three";
+import { Group, Material, Mesh, MeshStandardMaterial, Object3D, Scene } from "three";
 
 export const disposeObject = (obj?: Object3D | null) => {
     if (obj) {
@@ -13,7 +13,7 @@ export const disposeObject = (obj?: Object3D | null) => {
             }
         }
 
-        if (obj instanceof Group) {
+        if (obj instanceof Group || obj instanceof Scene) {
             obj.traverse((item) => {
                 disposables.push(item);
             });

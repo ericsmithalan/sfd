@@ -231,6 +231,14 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     dispose() {
         this.unregisterEvents();
+
+        if (this.model) {
+            disposeObject(this.model.object);
+            disposeObject(this.model.edges);
+        }
+
+        disposeObject(this.scene);
+
         this.orbitControls.dispose();
         this.grid.dispose();
         this.floor.dispose();

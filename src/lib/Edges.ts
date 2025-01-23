@@ -1,4 +1,5 @@
 import { EdgesGeometry, Group, LineBasicMaterial, LineSegments, Object3D } from "three";
+import { disposeObject } from "../utils";
 import { ObjectUserData } from "./ObjectUserData";
 
 export class Edges {
@@ -24,5 +25,9 @@ export class Edges {
         edges.dispose();
 
         return line;
+    }
+
+    dispose() {
+        disposeObject(this.edgeGroup);
     }
 }

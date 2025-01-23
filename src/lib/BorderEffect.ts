@@ -18,17 +18,16 @@ import {
     RenderPass,
     ShaderPass,
 } from "three/examples/jsm/Addons.js";
+import { disposeObject } from "../utils";
 
 export class BorderEffect {
+    private target: WebGLRenderTarget;
     private composer: EffectComposer;
-    private renderPass: RenderPass;
     private effectFXAA: ShaderPass;
     private outlinePass: OutlinePass;
-    private outputPass: OutputPass;
-    private target: WebGLRenderTarget;
 
     private _objects: Array<Object3D> = [];
-    effectScene: Scene;
+
     enabled: boolean = true;
 
     constructor(scene: Scene, renderer: WebGLRenderer, camera: Camera) {
@@ -46,12 +45,17 @@ export class BorderEffect {
         this.composer.renderTarget1.stencilBuffer = true;
         this.composer.renderTarget2.stencilBuffer = true;
 
-        this.effectScene = new Scene();
+        const effectScene = new Scene();
 
-        this.renderPass = new RenderPass(this.effectScene, camera);
-        this.renderPass.clearColor = new Color(0, 0, 0);
-        this.renderPass.clearAlpha = 0;
-        this.composer.addPass(this.renderPass);
+        const renderPass = new RenderPass(effectScene, camera);
+
+        disposeObject(effectScene);
+
+        renderPass.clearColor = new Color(0, 0, 0);
+        renderPass.clearAlpha = 0;
+        this.composer.addPass(renderPass);
+
+        renderPass.dispose();
 
         this.outlinePass = new OutlinePass(
             new Vector2(window.innerWidth, window.innerHeight),
@@ -68,8 +72,10 @@ export class BorderEffect {
         this.outlinePass.hiddenEdgeColor.set(new Color(0xf6c482));
         this.composer.addPass(this.outlinePass);
 
-        this.outputPass = new OutputPass();
-        this.composer.addPass(this.outputPass);
+        const outputPass = new OutputPass();
+        this.composer.addPass(outputPass);
+
+        outputPass.dispose();
 
         this.effectFXAA = new ShaderPass(FXAAShader);
         this.effectFXAA.uniforms["resolution"].value.set(
@@ -106,10 +112,9 @@ export class BorderEffect {
     }
 
     dispose() {
-        this.target.dispose();
-        this.renderPass.dispose();
         this.composer.dispose();
+        this.effectFXAA.dispose();
         this.outlinePass.dispose();
-        this.outputPass.dispose();
+        this.target.dispose();
     }
 }

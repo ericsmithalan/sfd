@@ -167,13 +167,9 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
 
-    private unRegisterEvents() {
+    dispose() {
         this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
-    }
-
-    dispose() {
-        this.unRegisterEvents();
         this.borderEffect.dispose();
     }
 }
