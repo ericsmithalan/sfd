@@ -36,7 +36,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 .entries()
                 .toArray()
                 .map(([key, value], i) => {
-                    console.log(key, value);
                     map.set(key, value);
                 });
 
