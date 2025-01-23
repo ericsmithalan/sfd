@@ -86,7 +86,7 @@ export class Lights {
     }
     private setDirectional() {
         this.dirLight.name = "Directional Light";
-        this.dirLight.position.set(4, 1, 6);
+        this.dirLight.position.set(4, 6, 1);
         this.dirLight.castShadow = true;
         this.dirLight.shadow.camera.near = 0.5;
         this.dirLight.shadow.camera.far = 100;
@@ -94,6 +94,14 @@ export class Lights {
         this.dirLight.shadow.mapSize.width = 1024 * 2;
         this.dirLight.shadow.mapSize.height = 1024 * 2;
     }
+
+    visible(visible: boolean) {
+        this.dirLight.visible = visible;
+        this.ambientLight.visible = visible;
+        this.dirLightHelper.visible = visible;
+        this.spotLightHelper.visible = visible;
+    }
+
     private setHemi() {
         this.hemiLight.name = "Hemi Light";
         this.hemiLight.position.set(10, 20, 0);

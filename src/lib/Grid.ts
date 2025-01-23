@@ -14,10 +14,9 @@ export class Grid extends Object3D {
 
         // @ts-ignore
         this.type = "Grid";
-
         this.size = 300;
-        this.divisions = 200;
-        this.color = new Color("#555555");
+        this.divisions = 500;
+        this.color = new Color("#444444");
         this.name = "Grid";
 
         this.update();
@@ -59,6 +58,7 @@ export class Grid extends Object3D {
         const vLine = new BufferGeometry().setFromPoints(vpoints);
         this.vLine = new LineSegments(hLine, material);
         this.hLine = new LineSegments(vLine, material);
+        this.rotateX(Math.PI / 2);
 
         this.add(this.vLine, this.hLine);
 
@@ -70,5 +70,6 @@ export class Grid extends Object3D {
     dispose() {
         disposeObject(this.vLine);
         disposeObject(this.hLine);
+        disposeObject(this);
     }
 }

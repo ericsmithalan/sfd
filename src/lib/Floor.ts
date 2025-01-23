@@ -17,6 +17,7 @@ export class Floor extends Mesh {
         this.name = "Floor";
         this.receiveShadow = true;
 
+        this.rotateX(-Math.PI / 2);
         material.dispose();
         geometry.dispose();
     }

@@ -125,13 +125,13 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
 
                 model.userData = new ObjectUserData(outliner, { selectable: true }, null, null);
 
-                if (model.up.y === 1) {
-                    model.up.set(0, 0, 1);
-                    model.rotateX(Math.PI / 2);
+                // if (model.up.y === 1) {
+                //     model.up.set(0, 0, 1);
+                //     model.rotateX(Math.PI / 2);
 
-                    edges.edgeGroup.up.set(0, 0, 1);
-                    edges.edgeGroup.rotateX(Math.PI / 2);
-                }
+                //     edges.edgeGroup.up.set(0, 0, 1);
+                //     edges.edgeGroup.rotateX(Math.PI / 2);
+                // }
 
                 resolve({
                     object: model,

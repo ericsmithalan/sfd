@@ -1,15 +1,18 @@
 import {
+    ACESFilmicToneMapping,
     Color,
+    CubeCamera,
+    EquirectangularReflectionMapping,
     EventDispatcher,
     Fog,
-    NeutralToneMapping,
+    HalfFloatType,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
     Scene,
     SRGBColorSpace,
     Texture,
-    Vector3,
+    WebGLCubeRenderTarget,
     WebGLRenderer,
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
@@ -37,6 +40,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
     readonly selection: Selection;
+    readonly cubeCamera: CubeCamera;
 
     readonly lights: Lights;
     readonly grid: Grid;
@@ -65,14 +69,16 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.scene = new Scene();
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
-        this.scene.fog = new Fog(new Color("#222222"), 1, 100);
+        this.scene.fog = new Fog(new Color("#222222"), 1, 50);
 
         this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
         this.camera.name = "Camera";
-        this.camera.up = new Vector3(0, 0, 1);
+        // this.camera.up = new Vector3(0, 0, 1);
+        // this.camera.rotateX(Math.PI / 2);
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
         this.camera.position.set(20, 10, 9);
+        this.camera.updateProjectionMatrix();
 
         this.renderer = new WebGLRenderer({
             canvas: canvas,
@@ -81,7 +87,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         });
 
         this.renderer.shadowMap.enabled = true;
-        this.renderer.toneMapping = NeutralToneMapping;
+        this.renderer.toneMapping = ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.size.width, this.size.height);
@@ -110,6 +116,13 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             placement: "bottom-right",
         });
 
+        const cubeRenderTarget = new WebGLCubeRenderTarget(256);
+        cubeRenderTarget.texture.type = HalfFloatType;
+
+        this.cubeCamera = new CubeCamera(1, 1000, cubeRenderTarget);
+
+        cubeRenderTarget.dispose();
+
         this.gizmo.scale.set(0.7, 0.7, 0.7);
         this.gizmo.attachControls(this.orbitControls);
 
@@ -117,7 +130,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.floor = new Floor();
         this.grid = new Grid();
 
-        this.scene.add(this.lights.dirLight, this.lights.ambientLight, this.floor, this.grid);
+        this.scene.add(this.lights.dirLight, this.floor, this.grid);
 
         this.renderer.setAnimationLoop(() => this.animate());
 
@@ -126,12 +139,19 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     }
 
     async setupEnvironment() {
+        // this.lights.visible(false);
         const pmremGenerator = new PMREMGenerator(this.renderer);
 
         const hdriLoader = new RGBELoader();
         const texture = await hdriLoader.loadAsync(hdr);
+
+        texture.mapping = EquirectangularReflectionMapping;
+
         this.environment = pmremGenerator.fromEquirectangular(texture).texture;
         this.scene.environment = this.environment;
+        // this.scene.environment.colorSpace = SRGBColorSpace;
+        // texture.needsUpdate = true;
+        // this.scene.background = texture;
 
         texture.dispose();
         pmremGenerator.dispose();
@@ -190,6 +210,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             console.log("textures", this.renderer.info.memory.geometries);
         }
 
+        this.cubeCamera.update(this.renderer, this.scene);
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
