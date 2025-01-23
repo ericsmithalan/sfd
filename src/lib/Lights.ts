@@ -99,4 +99,13 @@ export class Lights {
         this.hemiLight.position.set(10, 20, 0);
         this.hemiLight.intensity = hemiLuminousIrradiances["350 lx (Office Room)"];
     }
+
+    dispose() {
+        this.dirLight.dispose();
+        this.hemiLight.dispose();
+        this.ambientLight.dispose();
+        this.dirLightHelper.dispose();
+        this.spotLight.dispose();
+        this.spotLightHelper.dispose();
+    }
 }

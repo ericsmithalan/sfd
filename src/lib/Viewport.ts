@@ -44,6 +44,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
+    private geometries = 0;
+    private textures = 0;
 
     environment: Texture | null = null;
 
@@ -102,7 +104,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.orbitControls,
         );
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
-
         this.orbitControls.update();
 
         this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
@@ -113,9 +114,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.gizmo.attachControls(this.orbitControls);
 
         this.lights = new Lights();
-
         this.floor = new Floor();
-
         this.grid = new Grid();
 
         this.scene.add(this.lights.dirLight, this.lights.ambientLight, this.floor, this.grid);
@@ -181,17 +180,16 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.dispatchEvent({ type: "loading", value: false });
     }
 
-    geometries = 0;
-    textures = 0;
     private animate = () => {
         if (this.renderer.info.memory.geometries !== this.geometries) {
             this.geometries = this.renderer.info.memory.geometries;
-            // console.log("geometries", this.renderer.info.memory.geometries);
+            console.log("geometries", this.renderer.info.memory.geometries);
         }
         if (this.renderer.info.memory.textures !== this.textures) {
             this.textures = this.renderer.info.memory.textures;
-            // console.log("textures", this.renderer.info.memory.geometries);
+            console.log("textures", this.renderer.info.memory.geometries);
         }
+
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
@@ -234,7 +232,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     dispose() {
         this.unregisterEvents();
         this.orbitControls.dispose();
+        this.grid.dispose();
+        this.floor.dispose();
         this.renderer.dispose();
         this.selection.dispose();
+        this.gizmo.dispose();
+        this.environment?.dispose();
+        this.lights.dispose();
     }
 }
