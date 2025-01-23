@@ -129,7 +129,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
 
             loadMaterials(selected);
         }
-    }, [selected, resolution]);
+    }, [selected, resolution, viewport, onLoading]);
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
         const map: SelectedTextureState = new Map();
@@ -178,7 +178,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 }}
             />
 
-            <Button
+            {/* <Button
                 title="Toggle Edges"
                 variant="toolbar"
                 icon="4k"
@@ -190,7 +190,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                         setResolution("2k");
                     }
                 }}
-            />
+            /> */}
         </Panel>
     );
 };

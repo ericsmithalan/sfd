@@ -73,11 +73,8 @@ export class Lights {
         this.spotLight.shadow.mapSize.height = 1024;
         this.spotLight.shadow.camera.near = 5;
         this.spotLight.shadow.camera.far = 100;
-        this.spotLight.shadow.camera.near = 10;
-        this.spotLight.shadow.camera.far = 100;
         this.spotLight.power = bulbLuminousPowers["110000 lm (1000W)"];
 
-        //  intensity={2} shadow-bias={-0.0001}
         this.spotLight.intensity = 4;
         this.spotLight.position.set(3, 10, -8);
         this.spotLight.shadow.bias = -0.0001;

@@ -34,18 +34,22 @@ const getRepeat = (resolution: TextureResolution): Vector2 => {
 const loadTexture = async (
     url: string | null,
     resolution: TextureResolution,
-    colorSpace: string = SRGBColorSpace,
+    srgb: boolean = true,
 ): Promise<Texture | null> => {
     if (url) {
-        const texture = await loader.loadAsync(formatUrl(url, resolution));
-        texture.format = RGBAFormat;
-        texture.wrapS = RepeatWrapping;
-        texture.wrapT = RepeatWrapping;
-        // texture.anisotropy = anisotropy;
-        texture.repeat.set(1, 1);
-        texture.colorSpace = colorSpace;
+        const texture = await loader.loadAsync(formatUrl(url, resolution)).catch((e) => {
+            console.log(e);
+        });
 
-        return texture;
+        if (texture) {
+            texture.format = RGBAFormat;
+            texture.wrapS = RepeatWrapping;
+            texture.wrapT = RepeatWrapping;
+            // texture.anisotropy = 1;
+            texture.repeat.set(1, 1);
+            texture.colorSpace = SRGBColorSpace;
+            return texture;
+        }
     }
     return null;
 };
@@ -66,9 +70,11 @@ export const createTextureMaterials = async (
             const textr = await loadTexture(texture.basic.url, resolution);
 
             material = new MeshStandardMaterial({
+                envMap: environment,
+                envMapIntensity: 1,
                 map: textr,
                 metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
-                roughness: 0.4,
+                roughness: 0.6,
                 shadowSide: DoubleSide,
             });
 
@@ -113,16 +119,16 @@ const getPBRTexture = async (
             bumpMap: bump,
             // sheen: 1,
             // sheenColor: new Color("red"),
-            // thickness: 0,
+            // thickness: 1,
             // specularColor: new Color("#ffffff"),
             clearcoatMap: coat,
             clearcoatRoughnessMap: coatRoughness,
             clearcoatNormalMap: coatNormal,
             // specularIntensity: 1,
             specularIntensityMap: specular,
-            reflectivity: 1,
+            // reflectivity: metal ? 1 : 0,
             // iridescenceThicknessRange
-            ior: 1.5,
+            // ior: metal ? 1.2 : 1.5,
             // specularIntensity: 10,
             // bumpScale: 1,
             aoMap: ao,

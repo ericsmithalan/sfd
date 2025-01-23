@@ -6,16 +6,20 @@ import {
     EventDispatcher,
     Fog,
     HalfFloatType,
+    PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
     Scene,
+    SRGBColorSpace,
     Texture,
     WebGLCubeRenderTarget,
     WebGLRenderer,
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { OrbitControls, RGBELoader } from "three/examples/jsm/Addons.js";
-import hdr from "../assets/env/1.hdr";
+//8
+import hdr from "../assets/env/1a.hdr";
+
 import { IOutliner, IScreenSize } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
@@ -89,8 +93,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.toneMappingExposure = 1;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.size.width, this.size.height);
-        // this.renderer.shadowMap.type = PCFSoftShadowMap;
-        // this.renderer.outputColorSpace = SRGBColorSpace;
+        this.renderer.shadowMap.type = PCFSoftShadowMap;
+        this.renderer.outputColorSpace = SRGBColorSpace;
         this.renderer.autoClear = false;
 
         this.orbitControls = new OrbitControls(this.camera, this.canvas);

@@ -32,7 +32,7 @@ export const createTextureData = (
             diffuse: options.diffuse ? `${url}/${name}/${variant}-diffuse` : null,
             ao: options.ao ? `${url}/${name}/${variant}-ao` : null,
             displace: options.displace ? `${url}/${name}/${variant}-disp` : null,
-            metal: options.metal ? `${url}/${name}/${variant}-metal` : null,
+            metal: options.metal ? `${url}/${name}/${variant}-metallic` : null,
             normal: options.normal ? `${url}/${name}/${variant}-normal` : null,
             rough: options.rough ? `${url}/${name}/${variant}-roughness` : null,
             coat: options.coat ? `${url}/${name}/${variant}-coat` : null,

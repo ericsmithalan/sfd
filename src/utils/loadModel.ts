@@ -58,7 +58,6 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
-                        // object.computeBoundingBox();
                         object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
