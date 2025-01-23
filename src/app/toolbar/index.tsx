@@ -13,16 +13,17 @@ import "./style.scss";
 
 type ToolbarProps = {
     viewport: Viewport;
+    onLoading?: (loading: boolean) => void;
 };
 
 type SelectedTextureState = Map<string, IObjectMaterial>;
 
-export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
+export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
     const [resolution, setResolution] = useState<TextureResolution>("1k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
-    const { model, setLoading } = useModel();
+    const { model } = useModel();
 
     useEffect(() => {
         setEdges(viewport.edges);
@@ -115,12 +116,17 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                     }
 
                     materials.dispose();
-                    setLoading(false);
+                    if (onLoading) {
+                        onLoading(false);
+                    }
                 });
         };
 
         if (selected.size > 0) {
-            setLoading(true);
+            if (onLoading) {
+                onLoading(true);
+            }
+
             loadMaterials(selected);
         }
     }, [selected, resolution]);

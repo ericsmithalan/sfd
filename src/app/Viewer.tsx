@@ -59,7 +59,12 @@ export const Viewer = () => {
 
                     <Region placement="top">
                         <ModelProvider viewport={viewport}>
-                            <Toolbar viewport={viewport} />
+                            <Toolbar
+                                onLoading={(loading) => {
+                                    setLoading(loading);
+                                }}
+                                viewport={viewport}
+                            />
                         </ModelProvider>
                     </Region>
                 </>

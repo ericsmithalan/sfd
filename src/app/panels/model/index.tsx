@@ -10,7 +10,11 @@ type ViewerState = {
     selected: string;
 };
 
-export const ModelPanel = () => {
+type ModelPanelProps = {
+    onLoading?: (loading: boolean) => void;
+};
+
+export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
     const [visisble, setVisible] = useState(false);
     const [images, setImages] = useState<Array<string>>([]);
     const [primaryImage, setPrimaryImage] = useState<string | null>(null);
