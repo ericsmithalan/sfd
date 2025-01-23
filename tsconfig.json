@@ -22,6 +22,6 @@
         "src/views/outliner/index.old",
         "src/utils/edgesGeometry",
         "src/lib/Model.old"
-    ],
+, "scripts/textures.js"    ],
     "exclude": ["node_modules"]
 }

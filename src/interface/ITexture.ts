@@ -1,7 +1,7 @@
 import { TextureType } from "../types";
 
 export interface IPBRTexture {
-    color: string | null;
+    diffuse: string | null;
     ao: string | null;
     displace: string | null;
     metal: string | null;

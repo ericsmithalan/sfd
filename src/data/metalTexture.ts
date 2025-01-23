@@ -5,7 +5,7 @@ export const getAllMetalTextures = (): Array<ITexture> => {
     const settings = {
         coat: false,
         ao: false,
-        color: false,
+        diffuse: false,
         displace: false,
         metal: false,
         normal: false,
@@ -20,11 +20,11 @@ export const getAllMetalTextures = (): Array<ITexture> => {
     return [
         createTextureData(23232, "black", "Black", 2, url, {
             ...settings,
-            specular: true,
-            color: true,
+            diffuse: true,
             displace: true,
-            normal: true,
             metal: true,
+            normal: true,
+            specular: true,
         }),
     ];
 };

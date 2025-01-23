@@ -5,7 +5,7 @@ export const getAllFabricTextures = (): Array<ITexture> => {
     const settings = {
         coat: false,
         ao: false,
-        color: false,
+        diffuse: false,
         displace: false,
         metal: false,
         normal: false,
@@ -23,7 +23,7 @@ export const getAllFabricTextures = (): Array<ITexture> => {
             ao: true,
             normal: true,
             rough: true,
-            color: true,
+            diffuse: true,
         }),
     ];
 };

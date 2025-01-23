@@ -8,7 +8,7 @@ export const createTextureData = (
     url: string,
     options: {
         ao: boolean;
-        color: boolean;
+        diffuse: boolean;
         displace: boolean;
         metal: boolean;
         normal: boolean;
@@ -29,7 +29,7 @@ export const createTextureData = (
             url: `${url}/${name}/${variant}-diffuse`,
         },
         pbr: {
-            color: options.color ? `${url}/${name}/${variant}-diffuse` : null,
+            diffuse: options.diffuse ? `${url}/${name}/${variant}-diffuse` : null,
             ao: options.ao ? `${url}/${name}/${variant}-ao` : null,
             displace: options.displace ? `${url}/${name}/${variant}-disp` : null,
             metal: options.metal ? `${url}/${name}/${variant}-metal` : null,
