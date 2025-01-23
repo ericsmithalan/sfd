@@ -18,7 +18,7 @@ export const getAllFabricTextures = (): Array<ITexture> => {
     const url = "/textures/fabric";
 
     return [
-        createTextureData(98743, "green", "Green", 1, url, {
+        createTextureData(98743, "fabric", "green", "Green", 1, url, {
             ...settings,
             ao: true,
             normal: true,

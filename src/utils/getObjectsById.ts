@@ -1,15 +1,15 @@
 import { Object3D } from "three";
 import { Viewport } from "../lib";
 
-export const getObjectsById = (viewport: Viewport, ids: Array<number>): Array<Object3D> => {
-    let objects = [];
-
+export const getObjectsById = (
+    viewport: Viewport,
+    ids: Array<number>,
+    callback: (obj: Object3D) => void,
+): void => {
     for (const id of ids) {
         const obj = viewport.scene.getObjectById(id);
         if (obj) {
-            objects.push(obj);
+            callback(obj);
         }
     }
-
-    return objects;
 };

@@ -18,12 +18,21 @@ export const getAllMetalTextures = (): Array<ITexture> => {
     const url = "/textures/metal";
 
     return [
-        createTextureData(23232, "black", "Black", 1, url, {
+        createTextureData(2312, "metal", "black", "Black", 1, url, {
             ...settings,
-            ao: true,
             diffuse: true,
-            metal: true,
-            normal: true,
+        }),
+        createTextureData(43231, "metal", "gray", "Gray", 1, url, {
+            ...settings,
+            diffuse: true,
+        }),
+        createTextureData(5343, "metal", "gray", "Gray", 2, url, {
+            ...settings,
+            diffuse: true,
+        }),
+        createTextureData(2333, "metal", "brass", "Brass", 1, url, {
+            ...settings,
+            diffuse: true,
         }),
     ];
 };

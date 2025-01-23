@@ -10,7 +10,9 @@ import { getObjectDimensions } from "./getObjectDimensions";
 
 const loader: GLTFLoader = new GLTFLoader();
 
-const getMaterialType = (material: MeshStandardMaterial): TextureType | null => {
+const getMaterialType = (
+    material: MeshStandardMaterial,
+): { type: TextureType; texture: ITexture } | null => {
     const wood = material.name?.indexOf("wood") !== -1;
     const primary = material.name?.indexOf("primary") !== -1;
     const contrast = material.name?.indexOf("contrast") !== -1;
@@ -18,29 +20,33 @@ const getMaterialType = (material: MeshStandardMaterial): TextureType | null => 
     const metal = material.name?.indexOf("metal") !== -1;
     const hardware = material.name?.indexOf("hardware") !== -1;
 
-    if (wood || primary || contrast) {
-        return "wood";
+    if (wood || primary) {
+        return {
+            type: "wood",
+            texture: DATA.woodTextures[0],
+        };
     }
+
+    if (contrast) {
+        return {
+            type: "wood",
+            texture: DATA.woodTextures[1],
+        };
+    }
+
     if (fabric) {
-        return "fabric";
+        return {
+            type: "fabric",
+            texture: DATA.fabricTextures[0],
+        };
     }
     if (metal || hardware) {
-        return "metal";
+        return {
+            type: "metal",
+            texture: DATA.metalTextures[0],
+        };
     }
     return null;
-};
-
-const getDefaultTexture = (type: TextureType): ITexture => {
-    switch (type) {
-        case "fabric":
-            return DATA.defaultFabricTexture;
-        case "hardware":
-            return DATA.defaultMetalTexture;
-        case "metal":
-            return DATA.defaultMetalTexture;
-        case "wood":
-            return DATA.defaultWoodTexture;
-    }
 };
 
 export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IModel> => {
@@ -67,12 +73,12 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
 
                             if (matType) {
                                 const mat = materials.get(object.material.name);
-                                const textr = getDefaultTexture(matType);
+
                                 if (!mat) {
                                     materials.set(object.material.name, {
-                                        type: matType,
+                                        type: matType.type,
                                         objects: [object.id],
-                                        texture: textr,
+                                        texture: matType.texture,
                                         material: null,
                                     });
                                 } else {
@@ -123,14 +129,6 @@ export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IMod
                 ];
 
                 model.userData = new ObjectUserData(outliner, { selectable: true }, null, null);
-
-                // if (model.up.y === 1) {
-                //     model.up.set(0, 0, 1);
-                //     model.rotateX(Math.PI / 2);
-
-                //     edges.edgeGroup.up.set(0, 0, 1);
-                //     edges.edgeGroup.rotateX(Math.PI / 2);
-                // }
 
                 resolve({
                     object: model,

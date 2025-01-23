@@ -1,7 +1,9 @@
 import { ITexture } from "../interface/ITexture";
+import { TextureType } from "../types";
 
 export const createTextureData = (
     id: number,
+    type: TextureType,
     name: string,
     displayName: string,
     variant: number,
@@ -21,7 +23,7 @@ export const createTextureData = (
 ): ITexture => {
     return {
         id: id,
-        type: "fabric",
+        type: type,
         displayName: displayName,
         name: name,
         thumbnail: `${url}/${name}/${variant}-thumb.png`,

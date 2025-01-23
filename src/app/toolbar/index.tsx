@@ -21,7 +21,7 @@ type SelectedTextureState = Map<string, IObjectMaterial>;
 export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
-    const [resolution, setResolution] = useState<TextureResolution>("1k");
+    const [resolution, setResolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model } = useModel();
 
@@ -36,6 +36,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 .entries()
                 .toArray()
                 .map(([key, value], i) => {
+                    console.log(key, value);
                     map.set(key, value);
                 });
 
@@ -50,33 +51,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
             setVisible(false);
         }
     }, [model]);
-
-    const getTexture = (
-        type: TextureType,
-    ): { selected: ITexture | null; textures: Array<ITexture> } => {
-        switch (type) {
-            case "fabric":
-                return {
-                    selected: DATA.defaultFabricTexture,
-                    textures: DATA.fabricTextures,
-                };
-            case "wood":
-                return {
-                    selected: DATA.defaultWoodTexture,
-                    textures: DATA.woodTextures,
-                };
-            case "hardware":
-                return {
-                    selected: DATA.defaultMetalTexture,
-                    textures: DATA.metalTextures,
-                };
-            case "metal":
-                return {
-                    selected: DATA.defaultMetalTexture,
-                    textures: DATA.metalTextures,
-                };
-        }
-    };
 
     useEffect(() => {
         //TODO: only load the one that changed
@@ -96,9 +70,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                     );
 
                     matObj.material = materials;
-                    const objs = getObjectsById(viewport, matObj.objects);
-
-                    for (const obj of objs) {
+                    const objs = getObjectsById(viewport, matObj.objects, (obj) => {
                         if (obj instanceof Mesh) {
                             obj.material.dispose();
 
@@ -113,23 +85,63 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                             obj.receiveShadow = true;
                             obj.material = materials;
                         }
-                    }
+                    });
 
                     materials.dispose();
-                    if (onLoading) {
-                        onLoading(false);
-                    }
+                    // if (onLoading) {
+                    //     onLoading(false);
+                    // }
                 });
         };
 
         if (selected.size > 0) {
-            if (onLoading) {
-                onLoading(true);
-            }
+            // if (onLoading) {
+            //     onLoading(true);
+            // }
 
             loadMaterials(selected);
         }
-    }, [selected, resolution, viewport, onLoading]);
+    }, [selected, resolution, viewport]);
+
+    const getTexture = (
+        type: TextureType,
+        index: number,
+    ): { selected: ITexture | null; textures: Array<ITexture> } => {
+        switch (type) {
+            case "fabric":
+                if (index > DATA.fabricTextures.length) {
+                    index = DATA.fabricTextures.length;
+                }
+                return {
+                    selected: DATA.fabricTextures[index],
+                    textures: DATA.fabricTextures,
+                };
+            case "wood":
+                if (index > DATA.woodTextures.length) {
+                    index = DATA.woodTextures.length;
+                }
+                return {
+                    selected: DATA.woodTextures[index],
+                    textures: DATA.woodTextures,
+                };
+            case "hardware":
+                if (index > DATA.metalTextures.length) {
+                    index = DATA.metalTextures.length;
+                }
+                return {
+                    selected: DATA.metalTextures[index],
+                    textures: DATA.metalTextures,
+                };
+            case "metal":
+                if (index > DATA.metalTextures.length) {
+                    index = DATA.metalTextures.length;
+                }
+                return {
+                    selected: DATA.metalTextures[index],
+                    textures: DATA.metalTextures,
+                };
+        }
+    };
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
         const map: SelectedTextureState = new Map();
@@ -152,7 +164,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 .entries()
                 .toArray()
                 .map(([key, value], i) => {
-                    const textr = getTexture(value.type);
+                    const textr = getTexture(value.type, i);
 
                     return (
                         <TexturePicker

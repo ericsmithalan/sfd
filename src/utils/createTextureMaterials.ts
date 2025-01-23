@@ -18,19 +18,6 @@ const formatUrl = (url: string, resolution: TextureResolution) => {
     return `${url}-${resolution}.png`;
 };
 
-const getRepeat = (resolution: TextureResolution): Vector2 => {
-    switch (resolution) {
-        case "1k":
-            return new Vector2(1, 1);
-        case "2k":
-            return new Vector2(1, 1);
-        case "3k":
-            return new Vector2(1, 1);
-        case "4k":
-            return new Vector2(1, 1);
-    }
-};
-
 const loadTexture = async (
     url: string | null,
     resolution: TextureResolution,
@@ -61,29 +48,23 @@ export const createTextureMaterials = async (
 ): Promise<Material> => {
     return new Promise(async (resolve) => {
         let material: Material;
-        let repeat = getRepeat(resolution);
 
-        if (resolution !== "1k") {
-            material = await getPBRTexture(texture, environment, resolution);
-            resolve(material);
-        } else {
-            const textr = await loadTexture(texture.basic.url, resolution);
+        const textr = await loadTexture(texture.basic.url, resolution);
 
-            material = new MeshStandardMaterial({
-                envMap: environment,
-                envMapIntensity: 1,
-                map: textr,
-                metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
-                roughness: 0.6,
-                shadowSide: DoubleSide,
-            });
+        material = new MeshStandardMaterial({
+            envMap: environment,
+            envMapIntensity: 1,
+            map: textr,
+            metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
+            roughness: 0.6,
+            shadowSide: DoubleSide,
+        });
 
-            if (textr) {
-                textr.dispose();
-            }
-
-            resolve(material);
+        if (textr) {
+            textr.dispose();
         }
+
+        resolve(material);
     });
 };
 
