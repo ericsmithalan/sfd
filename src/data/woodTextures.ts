@@ -1,11 +1,21 @@
 import { ITexture } from "../interface/ITexture";
 import { createTextureData } from "./createTexture";
 
-const URL = "/textures/wood";
-
 export const getAllWoodTextures = (): Array<ITexture> => {
-    return [
-        createTextureData(92382, "dark", "Dark", 1, URL),
-        createTextureData(12221, "plywood", "Plywood", 1, URL),
-    ];
+    const settings = {
+        coat: true,
+        ao: true,
+        color: true,
+        displace: true,
+        metal: false,
+        normal: true,
+        rough: true,
+        coatRough: true,
+        coatNormal: true,
+        specular: false,
+    };
+
+    const URL = "/textures/wood";
+
+    return [createTextureData(92382, "birch", "Birch", 1, URL, settings)];
 };

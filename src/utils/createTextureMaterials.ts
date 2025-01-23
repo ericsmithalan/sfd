@@ -75,44 +75,60 @@ const getPBRTexture = async (
         const wrap = RepeatWrapping;
         let repeat = getRepeat(resolution);
 
-        const color = await loader.loadAsync(formatUrl(texture.pbr.color, resolution));
-        color.format = RGBAFormat;
-        color.wrapS = wrap;
-        color.wrapT = wrap;
-        color.anisotropy = anisotropy;
-        color.repeat.set(repeat.x, repeat.y);
-        color.colorSpace = SRGBColorSpace;
-        color.needsUpdate = true;
-
-        const bump = await loader.loadAsync(formatUrl(texture.pbr.bump, resolution));
-        bump.format = RGBAFormat;
-        bump.wrapS = wrap;
-        bump.wrapT = wrap;
-        bump.anisotropy = anisotropy;
-        bump.repeat.set(repeat.x, repeat.y);
-        bump.needsUpdate = true;
-        bump.colorSpace = NoColorSpace;
-
-        const normal = await loader.loadAsync(formatUrl(texture.pbr.normal, resolution));
-        normal.format = RGBAFormat;
-        normal.wrapS = wrap;
-        normal.wrapT = wrap;
-        normal.anisotropy = anisotropy;
-        normal.repeat.set(repeat.x, repeat.y);
-        normal.needsUpdate = true;
-        normal.colorSpace = NoColorSpace;
-
-        const rough = await loader.loadAsync(formatUrl(texture.pbr.rough, resolution));
-        rough.format = RGBAFormat;
-        rough.wrapS = wrap;
-        rough.wrapT = wrap;
-        rough.anisotropy = anisotropy;
-        rough.repeat.set(repeat.x, repeat.y);
-        rough.needsUpdate = true;
-        rough.colorSpace = NoColorSpace;
-
         let ao: Texture | null = null;
         let metal: Texture | null = null;
+        let color: Texture | null = null;
+        let bump: Texture | null = null;
+        let normal: Texture | null = null;
+        let rough: Texture | null = null;
+        let coat: Texture | null = null;
+        let coatRoughness: Texture | null = null;
+        let coatNormal: Texture | null = null;
+        let specular: Texture | null = null;
+
+        if (texture.pbr.color) {
+            color = await loader.loadAsync(formatUrl(texture.pbr.color, resolution));
+            color.format = RGBAFormat;
+            color.wrapS = wrap;
+            color.wrapT = wrap;
+            color.anisotropy = anisotropy;
+            color.repeat.set(repeat.x, repeat.y);
+            color.colorSpace = SRGBColorSpace;
+            color.needsUpdate = true;
+        }
+
+        if (texture.pbr.displace) {
+            bump = await loader.loadAsync(formatUrl(texture.pbr.displace, resolution));
+            bump.format = RGBAFormat;
+            bump.wrapS = wrap;
+            bump.wrapT = wrap;
+            bump.anisotropy = anisotropy;
+            bump.repeat.set(repeat.x, repeat.y);
+            bump.needsUpdate = true;
+            bump.colorSpace = NoColorSpace;
+        }
+
+        if (texture.pbr.normal) {
+            normal = await loader.loadAsync(formatUrl(texture.pbr.normal, resolution));
+            normal.format = RGBAFormat;
+            normal.wrapS = wrap;
+            normal.wrapT = wrap;
+            normal.anisotropy = anisotropy;
+            normal.repeat.set(repeat.x, repeat.y);
+            normal.needsUpdate = true;
+            normal.colorSpace = NoColorSpace;
+        }
+
+        if (texture.pbr.rough) {
+            rough = await loader.loadAsync(formatUrl(texture.pbr.rough, resolution));
+            rough.format = RGBAFormat;
+            rough.wrapS = wrap;
+            rough.wrapT = wrap;
+            rough.anisotropy = anisotropy;
+            rough.repeat.set(repeat.x, repeat.y);
+            rough.needsUpdate = true;
+            rough.colorSpace = NoColorSpace;
+        }
 
         if (texture.pbr.metal) {
             metal = await loader.loadAsync(formatUrl(texture.pbr.metal, resolution));
@@ -136,32 +152,84 @@ const getPBRTexture = async (
             ao.needsUpdate = true;
         }
 
+        if (texture.pbr.coat) {
+            coat = await loader.loadAsync(formatUrl(texture.pbr.coat, resolution));
+            coat.format = RGBAFormat;
+            coat.wrapS = wrap;
+            coat.wrapT = wrap;
+            coat.anisotropy = anisotropy;
+            coat.repeat.set(repeat.x, repeat.y);
+            coat.colorSpace = NoColorSpace;
+            coat.needsUpdate = true;
+        }
+
+        if (texture.pbr.coatRough) {
+            coatRoughness = await loader.loadAsync(formatUrl(texture.pbr.coatRough, resolution));
+            coatRoughness.format = RGBAFormat;
+            coatRoughness.wrapS = wrap;
+            coatRoughness.wrapT = wrap;
+            coatRoughness.anisotropy = anisotropy;
+            coatRoughness.repeat.set(repeat.x, repeat.y);
+            coatRoughness.colorSpace = NoColorSpace;
+            coatRoughness.needsUpdate = true;
+        }
+
+        if (texture.pbr.coatNormal) {
+            coatNormal = await loader.loadAsync(formatUrl(texture.pbr.coatNormal, resolution));
+            coatNormal.format = RGBAFormat;
+            coatNormal.wrapS = wrap;
+            coatNormal.wrapT = wrap;
+            coatNormal.anisotropy = anisotropy;
+            coatNormal.repeat.set(repeat.x, repeat.y);
+            coatNormal.colorSpace = NoColorSpace;
+            coatNormal.needsUpdate = true;
+        }
+
+        if (texture.pbr.specular) {
+            specular = await loader.loadAsync(formatUrl(texture.pbr.specular, resolution));
+            specular.format = RGBAFormat;
+            specular.wrapS = wrap;
+            specular.wrapT = wrap;
+            specular.anisotropy = anisotropy;
+            specular.repeat.set(repeat.x, repeat.y);
+            specular.colorSpace = NoColorSpace;
+            specular.needsUpdate = true;
+        }
+
         const material = new MeshPhysicalMaterial({
             map: color,
             envMap: environment,
+            envMapIntensity: 1,
             metalnessMap: metal,
             metalness: metal ? 1 : 0,
             roughnessMap: rough,
             roughness: 1,
             normalMap: normal,
-            normalScale: new Vector2(0.15, 0.15),
+            normalScale: new Vector2(0.2, 0.2),
             bumpMap: bump,
             specularColor: new Color("#ffffff"),
+            clearcoatMap: coat,
+            clearcoatRoughnessMap: coatRoughness,
+            clearcoatNormalMap: coatNormal,
             specularIntensity: 1,
-            // specularIntensityMap: rough,
+            specularIntensityMap: specular,
             ior: 1.52,
             bumpScale: 1,
             aoMap: ao,
             aoMapIntensity: ao ? 1 : 0,
-            shadowSide: DoubleSide,
+            // shadowSide: DoubleSide,
         });
 
-        rough.dispose();
-        normal.dispose();
-        color.dispose();
-        bump.dispose();
+        rough?.dispose();
+        normal?.dispose();
+        color?.dispose();
+        bump?.dispose();
         ao?.dispose();
         metal?.dispose();
+        coat?.dispose();
+        coatNormal?.dispose();
+        coatRoughness?.dispose();
+        specular?.dispose();
 
         resolve(material);
     });

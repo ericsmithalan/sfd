@@ -1,12 +1,16 @@
 import { TextureType } from "../types";
 
 export interface IPBRTexture {
-    color: string;
-    ao?: string;
-    bump: string;
-    metal?: string;
-    rough: string;
-    normal: string;
+    color: string | null;
+    ao: string | null;
+    displace: string | null;
+    metal: string | null;
+    rough: string | null;
+    normal: string | null;
+    coat: string | null;
+    coatRough: string | null;
+    coatNormal: string | null;
+    specular: string | null;
 }
 
 export interface IBasicTexture {

@@ -14,7 +14,7 @@ import {
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { OrbitControls, RGBELoader } from "three/examples/jsm/Addons.js";
-import hdr from "../assets/env/1.hdr";
+import hdr from "../assets/env/3.hdr";
 import { IOutliner, IScreenSize } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
@@ -118,7 +118,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.grid = new Grid();
 
-        this.scene.add(this.lights.dirLight, this.floor, this.grid);
+        this.scene.add(this.lights.dirLight, this.lights.ambientLight, this.floor, this.grid);
 
         this.renderer.setAnimationLoop(() => this.animate());
 

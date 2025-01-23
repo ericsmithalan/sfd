@@ -179,7 +179,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
                 <Button
                     title="Toggle Edges"
                     variant="toolbar"
-                    icon="hd"
+                    icon="4k"
                     active={resolution !== "1k"}
                     onClick={(e) => {
                         if (resolution === "2k") {

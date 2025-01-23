@@ -45,8 +45,8 @@ export class Lights {
     constructor() {
         this.dirLight = new DirectionalLight(0xffffff, 1);
         this.hemiLight = new HemisphereLight(0xffffff, 0x000000, 1);
-        this.ambientLight = new AmbientLight(0xffffff, 1 * Math.PI);
-        this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 3);
+        this.ambientLight = new AmbientLight(0xffffff, 1);
+        this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 1);
         this.spotLight = new SpotLight(0xffffff, 2);
 
         this.spotLightHelper = new SpotLightHelper(this.spotLight);
