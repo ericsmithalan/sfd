@@ -45,15 +45,18 @@ export const Viewer = () => {
             {loading && <Loading message="Loading" />}
             {viewport && (
                 <>
-                    <OutlinerProvider viewport={viewport}>
-                        <Region placement="left">
+                    <Region placement="left">
+                        <OutlinerProvider viewport={viewport}>
                             <Outlet />
-                        </Region>
-                        <Region placement="right">
+                        </OutlinerProvider>
+                    </Region>
+                    <Region placement="right">
+                        <OutlinerProvider viewport={viewport}>
                             <ModelPanel />
                             <ObjectPanel />
-                        </Region>
-                    </OutlinerProvider>
+                        </OutlinerProvider>
+                    </Region>
+
                     <ModelProvider viewport={viewport}>
                         <Region placement="top">
                             <Toolbar viewport={viewport} />
