@@ -57,11 +57,11 @@ export const Viewer = () => {
                         </OutlinerProvider>
                     </Region>
 
-                    <ModelProvider viewport={viewport}>
-                        <Region placement="top">
+                    <Region placement="top">
+                        <ModelProvider viewport={viewport}>
                             <Toolbar viewport={viewport} />
-                        </Region>
-                    </ModelProvider>
+                        </ModelProvider>
+                    </Region>
                 </>
             )}
 

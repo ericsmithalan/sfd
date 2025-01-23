@@ -141,55 +141,50 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport }) => {
     };
 
     return (
-        <>
-            <Panel
-                className={clsx("app-toolbar-panel", !visible && "hidden")}
-                contentCss="app-toolbar"
-            >
-                {model?.materials
-                    .entries()
-                    .toArray()
-                    .map(([key, value], i) => {
-                        const textr = getTexture(value.type);
+        <Panel className={clsx("app-toolbar-panel", !visible && "hidden")} contentCss="app-toolbar">
+            {model?.materials
+                .entries()
+                .toArray()
+                .map(([key, value], i) => {
+                    const textr = getTexture(value.type);
 
-                        return (
-                            <TexturePicker
-                                key={i}
-                                label={key}
-                                material={value}
-                                onItemClick={(material, e) => {
-                                    handleTextureClick(key, material);
-                                }}
-                                textures={textr.textures}
-                            />
-                        );
-                    })}
+                    return (
+                        <TexturePicker
+                            key={i}
+                            label={key}
+                            material={value}
+                            onItemClick={(material, e) => {
+                                handleTextureClick(key, material);
+                            }}
+                            textures={textr.textures}
+                        />
+                    );
+                })}
 
-                <Button
-                    title="Toggle Edges"
-                    variant="toolbar"
-                    icon="shape-2"
-                    active={edges}
-                    onClick={(e) => {
-                        viewport.edges = !edges;
-                        setEdges(!edges);
-                    }}
-                />
+            <Button
+                title="Toggle Edges"
+                variant="toolbar"
+                icon="shape-2"
+                active={edges}
+                onClick={(e) => {
+                    viewport.edges = !edges;
+                    setEdges(!edges);
+                }}
+            />
 
-                <Button
-                    title="Toggle Edges"
-                    variant="toolbar"
-                    icon="4k"
-                    active={resolution !== "1k"}
-                    onClick={(e) => {
-                        if (resolution === "2k") {
-                            setResolution("1k");
-                        } else {
-                            setResolution("2k");
-                        }
-                    }}
-                />
-            </Panel>
-        </>
+            <Button
+                title="Toggle Edges"
+                variant="toolbar"
+                icon="4k"
+                active={resolution !== "1k"}
+                onClick={(e) => {
+                    if (resolution === "2k") {
+                        setResolution("1k");
+                    } else {
+                        setResolution("2k");
+                    }
+                }}
+            />
+        </Panel>
     );
 };
