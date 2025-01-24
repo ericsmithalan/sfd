@@ -38,7 +38,6 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
     }, [categories, category, params.categoryId]);
 
     useEffect(() => {
-        console.log(params);
         const loadModel = async (obj: IOutliner) => {
             await viewport.loadModel(obj);
         };
@@ -54,7 +53,6 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
         }
 
         if (model && !params.modelId) {
-            console.log("no model id");
             setModel(null);
             viewport.model = null;
         }
