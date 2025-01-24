@@ -7,4 +7,9 @@
         min-height: 10px;
         height: 100%;
     }
+
+    &.mobile {
+        padding-bottom: 0;
+        font-size: var(--font-4);
+    }
 }

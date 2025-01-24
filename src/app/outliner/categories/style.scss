@@ -20,5 +20,25 @@
 
     &.mobile {
         padding-bottom: var(--padding-1);
+        font-size: var(--font-4);
+        gap: 0;
+
+        & > .link {
+            padding-top: var(--padding-3);
+            padding-bottom: var(--padding-3);
+        }
+
+        & > .outliner-group {
+            gap: 0;
+            font-size: var(--font-4);
+        }
+
+        & > .outliner-category-children {
+            gap: 0;
+            & > .link {
+                padding-top: var(--padding-3);
+                padding-bottom: var(--padding-3);
+            }
+        }
     }
 }

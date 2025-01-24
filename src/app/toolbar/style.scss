@@ -65,8 +65,11 @@
         & > .panel-content {
             gap: 1px;
             border-radius: 0;
+            justify-content: space-around;
 
             & > .button {
+                background-color: transparent;
+
                 & > .bg-image {
                 }
             }

@@ -33,7 +33,7 @@ export const ModelOutliner = () => {
         <div className={clsx("outliner-model", outliner.isMobile && "mobile")}>
             <OutlinerTitle
                 className={clsx(outliner.isMobile && "mobile")}
-                subTitle={"Objects"}
+                subTitle={outliner.isMobile ? undefined : "Objects"}
                 crumbs={crumbs}
                 title={outliner.model?.name}
                 iconName="blender"
