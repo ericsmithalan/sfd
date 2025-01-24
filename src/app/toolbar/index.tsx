@@ -31,15 +31,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
 
     useEffect(() => {
         if (model?.materials) {
-            const map: SelectedTextureState = new Map();
-            model?.materials
-                .entries()
-                .toArray()
-                .map(([key, value], i) => {
-                    map.set(key, value);
-                });
-
-            setSelected(map);
+            setSelected(model.materials);
         } else {
             setSelected(new Map());
         }
@@ -51,101 +43,51 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
         }
     }, [model]);
 
-    useEffect(() => {
-        //TODO: only load the one that changed
-        const loadMaterials = async (sel: SelectedTextureState) => {
-            selected
-                .entries()
-                .toArray()
-                .map(async ([key, matObj], i) => {
-                    if (matObj.material) {
-                        matObj.material.dispose();
-                    }
+    const loadMaterials = async (materialObj: IObjectMaterial) => {
+        console.log(materialObj);
 
-                    const materials = await createTextureMaterials(
-                        matObj.texture,
-                        viewport.environment,
-                        resolution,
-                    );
-
-                    matObj.material = materials;
-                    const objs = getObjectsById(viewport, matObj.objects, (obj) => {
-                        if (obj instanceof Mesh) {
-                            obj.material.dispose();
-
-                            if (obj.userData instanceof ObjectUserData) {
-                                obj.userData.textureInfo = {
-                                    textureId: Number(matObj.texture.id),
-                                    unwrapped: false,
-                                };
-                            }
-
-                            obj.castShadow = true;
-                            obj.receiveShadow = true;
-                            obj.material = materials;
-                        }
-                    });
-
-                    materials.dispose();
-                    // if (onLoading) {
-                    //     onLoading(false);
-                    // }
-                });
-        };
-
-        if (selected.size > 0) {
-            // if (onLoading) {
-            //     onLoading(true);
-            // }
-
-            loadMaterials(selected);
+        if (materialObj.material) {
+            materialObj.material.dispose();
         }
-    }, [selected, resolution, viewport]);
 
-    const getTexture = (
-        type: TextureType,
-        index: number,
-    ): { selected: ITexture | null; textures: Array<ITexture> } => {
+        const materials = await createTextureMaterials(
+            materialObj.texture,
+            viewport.environment,
+            resolution,
+        );
+
+        materialObj.material = materials;
+        const objs = getObjectsById(viewport, materialObj.objects, (obj) => {
+            if (obj instanceof Mesh) {
+                obj.material.dispose();
+                if (obj.userData instanceof ObjectUserData) {
+                    obj.userData.textureInfo = {
+                        textureId: Number(materialObj.texture.id),
+                        unwrapped: false,
+                    };
+                }
+                obj.castShadow = true;
+                obj.receiveShadow = true;
+                obj.material = materials;
+            }
+        });
+        materials.dispose();
+    };
+
+    const getTextures = (type: TextureType): Array<ITexture> => {
         switch (type) {
             case "fabric":
-                if (index > DATA.fabricTextures.length) {
-                    index = DATA.fabricTextures.length;
-                }
-                return {
-                    selected: DATA.fabricTextures[index],
-                    textures: DATA.fabricTextures,
-                };
+                return DATA.fabricTextures;
             case "wood":
-                if (index > DATA.woodTextures.length) {
-                    index = DATA.woodTextures.length;
-                }
-                return {
-                    selected: DATA.woodTextures[index],
-                    textures: DATA.woodTextures,
-                };
+                return DATA.woodTextures;
             case "hardware":
-                if (index > DATA.metalTextures.length) {
-                    index = DATA.metalTextures.length;
-                }
-                return {
-                    selected: DATA.metalTextures[index],
-                    textures: DATA.metalTextures,
-                };
+                return DATA.metalTextures;
             case "metal":
-                if (index > DATA.metalTextures.length) {
-                    index = DATA.metalTextures.length;
-                }
-                return {
-                    selected: DATA.metalTextures[index],
-                    textures: DATA.metalTextures,
-                };
+                return DATA.metalTextures;
         }
     };
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
-        const map: SelectedTextureState = new Map();
-        map.set(key, materialObj);
-
         const sel = selected.get(key);
 
         if (sel) {
@@ -153,8 +95,11 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
             selected.delete(key);
         }
 
+        await loadMaterials(materialObj);
+
+        selected.set(key, materialObj);
         // @ts-ignore
-        setSelected(new Map([...selected, ...map]));
+        setSelected(new Map([...selected]));
     };
 
     return (
@@ -162,24 +107,18 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
             className={clsx("app-toolbar-panel", !visible && "hidden", isMobile && "mobile")}
             contentCss="app-toolbar"
         >
-            {model?.materials
-                .entries()
-                .toArray()
-                .map(([key, value], i) => {
-                    const textr = getTexture(value.type, i);
-
-                    return (
-                        <TexturePicker
-                            key={i}
-                            label={key}
-                            material={value}
-                            onItemClick={(material, e) => {
-                                handleTextureClick(key, material);
-                            }}
-                            textures={textr.textures}
-                        />
-                    );
-                })}
+            {model?.materials &&
+                Array.from(model.materials.entries()).map(([key, value], i) => (
+                    <TexturePicker
+                        key={i}
+                        label={key}
+                        material={value}
+                        onItemClick={(material, e) => {
+                            handleTextureClick(key, material);
+                        }}
+                        textures={getTextures(value.type)}
+                    />
+                ))}
 
             <Button
                 title="Toggle Edges"

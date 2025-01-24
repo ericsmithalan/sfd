@@ -1,6 +1,6 @@
 {
     "compilerOptions": {
-        "lib": ["dom", "dom.iterable", "esnext"],
+        "lib": ["dom", "dom.iterable", "esnext", "es2017.object"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
@@ -21,7 +21,8 @@
         "**/*.tsx",
         "src/views/outliner/index.old",
         "src/utils/edgesGeometry",
-        "src/lib/Model.old"
-, "scripts/textures.js"    ],
+        "src/lib/Model.old",
+        "scripts/textures.js"
+    ],
     "exclude": ["node_modules"]
 }

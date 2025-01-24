@@ -51,6 +51,16 @@ export const Viewer = () => {
                         <OutlinerProvider isMobile={isMobile} viewport={viewport}>
                             <Outlet />
                         </OutlinerProvider>
+                        {isMobile && (
+                            <ModelProvider isMobile={isMobile} viewport={viewport}>
+                                <Toolbar
+                                    onLoading={(loading) => {
+                                        setLoading(loading);
+                                    }}
+                                    viewport={viewport}
+                                />
+                            </ModelProvider>
+                        )}
                     </Region>
                     <Region className={clsx(isMobile && "mobile")} placement="right">
                         <OutlinerProvider isMobile={isMobile} viewport={viewport}>

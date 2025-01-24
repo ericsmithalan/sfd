@@ -30,7 +30,7 @@ const getMaterialType = (
     if (contrast) {
         return {
             type: "wood",
-            texture: DATA.woodTextures[1],
+            texture: DATA.woodTextures[0],
         };
     }
 
