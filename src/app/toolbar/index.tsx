@@ -126,7 +126,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 title="Toggle Edges"
                 variant="toolbar"
                 icon="shape-2"
-                text={edges ? "Edges (on)" : "Edges (off)"}
+                text={edges ? "Edges" : "Edges"}
                 active={edges}
                 onClick={(e) => {
                     viewport.edges = !edges;

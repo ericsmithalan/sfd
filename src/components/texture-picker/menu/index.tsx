@@ -41,9 +41,10 @@ export const TextureMenu = ({
 
             if (targetCoords && menuCoords) {
                 if (isMobile) {
+                    console.log(targetCoords.y, targetCoords.bottom);
                     setPosition({
                         x: targetCoords.x - 40,
-                        y: targetCoords.y - (menuCoords.height - targetCoords.height),
+                        y: targetCoords.top - menuCoords.bottom,
                         width: targetCoords.width + 80,
                     });
                 } else {
@@ -64,8 +65,7 @@ export const TextureMenu = ({
                 className={clsx("menu", className)}
                 style={{
                     left: position?.x,
-                    top: isMobile ? undefined : position?.y,
-                    bottom: isMobile ? position.y : undefined,
+                    top: position?.y,
                     width: position.width,
                 }}
             >

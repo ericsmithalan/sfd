@@ -36,15 +36,9 @@ export const availablePositions = (
     return position;
 };
 
-export const getElementCoordinates = (element: HTMLElement): IElementCoordinate | null => {
+export const getElementCoordinates = (element: HTMLElement): DOMRect | null => {
     if (element) {
-        const bounds = element.getBoundingClientRect();
-        return {
-            x: bounds.x,
-            y: bounds.y,
-            width: bounds.width,
-            height: bounds.height,
-        };
+        return element.getBoundingClientRect();
     }
 
     return null;
