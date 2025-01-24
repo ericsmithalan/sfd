@@ -56,7 +56,7 @@ export const createTextureMaterials = async (
             envMapIntensity: 1,
             map: textr,
             metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
-            roughness: 0.6,
+            roughness: texture.type === "metal" || texture.type === "hardware" ? 0.2 : 0.6,
             shadowSide: DoubleSide,
         });
 

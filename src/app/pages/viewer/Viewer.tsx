@@ -1,22 +1,20 @@
-"use client";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 import { Outlet } from "react-router-dom";
-import { Loading, Region } from "../components";
-import { ModelProvider, OutlinerProvider } from "../context";
-import { IViewportEvent, Viewport } from "../lib";
-import { ImagesPanel } from "./panels/images";
-import { ModelPanel } from "./panels/model";
-import { ObjectPanel } from "./panels/object";
-import "./style.scss";
-import { Toolbar } from "./toolbar";
+import { Loading, Region } from "../../../components";
+import { ModelProvider, OutlinerProvider } from "../../../context";
+import { IViewportEvent, Viewport } from "../../../lib";
+import { ImagesPanel } from "../../panels/images";
+import { ModelPanel } from "../../panels/model";
+import { ObjectPanel } from "../../panels/object";
+import { Toolbar } from "../../toolbar";
 
 export interface IOutletContenxt {
     viewport: Viewport;
 }
 
-export const Viewer = () => {
+export const ViewerPage = () => {
     const [viewport, setViewport] = useState<Viewport>();
     const [loading, setLoading] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);

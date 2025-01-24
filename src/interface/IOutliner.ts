@@ -5,6 +5,7 @@ export interface IOutliner {
     group?: boolean;
     id: number;
     level?: number;
+    parentId?: number;
     name: string;
     displayName?: string;
     modelUrl?: string;

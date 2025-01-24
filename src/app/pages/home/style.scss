@@ -1,0 +1,26 @@
+.home-page {
+    background-color: #222222;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: var(--padding-1);
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    overflow: auto;
+
+    & > .cards {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: var(--gap-1);
+
+        & > .project-card {
+            min-width: 30%;
+            max-width: 30%;
+            width: 100%;
+        }
+    }
+}

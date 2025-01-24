@@ -7,6 +7,7 @@ export * from "./logo/LogoIcon";
 export * from "./nav-link";
 export * from "./outliner-title";
 export * from "./panel";
+export * from "./project-card";
 export * from "./region";
 export * from "./scroller";
 export * from "./stats";
