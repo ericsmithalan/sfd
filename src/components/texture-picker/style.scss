@@ -1,6 +1,7 @@
 .texture-picker {
     display: flex;
     flex-direction: row;
+    position: relative;
 
     height: var(--toolbar-height);
 

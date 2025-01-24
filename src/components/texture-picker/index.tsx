@@ -21,6 +21,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
     className,
     textures,
     label,
+    isMobile = false,
     material,
     onItemClick,
 }) => {
@@ -37,6 +38,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
             {selected && (
                 <TextureButton
                     ref={buttonRef}
+                    isMobile={isMobile}
                     active={open}
                     text={label}
                     className={clsx("menu-button", className)}
@@ -49,6 +51,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
             {open &&
                 createPortal(
                     <TextureMenu
+                        isMobile={isMobile}
                         open={open}
                         selected={selected}
                         items={textures}

@@ -7,7 +7,6 @@
     position: relative;
     flex: 1 1 auto;
     align-items: center;
-
     background-color: var(--color-white-8);
 
     padding: 0;
@@ -27,22 +26,10 @@
 
         height: 100%;
         width: 100%;
-
-        &.green {
-            background-color: green;
-        }
-        &.blue {
-            background-color: blue;
-        }
-        &.white {
-            background-color: white;
-        }
-        &.black {
-            background-color: black;
-        }
     }
 
     & > .text {
+        text-transform: capitalize;
         font-size: var(--font-7);
         padding: var(--padding-5);
     }
@@ -52,6 +39,10 @@
         flex-direction: column;
         flex: 1 1 auto;
         width: var(--toolbar-height);
+    }
+
+    &.mobile {
+        width: 4rem;
     }
 
     &.active {

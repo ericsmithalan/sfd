@@ -110,6 +110,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
             {model?.materials &&
                 Array.from(model.materials.entries()).map(([key, value], i) => (
                     <TexturePicker
+                        isMobile={isMobile}
                         className={clsx(isMobile && "mobile")}
                         key={i}
                         label={key}
@@ -125,12 +126,27 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 title="Toggle Edges"
                 variant="toolbar"
                 icon="shape-2"
+                text={edges ? "Edges (on)" : "Edges (off)"}
                 active={edges}
                 onClick={(e) => {
                     viewport.edges = !edges;
                     setEdges(!edges);
                 }}
             />
+
+            {isMobile && (
+                <Button
+                    title="Images"
+                    variant="toolbar"
+                    icon="multi-image"
+                    text={"images"}
+                    active={edges}
+                    onClick={(e) => {
+                        viewport.edges = !edges;
+                        setEdges(!edges);
+                    }}
+                />
+            )}
 
             {/* <Button
                 title="Toggle Edges"

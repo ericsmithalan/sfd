@@ -1,9 +1,8 @@
 import clsx from "clsx";
-import { MouseEvent, RefObject, useEffect, useRef, useState } from "react";
-import { getElementCoordinates, getPopupPosition, getWindowCoordinates } from "../../../utils";
+import { MouseEvent, RefObject, useLayoutEffect, useRef, useState } from "react";
+import { getElementCoordinates } from "../../../utils";
 
 import { ITexture } from "../../../interface/ITexture";
-import { Scroller } from "../../scroller";
 import { TextureButton } from "../texture-button";
 import "./style.scss";
 
@@ -12,6 +11,7 @@ type TextureMenuProps = {
     items: Array<ITexture>;
     selected: ITexture | null;
     targetRef: RefObject<any>;
+    isMobile?: boolean;
     open?: boolean;
     onItemClick?: (value: ITexture, e: MouseEvent) => void;
     onHide?: () => void;
@@ -21,36 +21,56 @@ export const TextureMenu = ({
     items = [],
     className,
     targetRef,
+    isMobile = false,
     onItemClick,
     onHide,
     open,
     selected,
 }: TextureMenuProps) => {
-    const [position, setPosition] = useState({ x: 0, y: 0, width: 0 });
+    const [position, setPosition] = useState<{ x: number; y: number; width: number }>({
+        x: 0,
+        y: 0,
+        width: 0,
+    });
     const menuRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (targetRef?.current && menuRef.current) {
             const targetCoords = getElementCoordinates(targetRef.current);
             const menuCoords = getElementCoordinates(menuRef.current);
-            const containerCoords = getWindowCoordinates();
 
-            if (targetCoords && menuCoords && containerCoords) {
-                const pos = getPopupPosition(targetCoords, menuCoords, containerCoords, "bottom");
-                setPosition({ x: pos.x - 100, y: pos.y, width: targetCoords.width + 200 });
+            if (targetCoords && menuCoords) {
+                if (isMobile) {
+                    setPosition({
+                        x: targetCoords.x - 40,
+                        y: targetCoords.y - (menuCoords.height - targetCoords.height),
+                        width: targetCoords.width + 80,
+                    });
+                } else {
+                    setPosition({
+                        x: targetCoords.x - 40,
+                        y: targetCoords.y + targetCoords.height,
+                        width: targetCoords.width + 80,
+                    });
+                }
             }
         }
-    }, [targetRef]);
+    }, [targetRef, menuRef, isMobile]);
 
     return (
         <>
             <div
                 ref={menuRef}
                 className={clsx("menu", className)}
-                style={{ left: position?.x, top: position?.y, width: position.width }}
+                style={{
+                    left: position?.x,
+                    top: isMobile ? undefined : position?.y,
+                    bottom: isMobile ? position.y : undefined,
+                    width: position.width,
+                }}
             >
                 <div className="inner-border"></div>
-                <Scroller>
+                <div className="menu-content">
                     {items.map((item, i) => {
                         return (
                             <TextureButton
@@ -67,7 +87,7 @@ export const TextureMenu = ({
                             />
                         );
                     })}
-                </Scroller>
+                </div>
             </div>
             <div
                 className="menu-wrapper"

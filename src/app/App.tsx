@@ -6,6 +6,7 @@ import { ModelOutliner } from "./outliner/model";
 import { ProjectOutliner } from "./outliner/project";
 
 export const App = () => {
+    console.log("app");
     return (
         <Routes>
             <Route path="/" element={<Viewer />}>

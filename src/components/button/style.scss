@@ -100,10 +100,17 @@ input::-moz-focus-inner {
         border-radius: var(--radius-5);
         justify-content: center;
         align-items: center;
+        flex-direction: column;
         width: var(--toolbar-height);
         height: var(--toolbar-height);
         flex: 1 1 auto;
-        font-size: var(--font-3);
+
+        color: var(--color-white-4);
+        font-size: var(--font-7);
+
+        & > .icon {
+            font-size: var(--font-3);
+        }
 
         &.active {
             color: var(--color-alt-2);

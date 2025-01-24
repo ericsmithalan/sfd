@@ -43,7 +43,7 @@ export const Viewer = () => {
     }, [canvasRef]);
 
     return (
-        <div className="viewer">
+        <div id="viewer-main" className="viewer">
             {loading && <Loading message="Loading" />}
             {viewport && (
                 <>

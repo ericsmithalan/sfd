@@ -6,6 +6,7 @@ import "./style.scss";
 type TextureButtonProps = {
     className?: string;
     disable?: boolean;
+    isMobile?: boolean;
     active?: boolean;
     text?: string;
     image?: string;
@@ -18,6 +19,7 @@ export const TextureButton: FC<TextureButtonProps> = ({
     text,
     active = false,
     className,
+    isMobile = false,
     ref,
     image,
     onClick,

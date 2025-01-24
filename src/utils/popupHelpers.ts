@@ -81,9 +81,9 @@ export const getPopupPosition = (
             y = container.height - popup.height;
         }
 
-        if (!position.right) {
-            x = container.width - popup.width;
-        }
+        // if (!position.right) {
+        //     x = container.width - popup.width;
+        // }
     } else if (placement === "side") {
         if (position.right) {
             x = target.x + target.width;
