@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { Outlet } from "react-router-dom";
-import { Logo, Panel } from "../../components";
+import { Logo, Panel, Scroller } from "../../components";
 import { useOutliner } from "../../hooks";
 import "./style.scss";
 
@@ -16,7 +16,9 @@ export const OutlinerView = () => {
             )}
         >
             <Logo height={45} />
-            <Outlet context={{ outliner: outliner }} />
+            <Scroller maxHeight={"90vh"}>
+                <Outlet context={{ outliner: outliner }} />
+            </Scroller>
         </Panel>
     );
 };
