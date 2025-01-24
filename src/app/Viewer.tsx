@@ -1,5 +1,7 @@
 "use client";
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { isMobile } from "react-device-detect";
 import { Outlet } from "react-router-dom";
 import { Loading, Region } from "../components";
 import { ModelProvider, OutlinerProvider } from "../context";
@@ -26,7 +28,7 @@ export const Viewer = () => {
 
         if (canvasRef) {
             if (canvasRef.current) {
-                vp = new Viewport(canvasRef.current);
+                vp = new Viewport(canvasRef.current, isMobile);
                 vp.addEventListener("loading", loading);
                 setViewport(vp);
             }
@@ -45,20 +47,20 @@ export const Viewer = () => {
             {loading && <Loading message="Loading" />}
             {viewport && (
                 <>
-                    <Region placement="left">
-                        <OutlinerProvider viewport={viewport}>
+                    <Region className={clsx(isMobile && "mobile")} placement="left">
+                        <OutlinerProvider isMobile={isMobile} viewport={viewport}>
                             <Outlet />
                         </OutlinerProvider>
                     </Region>
-                    <Region placement="right">
-                        <OutlinerProvider viewport={viewport}>
+                    <Region className={clsx(isMobile && "mobile")} placement="right">
+                        <OutlinerProvider isMobile={isMobile} viewport={viewport}>
                             <ModelPanel />
                             <ObjectPanel />
                         </OutlinerProvider>
                     </Region>
 
-                    <Region placement="top">
-                        <ModelProvider viewport={viewport}>
+                    <Region className={clsx(isMobile && "mobile")} placement="top">
+                        <ModelProvider isMobile={isMobile} viewport={viewport}>
                             <Toolbar
                                 onLoading={(loading) => {
                                     setLoading(loading);

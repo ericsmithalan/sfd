@@ -1,5 +1,6 @@
 import { MouseEvent } from "react";
 
+import clsx from "clsx";
 import { BreadcrumbData } from "use-react-router-breadcrumbs";
 import { IconName } from "../../types";
 import { Icon } from "../icon";
@@ -7,6 +8,7 @@ import { NavLink } from "../nav-link";
 import "./style.scss";
 
 type OutlinerTitleProps = {
+    className?: string;
     title?: string;
     subTitle?: string;
     crumbs?: BreadcrumbData[];
@@ -15,6 +17,7 @@ type OutlinerTitleProps = {
 };
 
 export const OutlinerTitle = ({
+    className,
     title,
     iconName,
     crumbs,
@@ -22,8 +25,7 @@ export const OutlinerTitle = ({
     onBack,
 }: OutlinerTitleProps) => {
     return (
-        <div className="outliner-title">
-            {/* {crumbs && <Breadcrumb crumbs={crumbs} />} */}
+        <div className={clsx("outliner-title", className)}>
             <div className="title-content">
                 <NavLink title="Home" isNav={false} href="/" icon="home-4" variant="back" />
                 <NavLink

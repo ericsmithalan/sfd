@@ -7,13 +7,20 @@ import { Scroller } from "../scroller";
 import "./style.scss";
 
 type ImageViewerProps = {
+    className?: string;
     images: Array<string>;
     image?: string;
     visible?: boolean;
     onClosed?: () => void;
 };
 
-export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onClosed }) => {
+export const ImageViewer: FC<ImageViewerProps> = ({
+    images,
+    visible,
+    image,
+    onClosed,
+    className,
+}) => {
     const [selected, setSelected] = useState<string>();
     const [isVisible, setIsVisible] = useState(false);
     const divRef = useRef<HTMLDivElement>(null);
@@ -36,7 +43,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({ images, visible, image, onCl
     return isVisible
         ? createPortal(
               <div
-                  className={clsx("image-viewer")}
+                  className={clsx("image-viewer", className)}
                   onClick={(e) => {
                       e.stopPropagation();
                       setIsVisible(false);

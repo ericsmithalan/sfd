@@ -1,20 +1,24 @@
 .outliner-root {
     display: flex;
     flex-direction: column;
-    padding-top: var(--padding-3);
 
     & > .outliner-group {
-        font-size: var(--font-7);
+        font-size: var(--font-6);
         text-transform: uppercase;
         color: var(--color-alt-3);
         font-weight: 600;
         margin-top: var(--margin-6);
         padding: var(--padding-3);
+        padding-top: var(--padding-1);
     }
 
     & > .outliner-category-children {
         display: flex;
         flex-direction: column;
         margin-left: var(--margin-3);
+    }
+
+    &.mobile {
+        padding-bottom: var(--padding-1);
     }
 }

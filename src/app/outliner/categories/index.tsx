@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Fragment } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
 import { NavLink } from "../../../components";
@@ -10,7 +11,7 @@ export const CategoriesOutliner = () => {
     }>();
 
     return (
-        <div className="outliner-root">
+        <div className={clsx("outliner-root", outliner.isMobile && "mobile")}>
             {outliner.categories.map((item, i) => {
                 return (
                     <Fragment key={i}>

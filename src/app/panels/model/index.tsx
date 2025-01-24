@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { BgImage, Button, Panel, Stats } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
@@ -58,7 +59,13 @@ export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
 
     return visisble ? (
         <>
-            <Panel title={outliner.project?.name} icon="blender" contentCss="images-panel">
+            <Panel
+                title={outliner.project?.name}
+                className={clsx(outliner.isMobile && "mobile")}
+                icon="blender"
+                contentCss="images-panel"
+                opened={!outliner.isMobile}
+            >
                 {primaryImage && (
                     <Button
                         variant="image"
@@ -99,6 +106,7 @@ export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
                 {outliner.model?.stats && <Stats stats={outliner.model?.stats || []} />}
             </Panel>
             <ImageViewer
+                className={clsx(outliner.isMobile && "mobile")}
                 onClosed={() => {
                     setViewer({ visible: false, selected: "" });
                 }}

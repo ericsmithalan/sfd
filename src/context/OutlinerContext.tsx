@@ -10,6 +10,7 @@ export interface IOutlinerContext {
     category: IOutliner | null;
     project: IOutliner | null;
     model: IOutliner | null;
+    isMobile: boolean;
 }
 
 export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerContext);
@@ -17,9 +18,10 @@ export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerCo
 type OutlinerContextProps = {
     viewport: Viewport;
     children?: React.ReactNode;
+    isMobile: boolean;
 };
 
-export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
+export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerContextProps) => {
     const [categories] = useState<Array<IOutliner>>(DATA.rootOutliner);
     const [category, setCategory] = useState<IOutliner | null>(null);
     const [project, setProject] = useState<IOutliner | null>(null);
@@ -34,7 +36,7 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
         if (category && !params.categoryId) {
             setCategory(null);
         }
-    }, [categories, params.categoryId]);
+    }, [categories, category, params.categoryId]);
 
     useEffect(() => {
         if (category && params.projectId) {
@@ -74,6 +76,7 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
                 categories: categories,
                 project: project,
                 model: model,
+                isMobile: isMobile,
                 category: category,
             }}
         >

@@ -35,7 +35,7 @@ export interface IViewportEvent {
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
-    private readonly gizmo: ViewportGizmo;
+    private readonly gizmo: ViewportGizmo | null;
     readonly renderer: WebGLRenderer;
     readonly scene: Scene;
     readonly camera: PerspectiveCamera;
@@ -52,6 +52,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private _edges: boolean = true;
     private geometries = 0;
     private textures = 0;
+    isMobile: boolean = false;
 
     environment: Texture | null = null;
 
@@ -61,7 +62,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         aspect: 0,
     };
 
-    constructor(canvas: HTMLCanvasElement) {
+    constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
         super();
 
         this.canvas = canvas;
@@ -114,9 +115,16 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
         this.orbitControls.update();
 
-        this.gizmo = new ViewportGizmo(this.camera, this.renderer, {
-            placement: "bottom-right",
-        });
+        this.gizmo = isMobile
+            ? null
+            : new ViewportGizmo(this.camera, this.renderer, {
+                  placement: "bottom-right",
+              });
+
+        if (this.gizmo) {
+            this.gizmo.scale.set(0.7, 0.7, 0.7);
+            this.gizmo.attachControls(this.orbitControls);
+        }
 
         const cubeRenderTarget = new WebGLCubeRenderTarget(256);
         cubeRenderTarget.texture.type = HalfFloatType;
@@ -124,9 +132,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.cubeCamera = new CubeCamera(1, 1000, cubeRenderTarget);
 
         cubeRenderTarget.dispose();
-
-        this.gizmo.scale.set(0.7, 0.7, 0.7);
-        this.gizmo.attachControls(this.orbitControls);
 
         this.lights = new Lights();
         this.floor = new Floor();
@@ -217,7 +222,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.clearDepth();
         this.renderer.render(this.scene, this.camera);
         this.selection.animate();
-        this.gizmo.render();
+
+        if (this.gizmo) {
+            this.gizmo.render();
+        }
+
         this.orbitControls.update();
     };
 
@@ -241,7 +250,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.renderer.setSize(this.size.width, this.size.height);
         this.selection.resize();
-        this.gizmo.update();
+
+        if (this.gizmo) {
+            this.gizmo.update();
+        }
     };
 
     private registerEvents() {
@@ -267,7 +279,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.floor.dispose();
         this.renderer.dispose();
         this.selection.dispose();
-        this.gizmo.dispose();
+
+        if (this.gizmo) {
+            this.gizmo.dispose();
+        }
+
         this.environment?.dispose();
         this.lights.dispose();
     }

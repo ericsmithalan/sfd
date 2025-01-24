@@ -42,12 +42,29 @@
             }
         }
 
-        & > .lnk-back {
-        }
-
         & > .outliner-title-text {
             display: flex;
             flex: 1 1 auto;
+        }
+    }
+
+    &.mobile {
+        margin-bottom: 0;
+
+        & > .subtitle {
+            display: none;
+        }
+
+        & > .title-content {
+            margin-bottom: 0;
+            font-size: var(--font-4);
+            margin-top: var(--margin-5);
+
+            & > .header {
+                & > .outliner-title-text {
+                    max-width: 180px;
+                }
+            }
         }
     }
 }

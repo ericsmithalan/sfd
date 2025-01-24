@@ -5,6 +5,7 @@ import { IViewportEvent, Viewport } from "../lib";
 export interface IModelContext {
     viewport: Viewport;
     model: IModel | null;
+    isMobile: boolean;
 }
 
 export const ModelContext = createContext<IModelContext>({} as IModelContext);
@@ -12,9 +13,10 @@ export const ModelContext = createContext<IModelContext>({} as IModelContext);
 type ModelContextProps = {
     viewport: Viewport;
     children?: React.ReactNode;
+    isMobile: boolean;
 };
 
-export const ModelProvider = ({ children, viewport }: ModelContextProps) => {
+export const ModelProvider = ({ children, viewport, isMobile }: ModelContextProps) => {
     const [model, setModel] = useState<IModel | null>(null);
 
     useEffect(() => {
@@ -34,6 +36,7 @@ export const ModelProvider = ({ children, viewport }: ModelContextProps) => {
             value={{
                 viewport: viewport,
                 model: model,
+                isMobile: isMobile,
             }}
         >
             {children}

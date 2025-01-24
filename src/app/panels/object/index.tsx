@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { Object3D, Vector3 } from "three";
 import { Panel, Stats } from "../../../components";
@@ -35,7 +36,13 @@ export const ObjectPanel = () => {
     }, [outliner.model, outliner.viewport]);
 
     return object ? (
-        <Panel title={object.name} icon="box-1" contentCss="object-panel">
+        <Panel
+            title={object.name}
+            className={clsx(outliner.isMobile && "mobile")}
+            icon="box-1"
+            contentCss="object-panel"
+            opened={!outliner.isMobile}
+        >
             <Stats
                 stats={[
                     {

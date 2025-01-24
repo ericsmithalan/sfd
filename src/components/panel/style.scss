@@ -20,9 +20,6 @@
         z-index: 0;
     }
 
-    &.panel-open {
-    }
-
     & > .panel-title {
         display: flex;
         flex-direction: row;
@@ -39,5 +36,11 @@
         flex-direction: column;
         position: relative;
         z-index: 1;
+    }
+
+    &.mobile {
+        & > .panel-title {
+            font-size: var(--font-4);
+        }
     }
 }
