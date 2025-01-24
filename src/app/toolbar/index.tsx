@@ -133,7 +133,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
             <Button
                 title="Toggle Edges"
                 variant="toolbar"
-                icon="shape-2"
+                icon="artboard-2"
                 text={edges ? "Edges" : "Edges"}
                 active={edges}
                 onClick={(e) => {

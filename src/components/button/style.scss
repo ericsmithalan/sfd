@@ -114,12 +114,16 @@ input::-moz-focus-inner {
         }
 
         &.active {
-            color: var(--color-alt-2);
+            & > .icon {
+                color: var(--color-alt-1);
+            }
         }
 
         &:hover {
             background-color: var(--color-white-7);
-            color: var(--color-alt-2);
+            & > .icon {
+                color: var(--color-alt-2);
+            }
         }
     }
 
