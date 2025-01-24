@@ -10,7 +10,7 @@
     & > .subtitle {
         font-size: var(--font-7);
         text-transform: uppercase;
-        color: var(--color-alt-3);
+        color: var(--color-alt-1);
         font-weight: 600;
 
         margin-top: var(--margin-6);
@@ -65,8 +65,10 @@
 
     &.mobile {
         & > .subtitle {
-            font-size: var(--font-4);
-            margin-top: var(--margin-1);
+            display: flex;
+            font-size: var(--font-6);
+            margin-top: var(--margin-2);
+            margin-left: var(--margin-1);
         }
 
         & > .title-content {
@@ -74,6 +76,7 @@
             font-size: var(--font-4);
             height: 4rem;
             gap: 1px;
+            border-bottom: 1px dashed var(--color-white-6);
 
             & > .link {
                 background-color: transparent;
@@ -86,6 +89,10 @@
                 border-right: 1px dashed var(--color-white-6);
                 border-radius: 0;
                 color: var(--color-white-6);
+
+                &.logo-icon-link {
+                    width: 100px;
+                }
             }
 
             & > .header {

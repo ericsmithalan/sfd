@@ -4,11 +4,13 @@ import clsx from "clsx";
 import { BreadcrumbData } from "use-react-router-breadcrumbs";
 import { IconName } from "../../types";
 import { Icon } from "../icon";
+import { LogoIcon } from "../logo/LogoIcon";
 import { NavLink } from "../nav-link";
 import "./style.scss";
 
 type OutlinerTitleProps = {
     className?: string;
+    isMobile?: boolean;
     title?: string;
     subTitle?: string;
     crumbs?: BreadcrumbData[];
@@ -18,6 +20,7 @@ type OutlinerTitleProps = {
 
 export const OutlinerTitle = ({
     className,
+    isMobile,
     title,
     iconName,
     crumbs,
@@ -27,7 +30,13 @@ export const OutlinerTitle = ({
     return (
         <div className={clsx("outliner-title", className)}>
             <div className="title-content">
-                <NavLink title="Home" isNav={false} href="/" icon="home-4" />
+                {isMobile ? (
+                    <NavLink title="Home" className="logo-icon-link" isNav={false} href="/">
+                        <LogoIcon height={70} />
+                    </NavLink>
+                ) : (
+                    <NavLink title="Home" isNav={false} href="/" icon="home-4" />
+                )}
                 <NavLink title="Back" isNav={false} href="../" icon="arrow-left-long" />
                 <div title={title} className="header">
                     {iconName && <Icon name={iconName} fill={true} />}

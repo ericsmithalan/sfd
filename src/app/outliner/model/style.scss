@@ -15,6 +15,10 @@
         & > .outliner-title {
             margin-bottom: 0;
             padding-bottom: 0;
+
+            & > .title-content {
+                border-bottom: 0;
+            }
         }
     }
 }

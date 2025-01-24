@@ -3,6 +3,7 @@ export * from "./button";
 export * from "./icon";
 export * from "./loading";
 export * from "./logo";
+export * from "./logo/LogoIcon";
 export * from "./nav-link";
 export * from "./outliner-title";
 export * from "./panel";

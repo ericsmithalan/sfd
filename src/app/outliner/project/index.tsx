@@ -14,27 +14,31 @@ export const ProjectOutliner = () => {
     return (
         <div className={clsx("outliner-project", outliner.isMobile && "mobile")}>
             <OutlinerTitle
+                isMobile={outliner.isMobile}
                 className={clsx(outliner.isMobile && "mobile")}
                 crumbs={crumbs}
                 title={outliner.project?.name}
                 subTitle="Models"
                 iconName="sofa"
             />
-            {outliner.project?.children?.map((item, i) => {
-                return item.group ? (
-                    <div key={i} className="outliner-group">
-                        {item.name}
-                    </div>
-                ) : (
-                    <NavLink
-                        variant="outliner"
-                        key={i}
-                        href={String(item.id)}
-                        icon="blender"
-                        text={item.name}
-                    />
-                );
-            })}
+
+            <div className="outliner-content">
+                {outliner.project?.children?.map((item, i) => {
+                    return item.group ? (
+                        <div key={i} className="outliner-group">
+                            {item.name}
+                        </div>
+                    ) : (
+                        <NavLink
+                            variant="outliner"
+                            key={i}
+                            href={String(item.id)}
+                            icon="blender"
+                            text={item.name}
+                        />
+                    );
+                })}
+            </div>
             <Outlet
                 context={{
                     outliner: outliner,

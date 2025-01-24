@@ -1,4 +1,4 @@
-import { FC, MouseEvent } from "react";
+import { FC, MouseEvent, ReactNode } from "react";
 
 import clsx from "clsx";
 import { Link, NavLink as NavLink2 } from "react-router-dom";
@@ -7,6 +7,7 @@ import { Icon } from "../icon";
 import "./style.scss";
 
 type NavLinkProps = {
+    children?: ReactNode;
     className?: string;
     href: string;
     title?: string;
@@ -21,6 +22,7 @@ type NavLinkProps = {
 };
 
 export const NavLink: FC<NavLinkProps> = ({
+    children,
     href,
     className,
     title,
@@ -43,6 +45,7 @@ export const NavLink: FC<NavLinkProps> = ({
         >
             {icon && <Icon name={icon} fill={active} />}
             {text && <div className={clsx("link-content", !wrap && "no-wrap")}>{text}</div>}
+            {children}
         </NavLink2>
     ) : (
         <Link
@@ -54,6 +57,7 @@ export const NavLink: FC<NavLinkProps> = ({
         >
             {icon && <Icon name={icon} fill={active} />}
             {text && <div className={clsx("link-content", !wrap && "no-wrap")}>{text}</div>}
+            {children}
         </Link>
     );
 };

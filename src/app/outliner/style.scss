@@ -18,6 +18,18 @@
                 border-bottom: 1px dashed var(--color-white-6);
             }
         }
+
+        &.project {
+            margin-top: var(--margin-4);
+            padding: 0;
+
+            & > .panel-content {
+                & > .logo {
+                    display: none;
+                    padding: 0;
+                }
+            }
+        }
     }
 
     &:not(.mobile) {
