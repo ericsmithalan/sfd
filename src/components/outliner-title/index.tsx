@@ -3,6 +3,7 @@ import { MouseEvent } from "react";
 import clsx from "clsx";
 import { BreadcrumbData } from "use-react-router-breadcrumbs";
 import { IconName } from "../../types";
+import { Icon } from "../icon";
 import { LogoIcon } from "../logo/LogoIcon";
 import { NavLink } from "../nav-link";
 import "./style.scss";
@@ -37,7 +38,7 @@ export const OutlinerTitle = ({
                     <NavLink title="Home" isNav={false} href="/" icon="arrow-go-back" />
                 )}
                 <div title={title} className="header">
-                    {/* {iconName && <Icon name={iconName} fill={true} />} */}
+                    {iconName && <Icon name={iconName} fill={true} />}
                     {title && <div className="outliner-title-text">{title}</div>}
                 </div>
             </div>

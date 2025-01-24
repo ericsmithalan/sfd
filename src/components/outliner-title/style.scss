@@ -42,11 +42,11 @@
         & > .header {
             display: flex;
             flex-direction: row;
-            gap: var(--gap-6);
+            gap: var(--gap-5);
             margin-left: var(--margin-3);
 
             & > .icon {
-                color: var(--color-alt-3);
+                color: var(--color-alt-1);
             }
 
             & > .outliner-title-text {
