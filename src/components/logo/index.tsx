@@ -10,8 +10,8 @@ interface LogoProps {
 }
 
 export const Logo = ({ theme = "light", width, height, className, imageClassName }: LogoProps) => {
-    const color1 = theme == "light" ? "#ffffff" : "#272727";
-    const color2 = theme == "light" ? "#D5B895" : "#B88A4E";
+    const color1 = "#ffffff";
+    const color2 = "#DDA55B";
 
     return (
         <Link title="Home: Smith Furniture Design" to="/" className={clsx("logo", className)}>

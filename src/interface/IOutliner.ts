@@ -6,6 +6,7 @@ export interface IOutliner {
     id: number;
     level?: number;
     name: string;
+    displayName?: string;
     modelUrl?: string;
     imageResouce?: IImageResource;
     children?: Array<IOutliner>;

@@ -25,6 +25,7 @@ export const CategoriesOutliner = () => {
                                     variant="outliner"
                                     href={`/${String(item.id)}`}
                                     icon="folder"
+                                    active={outliner.category?.id === item.id}
                                     text={item.name}
                                     onClick={(e) => {
                                         if (item.id === outliner.category?.id) {
