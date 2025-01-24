@@ -31,7 +31,7 @@ export const OutlinerTitle = ({
             <div className="title-content">
                 {isMobile ? (
                     <NavLink title="Home" className="logo-icon-link" isNav={false} href="/">
-                        <LogoIcon height={30} />
+                        <LogoIcon height={25} />
                     </NavLink>
                 ) : (
                     <NavLink title="Home" isNav={false} href="/" icon="home-4" />
