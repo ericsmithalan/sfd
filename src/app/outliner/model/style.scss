@@ -11,5 +11,10 @@
     &.mobile {
         padding-bottom: 0;
         font-size: var(--font-5);
+
+        & > .outliner-title {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
     }
 }
