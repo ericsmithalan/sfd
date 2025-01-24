@@ -72,7 +72,7 @@ export const rootOutliner: Array<IOutliner> = [
                 id: 10984,
                 modelUrl: "/models/case-1/final.glb",
                 level: 3,
-                name: "Final Model",
+                name: "Sideboard",
                 imageResouce: {
                     primaryImg: 10,
                     count: 10,

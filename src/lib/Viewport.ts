@@ -204,11 +204,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private animate = () => {
         if (this.renderer.info.memory.geometries !== this.geometries) {
             this.geometries = this.renderer.info.memory.geometries;
-            // console.log("geometries", this.renderer.info.memory.geometries);
+            console.log("geometries", this.renderer.info.memory.geometries);
         }
         if (this.renderer.info.memory.textures !== this.textures) {
             this.textures = this.renderer.info.memory.textures;
-            // console.log("textures", this.renderer.info.memory.geometries);
+            console.log("textures", this.renderer.info.memory.geometries);
         }
 
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
@@ -216,6 +216,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.renderer.render(this.scene, this.camera);
         this.selection.animate();
         this.renderer.clearDepth();
+
         if (this.gizmo) {
             this.gizmo.render();
         }

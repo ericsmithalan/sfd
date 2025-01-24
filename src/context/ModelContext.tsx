@@ -21,6 +21,7 @@ export const ModelProvider = ({ children, viewport, isMobile }: ModelContextProp
 
     useEffect(() => {
         const modelChanged = (e: IViewportEvent["modelChanged"]) => {
+            console.log("model changed", e.model);
             setModel(e.model);
         };
 

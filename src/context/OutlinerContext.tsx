@@ -31,12 +31,14 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
             const item = categories.find((item) => item.id === Number(params.categoryId));
             setCategory(item || null);
         }
+
         if (category && !params.categoryId) {
             setCategory(null);
         }
     }, [categories, category, params.categoryId]);
 
     useEffect(() => {
+        console.log(params);
         const loadModel = async (obj: IOutliner) => {
             await viewport.loadModel(obj);
         };
@@ -45,16 +47,18 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
             const model = category?.children?.find((item) => item.id === Number(params.modelId));
 
             setModel(model || null);
+
             if (model) {
                 loadModel(model);
             }
         }
 
         if (model && !params.modelId) {
+            console.log("no model id");
             setModel(null);
             viewport.model = null;
         }
-    }, [model, params.modelId, viewport]);
+    }, [model, params.modelId, category, viewport]);
 
     return (
         <OutlinerContext.Provider

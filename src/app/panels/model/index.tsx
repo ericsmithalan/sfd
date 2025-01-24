@@ -42,6 +42,7 @@ export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
                 }
             } else {
                 setImages([]);
+                setPrimaryImage(null);
                 setViewer({ visible: false, selected: "" });
             }
 
