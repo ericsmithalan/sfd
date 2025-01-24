@@ -27,11 +27,11 @@ export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
     const outliner = useOutliner();
 
     useEffect(() => {
-        if (outliner.project) {
-            const resources = outliner.project.imageResouce;
+        if (outliner.model) {
+            const resources = outliner.model.imageResouce;
 
             if (resources) {
-                const imgResource = generateImageResource(outliner.project.imageResouce);
+                const imgResource = generateImageResource(outliner.model.imageResouce);
 
                 if (imgResource) {
                     setImages(imgResource.images);
@@ -55,12 +55,12 @@ export const ModelPanel = ({ onLoading }: ModelPanelProps) => {
         } else {
             setVisible(false);
         }
-    }, [outliner.project, outliner.model]);
+    }, [outliner.model]);
 
     return visisble ? (
         <>
             <Panel
-                title={outliner.project?.name}
+                title={outliner.model?.name}
                 className={clsx(outliner.isMobile && "mobile")}
                 icon="blender"
                 contentCss="images-panel"

@@ -8,7 +8,6 @@ export interface IOutlinerContext {
     viewport: Viewport;
     categories: Array<IOutliner>;
     category: IOutliner | null;
-    project: IOutliner | null;
     model: IOutliner | null;
     isMobile: boolean;
 }
@@ -24,7 +23,6 @@ type OutlinerContextProps = {
 export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerContextProps) => {
     const [categories] = useState<Array<IOutliner>>(DATA.rootOutliner);
     const [category, setCategory] = useState<IOutliner | null>(null);
-    const [project, setProject] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);
     const params = useParams();
 
@@ -39,23 +37,12 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
     }, [categories, category, params.categoryId]);
 
     useEffect(() => {
-        if (category && params.projectId) {
-            const project = category.children?.find((item) => item.id === Number(params.projectId));
-            setProject(project || null);
-        }
-
-        if (project && !params.projectId) {
-            setProject(null);
-        }
-    }, [params.projectId, project, category]);
-
-    useEffect(() => {
         const loadModel = async (obj: IOutliner) => {
             await viewport.loadModel(obj);
         };
 
-        if (params.modelId && project) {
-            const model = project.children?.find((item) => item.id === Number(params.modelId));
+        if (params.modelId) {
+            const model = category?.children?.find((item) => item.id === Number(params.modelId));
 
             setModel(model || null);
             if (model) {
@@ -67,14 +54,13 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
             setModel(null);
             viewport.model = null;
         }
-    }, [model, params.modelId, project, viewport]);
+    }, [model, params.modelId, viewport]);
 
     return (
         <OutlinerContext.Provider
             value={{
                 viewport: viewport,
                 categories: categories,
-                project: project,
                 model: model,
                 isMobile: isMobile,
                 category: category,

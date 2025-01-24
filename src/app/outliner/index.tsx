@@ -12,7 +12,6 @@ export const OutlinerView = () => {
             className={clsx(
                 "outliner-main",
                 outliner.isMobile && "mobile",
-                outliner.project && "project",
                 outliner.model && "model",
             )}
         >

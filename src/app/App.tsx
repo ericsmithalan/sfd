@@ -3,7 +3,6 @@ import { Viewer } from "./Viewer";
 import { OutlinerView } from "./outliner";
 import { CategoriesOutliner } from "./outliner/categories";
 import { ModelOutliner } from "./outliner/model";
-import { ProjectOutliner } from "./outliner/project";
 
 export const App = () => {
     console.log("app");
@@ -13,8 +12,8 @@ export const App = () => {
                 <Route path="" element={<OutlinerView />}>
                     <Route path="" element={<CategoriesOutliner />} />
                     <Route path=":categoryId" element={<CategoriesOutliner />} />
-                    <Route path=":categoryId/:projectId" element={<ProjectOutliner />} />
-                    <Route path=":categoryId/:projectId/:modelId" element={<ModelOutliner />} />
+                    {/* <Route path=":categoryId/:projectId" element={<ProjectOutliner />} /> */}
+                    <Route path=":categoryId/:modelId" element={<ModelOutliner />} />
                 </Route>
             </Route>
         </Routes>

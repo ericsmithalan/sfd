@@ -12,23 +12,16 @@ export const rootOutliner: Array<IOutliner> = [
         level: 1,
         children: [
             {
-                id: 3223,
-                name: "Desk 1",
-                level: 2,
+                id: 11001,
+                level: 3,
                 imageResouce: {
                     primaryImg: 1,
                     count: 3,
                     path: "/models/desk/images/",
                 },
-                children: [
-                    {
-                        id: 11001,
-                        level: 3,
-                        modelUrl: "/models/desk/desk1.glb",
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
+                modelUrl: "/models/desk/desk1.glb",
+                name: "Desk",
+                children: [],
             },
         ],
     },
@@ -38,23 +31,16 @@ export const rootOutliner: Array<IOutliner> = [
         level: 1,
         children: [
             {
-                id: 411,
-                level: 2,
+                id: 7564,
+                modelUrl: "/models/bunks/bunks1.glb",
+                level: 3,
                 name: "Bunk Bed",
                 imageResouce: {
                     primaryImg: 18,
                     count: 18,
                     path: "/models/bunks/images/",
                 },
-                children: [
-                    {
-                        id: 7564,
-                        modelUrl: "/models/bunks/bunks1.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
+                children: [],
             },
         ],
     },
@@ -62,26 +48,18 @@ export const rootOutliner: Array<IOutliner> = [
         id: 233,
         name: "Tables",
         level: 1,
-
         children: [
             {
-                id: 3441,
-                level: 2,
+                id: 3320,
                 name: "Shaker Table",
+                modelUrl: "/models/shaker-table/shaker-table.glb",
+                level: 3,
                 imageResouce: {
                     primaryImg: 1,
                     count: 3,
                     path: "/models/shaker-table/images/",
                 },
-                children: [
-                    {
-                        id: 3320,
-                        modelUrl: "/models/shaker-table/shaker-table.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
+                children: [],
             },
         ],
     },
@@ -91,84 +69,22 @@ export const rootOutliner: Array<IOutliner> = [
         level: 1,
         children: [
             {
-                id: 4334,
-                level: 2,
-                name: "Sideboard 1",
+                id: 10984,
+                modelUrl: "/models/case-1/final.glb",
+                level: 3,
+                name: "Final Model",
                 imageResouce: {
                     primaryImg: 10,
                     count: 10,
                     path: "/models/case-1/images/",
                 },
-                children: [
-                    {
-                        id: 10984,
-                        modelUrl: "/models/case-1/final.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                    {
-                        id: 5342,
-                        modelUrl: "/models/case-1/build.glb",
-                        level: 3,
-                        name: "Build",
-                        children: [],
-                    },
-                ],
-            },
-        ],
-    },
-    // {
-    //     id: 4329,
-    //     name: "Cabinets",
-    //     level: 1,
-    //     children: [
-    //         {
-    //             id: 8883,
-    //             level: 2,
-    //             name: "Cabinet",
-    //             children: [
-    //                 {
-    //                     id: 9483,
-    //                     modelUrl: "/models/cabinet/cabinet-1.glb",
-    //                     level: 3,
-    //                     name: "Cabinet",
-    //                     children: [],
-    //                 },
-    //             ],
-    //         },
-    //     ],
-    // },
-
-    {
-        group: true,
-        name: "In Process",
-        id: 2,
-    },
-    {
-        id: 9873,
-        name: "Display Cases",
-        level: 1,
-        children: [
-            {
-                id: 8983,
-                level: 2,
-                name: "Case 1",
-                children: [
-                    {
-                        id: 5672,
-                        modelUrl: "/models/john/case-1.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
+                children: [],
             },
         ],
     },
     {
         group: true,
-        name: "Misc",
+        name: "Misc Designs",
         id: 2,
     },
     {
@@ -177,74 +93,31 @@ export const rootOutliner: Array<IOutliner> = [
         level: 1,
         children: [
             {
-                id: 3332,
+                id: 9873,
+                name: "Display Case",
+                level: 1,
+                modelUrl: "/models/john/case-1.glb",
+            },
+            {
+                id: 11002,
+                modelUrl: "/models/desk-2/desk-2.glb",
+                level: 3,
+                name: "Deks-1",
+                children: [],
+            },
+            {
+                id: 11002,
+                modelUrl: "/models/desk-3/desk-3.glb",
+                level: 3,
                 name: "Desk 2",
-                level: 2,
-                children: [
-                    {
-                        id: 11002,
-                        modelUrl: "/models/desk-2/desk-2.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
+                children: [],
             },
             {
-                id: 21,
-                name: "Desk 3",
-                level: 2,
-                children: [
-                    {
-                        id: 11002,
-                        modelUrl: "/models/desk-3/desk-3.glb",
-                        level: 3,
-                        name: "Final Model",
-                        children: [],
-                    },
-                ],
-            },
-            {
-                id: 433,
-                level: 2,
-                name: "Living Room Set",
-                children: [
-                    {
-                        id: 3244,
-                        modelUrl: "/models/living-room-set/sofa.glb",
-                        level: 3,
-                        name: "Sofa",
-                        children: [],
-                    },
-                    {
-                        id: 4262,
-                        modelUrl: "/models/living-room-set/chair.glb",
-                        level: 3,
-                        name: "Chair",
-                        children: [],
-                    },
-                    {
-                        id: 3211,
-                        modelUrl: "/models/living-room-set/end-table.glb",
-                        level: 3,
-                        name: "End Table",
-                        children: [],
-                    },
-                ],
-            },
-            {
-                id: 4444,
-                level: 2,
+                id: 3333,
+                modelUrl: "/models/kitchen-table/kitchen-table.glb",
+                level: 3,
                 name: "Kitchen Table",
-                children: [
-                    {
-                        id: 3333,
-                        modelUrl: "/models/kitchen-table/kitchen-table.glb",
-                        level: 3,
-                        name: "Table",
-                        children: [],
-                    },
-                ],
+                children: [],
             },
         ],
     },

@@ -36,7 +36,6 @@ export const OutlinerTitle = ({
                 ) : (
                     <NavLink title="Home" isNav={false} href="/" icon="home-4" />
                 )}
-                <NavLink title="Back" isNav={false} href="../" icon="arrow-left-long" />
                 <div title={title} className="header">
                     {/* {iconName && <Icon name={iconName} fill={true} />} */}
                     {title && <div className="outliner-title-text">{title}</div>}
