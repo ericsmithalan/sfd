@@ -10,12 +10,7 @@
         margin-top: var(--margin-3);
 
         &.model {
-            border-bottom-right-radius: 0;
-            border-bottom-left-radius: 0;
-
             & > .inner-border {
-                border-bottom-right-radius: 0;
-                border-bottom-left-radius: 0;
             }
         }
 

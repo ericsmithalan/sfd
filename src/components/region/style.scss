@@ -5,6 +5,19 @@
 
     &.mobile {
         &.place-top {
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: row;
+
+            justify-content: center;
+
+            bottom: 1rem;
+
+            max-width: calc(50% - 20rem);
+
+            left: 50%;
+            right: 50%;
+            transform: translate(-50%, -50%);
         }
 
         &.place-left {
@@ -19,8 +32,8 @@
         }
 
         &.place-right {
+            display: none;
             box-sizing: border-box;
-            display: flex;
             flex-direction: column;
             bottom: 0;
             left: 0;
