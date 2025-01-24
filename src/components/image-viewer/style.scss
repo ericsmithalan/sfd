@@ -102,15 +102,20 @@
             position: relative;
 
             & > .close {
-                position: static;
                 display: flex;
                 align-self: center;
                 justify-self: center;
                 justify-content: center;
                 align-items: center;
-                border-radius: 100%;
+                top: auto;
+                bottom: -4rem;
                 height: 50px;
                 background-color: var(--color-alt-1);
+
+                max-width: calc(50%);
+                left: 50%;
+                right: 50%;
+                transform: translate(-50%, -50%);
 
                 color: var(--color-black-3);
             }
