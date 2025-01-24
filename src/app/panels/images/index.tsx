@@ -43,6 +43,7 @@ export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
             } else {
                 setImages([]);
                 setViewer({ visible: false, selected: "" });
+                setPrimaryImage(null);
             }
 
             if (!outliner.model && !resources) {
