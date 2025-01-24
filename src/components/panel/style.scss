@@ -4,7 +4,7 @@
     background-color: var(--color-black-2);
     backdrop-filter: var(--blur-3);
     box-shadow: var(--shadow-1);
-    border-radius: var(--radius-4);
+    border-radius: var(--radius-6);
     border: 1px solid var(--color-dark-3);
     padding: var(--padding-1);
     position: relative;
@@ -16,7 +16,7 @@
         right: 0;
         bottom: 0;
         border: 1px solid var(--color-white-8);
-        border-radius: var(--radius-4);
+        border-radius: var(--radius-6);
         z-index: 0;
     }
 

@@ -12,7 +12,6 @@
         text-transform: uppercase;
         color: var(--color-alt-1);
         font-weight: 600;
-
         margin-top: var(--margin-6);
     }
 
@@ -42,7 +41,7 @@
         & > .header {
             display: flex;
             flex-direction: row;
-            gap: var(--gap-5);
+            gap: var(--gap-6);
             margin-left: var(--margin-3);
 
             & > .icon {
@@ -76,7 +75,7 @@
         & > .title-content {
             margin-bottom: 0;
             font-size: var(--font-4);
-            font-weight: 400;
+            font-weight: 600;
             height: 4rem;
             gap: 1px;
             border-bottom: 1px dashed var(--color-white-6);
@@ -87,18 +86,20 @@
                 flex-direction: column;
                 align-items: center;
                 justify-content: center;
-                width: 3.5rem;
-                height: 3rem;
-                border-right: 1px dashed var(--color-white-6);
+                width: auto;
+                height: auto;
                 border-radius: 0;
                 color: var(--color-white-4);
 
                 &.logo-icon-link {
-                    width: 80px;
+                    width: 100px;
                 }
             }
 
             & > .header {
+                display: flex;
+                flex-direction: row;
+
                 & > .outliner-title-text {
                     max-width: 180px;
                     color: var(--color-white-1);

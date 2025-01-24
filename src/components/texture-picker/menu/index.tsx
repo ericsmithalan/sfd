@@ -41,15 +41,14 @@ export const TextureMenu = ({
 
             if (targetCoords && menuCoords) {
                 if (isMobile) {
-                    console.log(targetCoords.y, targetCoords.bottom);
                     setPosition({
-                        x: targetCoords.x - 40,
+                        x: targetCoords.x - 10,
                         y: targetCoords.top - menuCoords.bottom,
                         width: 200,
                     });
                 } else {
                     setPosition({
-                        x: targetCoords.x - 75,
+                        x: targetCoords.x - 10,
                         y: targetCoords.top - menuCoords.bottom,
                         width: 200,
                     });
