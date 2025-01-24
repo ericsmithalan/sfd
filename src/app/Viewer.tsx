@@ -6,6 +6,7 @@ import { Outlet } from "react-router-dom";
 import { Loading, Region } from "../components";
 import { ModelProvider, OutlinerProvider } from "../context";
 import { IViewportEvent, Viewport } from "../lib";
+import { ImagesPanel } from "./panels/images";
 import { ModelPanel } from "./panels/model";
 import { ObjectPanel } from "./panels/object";
 import "./style.scss";
@@ -52,12 +53,14 @@ export const Viewer = () => {
                             <Outlet />
                         </OutlinerProvider>
                     </Region>
-                    <Region className={clsx(isMobile && "mobile")} placement="right">
-                        <OutlinerProvider isMobile={isMobile} viewport={viewport}>
-                            <ModelPanel />
-                            <ObjectPanel />
-                        </OutlinerProvider>
-                    </Region>
+                    {!isMobile && (
+                        <Region className={clsx(isMobile && "mobile")} placement="right">
+                            <OutlinerProvider isMobile={isMobile} viewport={viewport}>
+                                <ModelPanel />
+                                <ObjectPanel />
+                            </OutlinerProvider>
+                        </Region>
+                    )}
 
                     <Region className={clsx(isMobile && "mobile")} placement="top">
                         <ModelProvider isMobile={isMobile} viewport={viewport}>
@@ -66,7 +69,13 @@ export const Viewer = () => {
                                     setLoading(loading);
                                 }}
                                 viewport={viewport}
-                            />
+                            >
+                                {isMobile && (
+                                    <OutlinerProvider isMobile={isMobile} viewport={viewport}>
+                                        <ImagesPanel />
+                                    </OutlinerProvider>
+                                )}
+                            </Toolbar>
                         </ModelProvider>
                     </Region>
                 </>

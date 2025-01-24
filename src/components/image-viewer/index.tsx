@@ -100,6 +100,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                               );
                           })}
                       </Scroller>
+                      <div className="inner-border"></div>
                   </div>
               </div>,
               document.body,

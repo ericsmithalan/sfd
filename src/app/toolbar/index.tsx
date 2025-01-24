@@ -12,13 +12,14 @@ import { createTextureMaterials, getObjectsById } from "../../utils";
 import "./style.scss";
 
 type ToolbarProps = {
+    children?: React.ReactNode;
     viewport: Viewport;
     onLoading?: (loading: boolean) => void;
 };
 
 type SelectedTextureState = Map<string, IObjectMaterial>;
 
-export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
+export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
     const [resolution, setResolution] = useState<TextureResolution>("2k");
@@ -133,20 +134,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
                 }}
             />
 
-            {isMobile && (
-                <Button
-                    title="Images"
-                    variant="toolbar"
-                    icon="multi-image"
-                    text={"images"}
-                    active={edges}
-                    onClick={(e) => {
-                        viewport.edges = !edges;
-                        setEdges(!edges);
-                    }}
-                />
-            )}
-
+            {children}
             {/* <Button
                 title="Toggle Edges"
                 variant="toolbar"

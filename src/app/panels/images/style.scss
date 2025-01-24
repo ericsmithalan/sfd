@@ -1,0 +1,21 @@
+.images-panel {
+    display: flex;
+    flex-direction: column;
+    padding-top: var(--padding-1);
+
+    & > .image-list {
+        display: flex;
+        flex-direction: row;
+        flex: 1 1 auto;
+        margin-bottom: var(--margin-3);
+
+        & > .button {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+        }
+    }
+
+    & > .stats {
+    }
+}
