@@ -58,17 +58,6 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                           e.stopPropagation();
                       }}
                   >
-                      <Button
-                          className="close"
-                          icon="close"
-                          variant="close"
-                          onClick={() => {
-                              setIsVisible(false);
-                              if (onClosed) {
-                                  onClosed();
-                              }
-                          }}
-                      />
                       <div className="selected">
                           <BgImage
                               size="cover"
@@ -100,6 +89,17 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                               );
                           })}
                       </Scroller>
+                      <Button
+                          className="close"
+                          icon="close"
+                          variant="close"
+                          onClick={() => {
+                              setIsVisible(false);
+                              if (onClosed) {
+                                  onClosed();
+                              }
+                          }}
+                      />
                       <div className="inner-border"></div>
                   </div>
               </div>,
