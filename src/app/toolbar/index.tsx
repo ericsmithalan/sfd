@@ -92,7 +92,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
 
         if (sel) {
             sel.material?.dispose();
-            selected.delete(key);
         }
 
         await loadMaterials(materialObj);
