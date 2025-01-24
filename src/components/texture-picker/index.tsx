@@ -10,6 +10,7 @@ import { TextureButton } from "./texture-button";
 
 type TexturePickerProps = {
     className?: string;
+    isMobile?: boolean;
     label?: string;
     material: IObjectMaterial;
     textures: Array<ITexture>;

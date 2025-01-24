@@ -110,6 +110,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
             {model?.materials &&
                 Array.from(model.materials.entries()).map(([key, value], i) => (
                     <TexturePicker
+                        className={clsx(isMobile && "mobile")}
                         key={i}
                         label={key}
                         material={value}
