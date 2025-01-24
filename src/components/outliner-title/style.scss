@@ -54,12 +54,14 @@
                 overflow: hidden;
                 white-space: nowrap;
                 text-overflow: ellipsis;
+                color: var(--color-white-1);
             }
         }
 
         & > .outliner-title-text {
             display: flex;
             flex: 1 1 auto;
+            color: var(--color-white-1);
         }
     }
 

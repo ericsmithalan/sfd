@@ -37,11 +37,12 @@ input::-moz-focus-inner {
         flex: 1 1 auto;
         background-color: transparent;
         border: 1px solid transparent;
+        color: var(--color-white-1);
 
         gap: var(--gap-6);
 
         & > .icon {
-            color: var(--color-alt-3);
+            color: var(--color-alt-1);
         }
     }
 

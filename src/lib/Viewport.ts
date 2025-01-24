@@ -80,7 +80,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         // this.camera.rotateX(Math.PI / 2);
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
-        this.camera.position.set(15, 2, 9);
+        this.camera.position.set(15, 10, 9);
         this.camera.updateProjectionMatrix();
 
         this.renderer = new WebGLRenderer({
