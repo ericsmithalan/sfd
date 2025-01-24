@@ -33,8 +33,13 @@
         position: relative;
         flex-wrap: wrap;
         justify-content: center;
+
         align-items: center;
         gap: 2px;
+
+        & > .button {
+            height: 80px;
+        }
     }
 }
 
