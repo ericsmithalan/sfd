@@ -4,12 +4,20 @@
     padding-bottom: var(--padding-4);
     position: relative;
 
-    // transform: translate(-50%, -50%);
-
     &.mobile {
         flex: 1 1 auto;
-        width: 90%;
+        width: 95%;
         margin-top: var(--margin-3);
+
+        &.model {
+            border-bottom-right-radius: 0;
+            border-bottom-left-radius: 0;
+
+            & > .inner-border {
+                border-bottom-right-radius: 0;
+                border-bottom-left-radius: 0;
+            }
+        }
 
         & > .panel-content {
             flex: 1 1 auto;

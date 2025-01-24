@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Outlet, useOutletContext } from "react-router-dom";
 import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { NavLink, OutlinerTitle } from "../../../components";
@@ -11,8 +12,9 @@ export const ProjectOutliner = () => {
     const crumbs = useBreadcrumbs();
 
     return (
-        <div className="outliner-project">
+        <div className={clsx("outliner-project", outliner.isMobile && "mobile")}>
             <OutlinerTitle
+                className={clsx(outliner.isMobile && "mobile")}
                 crumbs={crumbs}
                 title={outliner.project?.name}
                 subTitle="Models"

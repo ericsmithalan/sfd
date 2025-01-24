@@ -8,7 +8,13 @@ export const OutlinerView = () => {
     const outliner = useOutliner();
 
     return (
-        <Panel className={clsx("outliner-main", outliner.isMobile && "mobile")}>
+        <Panel
+            className={clsx(
+                "outliner-main",
+                outliner.isMobile && "mobile",
+                outliner.model && "model",
+            )}
+        >
             <Logo height={45} />
             <Outlet context={{ outliner: outliner }} />
         </Panel>
