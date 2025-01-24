@@ -43,13 +43,13 @@ export const TextureMenu = ({
                 if (isMobile) {
                     setPosition({
                         x: targetCoords.x - 10,
-                        y: targetCoords.top - menuCoords.bottom,
+                        y: targetCoords.top - menuCoords.bottom - 5,
                         width: 200,
                     });
                 } else {
                     setPosition({
-                        x: targetCoords.x - 10,
-                        y: targetCoords.top - menuCoords.bottom,
+                        x: targetCoords.x - 60,
+                        y: targetCoords.top - menuCoords.bottom - 5,
                         width: 200,
                     });
                 }

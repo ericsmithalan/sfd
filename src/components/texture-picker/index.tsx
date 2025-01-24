@@ -33,6 +33,18 @@ export const TexturePicker: FC<TexturePickerProps> = ({
         setSelected(material.texture || null);
     }, [material.texture]);
 
+    const getLabel = () => {
+        if (label === "hardware") {
+            return "metal";
+        }
+        if (label === "primary") {
+            return "color 1";
+        }
+        if (label === "contrast") {
+            return "color 2";
+        }
+    };
+
     return (
         <>
             {selected && (
@@ -40,7 +52,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
                     ref={buttonRef}
                     isMobile={isMobile}
                     active={open}
-                    text={label}
+                    text={getLabel()}
                     className={clsx("menu-button", className)}
                     image={selected.thumbnail}
                     onClick={(e: MouseEvent) => {

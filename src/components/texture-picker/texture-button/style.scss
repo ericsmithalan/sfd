@@ -31,7 +31,7 @@
     & > .text {
         text-transform: capitalize;
         font-size: var(--font-7);
-        padding: var(--padding-5);
+        padding: var(--padding-4);
     }
 
     & > .bg-image {
@@ -42,8 +42,8 @@
     }
 
     &.mobile {
-        max-width: 4rem;
-        min-width: 2rem;
+        max-width: 4.4rem;
+        min-width: 4rem;
         width: 100%;
     }
 
