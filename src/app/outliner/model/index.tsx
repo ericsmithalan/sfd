@@ -30,7 +30,7 @@ export const ModelOutliner = () => {
     }, [outliner.viewport]);
 
     return (
-        <div className="outliner-model">
+        <div className={clsx("outliner-model", outliner.isMobile && "mobile")}>
             <OutlinerTitle
                 className={clsx(outliner.isMobile && "mobile")}
                 subTitle={"Objects"}

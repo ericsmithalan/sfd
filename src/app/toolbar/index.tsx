@@ -23,7 +23,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
     const [edges, setEdges] = useState(false);
     const [resolution, setResolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
-    const { model } = useModel();
+    const { model, isMobile } = useModel();
 
     useEffect(() => {
         setEdges(viewport.edges);
@@ -158,7 +158,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
     };
 
     return (
-        <Panel className={clsx("app-toolbar-panel", !visible && "hidden")} contentCss="app-toolbar">
+        <Panel
+            className={clsx("app-toolbar-panel", !visible || (isMobile && "hidden"))}
+            contentCss="app-toolbar"
+        >
             {model?.materials
                 .entries()
                 .toArray()
