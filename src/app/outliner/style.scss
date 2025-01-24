@@ -9,11 +9,6 @@
         width: 95%;
         margin-top: var(--margin-3);
 
-        &.model {
-            & > .inner-border {
-            }
-        }
-
         & > .panel-content {
             flex: 1 1 auto;
 
