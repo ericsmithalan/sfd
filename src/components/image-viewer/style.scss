@@ -143,14 +143,16 @@
                     flex-wrap: wrap;
                     justify-content: space-between;
                     gap: 0;
-                    row-gap: 8px;
+                    row-gap: 2px;
 
                     & > .button {
                         display: flex;
                         flex-direction: column;
-                        width: 32%;
+                        justify-content: center;
+                        align-items: center;
+                        max-height: 104px;
                         gap: 0;
-
+                        width: 33%;
                         height: auto;
 
                         & > .bg-image {
@@ -158,8 +160,6 @@
                             display: flex;
                             flex-direction: column;
                             flex: 1 1 auto;
-                            width: auto;
-                            height: auto;
                         }
                     }
                 }

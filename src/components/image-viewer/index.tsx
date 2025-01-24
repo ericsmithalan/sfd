@@ -80,8 +80,9 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                                       }}
                                   >
                                       <BgImage
-                                          minWidth={100}
-                                          minHeight={100}
+                                          minWidth={99}
+                                          minHeight={99}
+                                          maxHeight={99}
                                           size="cover"
                                           src={`${img}_thumb.png`}
                                       />
