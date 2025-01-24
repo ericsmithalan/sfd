@@ -8,6 +8,7 @@ import { TextureButton } from "../texture-button";
 import "./style.scss";
 
 type TextureMenuProps = {
+    className?: string;
     items: Array<ITexture>;
     selected: ITexture | null;
     targetRef: RefObject<any>;
@@ -18,6 +19,7 @@ type TextureMenuProps = {
 
 export const TextureMenu = ({
     items = [],
+    className,
     targetRef,
     onItemClick,
     onHide,
@@ -44,7 +46,7 @@ export const TextureMenu = ({
         <>
             <div
                 ref={menuRef}
-                className={clsx("menu")}
+                className={clsx("menu", className)}
                 style={{ left: position?.x, top: position?.y, width: position.width }}
             >
                 <div className="inner-border"></div>

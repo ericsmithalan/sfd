@@ -5,6 +5,7 @@ import "./style.scss";
 type BgImageProps = {
     src: string | null;
     className?: string;
+    bgCss?: string;
     size?: "contain" | "cover";
     title?: string;
     children?: React.ReactNode;
@@ -29,6 +30,7 @@ export const BgImage: FC<BgImageProps> = ({
     maxWidth,
     minHeight,
     maxHeight,
+    bgCss,
     width,
     onClick,
 }: BgImageProps) => {
@@ -47,7 +49,7 @@ export const BgImage: FC<BgImageProps> = ({
             onClick={onClick}
         >
             <div
-                className={clsx("background")}
+                className={clsx("background", bgCss)}
                 style={{
                     backgroundImage: `url(${src})`,
                     backgroundSize: size,

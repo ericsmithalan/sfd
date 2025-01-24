@@ -5,6 +5,7 @@ import "./style.scss";
 type ScrollerProps = {
     children?: ReactNode;
     className?: string;
+    scrollCss?: string;
     showShadow?: boolean;
     width?: number | string;
     height?: number | string;
@@ -21,6 +22,7 @@ export const Scroller: FC<ScrollerProps> = ({
     height = "100%",
     maxWidth,
     showShadow = true,
+    scrollCss,
     minWidth,
     minHeight,
     maxHeight,
@@ -83,7 +85,7 @@ export const Scroller: FC<ScrollerProps> = ({
         >
             <div
                 ref={scrollerRef}
-                className={clsx("scroller-scroll")}
+                className={clsx("scroller-scroll", scrollCss)}
                 style={{
                     width: (!disable && width) || undefined,
                     height: (!disable && height) || undefined,

@@ -1,20 +1,29 @@
+import clsx from "clsx";
 import { MouseEvent, useState } from "react";
 import { Button } from "../button";
 import "./style.scss";
 
 type OutlinerButtonProps = {
     id?: string;
+    className?: string;
     active?: boolean;
     text?: string;
     onClick?: (e: MouseEvent) => void;
     onVisible?: (visible: boolean, e: MouseEvent) => void;
 };
 
-export const OutlinerButton = ({ id, text, active, onClick, onVisible }: OutlinerButtonProps) => {
+export const OutlinerButton = ({
+    id,
+    text,
+    active,
+    onClick,
+    onVisible,
+    className,
+}: OutlinerButtonProps) => {
     const [visible, setVisible] = useState(true);
 
     return (
-        <div id={id} className="outliner-button">
+        <div id={id} className={clsx("outliner-button")}>
             <Button
                 title={text}
                 variant="outliner"

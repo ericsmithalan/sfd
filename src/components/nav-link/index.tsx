@@ -7,6 +7,7 @@ import { Icon } from "../icon";
 import "./style.scss";
 
 type NavLinkProps = {
+    className?: string;
     href: string;
     title?: string;
     active?: boolean;
@@ -21,6 +22,7 @@ type NavLinkProps = {
 
 export const NavLink: FC<NavLinkProps> = ({
     href,
+    className,
     title,
     active,
     onClick,
@@ -36,7 +38,7 @@ export const NavLink: FC<NavLinkProps> = ({
             title={title}
             relative={resolve}
             onClick={onClick}
-            className={clsx("link", active && "active", `lnk-${variant}`)}
+            className={clsx("link", active && "active", `lnk-${variant}`, className)}
             to={href}
         >
             {icon && <Icon name={icon} fill={active} />}
@@ -47,7 +49,7 @@ export const NavLink: FC<NavLinkProps> = ({
             title={title}
             relative={resolve}
             onClick={onClick}
-            className={clsx("link", active && "active", `lnk-${variant}`)}
+            className={clsx("link", active && "active", `lnk-${variant}`, className)}
             to={href}
         >
             {icon && <Icon name={icon} fill={active} />}

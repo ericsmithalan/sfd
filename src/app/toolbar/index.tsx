@@ -159,7 +159,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, onLoading }) => {
 
     return (
         <Panel
-            className={clsx("app-toolbar-panel", !visible || (isMobile && "hidden"))}
+            className={clsx("app-toolbar-panel", !visible && "hidden", isMobile && "mobile")}
             contentCss="app-toolbar"
         >
             {model?.materials
