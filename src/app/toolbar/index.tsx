@@ -19,10 +19,11 @@ type ToolbarProps = {
 
 type SelectedTextureState = Map<string, IObjectMaterial>;
 
-export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
+export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => {
     const [visible, setVisible] = useState(false);
     const [edges, setEdges] = useState(false);
-    const [resolution, setResolution] = useState<TextureResolution>("2k");
+    const [loading, setLoading] = useState(false);
+    const [resolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model, isMobile } = useModel();
 
@@ -89,6 +90,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
     };
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
+        if (onLoading) {
+            onLoading(true);
+        }
+
         const sel = selected.get(key);
 
         if (sel) {
@@ -100,6 +105,9 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
         selected.set(key, materialObj);
         // @ts-ignore
         setSelected(new Map([...selected]));
+        if (onLoading) {
+            onLoading(false);
+        }
     };
 
     return (
