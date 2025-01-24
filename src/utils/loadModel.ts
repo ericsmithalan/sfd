@@ -49,7 +49,11 @@ const getMaterialType = (
     return null;
 };
 
-export const loadModel = (outliner: IOutliner, viewport: Viewport): Promise<IModel> => {
+export const loadModel = (
+    outliner: IOutliner,
+    viewport: Viewport,
+    isMobile: boolean = false,
+): Promise<IModel> => {
     return new Promise((resolve) => {
         const modelChildrenOutliner: Array<IOutliner> = [];
 
