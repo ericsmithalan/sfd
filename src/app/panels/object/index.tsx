@@ -19,6 +19,7 @@ export const ObjectPanel = () => {
                 if (objSize) {
                     setSize(objSize);
                 }
+                console.log(e.object);
             }
 
             setObject(e.object);

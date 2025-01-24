@@ -95,10 +95,10 @@
         background-color: var(--color-black-2);
 
         & > .viewer {
-            max-width: 99%;
-            min-width: 99%;
-            max-height: 80%;
-            min-height: 60%;
+            max-width: 99vw;
+            min-width: 99vw;
+            max-height: 80vh;
+            min-height: 80vh;
             position: relative;
 
             & > .close {
@@ -108,7 +108,7 @@
                 justify-content: center;
                 align-items: center;
                 top: auto;
-                bottom: -4rem;
+                bottom: -3rem;
                 height: 50px;
                 background-color: var(--color-alt-1);
 
@@ -120,14 +120,48 @@
                 color: var(--color-black-3);
             }
 
-            padding: var(--padding-1);
+            padding: var(--padding-3);
 
             & > .selected {
-                max-height: 450px;
+                max-height: 300px;
 
                 & > .bg-image {
-                    max-height: 450px;
-                    min-height: 450px;
+                    max-height: 300px;
+                }
+            }
+
+            & > .images {
+                position: relative;
+                display: flex;
+                flex-direction: row;
+                max-height: 31vh;
+                gap: 0;
+
+                & > .scroller-scroll {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    justify-content: space-between;
+                    gap: 0;
+                    row-gap: 8px;
+
+                    & > .button {
+                        display: flex;
+                        flex-direction: column;
+                        width: 32%;
+                        gap: 0;
+
+                        height: auto;
+
+                        & > .bg-image {
+                            gap: 0;
+                            display: flex;
+                            flex-direction: column;
+                            flex: 1 1 auto;
+                            width: auto;
+                            height: auto;
+                        }
+                    }
                 }
             }
         }

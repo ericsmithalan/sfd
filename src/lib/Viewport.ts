@@ -1,18 +1,15 @@
 import {
     ACESFilmicToneMapping,
     Color,
-    CubeCamera,
-    EquirectangularReflectionMapping,
     EventDispatcher,
     Fog,
-    HalfFloatType,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
     Scene,
     SRGBColorSpace,
     Texture,
-    WebGLCubeRenderTarget,
+    UVMapping,
     WebGLRenderer,
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
@@ -42,7 +39,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     readonly orbitControls: OrbitControls;
     readonly canvas: HTMLCanvasElement;
     readonly selection: Selection;
-    readonly cubeCamera: CubeCamera;
 
     readonly lights: Lights;
     readonly grid: Grid;
@@ -129,13 +125,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.gizmo.attachControls(this.orbitControls);
         }
 
-        const cubeRenderTarget = new WebGLCubeRenderTarget(256);
-        cubeRenderTarget.texture.type = HalfFloatType;
-
-        this.cubeCamera = new CubeCamera(1, 1000, cubeRenderTarget);
-
-        cubeRenderTarget.dispose();
-
         this.lights = new Lights();
         this.floor = new Floor();
         this.grid = new Grid();
@@ -155,10 +144,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         const hdriLoader = new RGBELoader();
         const texture = await hdriLoader.loadAsync(hdr);
 
-        texture.mapping = EquirectangularReflectionMapping;
+        texture.mapping = UVMapping;
+        texture.colorSpace = SRGBColorSpace;
 
         this.environment = pmremGenerator.fromEquirectangular(texture).texture;
         this.scene.environment = this.environment;
+
         // this.scene.environment.colorSpace = SRGBColorSpace;
         // texture.needsUpdate = true;
         // this.scene.background = texture;
@@ -220,12 +211,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             // console.log("textures", this.renderer.info.memory.geometries);
         }
 
-        this.cubeCamera.update(this.renderer, this.scene);
         this.renderer.setViewport(0, 0, this.size.width, this.size.height);
-        this.renderer.clearDepth();
+
         this.renderer.render(this.scene, this.camera);
         this.selection.animate();
-
+        this.renderer.clearDepth();
         if (this.gizmo) {
             this.gizmo.render();
         }

@@ -1,11 +1,4 @@
-import {
-    AmbientLight,
-    DirectionalLight,
-    DirectionalLightHelper,
-    HemisphereLight,
-    SpotLight,
-    SpotLightHelper,
-} from "three";
+import { AmbientLight, DirectionalLight, HemisphereLight } from "three";
 
 // ref for lumens: http://www.power-sure.com/lumens.htm
 const bulbLuminousPowers: Record<string, number> = {
@@ -38,18 +31,11 @@ export class Lights {
     dirLight: DirectionalLight;
     hemiLight: HemisphereLight;
     ambientLight: AmbientLight;
-    dirLightHelper: DirectionalLightHelper;
-    spotLight: SpotLight;
-    spotLightHelper: SpotLightHelper;
 
     constructor() {
         this.dirLight = new DirectionalLight(0xffffff, 1);
-        this.hemiLight = new HemisphereLight(0xffffff, 0x000000, 1);
+        this.hemiLight = new HemisphereLight(0xffffff, 0x000000, 0.5);
         this.ambientLight = new AmbientLight(0xffffff, 1);
-        this.dirLightHelper = new DirectionalLightHelper(this.dirLight, 1);
-        this.spotLight = new SpotLight(0xffffff, 2);
-
-        this.spotLightHelper = new SpotLightHelper(this.spotLight);
 
         this.init();
     }
@@ -58,59 +44,43 @@ export class Lights {
         this.setAmbient();
         this.setDirectional();
         this.setHemi();
-        this.setSpotLight();
-        this.spotLightHelper.update();
     }
 
     private setAmbient() {
         this.ambientLight.name = "Ambient Light";
     }
 
-    private setSpotLight() {
-        this.spotLight.castShadow = true;
-        this.spotLight.angle = 0.3;
-        this.spotLight.shadow.mapSize.width = 1024;
-        this.spotLight.shadow.mapSize.height = 1024;
-        this.spotLight.shadow.camera.near = 5;
-        this.spotLight.shadow.camera.far = 100;
-        this.spotLight.power = bulbLuminousPowers["110000 lm (1000W)"];
-
-        this.spotLight.intensity = 4;
-        this.spotLight.position.set(3, 10, -8);
-        this.spotLight.shadow.bias = -0.0001;
-        this.spotLight.penumbra = 1;
-        this.spotLight.shadow.focus = 1;
-    }
     private setDirectional() {
         this.dirLight.name = "Directional Light";
-        this.dirLight.position.set(4, 6, 1);
+        this.dirLight.position.set(18, 10, -4);
         this.dirLight.castShadow = true;
-        this.dirLight.shadow.camera.near = 0.5;
+        this.dirLight.intensity = 1;
+
+        this.dirLight.shadow.camera.near = 0.001;
         this.dirLight.shadow.camera.far = 100;
         this.dirLight.shadow.bias = -0.001;
-        this.dirLight.shadow.mapSize.width = 1024 * 2;
-        this.dirLight.shadow.mapSize.height = 1024 * 2;
+        this.dirLight.shadow.mapSize.width = 1024;
+        this.dirLight.shadow.mapSize.height = 1024;
+        // this.dirLight.shadow.blurSamples = 3;
+        // this.dirLight.shadow.intensity = 2;
+        // this.dirLight.shadow.radius = 30;
+        // this.dirLight.shadow.camera.castShadow = true;
     }
 
     visible(visible: boolean) {
         this.dirLight.visible = visible;
         this.ambientLight.visible = visible;
-        this.dirLightHelper.visible = visible;
-        this.spotLightHelper.visible = visible;
     }
 
     private setHemi() {
         this.hemiLight.name = "Hemi Light";
-        this.hemiLight.position.set(10, 20, 0);
-        this.hemiLight.intensity = hemiLuminousIrradiances["350 lx (Office Room)"];
+        this.hemiLight.position.set(0, 0, 0);
+        this.hemiLight.intensity = 1000;
     }
 
     dispose() {
         this.dirLight.dispose();
         this.hemiLight.dispose();
         this.ambientLight.dispose();
-        this.dirLightHelper.dispose();
-        this.spotLight.dispose();
-        this.spotLightHelper.dispose();
     }
 }

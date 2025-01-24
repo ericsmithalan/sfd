@@ -71,6 +71,7 @@ export const loadModel = (
                         object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
+                        // object.customDepthMaterial
 
                         if (object.material) {
                             const matType = getMaterialType(object.material);

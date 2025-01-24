@@ -30,7 +30,7 @@ export const TextureMenu = ({
     const [position, setPosition] = useState<{ x: number; y: number; width: number }>({
         x: 0,
         y: 0,
-        width: 0,
+        width: 200,
     });
     const menuRef = useRef<HTMLDivElement>(null);
 
@@ -45,13 +45,13 @@ export const TextureMenu = ({
                     setPosition({
                         x: targetCoords.x - 40,
                         y: targetCoords.top - menuCoords.bottom,
-                        width: targetCoords.width + 80,
+                        width: 200,
                     });
                 } else {
                     setPosition({
-                        x: targetCoords.x - 40,
-                        y: targetCoords.y + targetCoords.height,
-                        width: targetCoords.width + 80,
+                        x: targetCoords.x - 75,
+                        y: targetCoords.top - menuCoords.bottom,
+                        width: 200,
                     });
                 }
             }
