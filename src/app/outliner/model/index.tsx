@@ -22,10 +22,15 @@ export const ModelOutliner = () => {
         const selectionChange = (e: ISelectionEvent["change"]) => {
             setObject(e.object);
         };
-        outliner.viewport.selection.addEventListener("change", selectionChange);
+
+        if (outliner.viewport.selection) {
+            outliner.viewport.selection.addEventListener("change", selectionChange);
+        }
 
         return () => {
-            outliner.viewport.selection.removeEventListener("change", selectionChange);
+            if (outliner.viewport.selection) {
+                outliner.viewport.selection.removeEventListener("change", selectionChange);
+            }
         };
     }, [outliner.viewport]);
 

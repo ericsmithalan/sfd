@@ -7,7 +7,7 @@ export const getObjectsById = (
     callback: (obj: Object3D) => void,
 ): void => {
     for (const id of ids) {
-        const obj = viewport.scene.getObjectById(id);
+        const obj = viewport.world.scene.getObjectById(id);
         if (obj) {
             callback(obj);
         }

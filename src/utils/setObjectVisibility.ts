@@ -18,7 +18,7 @@ export const setObjectVisibility = (
                 edge.visible = visible;
             }
 
-            if (viewport.selection.object?.id === object.id) {
+            if (viewport.selection?.object?.id === object.id) {
                 viewport.selection.object = null;
             }
 

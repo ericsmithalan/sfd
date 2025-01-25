@@ -20,7 +20,7 @@ import {
 } from "three/examples/jsm/Addons.js";
 import { disposeObject } from "../utils";
 
-export class BorderEffect {
+export class OutlineEffect {
     private target: WebGLRenderTarget;
     private composer: EffectComposer;
     private effectFXAA: ShaderPass;

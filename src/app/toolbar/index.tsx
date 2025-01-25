@@ -52,7 +52,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
 
         const materials = await createTextureMaterials(
             materialObj.texture,
-            viewport.environment,
+            viewport.world.scene.environment,
             resolution,
         );
 

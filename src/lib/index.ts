@@ -1,4 +1,4 @@
-export * from "./BorderEffect";
+export * from "./OutlineEffect";
 export * from "./Edges";
 export * from "./Floor";
 export * from "./Grid";

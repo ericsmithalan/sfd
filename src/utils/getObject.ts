@@ -9,12 +9,12 @@ export const getObject = <T extends Object3D>(
     let object = null;
 
     if (typeof obj === "number") {
-        object = viewport.scene.getObjectById(obj);
+        object = viewport.world.scene.getObjectById(obj);
     } else {
         object = obj;
     }
 
-    if (object && select) {
+    if (object && select && viewport.selection) {
         viewport.selection.object = object;
     }
 

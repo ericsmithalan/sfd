@@ -68,10 +68,8 @@ export const loadModel = (
 
                 model.traverse((object: Object3D) => {
                     if (object instanceof Mesh) {
-                        object.geometry.computeBoundingSphere();
                         object.castShadow = true;
                         object.receiveShadow = true;
-                        // object.customDepthMaterial
 
                         if (object.material) {
                             const matType = getMaterialType(object.material);
@@ -99,7 +97,10 @@ export const loadModel = (
                         };
 
                         object.userData = new ObjectUserData(outlinerUD, { selectable: true });
-                        modelChildrenOutliner.push(outlinerUD);
+
+                        if (!isMobile) {
+                            modelChildrenOutliner.push(outlinerUD);
+                        }
 
                         edges.add(object);
                     } else {

@@ -1,30 +1,12 @@
-import {
-    ACESFilmicToneMapping,
-    Color,
-    EventDispatcher,
-    Fog,
-    PCFSoftShadowMap,
-    PerspectiveCamera,
-    PMREMGenerator,
-    Scene,
-    SRGBColorSpace,
-    Texture,
-    UVMapping,
-    WebGLRenderer,
-} from "three";
-import { ViewportGizmo } from "three-viewport-gizmo";
-import { OrbitControls, RGBELoader } from "three/examples/jsm/Addons.js";
+import { EventDispatcher } from "three";
 //8
-import hdr from "../assets/env/1a.hdr";
 
 import { IOutliner, IScreenSize } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
-import { Floor } from "./Floor";
-import { Grid } from "./Grid";
-import { Lights } from "./Lights";
 import { Selection } from "./Selection";
+import { World } from "./World";
 
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
@@ -32,25 +14,15 @@ export interface IViewportEvent {
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
-    private readonly gizmo: ViewportGizmo | null;
-    readonly renderer: WebGLRenderer;
-    readonly scene: Scene;
-    readonly camera: PerspectiveCamera;
-    readonly orbitControls: OrbitControls;
+    readonly world: World;
     readonly canvas: HTMLCanvasElement;
-    readonly selection: Selection;
-
-    readonly lights: Lights;
-    readonly grid: Grid;
-    readonly floor: Floor;
+    readonly selection: Selection | null;
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
     private geometries = 0;
     private textures = 0;
-    isMobile: boolean = false;
-
-    environment: Texture | null = null;
+    private isMobile: boolean = false;
 
     size: IScreenSize = {
         width: 0,
@@ -62,100 +34,27 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         super();
 
         this.canvas = canvas;
-
         this.setSize();
 
-        this.scene = new Scene();
-        this.scene.name = "Scene";
-        this.scene.background = new Color("#222222");
-        this.scene.fog = new Fog(new Color("#222222"), 1, 50);
-
-        this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
-        this.camera.name = "Camera";
-        // this.camera.up = new Vector3(0, 0, 1);
-        // this.camera.rotateX(Math.PI / 2);
-        this.camera.zoom = 1;
-        this.camera.updateProjectionMatrix();
-        this.camera.position.set(15, 10, 9);
-        this.camera.updateProjectionMatrix();
-
-        this.renderer = new WebGLRenderer({
-            canvas: canvas,
-            antialias: true,
-            alpha: true,
-        });
-
-        this.renderer.shadowMap.enabled = true;
-        this.renderer.toneMapping = ACESFilmicToneMapping;
-        this.renderer.toneMappingExposure = 1;
-        this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setSize(this.size.width, this.size.height);
-        this.renderer.shadowMap.type = PCFSoftShadowMap;
-        this.renderer.outputColorSpace = SRGBColorSpace;
-        this.renderer.autoClear = false;
-
-        this.orbitControls = new OrbitControls(this.camera, this.canvas);
-        this.orbitControls.enableDamping = false; // an animation loop is required when either damping or auto-rotation are enabled
-        this.orbitControls.dampingFactor = 0.05;
-        this.orbitControls.screenSpacePanning = true;
-        this.orbitControls.minDistance = 0.1;
-        this.orbitControls.maxDistance = 3500;
-
-        this.selection = new Selection(
-            this.canvas,
-            this.scene,
-            this.camera,
-            this.renderer,
-            this.orbitControls,
-        );
-
-        this.selection.enabled = !isMobile;
-
-        this.orbitControls.maxPolarAngle = Math.PI / 1.5;
-        this.orbitControls.update();
-
-        this.gizmo = isMobile
+        this.world = new World(canvas, isMobile, this.size);
+        this.selection = isMobile
             ? null
-            : new ViewportGizmo(this.camera, this.renderer, {
-                  placement: "bottom-right",
-              });
+            : new Selection(
+                  this.canvas,
+                  this.world.scene,
+                  this.world.camera,
+                  this.world.renderer,
+                  this.world.orbitControls,
+              );
 
-        if (this.gizmo) {
-            this.gizmo.scale.set(0.7, 0.7, 0.7);
-            this.gizmo.attachControls(this.orbitControls);
-        }
-
-        this.lights = new Lights();
-        this.floor = new Floor();
-        this.grid = new Grid();
-
-        this.scene.add(this.lights.dirLight, this.floor, this.grid);
-
-        this.renderer.setAnimationLoop(() => this.animate());
+        this.world.renderer.setAnimationLoop(() => this.animate());
 
         this.registerEvents();
-        this.setupEnvironment();
+        this.init();
     }
 
-    async setupEnvironment() {
-        // this.lights.visible(false);
-        const pmremGenerator = new PMREMGenerator(this.renderer);
-
-        const hdriLoader = new RGBELoader();
-        const texture = await hdriLoader.loadAsync(hdr);
-
-        texture.mapping = UVMapping;
-        texture.colorSpace = SRGBColorSpace;
-
-        this.environment = pmremGenerator.fromEquirectangular(texture).texture;
-        this.scene.environment = this.environment;
-
-        // this.scene.environment.colorSpace = SRGBColorSpace;
-        // texture.needsUpdate = true;
-        // this.scene.background = texture;
-
-        texture.dispose();
-        pmremGenerator.dispose();
+    async init() {
+        await this.world.loadEnvironment();
     }
 
     get edges() {
@@ -180,8 +79,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         }
 
         if (value) {
-            this.scene.add(value.object);
-            this.scene.add(value.edges);
+            this.world.scene.add(value.object);
+            this.world.scene.add(value.edges);
             value.edges.visible = this.edges;
         }
 
@@ -191,10 +90,11 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     async loadModel(outliner: IOutliner) {
         this.dispatchEvent({ type: "loading", value: true });
+
         const model = await loadModel(outliner, this, this.isMobile);
 
         if (model.object) {
-            fitCameraToObject(this.camera, this.orbitControls, [model.object], 2);
+            fitCameraToObject(this.world.camera, this.world.orbitControls, [model.object], 2);
         }
 
         this.model = model;
@@ -202,26 +102,28 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     }
 
     private animate = () => {
-        if (this.renderer.info.memory.geometries !== this.geometries) {
-            this.geometries = this.renderer.info.memory.geometries;
+        const { renderer, scene, camera, orbitControls } = this.world;
+
+        if (renderer.info.memory.geometries !== this.geometries) {
+            this.geometries = renderer.info.memory.geometries;
             // console.log("geometries", this.renderer.info.memory.geometries);
         }
-        if (this.renderer.info.memory.textures !== this.textures) {
-            this.textures = this.renderer.info.memory.textures;
+        if (renderer.info.memory.textures !== this.textures) {
+            this.textures = renderer.info.memory.textures;
             // console.log("textures", this.renderer.info.memory.geometries);
         }
 
-        this.renderer.setViewport(0, 0, this.size.width, this.size.height);
+        renderer.setViewport(0, 0, this.size.width, this.size.height);
 
-        this.renderer.render(this.scene, this.camera);
-        this.selection.animate();
-        this.renderer.clearDepth();
+        renderer.render(scene, camera);
+        this.selection?.animate();
 
-        if (this.gizmo) {
-            this.gizmo.render();
+        if (this.world.gizmo) {
+            this.world.gizmo.render();
         }
 
-        this.orbitControls.update();
+        orbitControls.update();
+        renderer.clearDepth();
     };
 
     private setSize() {
@@ -239,14 +141,14 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private resize = () => {
         this.setSize();
 
-        this.camera.aspect = this.size.aspect;
-        this.camera.updateProjectionMatrix();
+        this.world.camera.aspect = this.size.aspect;
+        this.world.camera.updateProjectionMatrix();
 
-        this.renderer.setSize(this.size.width, this.size.height);
-        this.selection.resize();
+        this.world.renderer.setSize(this.size.width, this.size.height);
+        this.selection?.resize();
 
-        if (this.gizmo) {
-            this.gizmo.update();
+        if (this.world.gizmo) {
+            this.world.gizmo.update();
         }
     };
 
@@ -266,19 +168,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             disposeObject(this.model.edges);
         }
 
-        disposeObject(this.scene);
-
-        this.orbitControls.dispose();
-        this.grid.dispose();
-        this.floor.dispose();
-        this.renderer.dispose();
-        this.selection.dispose();
-
-        if (this.gizmo) {
-            this.gizmo.dispose();
-        }
-
-        this.environment?.dispose();
-        this.lights.dispose();
+        this.selection?.dispose();
+        this.world.dispose();
     }
 }

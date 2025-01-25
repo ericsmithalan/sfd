@@ -1,6 +1,7 @@
 export * from "./createTextureMaterials";
 export * from "./dispose";
 export * from "./fitCameraToObject";
+export * from "./formatTextureUrl";
 export * from "./generateImageResource";
 export * from "./getEdge";
 export * from "./getObject";
@@ -8,6 +9,7 @@ export * from "./getObjectDimensions";
 export * from "./getObjectsById";
 export * from "./getObjectUserData";
 export * from "./isObjEmpty";
+export * from "./loadTexture";
 export * from "./popupHelpers";
 export * from "./setObjectVisibility";
 export * from "./unitConversions";

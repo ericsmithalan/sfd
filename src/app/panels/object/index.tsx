@@ -23,7 +23,7 @@ export const ObjectPanel = () => {
 
             setObject(e.object);
         };
-        if (outliner.model) {
+        if (outliner.model && outliner.viewport.selection) {
             outliner.viewport.selection.addEventListener("change", selectionChange);
         } else {
             setObject(null);
@@ -31,7 +31,9 @@ export const ObjectPanel = () => {
         }
 
         return () => {
-            outliner.viewport.selection.removeEventListener("change", selectionChange);
+            if (outliner.viewport.selection) {
+                outliner.viewport.selection.removeEventListener("change", selectionChange);
+            }
         };
     }, [outliner.model, outliner.viewport]);
 
