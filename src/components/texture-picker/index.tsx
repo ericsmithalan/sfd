@@ -34,7 +34,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
     }, [material.texture]);
 
     const getLabel = () => {
-        if (label === "hardware") {
+        if (label === "hardware" || label === "metal") {
             return "metal";
         }
         if (label === "primary") {

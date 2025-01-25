@@ -47,6 +47,25 @@ export const rootOutliner: Array<IOutliner> = [
         ],
     },
     {
+        id: 7663,
+        name: "Boxes",
+        level: 1,
+        children: [
+            {
+                id: 8888,
+                modelUrl: "/models/toolbox/tool-box.glb",
+                level: 3,
+                name: "Toolbox",
+                imageResouce: {
+                    primaryImg: 4,
+                    count: 4,
+                    path: "/models/toolbox/images/",
+                },
+                children: [],
+            },
+        ],
+    },
+    {
         id: 999,
         name: "Chairs",
         level: 1,
