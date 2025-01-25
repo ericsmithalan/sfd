@@ -22,27 +22,7 @@ export const getAllWoodTextures = (): Array<ITexture> => {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(2323, "wood", "ash", "Ash", 1, URL, {
-            ...settings,
-            diffuse: true,
-        }),
-        createTextureData(2434, "wood", "birch", "Birch", 1, URL, {
-            ...settings,
-            diffuse: true,
-        }),
         createTextureData(6543, "wood", "cherry", "Cherry", 1, URL, {
-            ...settings,
-            diffuse: true,
-        }),
-        createTextureData(7643, "wood", "hickory", "Hickory", 1, URL, {
-            ...settings,
-            diffuse: true,
-        }),
-        createTextureData(9900, "wood", "maple", "Maple", 1, URL, {
-            ...settings,
-            diffuse: true,
-        }),
-        createTextureData(5894, "wood", "oak", "Oak", 1, URL, {
             ...settings,
             diffuse: true,
         }),
