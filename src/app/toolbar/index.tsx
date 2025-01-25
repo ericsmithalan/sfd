@@ -46,8 +46,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
     }, [model]);
 
     const loadMaterials = async (materialObj: IObjectMaterial) => {
-        console.log(materialObj);
-
         if (materialObj.material) {
             materialObj.material.dispose();
         }

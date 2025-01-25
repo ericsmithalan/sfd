@@ -5,7 +5,6 @@ import { CategoriesOutliner } from "./outliner/categories";
 import { ModelOutliner } from "./outliner/model";
 
 export const App = () => {
-    console.log("app");
     return (
         <Routes>
             <Route path="/" element={<Viewer />}>
