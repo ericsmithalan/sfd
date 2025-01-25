@@ -1,12 +1,12 @@
 import { EventDispatcher } from "three";
 //8
 
-import { IOutliner, IScreenSize } from "../interface";
+import { IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
 import { Selection } from "./Selection";
-import { World } from "./World";
+import { IWorldEvent, World } from "./World";
 
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
@@ -24,19 +24,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private textures = 0;
     private isMobile: boolean = false;
 
-    size: IScreenSize = {
-        width: 0,
-        height: 0,
-        aspect: 0,
-    };
-
     constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
         super();
 
         this.canvas = canvas;
-        this.setSize();
 
-        this.world = new World(canvas, isMobile, this.size);
+        this.world = new World(canvas, isMobile);
         this.selection = isMobile
             ? null
             : new Selection(
@@ -49,12 +42,16 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this.world.renderer.setAnimationLoop(() => this.animate());
 
-        this.registerEvents();
         this.init();
     }
 
     async init() {
+        this.world.addEventListener("resize", this.resize);
         await this.world.loadEnvironment();
+    }
+
+    private resize(e: IWorldEvent["resize"]) {
+        this.selection?.resize();
     }
 
     get edges() {
@@ -106,16 +103,16 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         if (renderer.info.memory.geometries !== this.geometries) {
             this.geometries = renderer.info.memory.geometries;
-            // console.log("geometries", this.renderer.info.memory.geometries);
+            console.log("geometries", this.world.renderer.info.memory.geometries);
         }
         if (renderer.info.memory.textures !== this.textures) {
             this.textures = renderer.info.memory.textures;
-            // console.log("textures", this.renderer.info.memory.geometries);
+            console.log("textures", this.world.renderer.info.memory.geometries);
         }
 
-        renderer.setViewport(0, 0, this.size.width, this.size.height);
-
+        renderer.setViewport(0, 0, this.world.size.width, this.world.size.height);
         renderer.render(scene, camera);
+
         this.selection?.animate();
 
         if (this.world.gizmo) {
@@ -126,43 +123,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         renderer.clearDepth();
     };
 
-    private setSize() {
-        let width: number = 0;
-        let height: number = 0;
-
-        width = window.innerWidth;
-        height = window.innerHeight;
-
-        this.size.aspect = width / height;
-        this.size.width = width;
-        this.size.height = height;
-    }
-
-    private resize = () => {
-        this.setSize();
-
-        this.world.camera.aspect = this.size.aspect;
-        this.world.camera.updateProjectionMatrix();
-
-        this.world.renderer.setSize(this.size.width, this.size.height);
-        this.selection?.resize();
-
-        if (this.world.gizmo) {
-            this.world.gizmo.update();
-        }
-    };
-
-    private registerEvents() {
-        window.addEventListener("resize", () => this.resize());
-    }
-
-    private unregisterEvents() {
-        window.removeEventListener("resize", () => this.resize());
-    }
-
     dispose() {
-        this.unregisterEvents();
-
+        this.world.removeEventListener("resize", this.resize);
         if (this.model) {
             disposeObject(this.model.object);
             disposeObject(this.model.edges);

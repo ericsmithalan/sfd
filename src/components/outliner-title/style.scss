@@ -8,7 +8,7 @@
     }
 
     & > .subtitle {
-        font-size: var(--font-7);
+        font-size: var(--font-6);
         text-transform: uppercase;
         color: var(--color-alt-1);
         font-weight: 600;
@@ -19,14 +19,14 @@
         display: flex;
         flex-direction: row;
         font-weight: 600;
-        font-size: var(--font-6);
+        font-size: var(--font-4);
         align-items: center;
         margin-bottom: var(--margin-2);
 
         & > .link {
             border: 1px solid transparent;
             background-color: transparent;
-            padding: var(--padding-5) var(--padding-5);
+            padding: var(--padding-3) var(--padding-3);
             border-radius: var(--radius-5);
             color: var(--color-white-4);
             border-right: 1px solid var(--color-white-7);

@@ -1,13 +1,13 @@
 import {
     ACESFilmicToneMapping,
     Color,
+    EventDispatcher,
     Fog,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
     Scene,
     SRGBColorSpace,
-    UVMapping,
     WebGLRenderer,
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
@@ -21,7 +21,11 @@ import { Floor } from "./Floor";
 import { Grid } from "./Grid";
 import { Lights } from "./Lights";
 
-export class World {
+export interface IWorldEvent {
+    resize: { type: string; size: IScreenSize };
+}
+
+export class World extends EventDispatcher<IWorldEvent> {
     readonly gizmo: ViewportGizmo | null;
     readonly renderer: WebGLRenderer;
     readonly scene: Scene;
@@ -31,16 +35,23 @@ export class World {
     readonly grid: Grid;
     readonly floor: Floor;
 
-    constructor(canvas: HTMLCanvasElement, isMobile: boolean, size: IScreenSize) {
+    size: IScreenSize = {
+        width: 0,
+        height: 0,
+        aspect: 0,
+    };
+
+    constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
+        super();
+
+        this.setSize();
         this.scene = new Scene();
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
         this.scene.fog = new Fog(new Color("#222222"), 1, 50);
 
-        this.camera = new PerspectiveCamera(40, size.aspect, 1, 50);
+        this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
         this.camera.name = "Camera";
-        // this.camera.up = new Vector3(0, 0, 1);
-        // this.camera.rotateX(Math.PI / 2);
         this.camera.zoom = 1;
         this.camera.updateProjectionMatrix();
         this.camera.position.set(15, 10, 9);
@@ -56,7 +67,7 @@ export class World {
         this.renderer.toneMapping = ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1;
         this.renderer.setPixelRatio(window.devicePixelRatio);
-        this.renderer.setSize(size.width, size.height);
+        this.renderer.setSize(this.size.width, this.size.height);
         this.renderer.shadowMap.type = PCFSoftShadowMap;
         this.renderer.outputColorSpace = SRGBColorSpace;
         this.renderer.autoClear = false;
@@ -86,18 +97,37 @@ export class World {
         this.floor = new Floor();
         this.grid = new Grid();
 
-        this.scene.add(this.lights.dirLight, this.floor, this.grid);
+        this.registerEvents();
+    }
+
+    private resize = () => {
+        this.setSize();
+
+        this.camera.aspect = this.size.aspect;
+        this.camera.updateProjectionMatrix();
+
+        this.renderer.setSize(this.size.width, this.size.height);
+
+        if (this.gizmo) {
+            this.gizmo.update();
+        }
+
+        this.dispatchEvent({ type: "resize", size: this.size });
+    };
+
+    private registerEvents() {
+        window.addEventListener("resize", () => this.resize());
+    }
+
+    private unregisterEvents() {
+        window.removeEventListener("resize", () => this.resize());
     }
 
     async loadEnvironment() {
-        // this.lights.visible(false);
         const pmremGenerator = new PMREMGenerator(this.renderer);
 
         const hdriLoader = new RGBELoader();
         const texture = await hdriLoader.loadAsync(hdr);
-
-        texture.mapping = UVMapping;
-        texture.colorSpace = SRGBColorSpace;
 
         const env = pmremGenerator.fromEquirectangular(texture).texture;
         this.scene.environment = env;
@@ -105,9 +135,24 @@ export class World {
         env.dispose();
         texture.dispose();
         pmremGenerator.dispose();
+
+        this.scene.add(this.lights.dirLight, this.floor, this.grid);
+    }
+
+    setSize() {
+        let width: number = 0;
+        let height: number = 0;
+
+        width = window.innerWidth;
+        height = window.innerHeight;
+
+        this.size.aspect = width / height;
+        this.size.width = width;
+        this.size.height = height;
     }
 
     dispose() {
+        this.unregisterEvents();
         this.orbitControls.dispose();
         this.grid.dispose();
         this.floor.dispose();
