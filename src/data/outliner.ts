@@ -7,6 +7,25 @@ export const rootOutliner: Array<IOutliner> = [
         id: 1,
     },
     {
+        id: 999,
+        name: "Chairs",
+        level: 1,
+        children: [
+            {
+                id: 987,
+                level: 3,
+                imageResouce: {
+                    primaryImg: 11,
+                    count: 11,
+                    path: "/models/windsor-chair/images/",
+                },
+                modelUrl: "/models/windsor-chair/chair.glb",
+                name: "Windsor Chair",
+                children: [],
+            },
+        ],
+    },
+    {
         id: 100,
         name: "Desks",
         level: 1,
