@@ -6,25 +6,7 @@ export const rootOutliner: Array<IOutliner> = [
         name: "Completed",
         id: 1,
     },
-    {
-        id: 999,
-        name: "Chairs",
-        level: 1,
-        children: [
-            {
-                id: 987,
-                level: 3,
-                imageResouce: {
-                    primaryImg: 11,
-                    count: 11,
-                    path: "/models/windsor-chair/images/",
-                },
-                modelUrl: "/models/windsor-chair/chair.glb",
-                name: "Windsor Chair",
-                children: [],
-            },
-        ],
-    },
+
     {
         id: 100,
         name: "Desks",
@@ -44,6 +26,7 @@ export const rootOutliner: Array<IOutliner> = [
             },
         ],
     },
+
     {
         id: 23221,
         name: "Beds",
@@ -59,6 +42,25 @@ export const rootOutliner: Array<IOutliner> = [
                     count: 18,
                     path: "/models/bunks/images/",
                 },
+                children: [],
+            },
+        ],
+    },
+    {
+        id: 999,
+        name: "Chairs",
+        level: 1,
+        children: [
+            {
+                id: 987,
+                level: 3,
+                imageResouce: {
+                    primaryImg: 11,
+                    count: 11,
+                    path: "/models/windsor-chair/images/",
+                },
+                modelUrl: "/models/windsor-chair/chair.glb",
+                name: "Windsor Chair",
                 children: [],
             },
         ],
