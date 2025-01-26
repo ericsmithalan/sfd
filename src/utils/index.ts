@@ -10,6 +10,7 @@ export * from "./getObjectsById";
 export * from "./getObjectUserData";
 export * from "./isObjEmpty";
 export * from "./loadTexture";
+export * from "./mapTextures";
 export * from "./popupHelpers";
 export * from "./setObjectVisibility";
 export * from "./unitConversions";
