@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, ReactNode, useEffect, useState } from "react";
+import { createRef, FC, ReactNode, RefObject, useEffect, useState } from "react";
 import { IconName } from "../../types";
 import { Button } from "../button";
 import "./style.scss";
@@ -11,6 +11,7 @@ type PanelProps = {
     icon?: IconName;
     opened?: boolean;
     contentCss?: string;
+    ref?: RefObject<HTMLDivElement | null>;
 };
 
 export const Panel: FC<PanelProps> = ({
@@ -20,15 +21,16 @@ export const Panel: FC<PanelProps> = ({
     contentCss,
     icon,
     opened = true,
+    ref,
 }) => {
     const [open, setOpen] = useState(true);
-
+    const panelRef = ref || createRef();
     useEffect(() => {
         setOpen(opened);
     }, [opened]);
 
     return (
-        <div className={clsx("panel", open && "panel-open", className)}>
+        <div ref={panelRef} className={clsx("panel", open && "panel-open", className)}>
             {title && (
                 <Button
                     iconFill={true}

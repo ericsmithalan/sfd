@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useEffect, useRef, useState } from "react";
+import { FC, MouseEvent, RefObject, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
 import clsx from "clsx";
@@ -12,6 +12,7 @@ type TexturePickerProps = {
     className?: string;
     isMobile?: boolean;
     label?: string;
+    panelRef?: RefObject<HTMLDivElement | null>;
     material: IObjectMaterial;
     textures: Array<ITexture>;
     onItemClick?: (material: IObjectMaterial, e: MouseEvent) => void;
@@ -23,6 +24,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
     label,
     isMobile = false,
     material,
+    panelRef,
     onItemClick,
 }) => {
     const [open, setOpen] = useState(false);
@@ -53,6 +55,7 @@ export const TexturePicker: FC<TexturePickerProps> = ({
                     <TextureMenu
                         isMobile={isMobile}
                         open={open}
+                        panelRef={panelRef}
                         selected={selected}
                         items={textures}
                         onItemClick={(value, e) => {

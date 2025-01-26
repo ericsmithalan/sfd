@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
 import { DATA } from "../../data";
@@ -26,6 +26,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
     const [resolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model, isMobile } = useModel();
+    const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         setShowEdges(viewport.edges);
@@ -122,12 +123,14 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
 
     return (
         <Panel
+            ref={panelRef}
             className={clsx("app-toolbar-panel", !visible && "hidden", isMobile && "mobile")}
             contentCss="app-toolbar"
         >
             {model?.materials &&
                 Array.from(model.materials.entries()).map(([key, value], i) => (
                     <TexturePicker
+                        panelRef={panelRef}
                         isMobile={isMobile}
                         className={clsx(isMobile && "mobile")}
                         key={i}

@@ -12,6 +12,7 @@ type TextureMenuProps = {
     selected: ITexture | null;
     targetRef: RefObject<any>;
     isMobile?: boolean;
+    panelRef?: RefObject<HTMLDivElement | null>;
     open?: boolean;
     onItemClick?: (value: ITexture, e: MouseEvent) => void;
     onHide?: () => void;
@@ -25,37 +26,41 @@ export const TextureMenu = ({
     onItemClick,
     onHide,
     open,
+    panelRef,
     selected,
 }: TextureMenuProps) => {
+    const menuWidth = isMobile ? 350 : 450;
+
     const [position, setPosition] = useState<{ x: number; y: number; width: number }>({
         x: 0,
         y: 0,
-        width: 200,
+        width: menuWidth,
     });
     const menuRef = useRef<HTMLDivElement>(null);
 
     useLayoutEffect(() => {
-        if (targetRef?.current && menuRef.current) {
+        if (targetRef?.current && menuRef.current && panelRef?.current) {
             const targetCoords = getElementCoordinates(targetRef.current);
             const menuCoords = getElementCoordinates(menuRef.current);
+            const panelCoords = getElementCoordinates(panelRef.current);
 
-            if (targetCoords && menuCoords) {
+            if (targetCoords && menuCoords && panelCoords) {
                 if (isMobile) {
                     setPosition({
-                        x: targetCoords.x - 10,
+                        x: panelCoords.x + panelCoords.width / 2 - menuWidth / 2,
                         y: targetCoords.top - menuCoords.bottom - 5,
-                        width: 200,
+                        width: menuWidth,
                     });
                 } else {
                     setPosition({
-                        x: targetCoords.x - 60,
+                        x: panelCoords.x + panelCoords.width / 2 - menuWidth / 2,
                         y: targetCoords.top - menuCoords.bottom - 5,
-                        width: 200,
+                        width: menuWidth,
                     });
                 }
             }
         }
-    }, [targetRef, menuRef, isMobile]);
+    }, [targetRef, menuRef, panelRef, isMobile]);
 
     return (
         <>
