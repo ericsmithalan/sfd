@@ -16,9 +16,9 @@
         "react": "^19.0.0",
         "react-device-detect": "^2.2.3",
         "react-dom": "^19.0.0",
-        "react-scripts": "^5.0.1",
         "three": "^0.172.0",
-        "three-viewport-gizmo": "^2.0.2"
+        "three-viewport-gizmo": "^2.0.2",
+        "winston": "^3.17.0"
     },
     "packageManager": "yarn@1.22.22",
     "devDependencies": {

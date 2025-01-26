@@ -1,15 +1,20 @@
-"use client";
 import { Loading } from "@/components";
 import { IViewportEvent, Viewport } from "@/lib";
-import { ReactNode, useEffect, useRef, useState } from "react";
+import { createContext, useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
 
+export interface IViewportContext {
+    viewport: Viewport | null;
+}
+
+export const ViewportContext = createContext<IViewportContext>({} as IViewportContext);
+
 type Props = {
-    children?: ReactNode;
+    children?: React.ReactNode;
 };
 
-export const ViewerLayoutClient = ({ children }: Props) => {
-    const [viewport, setViewport] = useState<Viewport>();
+export const ViewportProvider = ({ children }: Props) => {
+    const [viewport, setViewport] = useState<Viewport | null>(null);
     const [loading, setLoading] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
@@ -36,12 +41,17 @@ export const ViewerLayoutClient = ({ children }: Props) => {
     }, [canvasRef]);
 
     return (
-        <div id="viewer-main" className="viewer">
-            {loading && <Loading message="Loading" />}
+        <ViewportContext.Provider
+            value={{
+                viewport: viewport,
+            }}
+        >
+            <div id="viewer-main" className="viewer">
+                {loading && <Loading message="Loading" />}
 
-            <canvas className="canvas" ref={canvasRef} />
-
-            <div className="content">{children}</div>
-        </div>
+                <canvas className="canvas" ref={canvasRef} />
+                {children}
+            </div>
+        </ViewportContext.Provider>
     );
 };
