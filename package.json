@@ -17,8 +17,7 @@
         "react-router-dom": "^7.1.2",
         "react-scripts": "^5.0.1",
         "three": "^0.172.0",
-        "three-viewport-gizmo": "^2.0.2",
-        "use-react-router-breadcrumbs": "^4.0.1"
+        "three-viewport-gizmo": "^2.0.2"
     },
     "packageManager": "yarn@1.22.22",
     "devDependencies": {

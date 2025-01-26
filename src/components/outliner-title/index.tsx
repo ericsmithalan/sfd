@@ -1,7 +1,6 @@
 import { MouseEvent } from "react";
 
 import clsx from "clsx";
-import { BreadcrumbData } from "use-react-router-breadcrumbs";
 import { IconName } from "../../types";
 import { LogoIcon } from "../logo/LogoIcon";
 import { NavLink } from "../nav-link";
@@ -12,7 +11,6 @@ type OutlinerTitleProps = {
     isMobile?: boolean;
     title?: string;
     subTitle?: string;
-    crumbs?: BreadcrumbData[];
     iconName?: IconName;
     onBack?: (e: MouseEvent) => void;
 };

@@ -16,7 +16,7 @@ export const OutlinerView = () => {
             )}
         >
             <Logo height={45} />
-            <Scroller maxHeight={"90vh"}>
+            <Scroller>
                 <Outlet context={{ outliner: outliner }} />
             </Scroller>
         </Panel>

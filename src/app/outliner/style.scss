@@ -8,6 +8,8 @@
         flex: 1 1 auto;
         width: 95%;
         margin-top: var(--margin-3);
+        height: 92vh;
+        overflow: hidden;
 
         & > .panel-content {
             flex: 1 1 auto;
@@ -17,9 +19,14 @@
                 padding-bottom: var(--padding-1);
                 border-bottom: 1px dashed var(--color-white-6);
             }
+
+            & > .scroller {
+                max-height: 75vh;
+            }
         }
 
         &.model {
+            height: auto;
             margin-top: var(--margin-4);
             padding: 0;
 
@@ -27,6 +34,10 @@
                 & > .logo {
                     display: none;
                     padding: 0;
+                }
+
+                & > .scroller {
+                    max-height: auto;
                 }
             }
         }
