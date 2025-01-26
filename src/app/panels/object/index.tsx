@@ -7,9 +7,13 @@ import { ISelectionEvent } from "../../../lib/Selection";
 import { convertToBordFeet, getObjectDimensions } from "../../../utils";
 import "./style.scss";
 
+type State = {
+    object: Object3D;
+    size: Vector3;
+};
+
 export const ObjectPanel = () => {
-    const [object, setObject] = useState<Object3D | null>(null);
-    const [size, setSize] = useState<Vector3>(new Vector3());
+    const [state, setState] = useState<State | null>(null);
     const outliner = useOutliner();
 
     useEffect(() => {
@@ -17,17 +21,20 @@ export const ObjectPanel = () => {
             if (e.object) {
                 const objSize = getObjectDimensions(outliner.viewport, e.object);
                 if (objSize) {
-                    setSize(objSize);
+                    setState({
+                        object: e.object,
+                        size: objSize,
+                    });
                 }
+            } else {
+                setState(null);
             }
-
-            setObject(e.object);
         };
+
         if (outliner.model && outliner.viewport.selection) {
             outliner.viewport.selection.addEventListener("change", selectionChange);
         } else {
-            setObject(null);
-            setSize(new Vector3());
+            setState(null);
         }
 
         return () => {
@@ -37,9 +44,9 @@ export const ObjectPanel = () => {
         };
     }, [outliner.model, outliner.viewport]);
 
-    return object ? (
+    return outliner.model && state ? (
         <Panel
-            title={object.name}
+            title={state.object.name}
             className={clsx(outliner.isMobile && "mobile")}
             icon="box-1"
             contentCss="object-panel"
@@ -49,22 +56,22 @@ export const ObjectPanel = () => {
                 stats={[
                     {
                         name: "Width",
-                        value: String(size.x),
+                        value: String(state.size.x),
                         unit: "in",
                     },
                     {
                         name: "Length",
-                        value: String(size.y),
+                        value: String(state.size.y),
                         unit: "in",
                     },
                     {
                         name: "Thickness",
-                        value: String(size.z),
+                        value: String(state.size.z),
                         unit: "in",
                     },
                     {
                         name: "Board Ft",
-                        value: String(convertToBordFeet(size)),
+                        value: String(convertToBordFeet(state.size)),
                         unit: "bf",
                     },
                 ]}

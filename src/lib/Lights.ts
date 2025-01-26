@@ -39,7 +39,7 @@ export class Lights {
 
         this.dirLight.shadow.camera.near = 0.001;
         this.dirLight.shadow.camera.far = 100;
-        this.dirLight.shadow.bias = -0.001;
+        this.dirLight.shadow.bias = -0.1;
         this.dirLight.shadow.mapSize.width = 1024;
         this.dirLight.shadow.mapSize.height = 1024;
     }

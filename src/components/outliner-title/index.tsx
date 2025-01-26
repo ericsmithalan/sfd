@@ -3,7 +3,6 @@ import { MouseEvent } from "react";
 import clsx from "clsx";
 import { BreadcrumbData } from "use-react-router-breadcrumbs";
 import { IconName } from "../../types";
-import { Icon } from "../icon";
 import { LogoIcon } from "../logo/LogoIcon";
 import { NavLink } from "../nav-link";
 import "./style.scss";
@@ -23,7 +22,6 @@ export const OutlinerTitle = ({
     isMobile,
     title,
     iconName,
-    crumbs,
     subTitle,
     onBack,
 }: OutlinerTitleProps) => {

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { BgImage, Button, Panel, Stats } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
-import { generateImageResource } from "../../../utils";
+import { generateImageResource, ImageResource } from "../../../utils";
 import "./style.scss";
 
 type ViewerState = {
@@ -12,9 +12,7 @@ type ViewerState = {
 };
 
 export const ModelPanel = () => {
-    const [visisble, setVisible] = useState(false);
-    const [images, setImages] = useState<Array<string>>([]);
-    const [primaryImage, setPrimaryImage] = useState<string | null>(null);
+    const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
         selected: "",
@@ -28,34 +26,29 @@ export const ModelPanel = () => {
 
             if (resources) {
                 const imgResource = generateImageResource(outliner.model.imageResouce);
-
-                if (imgResource) {
-                    setImages(imgResource.images);
-                    setPrimaryImage(imgResource.primary);
-                } else {
-                    setImages([]);
-                    setPrimaryImage(null);
-                }
+                setImageResource(imgResource);
             } else {
-                setImages([]);
-                setPrimaryImage(null);
+                setImageResource(null);
                 setViewer({ visible: false, selected: "" });
             }
+        }
 
-            if (!outliner.model && !resources) {
-                setVisible(false);
-                setImages([]);
-                setPrimaryImage(null);
-            } else {
-                setVisible(true);
-            }
-        } else {
-            setVisible(false);
+        if (!outliner.model) {
+            setImageResource(null);
         }
     }, [outliner.model]);
 
-    return visisble ? (
+    return outliner.model && imageResource ? (
         <>
+            <ImageViewer
+                className={clsx(outliner.isMobile && "mobile")}
+                onClosed={() => {
+                    setViewer({ visible: false, selected: "" });
+                }}
+                visible={viewer.visible}
+                images={imageResource.images}
+                image={viewer.selected}
+            />
             <Panel
                 title={`${outliner.model?.name} Info`}
                 className={clsx(outliner.isMobile && "mobile")}
@@ -63,23 +56,21 @@ export const ModelPanel = () => {
                 contentCss="images-panel"
                 opened={!outliner.isMobile}
             >
-                {primaryImage && (
-                    <Button
-                        variant="image"
-                        onClick={() => {
-                            setViewer({
-                                visible: true,
-                                selected: primaryImage,
-                            });
-                        }}
-                    >
-                        <BgImage minHeight={140} src={`${primaryImage}_thumb.png`} />
-                    </Button>
-                )}
+                <Button
+                    variant="image"
+                    onClick={() => {
+                        setViewer({
+                            visible: true,
+                            selected: imageResource.primary,
+                        });
+                    }}
+                >
+                    <BgImage minHeight={140} src={`${imageResource.primary}_thumb.png`} />
+                </Button>
 
-                {images.length > 0 && (
+                {imageResource.images.length > 0 && (
                     <div className="image-list">
-                        {images.map((item, i) => {
+                        {imageResource.images.map((item, i) => {
                             if (i < 3) {
                                 return (
                                     <Button
@@ -102,15 +93,6 @@ export const ModelPanel = () => {
 
                 {outliner.model?.stats && <Stats stats={outliner.model?.stats || []} />}
             </Panel>
-            <ImageViewer
-                className={clsx(outliner.isMobile && "mobile")}
-                onClosed={() => {
-                    setViewer({ visible: false, selected: "" });
-                }}
-                visible={viewer.visible}
-                images={images}
-                image={viewer.selected}
-            />
         </>
     ) : null;
 };

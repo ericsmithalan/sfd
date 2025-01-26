@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
 import { Object3D } from "three";
-import useBreadcrumbs from "use-react-router-breadcrumbs";
 import { OutlinerTitle, Scroller } from "../../../components";
 import { OutlinerButton } from "../../../components/outliner-button";
 import { IOutlinerContext } from "../../../context";
@@ -15,8 +14,6 @@ export const ModelOutliner = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
     }>();
-
-    const crumbs = useBreadcrumbs();
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["change"]) => {
@@ -40,7 +37,6 @@ export const ModelOutliner = () => {
                 isMobile={outliner.isMobile}
                 className={clsx(outliner.isMobile && "mobile")}
                 subTitle={outliner.isMobile ? undefined : "Objects"}
-                crumbs={crumbs}
                 title={outliner.model?.name}
                 iconName="blender"
             />

@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
-import { generateImageResource } from "../../../utils";
+import { generateImageResource, ImageResource } from "../../../utils";
 import "./style.scss";
 
 type ViewerState = {
@@ -16,9 +16,7 @@ type ImagesPanelProps = {
 };
 
 export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
-    const [visisble, setVisible] = useState(false);
-    const [images, setImages] = useState<Array<string>>([]);
-    const [primaryImage, setPrimaryImage] = useState<string | null>(null);
+    const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
         selected: "",
@@ -32,35 +30,21 @@ export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
 
             if (resources) {
                 const imgResource = generateImageResource(outliner.model.imageResouce);
-
-                if (imgResource) {
-                    setImages(imgResource.images);
-                    setPrimaryImage(imgResource.primary);
-                } else {
-                    setImages([]);
-                    setPrimaryImage(null);
-                }
+                setImageResource(imgResource);
             } else {
-                setImages([]);
+                setImageResource(null);
                 setViewer({ visible: false, selected: "" });
-                setPrimaryImage(null);
             }
+        }
 
-            if (!outliner.model && !resources) {
-                setVisible(false);
-                setImages([]);
-                setPrimaryImage(null);
-            } else {
-                setVisible(true);
-            }
-        } else {
-            setVisible(false);
+        if (!outliner.model) {
+            setImageResource(null);
         }
     }, [outliner.model]);
 
-    return visisble ? (
+    return outliner.model && imageResource ? (
         <>
-            {primaryImage && (
+            {imageResource.primary && (
                 <Button
                     variant="toolbar"
                     text="Images"
@@ -68,7 +52,7 @@ export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
                     onClick={() => {
                         setViewer({
                             visible: true,
-                            selected: primaryImage,
+                            selected: imageResource.primary,
                         });
                     }}
                 ></Button>
@@ -80,7 +64,7 @@ export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
                     setViewer({ visible: false, selected: "" });
                 }}
                 visible={viewer.visible}
-                images={images}
+                images={imageResource.images}
                 image={viewer.selected}
             />
         </>

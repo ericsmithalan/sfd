@@ -64,12 +64,7 @@ export const Viewer = () => {
 
                     <Region className={clsx(isMobile && "mobile")} placement="top">
                         <ModelProvider isMobile={isMobile} viewport={viewport}>
-                            <Toolbar
-                                onLoading={(loading) => {
-                                    setLoading(loading);
-                                }}
-                                viewport={viewport}
-                            >
+                            <Toolbar viewport={viewport}>
                                 {isMobile && (
                                     <OutlinerProvider isMobile={isMobile} viewport={viewport}>
                                         <ImagesPanel />

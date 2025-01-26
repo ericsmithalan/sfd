@@ -1,6 +1,6 @@
 import { IImageResource } from "../interface";
 
-type ImageResource = {
+export type ImageResource = {
     primary: string;
     images: Array<string>;
 };

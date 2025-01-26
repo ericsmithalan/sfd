@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
 import { Mesh } from "three";
-import { Button, Panel, TexturePicker } from "../../components";
+import { Button, Loading, Panel, TexturePicker } from "../../components";
 import { DATA } from "../../data";
 import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
@@ -14,12 +14,11 @@ import "./style.scss";
 type ToolbarProps = {
     children?: React.ReactNode;
     viewport: Viewport;
-    onLoading?: (loading: boolean) => void;
 };
 
 type SelectedTextureState = Map<string, IObjectMaterial>;
 
-export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => {
+export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
     const [visible, setVisible] = useState(false);
     const [showEdges, setShowEdges] = useState(false);
     const [loading, setLoading] = useState(false);
@@ -34,6 +33,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
 
     const loadMaterials = useCallback(
         async (materialObj: IObjectMaterial) => {
+            setLoading(true);
             if (materialObj.material) {
                 disposeMaterial(materialObj.material);
             }
@@ -63,6 +63,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
             });
 
             disposeMaterial(materials);
+            setLoading(false);
         },
         [resolution, viewport],
     );
@@ -97,10 +98,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
     };
 
     const handleTextureClick = async (key: string, materialObj: IObjectMaterial) => {
-        if (onLoading) {
-            onLoading(true);
-        }
-
         // console.log(key, materialObj);
 
         const sel = selected.get(key);
@@ -115,10 +112,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
 
         // @ts-ignore
         setSelected(new Map([...selected]));
-
-        if (onLoading) {
-            onLoading(false);
-        }
     };
 
     return (
@@ -127,6 +120,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
             className={clsx("app-toolbar-panel", !visible && "hidden", isMobile && "mobile")}
             contentCss="app-toolbar"
         >
+            {loading && <Loading message="loading" />}
             {model?.materials &&
                 Array.from(model.materials.entries()).map(([key, value], i) => (
                     <TexturePicker
