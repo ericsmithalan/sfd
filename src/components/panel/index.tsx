@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { createRef, FC, ReactNode, RefObject, useEffect, useState } from "react";
 import { IconName } from "../../types";
 import { Button } from "../button";
+import { BorderHighlight } from "./BorderHighlight";
 import "./style.scss";
 
 type PanelProps = {
@@ -45,6 +46,7 @@ export const Panel: FC<PanelProps> = ({
             )}
             {open && <div className={clsx("panel-content", contentCss)}>{children}</div>}
             <div className="inner-border"></div>
+            <BorderHighlight />
         </div>
     );
 };

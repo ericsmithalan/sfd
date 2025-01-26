@@ -59,12 +59,12 @@ export class OutlineEffect {
         );
 
         this.outlinePass.edgeGlow = 0;
-        this.outlinePass.edgeThickness = 3;
-        this.outlinePass.edgeStrength = 8;
+        this.outlinePass.edgeThickness = 2;
+        this.outlinePass.edgeStrength = 10;
         this.outlinePass.pulsePeriod = 0;
 
-        this.outlinePass.visibleEdgeColor.set(new Color(0xf6c482));
-        this.outlinePass.hiddenEdgeColor.set(new Color(0xf6c482));
+        this.outlinePass.visibleEdgeColor.set(new Color(0xc2883d));
+        this.outlinePass.hiddenEdgeColor.set(new Color(0xc2883d));
         this.composer.addPass(this.outlinePass);
 
         const outputPass = new OutputPass();
@@ -75,6 +75,7 @@ export class OutlineEffect {
             1 / window.innerWidth,
             1 / window.innerHeight,
         );
+
         this.effectFXAA.renderToScreen = true;
         this.effectFXAA.material.transparent = true; //
         this.composer.addPass(this.effectFXAA);

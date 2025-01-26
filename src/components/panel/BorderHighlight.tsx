@@ -1,0 +1,30 @@
+export const BorderHighlight = () => {
+    return (
+        <svg
+            width="100%"
+            className="border-highlight"
+            height="1"
+            viewBox="0 0 313 1"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+        >
+            <rect width="313" height="1" fill="url(#paint0_linear_518_4)" />
+            <defs>
+                <linearGradient
+                    id="paint0_linear_518_4"
+                    x1="0"
+                    y1="0.5"
+                    x2="313"
+                    y2="0.5"
+                    gradientUnits="userSpaceOnUse"
+                >
+                    <stop stop-color="white" stop-opacity="0" />
+                    <stop offset="0.3" stop-color="white" />
+                    <stop offset="0.5" stop-color="white" />
+                    <stop offset="0.7" stop-color="white" />
+                    <stop offset="1" stop-color="white" stop-opacity="0" />
+                </linearGradient>
+            </defs>
+        </svg>
+    );
+};
