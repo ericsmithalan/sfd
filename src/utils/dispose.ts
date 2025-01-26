@@ -1,4 +1,12 @@
-import { Group, Material, Mesh, MeshStandardMaterial, Object3D, Scene } from "three";
+import {
+    BufferGeometry,
+    Group,
+    Material,
+    Mesh,
+    MeshStandardMaterial,
+    Object3D,
+    Scene,
+} from "three";
 
 export const disposeObject = (obj?: Object3D | null) => {
     if (obj) {
@@ -10,12 +18,22 @@ export const disposeObject = (obj?: Object3D | null) => {
                 obj.children.forEach((item) => {
                     disposables.push(item);
                 });
+
+                if (obj.geometry) {
+                    disposables.push(obj.geometry);
+                }
             }
         }
 
         if (obj instanceof Group || obj instanceof Scene) {
             obj.traverse((item) => {
                 disposables.push(item);
+
+                if (item instanceof Mesh) {
+                    if (item.geometry) {
+                        disposables.push(item.geometry);
+                    }
+                }
             });
         }
 
@@ -29,6 +47,12 @@ export const disposeObject = (obj?: Object3D | null) => {
                 child.geometry?.dispose();
             }
         });
+    }
+};
+
+export const disposeGeometry = (geometry: BufferGeometry | null) => {
+    if (geometry) {
+        geometry.dispose();
     }
 };
 

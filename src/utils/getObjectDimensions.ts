@@ -52,13 +52,3 @@ export const getObjectDimensions = (
 
     return null;
 };
-
-//   const object = getObject(viewport, obj, false);
-
-//         if (object && object instanceof Mesh) {
-//             const sizeX = object.geometry.parameters?.width || 1;
-//             const sizeY = object.geometry.parameters?.depth || 1;
-//             const sizeZ = object.geometry.parameters?.height || 1;
-
-//             return new Vector3(sizeX, sizeY, sizeZ);
-//         }

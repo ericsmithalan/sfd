@@ -1,8 +1,11 @@
 import { Material, MeshStandardMaterial, Texture } from "three";
 import { ITexture } from "../interface/ITexture";
+import { AppCache } from "../lib";
 import { TextureResolution } from "../types";
 import { formatTextureUrl } from "./formatTextureUrl";
 import { loadTexture } from "./loadTexture";
+
+const cached = new AppCache<number, Material>();
 
 export const createTextureMaterials = async (
     texture: ITexture,
@@ -12,25 +15,29 @@ export const createTextureMaterials = async (
     return new Promise(async (resolve) => {
         let material: Material;
 
-        const url = formatTextureUrl(texture.basic.url, resolution);
-        const textr = await loadTexture(url);
+        const cache = cached.get(texture.id);
 
-        material = new MeshStandardMaterial({
-            envMap: environment,
-            envMapIntensity: 1,
-            map: textr,
-            metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
-            roughness: texture.type === "metal" || texture.type === "hardware" ? 0.2 : 0.6,
-            // shadowSide: DoubleSide,
-            // depthTest: true,
-            // depthWrite: true,
-            // side: DoubleSide,
-        });
+        if (cache) {
+            return resolve(cache);
+        } else {
+            const url = formatTextureUrl(texture.basic.url, resolution);
+            const textr = await loadTexture(url);
 
-        if (textr) {
-            textr.dispose();
+            material = new MeshStandardMaterial({
+                envMap: environment,
+                envMapIntensity: 1,
+                map: textr,
+                metalness: texture.type === "metal" || texture.type === "hardware" ? 1 : 0,
+                roughness: texture.type === "metal" || texture.type === "hardware" ? 0.2 : 0.6,
+            });
+
+            if (textr) {
+                textr.dispose();
+            }
+
+            cached.set(texture.id, material);
+
+            resolve(material);
         }
-
-        resolve(material);
     });
 };

@@ -14,44 +14,25 @@ export interface IViewportEvent {
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
+    private readonly isMobile: boolean = false;
+
     readonly world: World;
-    readonly canvas: HTMLCanvasElement;
     readonly selection: Selection | null;
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
-    private geometries = 0;
-    private textures = 0;
-    private isMobile: boolean = false;
 
     constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
         super();
 
-        this.canvas = canvas;
-
         this.world = new World(canvas, isMobile);
         this.selection = isMobile
             ? null
-            : new Selection(
-                  this.canvas,
-                  this.world.scene,
-                  this.world.camera,
-                  this.world.renderer,
-                  this.world.orbitControls,
-              );
+            : new Selection(canvas, this.world.scene, this.world.camera, this.world.renderer);
 
         this.world.renderer.setAnimationLoop(() => this.animate());
 
         this.init();
-    }
-
-    async init() {
-        this.world.addEventListener("resize", this.resize);
-        await this.world.loadEnvironment();
-    }
-
-    private resize(e: IWorldEvent["resize"]) {
-        this.selection?.resize();
     }
 
     get edges() {
@@ -98,33 +79,36 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.dispatchEvent({ type: "loading", value: false });
     }
 
+    private async init() {
+        this.world.addEventListener("resize", this.resize);
+        await this.world.loadEnvironment();
+    }
+
+    private resize(e: IWorldEvent["resize"]) {
+        this.selection?.resize();
+    }
+
     private animate = () => {
-        const { renderer, scene, camera, orbitControls } = this.world;
+        const { renderer, scene, camera, orbitControls, size, gizmo } = this.world;
 
-        if (renderer.info.memory.geometries !== this.geometries) {
-            this.geometries = renderer.info.memory.geometries;
-            console.log("geometries", this.world.renderer.info.memory.geometries);
-        }
-        if (renderer.info.memory.textures !== this.textures) {
-            this.textures = renderer.info.memory.textures;
-            console.log("textures", this.world.renderer.info.memory.geometries);
-        }
-
-        renderer.setViewport(0, 0, this.world.size.width, this.world.size.height);
+        renderer.setViewport(0, 0, size.width, size.height);
         renderer.render(scene, camera);
 
         this.selection?.animate();
 
-        if (this.world.gizmo) {
-            this.world.gizmo.render();
+        if (gizmo) {
+            gizmo.render();
         }
 
         orbitControls.update();
         renderer.clearDepth();
+
+        this.world.logStats();
     };
 
     dispose() {
         this.world.removeEventListener("resize", this.resize);
+
         if (this.model) {
             disposeObject(this.model.object);
             disposeObject(this.model.edges);

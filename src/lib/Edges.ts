@@ -1,5 +1,5 @@
-import { EdgesGeometry, Group, LineBasicMaterial, LineSegments, Object3D } from "three";
-import { disposeObject } from "../utils";
+import { EdgesGeometry, Group, LineBasicMaterial, LineSegments, Mesh } from "three";
+import { disposeGeometry, disposeObject } from "../utils";
 import { ObjectUserData } from "./ObjectUserData";
 
 export class Edges {
@@ -11,10 +11,9 @@ export class Edges {
         this.threshold = 20;
     }
 
-    add(mesh: Object3D) {
+    add(mesh: Mesh) {
         let line: LineSegments;
 
-        //@ts-ignore
         const edges = new EdgesGeometry(mesh.geometry, this.threshold);
 
         line = new LineSegments(edges, new LineBasicMaterial({ color: "black", linewidth: 3 }));
@@ -22,7 +21,7 @@ export class Edges {
 
         this.edgeGroup.add(line);
 
-        edges.dispose();
+        disposeGeometry(edges);
 
         return line;
     }

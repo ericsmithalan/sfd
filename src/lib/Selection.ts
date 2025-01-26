@@ -1,6 +1,5 @@
 import { Camera, EventDispatcher, Object3D, Raycaster, Scene, Vector2, WebGLRenderer } from "three";
 
-import { OrbitControls } from "three/examples/jsm/Addons.js";
 import { SelectMode } from "../types";
 import { ObjectUserData, OutlineEffect } from "./";
 
@@ -14,11 +13,11 @@ export interface ISelectionEvent {
 
 export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly mouse = new Vector2();
+
     private readonly container: HTMLElement;
     private readonly camera: Camera;
     private readonly raycaster: Raycaster;
     private readonly scene: Scene;
-    private readonly orbitControls: OrbitControls;
     readonly borderEffect: OutlineEffect;
 
     private _object: Object3D | null = null;
@@ -28,20 +27,13 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     dragging = false;
     enabled: boolean = true;
 
-    constructor(
-        container: HTMLElement,
-        scene: Scene,
-        camera: Camera,
-        renderer: WebGLRenderer,
-        orbitControls: OrbitControls,
-    ) {
+    constructor(container: HTMLElement, scene: Scene, camera: Camera, renderer: WebGLRenderer) {
         super();
 
         this.camera = camera;
         this.raycaster = new Raycaster();
         this.container = container;
         this.scene = scene;
-        this.orbitControls = orbitControls;
         this.raycaster.setFromCamera(this.mouse, this.camera);
 
         this.registerEvents();
@@ -156,13 +148,6 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     };
 
     private registerEvents() {
-        this.orbitControls.addEventListener("change", () => {
-            if (this.timer) {
-                clearTimeout(this.timer);
-                this.timer = null;
-            }
-        });
-
         this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
     }
@@ -170,6 +155,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     dispose() {
         this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
         this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
+
         this.borderEffect.dispose();
     }
 }

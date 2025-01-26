@@ -1,5 +1,5 @@
 import { Mesh, PlaneGeometry, ShadowMaterial } from "three";
-import { disposeObject } from "../utils";
+import { disposeGeometry, disposeMaterial, disposeObject } from "../utils";
 
 export class Floor extends Mesh {
     constructor() {
@@ -18,8 +18,9 @@ export class Floor extends Mesh {
         this.receiveShadow = true;
 
         this.rotateX(-Math.PI / 2);
-        material.dispose();
-        geometry.dispose();
+
+        disposeMaterial(material);
+        disposeGeometry(geometry);
     }
 
     dispose() {

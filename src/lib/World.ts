@@ -35,6 +35,9 @@ export class World extends EventDispatcher<IWorldEvent> {
     readonly grid: Grid;
     readonly floor: Floor;
 
+    private geometries = 0;
+    private textures = 0;
+
     size: IScreenSize = {
         width: 0,
         height: 0,
@@ -45,6 +48,7 @@ export class World extends EventDispatcher<IWorldEvent> {
         super();
 
         this.setSize();
+
         this.scene = new Scene();
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
@@ -62,7 +66,6 @@ export class World extends EventDispatcher<IWorldEvent> {
             antialias: true,
             alpha: true,
         });
-
         this.renderer.shadowMap.enabled = true;
         this.renderer.toneMapping = ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1;
@@ -78,7 +81,6 @@ export class World extends EventDispatcher<IWorldEvent> {
         this.orbitControls.screenSpacePanning = true;
         this.orbitControls.minDistance = 0.1;
         this.orbitControls.maxDistance = 3500;
-
         this.orbitControls.maxPolarAngle = Math.PI / 1.5;
         this.orbitControls.update();
 
@@ -99,6 +101,18 @@ export class World extends EventDispatcher<IWorldEvent> {
 
         this.scene.add(this.lights.dirLight, this.floor, this.grid);
         this.registerEvents();
+    }
+
+    logStats() {
+        if (this.renderer.info.memory.geometries !== this.geometries) {
+            this.geometries = this.renderer.info.memory.geometries;
+            console.log("geometries", this.renderer.info.memory.geometries);
+        }
+
+        if (this.renderer.info.memory.textures !== this.textures) {
+            this.textures = this.renderer.info.memory.textures;
+            console.log("textures", this.renderer.info.memory.geometries);
+        }
     }
 
     private resize = () => {
@@ -152,17 +166,17 @@ export class World extends EventDispatcher<IWorldEvent> {
 
     dispose() {
         this.unregisterEvents();
+
         this.orbitControls.dispose();
-        this.grid.dispose();
-        this.floor.dispose();
         this.renderer.dispose();
 
         if (this.gizmo) {
             this.gizmo.dispose();
         }
 
+        this.grid.dispose();
+        this.floor.dispose();
         this.lights.dispose();
-
         disposeObject(this.scene);
     }
 }

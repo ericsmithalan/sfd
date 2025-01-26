@@ -46,16 +46,11 @@ export class OutlineEffect {
         this.composer.renderTarget2.stencilBuffer = true;
 
         const effectScene = new Scene();
-
         const renderPass = new RenderPass(effectScene, camera);
-
-        disposeObject(effectScene);
 
         renderPass.clearColor = new Color(0, 0, 0);
         renderPass.clearAlpha = 0;
         this.composer.addPass(renderPass);
-
-        renderPass.dispose();
 
         this.outlinePass = new OutlinePass(
             new Vector2(window.innerWidth, window.innerHeight),
@@ -75,8 +70,6 @@ export class OutlineEffect {
         const outputPass = new OutputPass();
         this.composer.addPass(outputPass);
 
-        outputPass.dispose();
-
         this.effectFXAA = new ShaderPass(FXAAShader);
         this.effectFXAA.uniforms["resolution"].value.set(
             1 / window.innerWidth,
@@ -85,6 +78,10 @@ export class OutlineEffect {
         this.effectFXAA.renderToScreen = true;
         this.effectFXAA.material.transparent = true; //
         this.composer.addPass(this.effectFXAA);
+
+        renderPass.dispose();
+        outputPass.dispose();
+        disposeObject(effectScene);
     }
 
     get objects() {
