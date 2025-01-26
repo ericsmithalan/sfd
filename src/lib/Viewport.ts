@@ -1,6 +1,4 @@
 import { EventDispatcher } from "three";
-//8
-
 import { IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";

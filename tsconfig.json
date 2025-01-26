@@ -1,28 +1,37 @@
 {
     "compilerOptions": {
-        "lib": ["dom", "dom.iterable", "esnext", "es2017.object"],
+        "baseUrl": ".",
+        "lib": ["dom", "dom.iterable", "esnext"],
         "allowJs": true,
         "skipLibCheck": true,
         "strict": true,
         "noEmit": true,
         "esModuleInterop": true,
-        "module": "ESNext",
+        "module": "esnext",
         "moduleResolution": "bundler",
-        "allowImportingTsExtensions": true,
         "resolveJsonModule": true,
         "isolatedModules": true,
         "jsx": "preserve",
-        "incremental": true
+        "incremental": true,
+        "paths": {
+            "@/*": ["src/*"]
+        },
+        "plugins": [
+            {
+                "name": "next"
+            }
+        ],
+        "target": "ESNext"
     },
     "include": [
-        "next-env.d.ts",
-        "./src/default.d.ts",
         "**/*.ts",
         "**/*.tsx",
-        "src/views/outliner/index.old",
-        "src/utils/edgesGeometry",
-        "src/lib/Model.old",
-        "scripts/textures.js"
-    ],
+        "./DI  /types/**/*.ts",
+        "./DI/types/**/*.ts",
+        "./build/types/**/*.ts",
+        ".next/types/**/*.ts",
+        "next-env.d.ts",
+        "./dist/types/**/*.ts"
+, "src/_old/Viewer.old"    ],
     "exclude": ["node_modules"]
 }

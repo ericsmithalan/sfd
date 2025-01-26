@@ -12,9 +12,6 @@ import {
 } from "three";
 import { ViewportGizmo } from "three-viewport-gizmo";
 import { OrbitControls, RGBELoader } from "three/examples/jsm/Addons.js";
-//8
-import hdr from "../assets/env/1a.hdr";
-
 import { IScreenSize } from "../interface";
 import { disposeObject } from "../utils";
 import { Floor } from "./Floor";
@@ -142,7 +139,7 @@ export class World extends EventDispatcher<IWorldEvent> {
         const pmremGenerator = new PMREMGenerator(this.renderer);
 
         const hdriLoader = new RGBELoader();
-        const texture = await hdriLoader.loadAsync(hdr);
+        const texture = await hdriLoader.loadAsync("/env/1a.hdr");
 
         const env = pmremGenerator.fromEquirectangular(texture).texture;
         this.scene.environment = env;

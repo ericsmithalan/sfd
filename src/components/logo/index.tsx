@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 
 interface LogoProps {
     theme?: "dark" | "light";
@@ -14,7 +14,7 @@ export const Logo = ({ theme = "light", width, height, className, imageClassName
     const color2 = "#DDA55B";
 
     return (
-        <Link title="Home: Smith Furniture Design" to="/" className={clsx("logo", className)}>
+        <Link title="Home: Smith Furniture Design" href="/" className={clsx("logo", className)}>
             <svg
                 width={width || "100%"}
                 height={height || "100%"}

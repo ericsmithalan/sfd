@@ -3,18 +3,19 @@
     "version": "0.1.0",
     "private": true,
     "scripts": {
-        "start": "react-scripts start",
-        "build": "react-scripts build",
-        "eject": "react-scripts eject",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint",
         "names": "node ./scripts/textures.js"
     },
     "dependencies": {
         "clsx": "^2.1.1",
+        "next": "^15.1.6",
         "object.entries": "^1.1.8",
         "react": "^19.0.0",
         "react-device-detect": "^2.2.3",
         "react-dom": "^19.0.0",
-        "react-router-dom": "^7.1.2",
         "react-scripts": "^5.0.1",
         "three": "^0.172.0",
         "three-viewport-gizmo": "^2.0.2"
