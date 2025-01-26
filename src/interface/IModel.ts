@@ -1,4 +1,4 @@
-import { Group, Object3D } from "three";
+import { AnimationClip, Group, Object3D } from "three";
 import { IObjectMaterial } from "./IObjectMaterial";
 import { IOutliner } from "./IOutliner";
 
@@ -7,4 +7,5 @@ export interface IModel {
     outliner: IOutliner;
     edges: Group;
     materials: Map<string, IObjectMaterial>;
+    animations: AnimationClip[];
 }

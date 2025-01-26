@@ -18,11 +18,11 @@ export const BorderHighlight = () => {
                     y2="0.5"
                     gradientUnits="userSpaceOnUse"
                 >
-                    <stop stop-color="white" stop-opacity="0" />
-                    <stop offset="0.3" stop-color="white" />
-                    <stop offset="0.5" stop-color="white" />
-                    <stop offset="0.7" stop-color="white" />
-                    <stop offset="1" stop-color="white" stop-opacity="0" />
+                    <stop stopColor="white" stopOpacity="0" />
+                    <stop offset="0.3" stopColor="white" />
+                    <stop offset="0.5" stopColor="white" />
+                    <stop offset="0.7" stopColor="white" />
+                    <stop offset="1" stopColor="white" stopOpacity="0" />
                 </linearGradient>
             </defs>
         </svg>

@@ -100,6 +100,7 @@ export const loadModel = (
                     outliner: outliner,
                     edges: edges.edgeGroup,
                     materials: materials,
+                    animations: gltf.animations,
                 });
             });
         }
