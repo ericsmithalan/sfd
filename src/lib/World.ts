@@ -97,6 +97,7 @@ export class World extends EventDispatcher<IWorldEvent> {
         this.floor = new Floor();
         this.grid = new Grid();
 
+        this.scene.add(this.lights.dirLight, this.floor, this.grid);
         this.registerEvents();
     }
 
@@ -135,8 +136,6 @@ export class World extends EventDispatcher<IWorldEvent> {
         env.dispose();
         texture.dispose();
         pmremGenerator.dispose();
-
-        this.scene.add(this.lights.dirLight, this.floor, this.grid);
     }
 
     setSize() {
