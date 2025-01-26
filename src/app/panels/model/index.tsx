@@ -57,7 +57,7 @@ export const ModelPanel = () => {
     return visisble ? (
         <>
             <Panel
-                title={outliner.model?.name}
+                title={`${outliner.model?.name} Info`}
                 className={clsx(outliner.isMobile && "mobile")}
                 icon="blender"
                 contentCss="images-panel"
