@@ -18,11 +18,11 @@ export const getAllFabricTextures = (): Array<ITexture> => {
     const url = "/textures/fabric";
 
     return [
-        createTextureData(2222, "wood", "none", "None", 1, url, {
+        createTextureData(189, "wood", "none", "None", 1, url, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(98743, "fabric", "green", "Green", 1, url, {
+        createTextureData(283, "fabric", "green", "Green", 1, url, {
             ...settings,
             ao: true,
             normal: true,

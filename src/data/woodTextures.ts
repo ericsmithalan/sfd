@@ -18,35 +18,35 @@ export const getAllWoodTextures = (): Array<ITexture> => {
     const URL = "/textures/wood";
 
     return [
-        createTextureData(1111, "wood", "none", "None", 1, URL, {
+        createTextureData(138, "wood", "none", "None", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(3211, "wood", "ash", "Ash", 1, URL, {
+        createTextureData(299, "wood", "ash", "Ash", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(5322, "wood", "birch", "Birch", 1, URL, {
+        createTextureData(390, "wood", "birch", "Birch", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(8743, "wood", "hickory", "Hickory", 1, URL, {
+        createTextureData(464, "wood", "hickory", "Hickory", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(9999, "wood", "maple", "Maple", 1, URL, {
+        createTextureData(584, "wood", "maple", "Maple", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(4323, "wood", "oak", "Oak", 1, URL, {
+        createTextureData(699, "wood", "oak", "Oak", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(6543, "wood", "cherry", "Cherry", 1, URL, {
+        createTextureData(745, "wood", "cherry", "Cherry", 1, URL, {
             ...settings,
             diffuse: true,
         }),
-        createTextureData(9887, "wood", "walnut", "Walnut", 1, URL, {
+        createTextureData(888, "wood", "walnut", "Walnut", 1, URL, {
             ...settings,
             diffuse: true,
         }),

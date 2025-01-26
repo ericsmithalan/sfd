@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, useEffect, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { Mesh } from "three";
 import { Button, Panel, TexturePicker } from "../../components";
 import { DATA } from "../../data";
@@ -8,7 +8,7 @@ import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
 import { ObjectUserData, Viewport } from "../../lib";
 import { TextureResolution, TextureType } from "../../types";
-import { createTextureMaterials, getObjectsById } from "../../utils";
+import { createTextureMaterials, disposeMaterial, getObjectsById } from "../../utils";
 import "./style.scss";
 
 type ToolbarProps = {
@@ -21,18 +21,55 @@ type SelectedTextureState = Map<string, IObjectMaterial>;
 
 export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => {
     const [visible, setVisible] = useState(false);
-    const [edges, setEdges] = useState(false);
+    const [showEdges, setShowEdges] = useState(false);
     const [loading, setLoading] = useState(false);
     const [resolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model, isMobile } = useModel();
 
     useEffect(() => {
-        setEdges(viewport.edges);
+        setShowEdges(viewport.edges);
     }, [viewport]);
+
+    const loadMaterials = useCallback(
+        async (materialObj: IObjectMaterial) => {
+            if (materialObj.material) {
+                disposeMaterial(materialObj.material);
+            }
+
+            const materials = await createTextureMaterials(
+                materialObj.texture,
+                viewport.world.scene.environment,
+                resolution,
+            );
+
+            materialObj.material = materials;
+
+            getObjectsById(viewport, materialObj.objects, (obj) => {
+                if (obj instanceof Mesh) {
+                    disposeMaterial(obj.material);
+
+                    if (obj.userData instanceof ObjectUserData) {
+                        obj.userData.textureInfo = {
+                            textureId: Number(materialObj.texture.id),
+                            unwrapped: false,
+                        };
+                    }
+                    obj.castShadow = true;
+                    obj.receiveShadow = true;
+                    obj.material = materials;
+                }
+            });
+
+            disposeMaterial(materials);
+        },
+        [resolution, viewport],
+    );
 
     useEffect(() => {
         if (model?.materials) {
+            Array.from(model.materials.entries()).map(([key, value], i) => loadMaterials(value));
+
             setSelected(model.materials);
         } else {
             setSelected(new Map());
@@ -43,36 +80,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
         } else {
             setVisible(false);
         }
-    }, [model]);
-
-    const loadMaterials = async (materialObj: IObjectMaterial) => {
-        if (materialObj.material) {
-            materialObj.material.dispose();
-        }
-
-        const materials = await createTextureMaterials(
-            materialObj.texture,
-            viewport.world.scene.environment,
-            resolution,
-        );
-
-        materialObj.material = materials;
-        const objs = getObjectsById(viewport, materialObj.objects, (obj) => {
-            if (obj instanceof Mesh) {
-                obj.material.dispose();
-                if (obj.userData instanceof ObjectUserData) {
-                    obj.userData.textureInfo = {
-                        textureId: Number(materialObj.texture.id),
-                        unwrapped: false,
-                    };
-                }
-                obj.castShadow = true;
-                obj.receiveShadow = true;
-                obj.material = materials;
-            }
-        });
-        materials.dispose();
-    };
+    }, [model, loadMaterials]);
 
     const getTextures = (type: TextureType): Array<ITexture> => {
         switch (type) {
@@ -92,17 +100,21 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
             onLoading(true);
         }
 
+        // console.log(key, materialObj);
+
         const sel = selected.get(key);
 
         if (sel) {
-            sel.material?.dispose();
+            disposeMaterial(sel.material);
         }
+
+        selected.set(key, materialObj);
 
         await loadMaterials(materialObj);
 
-        selected.set(key, materialObj);
         // @ts-ignore
         setSelected(new Map([...selected]));
+
         if (onLoading) {
             onLoading(false);
         }
@@ -132,28 +144,15 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, onLoading }) => 
                 title="Toggle Edges"
                 variant="toolbar"
                 icon="artboard-2"
-                text={edges ? "Edges" : "Edges"}
-                active={edges}
+                text={showEdges ? "Edges" : "Edges"}
+                active={showEdges}
                 onClick={(e) => {
-                    viewport.edges = !edges;
-                    setEdges(!edges);
+                    viewport.edges = !showEdges;
+                    setShowEdges(!showEdges);
                 }}
             />
 
             {children}
-            {/* <Button
-                title="Toggle Edges"
-                variant="toolbar"
-                icon="4k"
-                active={resolution !== "1k"}
-                onClick={(e) => {
-                    if (resolution === "2k") {
-                        setResolution("1k");
-                    } else {
-                        setResolution("2k");
-                    }
-                }}
-            /> */}
         </Panel>
     );
 };
