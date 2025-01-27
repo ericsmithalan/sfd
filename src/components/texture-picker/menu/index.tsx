@@ -60,13 +60,13 @@ export const TextureMenu = ({
                 }
             }
         }
-    }, [targetRef, menuRef, panelRef, isMobile]);
+    }, [targetRef, menuRef, panelRef, isMobile, menuWidth]);
 
     return (
         <>
             <div
                 ref={menuRef}
-                className={clsx("menu", className)}
+                className={clsx("menu", className, isMobile && "mobile")}
                 style={{
                     left: position?.x,
                     top: position?.y,
