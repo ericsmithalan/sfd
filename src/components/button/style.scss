@@ -102,15 +102,13 @@ input::-moz-focus-inner {
         justify-content: center;
         align-items: center;
         flex-direction: column;
-        width: var(--toolbar-height);
-        height: var(--toolbar-height);
         flex: 1 1 auto;
 
         color: var(--color-white-4);
         font-size: var(--font-7);
 
         & > .icon {
-            font-size: var(--font-3);
+            font-size: var(--font-4);
         }
 
         &.active {

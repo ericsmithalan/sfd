@@ -1,4 +1,4 @@
-import { EventDispatcher } from "three";
+import { Clock, EventDispatcher } from "three";
 //8
 
 import { IOutliner } from "../interface";
@@ -11,6 +11,7 @@ import { IWorldEvent, World } from "./World";
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
     modelChanged: { type: string; model: IModel | null };
+    animate: { type: string; time: number };
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
@@ -21,6 +22,9 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
+
+    clock = new Clock();
+    animating: boolean = false;
 
     constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
         super();
@@ -41,7 +45,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     set edges(value: boolean) {
         if (this.model) {
-            this.model.edges.visible = value;
+            this.model.edges.edgeGroup.visible = value;
             this._edges = value;
         }
     }
@@ -53,13 +57,13 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     set model(value: IModel | null) {
         if (this._model) {
             disposeObject(this._model.object);
-            disposeObject(this._model.edges);
+            this._model.edges.dispose();
         }
 
         if (value) {
             this.world.scene.add(value.object);
-            this.world.scene.add(value.edges);
-            value.edges.visible = this.edges;
+            this.world.scene.add(value.edges.edgeGroup);
+            value.edges.edgeGroup.visible = this.edges;
         }
 
         this._model = value;
@@ -82,6 +86,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private async init() {
         this.world.addEventListener("resize", this.resize);
         await this.world.loadEnvironment();
+        console.log("cool");
     }
 
     private resize(e: IWorldEvent["resize"]) {
@@ -94,6 +99,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         renderer.setViewport(0, 0, size.width, size.height);
         renderer.render(scene, camera);
 
+        if (this.animating && this.model?.edges) {
+            this.model.edges.update(this.world.scene);
+        }
+
         this.selection?.animate();
 
         if (gizmo) {
@@ -102,7 +111,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         orbitControls.update();
         renderer.clearDepth();
-
+        this.dispatchEvent({ type: "animate", time: this.clock.getDelta() });
         this.world.logStats();
     };
 
@@ -111,7 +120,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         if (this.model) {
             disposeObject(this.model.object);
-            disposeObject(this.model.edges);
+            this.model.edges.dispose();
         }
 
         this.selection?.dispose();

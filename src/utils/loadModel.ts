@@ -98,9 +98,9 @@ export const loadModel = (
                 resolve({
                     object: model,
                     outliner: outliner,
-                    edges: edges.edgeGroup,
+                    edges: edges,
                     materials: materials,
-                    animations: gltf.animations,
+                    animations: gltf.animations?.length > 0 ? gltf.animations : null,
                 });
             });
         }

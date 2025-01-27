@@ -14,8 +14,9 @@
         gap: 1px;
 
         & > .button {
-            width: 5rem;
             border-radius: 0;
+            height: 60px;
+            width: 70px;
 
             & > .bg-image {
                 border-radius: 0;
@@ -58,8 +59,10 @@
             justify-content: space-around;
             position: relative;
 
-            & > .btn-toolbar {
-                width: 5rem;
+            & > .button {
+                height: 60px;
+                width: 58px;
+
                 & > .bg-image {
                 }
             }

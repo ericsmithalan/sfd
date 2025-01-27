@@ -38,6 +38,7 @@ export const TextureButton: FC<TextureButtonProps> = ({
                 "button texture-button",
                 disable && "disabled",
                 active && "active",
+                isMobile && "mobile",
                 className,
             )}
         >

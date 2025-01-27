@@ -6,7 +6,7 @@ export const getEdge = (viewport: Viewport, id: number): Object3D | null => {
     let edge: Object3D | null = null;
 
     if (edges) {
-        edges.traverse((item) => {
+        edges.edgeGroup.traverse((item) => {
             if (item.userData instanceof ObjectUserData) {
                 if (id === item.userData.edgeInfo?.objectId) {
                     edge = item;

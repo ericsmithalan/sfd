@@ -16,9 +16,6 @@
 
     border-radius: var(--radius-5);
 
-    min-height: var(--toolbar-height);
-    width: var(--toolbar-height);
-
     & > .color {
         display: flex;
         flex-direction: column;
@@ -30,6 +27,8 @@
 
     & > .text {
         text-transform: capitalize;
+        overflow: hidden;
+        white-space: nowrap;
         font-size: var(--font-7);
         padding: var(--padding-4);
     }
@@ -42,9 +41,14 @@
     }
 
     &.mobile {
-        max-width: 4.4rem;
-        min-width: 4rem;
-        width: 100%;
+        & > .text {
+            text-transform: capitalize;
+            overflow: hidden;
+            white-space: nowrap;
+            font-size: var(--font-7);
+            padding: 3px;
+            margin-bottom: 3px;
+        }
     }
 
     &.active {
