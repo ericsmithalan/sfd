@@ -21,40 +21,44 @@ type OutlinerContextProps = {
 };
 
 export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerContextProps) => {
-    const [categories] = useState<Array<IOutliner>>(DATA.rootOutliner);
     const [category, setCategory] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);
     const params = useParams();
 
     useEffect(() => {
         if (params.categoryId) {
-            const item = categories.find((item) => item.id === Number(params.categoryId));
+            const item = DATA.rootOutliner.find((item) => item.id === Number(params.categoryId));
             setCategory(item || null);
         }
 
         if (category && !params.categoryId) {
             setCategory(null);
         }
-    }, [categories, category, params.categoryId]);
+    }, [category, params.categoryId]);
 
     useEffect(() => {
-        const loadModel = async (obj: IOutliner) => {
-            await viewport.loadModel(obj);
-        };
+        if (category) {
+            const loadModel = async (obj: IOutliner) => {
+                await viewport.loadModel(obj);
+                setModel(obj);
+                console.log("loaded");
+            };
 
-        if (params.modelId) {
-            const model = category?.children?.find((item) => item.id === Number(params.modelId));
+            if (category && params.modelId && model?.id !== Number(params.modelId)) {
+                const model =
+                    category?.children?.find((item) => item.id === Number(params.modelId)) || null;
 
-            setModel(model || null);
-
-            if (model) {
-                loadModel(model);
+                if (model) {
+                    loadModel(model);
+                } else {
+                    setModel(null);
+                }
             }
-        }
 
-        if (model && !params.modelId) {
-            setModel(null);
-            viewport.model = null;
+            if (model && !params.modelId) {
+                setModel(null);
+                viewport.model = null;
+            }
         }
     }, [model, params.modelId, category, viewport]);
 
@@ -62,7 +66,7 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
         <OutlinerContext.Provider
             value={{
                 viewport: viewport,
-                categories: categories,
+                categories: DATA.rootOutliner,
                 model: model,
                 isMobile: isMobile,
                 category: category,

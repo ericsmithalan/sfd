@@ -106,12 +106,12 @@ export class World extends EventDispatcher<IWorldEvent> {
     logStats() {
         if (this.renderer.info.memory.geometries !== this.geometries) {
             this.geometries = this.renderer.info.memory.geometries;
-            console.log("geometries", this.renderer.info.memory.geometries);
+            // console.log("geometries", this.renderer.info.memory.geometries);
         }
 
         if (this.renderer.info.memory.textures !== this.textures) {
             this.textures = this.renderer.info.memory.textures;
-            console.log("textures", this.renderer.info.memory.geometries);
+            // console.log("textures", this.renderer.info.memory.geometries);
         }
     }
 

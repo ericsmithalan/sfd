@@ -38,8 +38,6 @@ export const Viewer = () => {
         };
     }, [canvasRef]);
 
-    console.log(isMobile);
-
     return (
         <div id="viewer-main" className="viewer">
             {loading && <Loading message="Loading" />}

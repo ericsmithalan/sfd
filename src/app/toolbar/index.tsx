@@ -156,7 +156,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
 
     const handleAnimate = () => {
         if (animation && !animating) {
-            console.log("clicked");
             setAnimating(true);
 
             const handleDone = () => {

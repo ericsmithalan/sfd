@@ -86,7 +86,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     private async init() {
         this.world.addEventListener("resize", this.resize);
         await this.world.loadEnvironment();
-        console.log("cool");
     }
 
     private resize(e: IWorldEvent["resize"]) {
