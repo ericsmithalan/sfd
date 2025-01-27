@@ -1,16 +1,11 @@
 "use client";
-import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 import { isMobile } from "react-device-detect";
-import { Outlet } from "react-router-dom";
-import { Loading, Region } from "../components";
-import { ModelProvider, OutlinerProvider } from "../context";
+import { Loading } from "../components";
 import { IViewportEvent, Viewport } from "../lib";
-import { ImagesPanel } from "./panels/images";
-import { ModelPanel } from "./panels/model";
-import { ObjectPanel } from "./panels/object";
 import "./style.scss";
-import { Toolbar } from "./toolbar";
+import { MobileViewer } from "./viewer/Mobile";
+import { StandardViewer } from "./viewer/Standard";
 
 export interface IOutletContenxt {
     viewport: Viewport;
@@ -43,38 +38,17 @@ export const Viewer = () => {
         };
     }, [canvasRef]);
 
+    console.log(isMobile);
+
     return (
         <div id="viewer-main" className="viewer">
             {loading && <Loading message="Loading" />}
-            {viewport && (
-                <>
-                    <Region className={clsx(isMobile && "mobile")} placement="left">
-                        <OutlinerProvider isMobile={isMobile} viewport={viewport}>
-                            <Outlet />
-                        </OutlinerProvider>
-                    </Region>
-                    {!isMobile && (
-                        <Region className={clsx(isMobile && "mobile")} placement="right">
-                            <OutlinerProvider isMobile={isMobile} viewport={viewport}>
-                                <ModelPanel />
-                                <ObjectPanel />
-                            </OutlinerProvider>
-                        </Region>
-                    )}
-
-                    <Region className={clsx(isMobile && "mobile")} placement="top">
-                        <ModelProvider isMobile={isMobile} viewport={viewport}>
-                            <Toolbar viewport={viewport}>
-                                {isMobile && (
-                                    <OutlinerProvider isMobile={isMobile} viewport={viewport}>
-                                        <ImagesPanel />
-                                    </OutlinerProvider>
-                                )}
-                            </Toolbar>
-                        </ModelProvider>
-                    </Region>
-                </>
-            )}
+            {viewport &&
+                (isMobile ? (
+                    <MobileViewer viewport={viewport} />
+                ) : (
+                    <StandardViewer viewport={viewport} />
+                ))}
 
             <canvas className="canvas" ref={canvasRef} />
         </div>
