@@ -14,20 +14,20 @@ type Props = {
 export const StandardViewer = ({ viewport, loading }: Props) => {
     return (
         <>
-            <OutlinerProvider isMobile={false} viewport={viewport}>
+            <OutlinerProvider viewport={viewport}>
                 <Region placement="left">
-                    <Outlet context={{ viewport: viewport, loading: loading }} />
+                    <Outlet context={{ viewport: viewport, loading: loading, isMobile: false }} />
                 </Region>
 
                 <Region placement="right">
-                    <ModelPanel viewport={viewport} loading={loading} />
-                    <ObjectPanel viewport={viewport} loading={loading} />
+                    <ModelPanel viewport={viewport} isMobile={false} loading={loading} />
+                    <ObjectPanel viewport={viewport} isMobile={false} loading={loading} />
                 </Region>
             </OutlinerProvider>
 
             <Region placement="top">
-                <ModelProvider isMobile={false} viewport={viewport}>
-                    <Toolbar viewport={viewport} />
+                <ModelProvider viewport={viewport}>
+                    <Toolbar isMobile={false} viewport={viewport} />
                 </ModelProvider>
             </Region>
         </>

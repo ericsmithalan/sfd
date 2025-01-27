@@ -15,9 +15,10 @@ type ViewerState = {
 type Props = {
     viewport: Viewport;
     loading: boolean;
+    isMobile: boolean;
 };
 
-export const ModelPanel = ({ viewport, loading }: Props) => {
+export const ModelPanel = ({ viewport, loading, isMobile }: Props) => {
     const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
@@ -47,7 +48,7 @@ export const ModelPanel = ({ viewport, loading }: Props) => {
     return outliner.model && imageResource ? (
         <>
             <ImageViewer
-                className={clsx(outliner.isMobile && "mobile")}
+                className={clsx(isMobile && "mobile")}
                 onClosed={() => {
                     setViewer({ visible: false, selected: "" });
                 }}
@@ -57,10 +58,10 @@ export const ModelPanel = ({ viewport, loading }: Props) => {
             />
             <Panel
                 title={`${outliner.model?.name} Info`}
-                className={clsx(outliner.isMobile && "mobile")}
+                className={clsx(isMobile && "mobile")}
                 icon="blender"
                 contentCss="images-panel"
-                opened={!outliner.isMobile}
+                opened={!isMobile}
             >
                 <Button
                     variant="image"

@@ -15,9 +15,10 @@ type ViewerState = {
 type ImagesPanelProps = {
     loading: boolean;
     viewport: Viewport;
+    isMobile: boolean;
 };
 
-export const ImagesPanel = ({ loading, viewport }: ImagesPanelProps) => {
+export const ImagesPanel = ({ loading, viewport, isMobile }: ImagesPanelProps) => {
     const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,
@@ -61,7 +62,7 @@ export const ImagesPanel = ({ loading, viewport }: ImagesPanelProps) => {
             )}
 
             <ImageViewer
-                className={clsx(outliner.isMobile && "mobile")}
+                className={clsx(isMobile && "mobile")}
                 onClosed={() => {
                     setViewer({ visible: false, selected: "" });
                 }}

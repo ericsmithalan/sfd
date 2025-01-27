@@ -14,17 +14,18 @@ import "./style.scss";
 type ToolbarProps = {
     children?: React.ReactNode;
     viewport: Viewport;
+    isMobile: boolean;
 };
 
-type SelectedTextureState = Map<string, IObjectMaterial>;
+type SelectedState = Map<string, IObjectMaterial>;
 
-export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
+export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
     const [showEdges, setShowEdges] = useState(false);
     const [loading, setLoading] = useState(false);
     const [animate, setAnimate] = useState<boolean | null>(null);
     const [resolution] = useState<TextureResolution>("2k");
-    const [selected, setSelected] = useState<SelectedTextureState>(new Map());
-    const { model, isMobile } = useModel();
+    const [selected, setSelected] = useState<SelectedState>(new Map());
+    const { model } = useModel();
     const panelRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {

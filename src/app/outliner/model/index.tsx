@@ -11,10 +11,11 @@ import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const ModelOutliner = () => {
-    const { viewport, loading, outliner } = useOutletContext<{
+    const { viewport, loading, outliner, isMobile } = useOutletContext<{
         viewport: Viewport;
         loading: boolean;
         outliner: IOutlinerContext;
+        isMobile: boolean;
     }>();
     const [object, setObject] = useState<Object3D | null>(null);
 
@@ -35,18 +36,18 @@ export const ModelOutliner = () => {
     }, [viewport]);
 
     return (
-        <div className={clsx("outliner-model", outliner.isMobile && "mobile")}>
+        <div className={clsx("outliner-model", isMobile && "mobile")}>
             {!loading && (
                 <OutlinerTitle
-                    isMobile={outliner.isMobile}
-                    className={clsx(outliner.isMobile && "mobile")}
-                    subTitle={outliner.isMobile ? undefined : "Objects"}
+                    isMobile={isMobile}
+                    className={clsx(isMobile && "mobile")}
+                    subTitle={isMobile ? undefined : "Objects"}
                     title={outliner.model?.name}
                     iconName="blender"
                 />
             )}
 
-            {!outliner.isMobile && (
+            {!isMobile && (
                 <Scroller scrollTo={object ? `obj_${object.id}` : undefined}>
                     {outliner.model?.children?.map((item, i) => {
                         return (

@@ -8,7 +8,6 @@ export interface IOutlinerContext {
     categories: Array<IOutliner>;
     category: IOutliner | null;
     model: IOutliner | null;
-    isMobile: boolean;
 }
 
 export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerContext);
@@ -16,10 +15,9 @@ export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerCo
 type OutlinerContextProps = {
     viewport: Viewport;
     children?: React.ReactNode;
-    isMobile: boolean;
 };
 
-export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerContextProps) => {
+export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
     const [category, setCategory] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);
     const params = useParams();
@@ -66,7 +64,6 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
             value={{
                 categories: DATA.rootOutliner,
                 model: model,
-                isMobile: isMobile,
                 category: category,
             }}
         >

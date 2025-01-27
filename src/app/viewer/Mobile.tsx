@@ -13,15 +13,15 @@ type Props = {
 
 export const MobileViewer = ({ viewport, loading }: Props) => {
     return (
-        <OutlinerProvider isMobile={true} viewport={viewport}>
+        <OutlinerProvider viewport={viewport}>
             <Region className={clsx("mobile", loading && "loading")} placement="left">
                 <Outlet context={{ viewport: viewport, loading: loading }} />
             </Region>
 
             <Region className={clsx("mobile", loading && "loading")} placement="top">
-                <ModelProvider isMobile={true} viewport={viewport}>
-                    <Toolbar viewport={viewport}>
-                        <ImagesPanel viewport={viewport} loading={loading} />
+                <ModelProvider viewport={viewport}>
+                    <Toolbar isMobile={true} viewport={viewport}>
+                        <ImagesPanel isMobile={true} viewport={viewport} loading={loading} />
                     </Toolbar>
                 </ModelProvider>
             </Region>

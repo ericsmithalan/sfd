@@ -16,9 +16,10 @@ type State = {
 type Props = {
     viewport: Viewport;
     loading: boolean;
+    isMobile: boolean;
 };
 
-export const ObjectPanel = ({ viewport, loading }: Props) => {
+export const ObjectPanel = ({ viewport, loading, isMobile }: Props) => {
     const [state, setState] = useState<State | null>(null);
     const outliner = useOutliner();
 
@@ -53,10 +54,10 @@ export const ObjectPanel = ({ viewport, loading }: Props) => {
     return outliner.model && state ? (
         <Panel
             title={state.object.name}
-            className={clsx(outliner.isMobile && "mobile")}
+            className={clsx(isMobile && "mobile")}
             icon="box-1"
             contentCss="object-panel"
-            opened={!outliner.isMobile}
+            opened={!isMobile}
         >
             <Stats
                 stats={[

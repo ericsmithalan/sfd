@@ -7,14 +7,15 @@ import { Viewport } from "../../../lib";
 import "./style.scss";
 
 export const CategoriesOutliner = () => {
-    const { outliner } = useOutletContext<{
+    const { outliner, isMobile } = useOutletContext<{
         outliner: IOutlinerContext;
         viewport: Viewport;
         loading: boolean;
+        isMobile: boolean;
     }>();
 
     return (
-        <div className={clsx("outliner-root", outliner.isMobile && "mobile")}>
+        <div className={clsx("outliner-root", isMobile && "mobile")}>
             {outliner.categories.map((item, i) => {
                 return (
                     <Fragment key={i}>

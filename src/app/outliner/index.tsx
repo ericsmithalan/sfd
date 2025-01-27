@@ -7,19 +7,24 @@ import "./style.scss";
 
 export const OutlinerView = () => {
     const outliner = useOutliner();
-    const { viewport, loading } = useOutletContext<{ viewport: Viewport; loading: boolean }>();
+    const { viewport, loading, isMobile } = useOutletContext<{
+        viewport: Viewport;
+        loading: boolean;
+        isMobile: boolean;
+    }>();
 
     return (
-        <Panel
-            className={clsx(
-                "outliner-main",
-                outliner.isMobile && "mobile",
-                outliner.model && "model",
-            )}
-        >
+        <Panel className={clsx("outliner-main", isMobile && "mobile", outliner.model && "model")}>
             <Logo height={45} />
             <Scroller>
-                <Outlet context={{ outliner: outliner, viewport: viewport, loading: loading }} />
+                <Outlet
+                    context={{
+                        outliner: outliner,
+                        viewport: viewport,
+                        isMobile: isMobile,
+                        loading: loading,
+                    }}
+                />
             </Scroller>
         </Panel>
     );
