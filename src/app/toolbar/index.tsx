@@ -7,7 +7,7 @@ import { useModel } from "../../hooks";
 import { IObjectMaterial } from "../../interface";
 import { ITexture } from "../../interface/ITexture";
 import { IViewportEvent, ObjectUserData, Viewport } from "../../lib";
-import { TextureResolution, TextureType } from "../../types";
+import { AnimationState, TextureResolution, TextureType } from "../../types";
 import { createTextureMaterials, disposeMaterial, getObjectsById } from "../../utils";
 import "./style.scss";
 
@@ -19,10 +19,15 @@ type ToolbarProps = {
 
 type SelectedState = Map<string, IObjectMaterial>;
 
+type Animation = {
+    state: AnimationState;
+    animating: boolean;
+};
+
 export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
     const [showEdges, setShowEdges] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [animate, setAnimate] = useState<boolean | null>(null);
+    const [animate, setAnimate] = useState<Animation | null>(null);
     const [resolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedState>(new Map());
     const { model } = useModel();
@@ -55,11 +60,9 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                     if (obj.userData instanceof ObjectUserData) {
                         obj.userData.textureInfo = {
                             textureId: Number(materialObj.texture.id),
-                            unwrapped: false,
                         };
                     }
-                    obj.castShadow = true;
-                    obj.receiveShadow = true;
+
                     obj.material = materials;
                 }
             });
@@ -72,8 +75,11 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
 
     useEffect(() => {
         const handleModelAnimationComplete = (e: IViewportEvent["modelAnimated"]) => {
-            setAnimate(e.running);
-            console.log("done", e);
+            setAnimate({
+                state: e.state,
+                animating: e.running,
+            });
+            console.log("done", e.state);
         };
 
         if (model) {
@@ -83,7 +89,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
 
             if (model.animations) {
                 viewport.addEventListener("modelAnimated", (e) => handleModelAnimationComplete(e));
-                setAnimate(false);
+                setAnimate({
+                    state: "closed",
+                    animating: false,
+                });
             } else {
                 setAnimate(null);
             }
@@ -118,11 +127,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
         }
 
         selected.set(key, materialObj);
-
-        await loadMaterials(materialObj);
-
         // @ts-ignore
         setSelected(new Map([...selected]));
+
+        await loadMaterials(materialObj);
     };
 
     return (
@@ -162,12 +170,12 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
 
             {animate !== null && (
                 <Button
-                    title="Animate"
+                    title={animate.state === "closed" ? "Open" : "Close"}
                     variant="toolbar"
-                    icon="play"
-                    text={"Play"}
-                    active={animate}
-                    disabled={animate}
+                    icon={animate.state === "closed" ? "door-closed" : "door-open"}
+                    text={animate.state === "closed" ? "Open" : "Close"}
+                    active={animate.animating || animate.state === "opened"}
+                    disabled={animate.animating}
                     onClick={(e) => {
                         viewport.toggleAnimation();
                     }}

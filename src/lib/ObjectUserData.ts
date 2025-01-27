@@ -6,7 +6,6 @@ export interface IEdgeInfo {
 
 export interface ITextureInfo {
     textureId: number | null;
-    unwrapped: boolean;
 }
 
 export interface IViewportInfo {

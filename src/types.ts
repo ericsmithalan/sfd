@@ -1,6 +1,6 @@
 export type TransformMode = "translate" | "rotate" | "scale";
 export type SelectMode = "select" | "edit";
-
+export type AnimationState = "opened" | "closed";
 export type TextureType = "wood" | "fabric" | "metal" | "hardware";
 export type TextureResolution = "1k" | "2k" | "3k" | "4k";
 export type RegionPlacement = "left" | "right" | "top" | "bottom";

@@ -1,6 +1,7 @@
 import { AnimationMixer, Clock, EventDispatcher, LoopOnce, Object3D } from "three";
 import { IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
+import { AnimationState } from "../types";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
 import { Selection } from "./Selection";
@@ -9,7 +10,12 @@ import { IWorldEvent, World } from "./World";
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
     modelChanged: { type: string; model: IModel | null };
-    modelAnimated: { type: string; mixer: AnimationMixer; running: boolean };
+    modelAnimated: {
+        type: string;
+        mixer: AnimationMixer;
+        running: boolean;
+        state: AnimationState;
+    };
     animate: { type: string; time: number };
 }
 
@@ -81,7 +87,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     toggleAnimation() {
         if (!this.animating && this.mixer) {
             if (this.mixer && this.model && this.model.animations) {
-                this.dispatchEvent({ type: "modelAnimated", mixer: this.mixer, running: true });
+                let state: AnimationState = "closed";
 
                 this.model.animations.forEach((clip) => {
                     if (this.mixer) {
@@ -89,6 +95,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
                         /// not sure why this works??
                         if (action.isRunning()) {
+                            state = "opened";
                             action.paused = false;
                             action.loop = LoopOnce;
                             action.timeScale = -action.timeScale;
@@ -113,30 +120,42 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
                     }
                 });
 
+                this.dispatchEvent({
+                    type: "modelAnimated",
+                    mixer: this.mixer,
+                    running: true,
+                    state: state,
+                });
+
                 this.animating = true;
             }
         }
     }
 
-    private handleModelAnimationComplete() {
+    private handleModelAnimationComplete(e: any) {
         this.animating = false;
         if (this.mixer) {
-            this.dispatchEvent({ type: "modelAnimated", mixer: this.mixer, running: false });
+            this.dispatchEvent({
+                type: "modelAnimated",
+                mixer: this.mixer,
+                running: false,
+                state: e.direction === 1 ? "opened" : "closed",
+            });
         }
     }
 
     private setupModelAnimations(model: Object3D) {
         this.animating = false;
         this.mixer = new AnimationMixer(model);
-        this.mixer.addEventListener("loop", () => this.handleModelAnimationComplete());
-        this.mixer.addEventListener("finished", () => this.handleModelAnimationComplete());
+        this.mixer.addEventListener("loop", (e) => this.handleModelAnimationComplete(e));
+        this.mixer.addEventListener("finished", (e) => this.handleModelAnimationComplete(e));
     }
 
     private disposeModelAnimations() {
         this.animating = false;
         if (this.mixer) {
-            this.mixer.removeEventListener("loop", () => this.handleModelAnimationComplete());
-            this.mixer.removeEventListener("finished", () => this.handleModelAnimationComplete());
+            this.mixer.removeEventListener("loop", (e) => this.handleModelAnimationComplete(e));
+            this.mixer.removeEventListener("finished", (e) => this.handleModelAnimationComplete(e));
         }
 
         this.mixer = null;
