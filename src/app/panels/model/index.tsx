@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { BgImage, Button, Panel, Stats } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
+import { Viewport } from "../../../lib";
 import { generateImageResource, ImageResource } from "../../../utils";
 import "./style.scss";
 
@@ -11,7 +12,12 @@ type ViewerState = {
     selected: string;
 };
 
-export const ModelPanel = () => {
+type Props = {
+    viewport: Viewport;
+    loading: boolean;
+};
+
+export const ModelPanel = ({ viewport, loading }: Props) => {
     const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,

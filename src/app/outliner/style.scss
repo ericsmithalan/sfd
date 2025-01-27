@@ -58,3 +58,11 @@
         }
     }
 }
+
+.loading {
+    .outliner-main {
+        &.mobile {
+            display: none;
+        }
+    }
+}

@@ -3,11 +3,14 @@ import { Fragment } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
 import { NavLink } from "../../../components";
 import { IOutlinerContext } from "../../../context";
+import { Viewport } from "../../../lib";
 import "./style.scss";
 
 export const CategoriesOutliner = () => {
     const { outliner } = useOutletContext<{
         outliner: IOutlinerContext;
+        viewport: Viewport;
+        loading: boolean;
     }>();
 
     return (

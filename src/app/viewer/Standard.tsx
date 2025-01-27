@@ -8,19 +8,20 @@ import { Toolbar } from "../toolbar";
 
 type Props = {
     viewport: Viewport;
+    loading: boolean;
 };
 
-export const StandardViewer = ({ viewport }: Props) => {
+export const StandardViewer = ({ viewport, loading }: Props) => {
     return (
         <>
             <OutlinerProvider isMobile={false} viewport={viewport}>
                 <Region placement="left">
-                    <Outlet />
+                    <Outlet context={{ viewport: viewport, loading: loading }} />
                 </Region>
 
                 <Region placement="right">
-                    <ModelPanel />
-                    <ObjectPanel />
+                    <ModelPanel viewport={viewport} loading={loading} />
+                    <ObjectPanel viewport={viewport} loading={loading} />
                 </Region>
             </OutlinerProvider>
 

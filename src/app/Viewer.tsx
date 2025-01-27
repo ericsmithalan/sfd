@@ -13,7 +13,7 @@ export interface IOutletContenxt {
 
 export const Viewer = () => {
     const [viewport, setViewport] = useState<Viewport>();
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const canvasRef = useRef<HTMLCanvasElement>(null);
 
     useEffect(() => {
@@ -43,9 +43,9 @@ export const Viewer = () => {
             {loading && <Loading message="Loading" />}
             {viewport &&
                 (isMobile ? (
-                    <MobileViewer viewport={viewport} />
+                    <MobileViewer loading={loading} viewport={viewport} />
                 ) : (
-                    <StandardViewer viewport={viewport} />
+                    <StandardViewer loading={loading} viewport={viewport} />
                 ))}
 
             <canvas className="canvas" ref={canvasRef} />

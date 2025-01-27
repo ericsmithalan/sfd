@@ -5,7 +5,6 @@ import { IOutliner } from "../interface";
 import { Viewport } from "../lib";
 
 export interface IOutlinerContext {
-    viewport: Viewport;
     categories: Array<IOutliner>;
     category: IOutliner | null;
     model: IOutliner | null;
@@ -65,7 +64,6 @@ export const OutlinerProvider = ({ children, viewport, isMobile }: OutlinerConte
     return (
         <OutlinerContext.Provider
             value={{
-                viewport: viewport,
                 categories: DATA.rootOutliner,
                 model: model,
                 isMobile: isMobile,

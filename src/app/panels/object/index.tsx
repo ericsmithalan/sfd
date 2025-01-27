@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Object3D, Vector3 } from "three";
 import { Panel, Stats } from "../../../components";
 import { useOutliner } from "../../../hooks";
+import { Viewport } from "../../../lib";
 import { ISelectionEvent } from "../../../lib/Selection";
 import { convertToBordFeet, getObjectDimensions } from "../../../utils";
 import "./style.scss";
@@ -12,14 +13,19 @@ type State = {
     size: Vector3;
 };
 
-export const ObjectPanel = () => {
+type Props = {
+    viewport: Viewport;
+    loading: boolean;
+};
+
+export const ObjectPanel = ({ viewport, loading }: Props) => {
     const [state, setState] = useState<State | null>(null);
     const outliner = useOutliner();
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["change"]) => {
             if (e.object) {
-                const objSize = getObjectDimensions(outliner.viewport, e.object);
+                const objSize = getObjectDimensions(viewport, e.object);
                 if (objSize) {
                     setState({
                         object: e.object,
@@ -31,18 +37,18 @@ export const ObjectPanel = () => {
             }
         };
 
-        if (outliner.model && outliner.viewport.selection) {
-            outliner.viewport.selection.addEventListener("change", selectionChange);
+        if (outliner.model && viewport.selection) {
+            viewport.selection.addEventListener("change", selectionChange);
         } else {
             setState(null);
         }
 
         return () => {
-            if (outliner.viewport.selection) {
-                outliner.viewport.selection.removeEventListener("change", selectionChange);
+            if (viewport.selection) {
+                viewport.selection.removeEventListener("change", selectionChange);
             }
         };
-    }, [outliner.model, outliner.viewport]);
+    }, [outliner.model, viewport]);
 
     return outliner.model && state ? (
         <Panel

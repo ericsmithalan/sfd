@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Button } from "../../../components";
 import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
+import { Viewport } from "../../../lib";
 import { generateImageResource, ImageResource } from "../../../utils";
 import "./style.scss";
 
@@ -12,10 +13,11 @@ type ViewerState = {
 };
 
 type ImagesPanelProps = {
-    onLoading?: (loading: boolean) => void;
+    loading: boolean;
+    viewport: Viewport;
 };
 
-export const ImagesPanel = ({ onLoading }: ImagesPanelProps) => {
+export const ImagesPanel = ({ loading, viewport }: ImagesPanelProps) => {
     const [imageResource, setImageResource] = useState<ImageResource | null>(null);
     const [viewer, setViewer] = useState<ViewerState>({
         visible: false,

@@ -5,41 +5,46 @@ import { Object3D } from "three";
 import { OutlinerTitle, Scroller } from "../../../components";
 import { OutlinerButton } from "../../../components/outliner-button";
 import { IOutlinerContext } from "../../../context";
+import { Viewport } from "../../../lib";
 import { ISelectionEvent } from "../../../lib/Selection";
 import { getObject, setObjectVisibility } from "../../../utils";
 import "./style.scss";
 
 export const ModelOutliner = () => {
-    const [object, setObject] = useState<Object3D | null>(null);
-    const { outliner } = useOutletContext<{
+    const { viewport, loading, outliner } = useOutletContext<{
+        viewport: Viewport;
+        loading: boolean;
         outliner: IOutlinerContext;
     }>();
+    const [object, setObject] = useState<Object3D | null>(null);
 
     useEffect(() => {
         const selectionChange = (e: ISelectionEvent["change"]) => {
             setObject(e.object);
         };
 
-        if (outliner.viewport.selection) {
-            outliner.viewport.selection.addEventListener("change", selectionChange);
+        if (viewport.selection) {
+            viewport.selection.addEventListener("change", selectionChange);
         }
 
         return () => {
-            if (outliner.viewport.selection) {
-                outliner.viewport.selection.removeEventListener("change", selectionChange);
+            if (viewport.selection) {
+                viewport.selection.removeEventListener("change", selectionChange);
             }
         };
-    }, [outliner.viewport]);
+    }, [viewport]);
 
     return (
         <div className={clsx("outliner-model", outliner.isMobile && "mobile")}>
-            <OutlinerTitle
-                isMobile={outliner.isMobile}
-                className={clsx(outliner.isMobile && "mobile")}
-                subTitle={outliner.isMobile ? undefined : "Objects"}
-                title={outliner.model?.name}
-                iconName="blender"
-            />
+            {!loading && (
+                <OutlinerTitle
+                    isMobile={outliner.isMobile}
+                    className={clsx(outliner.isMobile && "mobile")}
+                    subTitle={outliner.isMobile ? undefined : "Objects"}
+                    title={outliner.model?.name}
+                    iconName="blender"
+                />
+            )}
 
             {!outliner.isMobile && (
                 <Scroller scrollTo={object ? `obj_${object.id}` : undefined}>
@@ -51,10 +56,10 @@ export const ModelOutliner = () => {
                                 active={object?.id === item.id}
                                 text={item.name}
                                 onVisible={(visible, e) => {
-                                    setObjectVisibility(outliner.viewport, item.id, visible);
+                                    setObjectVisibility(viewport, item.id, visible);
                                 }}
                                 onClick={(e) => {
-                                    getObject(outliner.viewport, item.id, true);
+                                    getObject(viewport, item.id, true);
                                 }}
                             />
                         );

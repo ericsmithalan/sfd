@@ -1,6 +1,4 @@
 import { Clock, EventDispatcher } from "three";
-//8
-
 import { IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
@@ -33,8 +31,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.selection = isMobile
             ? null
             : new Selection(canvas, this.world.scene, this.world.camera, this.world.renderer);
-
-        this.world.renderer.setAnimationLoop(() => this.animate());
 
         this.init();
     }
@@ -83,8 +79,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         this.dispatchEvent({ type: "loading", value: false });
     }
 
-    private async init() {
+    async init() {
+        this.world.renderer.setAnimationLoop(() => this.animate());
         this.world.addEventListener("resize", this.resize);
+
         await this.world.loadEnvironment();
     }
 
