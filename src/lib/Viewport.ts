@@ -1,4 +1,4 @@
-import { Clock, EventDispatcher } from "three";
+import { AnimationMixer, Clock, EventDispatcher, LoopOnce, Object3D } from "three";
 import { IOutliner } from "../interface";
 import { IModel } from "../interface/IModel";
 import { disposeObject, fitCameraToObject } from "../utils";
@@ -9,11 +9,13 @@ import { IWorldEvent, World } from "./World";
 export interface IViewportEvent {
     loading: { type: string; value: boolean };
     modelChanged: { type: string; model: IModel | null };
+    modelAnimated: { type: string; mixer: AnimationMixer; running: boolean };
     animate: { type: string; time: number };
 }
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
     private readonly isMobile: boolean = false;
+    mixer: AnimationMixer | null = null;
 
     readonly world: World;
     readonly selection: Selection | null;
@@ -52,6 +54,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     set model(value: IModel | null) {
         if (this._model) {
+            this.disposeModelAnimations();
             disposeObject(this._model.object);
             this._model.edges.dispose();
         }
@@ -60,10 +63,83 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.world.scene.add(value.object);
             this.world.scene.add(value.edges.edgeGroup);
             value.edges.edgeGroup.visible = this.edges;
+
+            if (value.animations) {
+                this.setupModelAnimations(value.object);
+            } else {
+                if (this.mixer) {
+                    this.mixer.stopAllAction();
+                    this.mixer = null;
+                }
+            }
         }
 
         this._model = value;
         this.dispatchEvent({ type: "modelChanged", model: value });
+    }
+
+    toggleAnimation() {
+        if (!this.animating && this.mixer) {
+            if (this.mixer && this.model && this.model.animations) {
+                this.dispatchEvent({ type: "modelAnimated", mixer: this.mixer, running: true });
+
+                this.model.animations.forEach((clip) => {
+                    if (this.mixer) {
+                        const action = this.mixer.clipAction(clip);
+
+                        /// not sure why this works??
+                        if (action.isRunning()) {
+                            action.paused = false;
+                            action.loop = LoopOnce;
+                            action.timeScale = -action.timeScale;
+                            action.clampWhenFinished = true;
+                        }
+
+                        /// need isRunning above ???
+                        if (action.paused) {
+                            action.paused = false;
+                            action.loop = LoopOnce;
+                            action.timeScale = -action.timeScale;
+                            action.clampWhenFinished = true;
+
+                            action.play();
+                        } else {
+                            action.paused = false;
+                            action.loop = LoopOnce;
+                            action.clampWhenFinished = true;
+
+                            action.play();
+                        }
+                    }
+                });
+
+                this.animating = true;
+            }
+        }
+    }
+
+    private handleModelAnimationComplete() {
+        this.animating = false;
+        if (this.mixer) {
+            this.dispatchEvent({ type: "modelAnimated", mixer: this.mixer, running: false });
+        }
+    }
+
+    private setupModelAnimations(model: Object3D) {
+        this.animating = false;
+        this.mixer = new AnimationMixer(model);
+        this.mixer.addEventListener("loop", () => this.handleModelAnimationComplete());
+        this.mixer.addEventListener("finished", () => this.handleModelAnimationComplete());
+    }
+
+    private disposeModelAnimations() {
+        this.animating = false;
+        if (this.mixer) {
+            this.mixer.removeEventListener("loop", () => this.handleModelAnimationComplete());
+            this.mixer.removeEventListener("finished", () => this.handleModelAnimationComplete());
+        }
+
+        this.mixer = null;
     }
 
     async loadModel(outliner: IOutliner) {
@@ -96,7 +172,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         renderer.setViewport(0, 0, size.width, size.height);
         renderer.render(scene, camera);
 
-        if (this.animating && this.model?.edges) {
+        if (this.mixer && this.animating && this.model?.edges) {
+            this.mixer.update(this.clock.getDelta());
             this.model.edges.update(this.world.scene);
         }
 

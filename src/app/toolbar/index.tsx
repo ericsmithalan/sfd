@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import { FC, useCallback, useEffect, useRef, useState } from "react";
-import { AnimationClip, AnimationMixer, LoopOnce, Mesh } from "three";
+import { Mesh } from "three";
 import { Button, Loading, Panel, TexturePicker } from "../../components";
 import { DATA } from "../../data";
 import { useModel } from "../../hooks";
@@ -18,17 +18,10 @@ type ToolbarProps = {
 
 type SelectedTextureState = Map<string, IObjectMaterial>;
 
-type AnimationState = {
-    mixer: AnimationMixer;
-    clips: Array<AnimationClip>;
-};
-
 export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
-    const [visible, setVisible] = useState(false);
     const [showEdges, setShowEdges] = useState(false);
     const [loading, setLoading] = useState(false);
-    const [animation, setAnimation] = useState<AnimationState | null>(null);
-    const [animating, setAnimating] = useState(false);
+    const [animate, setAnimate] = useState<boolean | null>(null);
     const [resolution] = useState<TextureResolution>("2k");
     const [selected, setSelected] = useState<SelectedTextureState>(new Map());
     const { model, isMobile } = useModel();
@@ -41,6 +34,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
     const loadMaterials = useCallback(
         async (materialObj: IObjectMaterial) => {
             setLoading(true);
+
             if (materialObj.material) {
                 disposeMaterial(materialObj.material);
             }
@@ -76,37 +70,31 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
     );
 
     useEffect(() => {
-        const isAnimatable = () => {
-            if (model && model.animations) {
-                return model.animations.length > 0;
-            }
-            return false;
+        const handleModelAnimationComplete = (e: IViewportEvent["modelAnimated"]) => {
+            setAnimate(e.running);
+            console.log("done", e);
         };
 
-        if (model?.materials) {
-            Array.from(model.materials.entries()).map(([key, value], i) => loadMaterials(value));
+        if (model) {
+            if (model.materials) {
+                setSelected(model.materials);
+            }
 
-            setSelected(model.materials);
+            if (model.animations) {
+                viewport.addEventListener("modelAnimated", (e) => handleModelAnimationComplete(e));
+                setAnimate(false);
+            } else {
+                setAnimate(null);
+            }
         } else {
+            setAnimate(null);
             setSelected(new Map());
         }
 
-        if (model) {
-            if (isAnimatable()) {
-                setAnimation({
-                    mixer: new AnimationMixer(model.object),
-                    clips: model.animations || [],
-                });
-            } else {
-                setAnimation(null);
-            }
-
-            setVisible(true);
-        } else {
-            setAnimation(null);
-            setVisible(false);
-        }
-    }, [model, loadMaterials]);
+        return () => {
+            viewport.removeEventListener("modelAnimated", (e) => handleModelAnimationComplete(e));
+        };
+    }, [model, viewport]);
 
     const getTextures = (type: TextureType): Array<ITexture> => {
         switch (type) {
@@ -136,64 +124,10 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
         setSelected(new Map([...selected]));
     };
 
-    useEffect(() => {
-        const onAnimate = (e: IViewportEvent["animate"]) => {
-            if (animation) {
-                animation.mixer.update(e.time);
-            }
-        };
-
-        if (animation) {
-            viewport.addEventListener("animate", (e) => onAnimate(e));
-        }
-
-        () => {
-            if (animation) {
-                viewport.removeEventListener("animate", (e) => onAnimate(e));
-            }
-        };
-    }, [animation, viewport]);
-
-    const handleAnimate = () => {
-        if (animation && !animating) {
-            setAnimating(true);
-
-            const handleDone = () => {
-                viewport.animating = false;
-                setAnimating(false);
-                animation.mixer.removeEventListener("loop", handleDone);
-                animation.mixer.removeEventListener("finished", handleDone);
-            };
-
-            animation.mixer.addEventListener("loop", handleDone);
-            animation.mixer.addEventListener("finished", handleDone);
-
-            viewport.animating = true;
-            animation.clips.forEach(function (clip) {
-                const action = animation.mixer.clipAction(clip);
-                if (!action.isRunning()) {
-                    if (action.paused) {
-                        action.paused = false;
-                        action.timeScale = -action.timeScale;
-                        action.clampWhenFinished = true;
-
-                        action.play();
-                    } else {
-                        action.paused = false;
-                        action.loop = LoopOnce;
-                        action.clampWhenFinished = true;
-
-                        action.play();
-                    }
-                }
-            });
-        }
-    };
-
     return (
         <Panel
             ref={panelRef}
-            className={clsx("app-toolbar-panel", !visible && "hidden", isMobile && "mobile")}
+            className={clsx("app-toolbar-panel", !model && "hidden", isMobile && "mobile")}
             contentCss="app-toolbar"
         >
             {loading && <Loading message="loading" />}
@@ -224,18 +158,17 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
                     setShowEdges(!showEdges);
                 }}
             />
-            {animation && (
+
+            {animate !== null && (
                 <Button
                     title="Animate"
                     variant="toolbar"
                     icon="play"
                     text={"Play"}
-                    active={animating}
-                    disabled={animating}
+                    active={animate}
+                    disabled={animate}
                     onClick={(e) => {
-                        if (!animating) {
-                            handleAnimate();
-                        }
+                        viewport.toggleAnimation();
                     }}
                 />
             )}
