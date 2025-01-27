@@ -10,6 +10,7 @@ type ButtonProps = {
     title?: string;
     children?: ReactNode;
     icon?: IconName;
+    disabled?: boolean;
     iconFill?: boolean;
     active?: boolean;
     variant?: "toolbar" | "image" | "panel" | "outliner" | "back" | "close";
@@ -24,6 +25,7 @@ export const Button: FC<ButtonProps> = ({
     icon,
     text,
     active = false,
+    disabled,
     iconFill,
     variant = "default",
     className,
@@ -33,7 +35,13 @@ export const Button: FC<ButtonProps> = ({
         <button
             title={title}
             id={id}
-            className={clsx("button", `btn-${variant}`, active && "active", className)}
+            className={clsx(
+                "button",
+                `btn-${variant}`,
+                disabled && "btn-disabled",
+                active && "active",
+                className,
+            )}
             onClick={onClick}
         >
             {icon && <Icon name={icon} fill={iconFill || active} />}

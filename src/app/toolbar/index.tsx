@@ -232,6 +232,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children }) => {
                     icon="play"
                     text={"Play"}
                     active={animating}
+                    disabled={animating}
                     onClick={(e) => {
                         if (!animating) {
                             handleAnimate();
