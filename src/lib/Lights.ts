@@ -33,13 +33,13 @@ export class Lights {
     constructor() {
         this.dirLight = new DirectionalLight(0xffffff, 1);
         this.dirLight.name = "Directional Light";
-        this.dirLight.position.set(18, 10, -4);
+        this.dirLight.position.set(25, 20, -10);
         this.dirLight.castShadow = true;
-        this.dirLight.intensity = 1;
+        this.dirLight.intensity = 2;
 
         this.dirLight.shadow.camera.near = 0.001;
-        this.dirLight.shadow.camera.far = 100;
-        this.dirLight.shadow.bias = -0.1;
+        this.dirLight.shadow.camera.far = 1000;
+        this.dirLight.shadow.bias = -0.0001;
         this.dirLight.shadow.mapSize.width = 1024;
         this.dirLight.shadow.mapSize.height = 1024;
     }

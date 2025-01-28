@@ -1,8 +1,8 @@
 import {
-    ACESFilmicToneMapping,
     Color,
     EventDispatcher,
     Fog,
+    NeutralToneMapping,
     PCFSoftShadowMap,
     PerspectiveCamera,
     PMREMGenerator,
@@ -52,7 +52,7 @@ export class World extends EventDispatcher<IWorldEvent> {
         this.scene = new Scene();
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
-        this.scene.fog = new Fog(new Color("#222222"), 1, 50);
+        this.scene.fog = new Fog(new Color("#222222"), 10, 30);
 
         this.camera = new PerspectiveCamera(40, this.size.aspect, 1, 50);
         this.camera.name = "Camera";
@@ -67,7 +67,7 @@ export class World extends EventDispatcher<IWorldEvent> {
             alpha: true,
         });
         this.renderer.shadowMap.enabled = true;
-        this.renderer.toneMapping = ACESFilmicToneMapping;
+        this.renderer.toneMapping = NeutralToneMapping;
         this.renderer.toneMappingExposure = 1;
         this.renderer.setPixelRatio(window.devicePixelRatio);
         this.renderer.setSize(this.size.width, this.size.height);
