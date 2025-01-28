@@ -24,6 +24,7 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
     private tweenGroup = new TweenGroup();
     private _animating: boolean = false;
     private scene: Scene | null = null;
+    private multiplier = 1;
 
     exploded: boolean = false;
     state: AnimationState = "closed";
@@ -35,8 +36,11 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
 
         const meshBox = new Box3();
         meshBox.setFromObject(this.mesh);
+        const size = meshBox.getSize(new Vector3());
         const center = meshBox.getCenter(new Vector3());
         this.center = center;
+
+        this.multiplier = size.y / 2;
 
         this.scene = this.mesh.parent as Scene;
 
@@ -45,8 +49,6 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
 
     private createHelpers(box3: Box3) {
         const helper = new Box3Helper(box3, "red");
-        const center = box3.getCenter(new Vector3());
-
         const centerRef = new Mesh(
             new BoxGeometry(0.01, 0.01, 0.01),
             new MeshBasicMaterial({ color: "blue" }),
@@ -118,7 +120,7 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
 
         let direction = mesh.userData.oldPosition.clone().sub(this.center).normalize();
 
-        let to: Vector3 = direction.clone().multiplyScalar(this.exploded ? 0 : 0.2);
+        let to: Vector3 = direction.clone().multiplyScalar(this.exploded ? 0 : this.multiplier);
 
         const edge = this.edges.get(mesh) || null;
 

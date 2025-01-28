@@ -31,7 +31,7 @@ export const OutlinerTitle = ({
                         <LogoIcon height={30} />
                     </NavLink>
                 ) : (
-                    <NavLink title="Home" isNav={false} href="/" icon="arrow-go-back" />
+                    <NavLink title="Home" isNav={false} href="../" icon="arrow-go-back" />
                 )}
                 <div title={title} className="header">
                     {/* {iconName && <Icon name={iconName} fill={true} />} */}

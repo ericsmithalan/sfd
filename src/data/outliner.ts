@@ -44,6 +44,18 @@ export const rootOutliner: Array<IOutliner> = [
                 },
                 children: [],
             },
+            {
+                id: 7921,
+                modelUrl: "/models/bunks/twin-Portfolio.glb",
+                level: 3,
+                name: "Twin Bed",
+                imageResouce: {
+                    primaryImg: 18,
+                    count: 18,
+                    path: "/models/bunks/images/",
+                },
+                children: [],
+            },
         ],
     },
     {
