@@ -12,7 +12,7 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
     private center = new Vector3(0, 0, 0);
     private explosionFactor = 0.001;
     private frames = 0;
-    private maxFrames = 100;
+    private maxFrames = 180;
     exploded: boolean = false;
     state: AnimationState = "closed";
 
@@ -22,7 +22,11 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         super();
         this.mesh = mesh;
         this.edges = edges;
-        this.center = this.getCenter(mesh);
+        const info = this.getObjectInfo(mesh);
+        const max = info.size.max(new Vector3());
+        console.log(max);
+        this.explosionFactor = max.z > 2 ? 0.006 : 0.001;
+        this.center = info.center;
     }
 
     get animate() {
@@ -34,10 +38,11 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         this.dispatchEvent({ type: "animated", running: value, state: this.state });
     }
 
-    private getCenter(obj: Object3D) {
+    private getObjectInfo(obj: Object3D) {
         const childBox = new Box3();
         const groupBox = new Box3();
         const center = new Vector3();
+        const size = new Vector3();
 
         if (obj instanceof Group) {
             obj.traverse(function (child) {
@@ -57,12 +62,17 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
                 }
             });
 
+            const box = new Box3().setFromObject(obj);
+            box.getSize(size);
             // All computations are in world space
             // But the group might not be in world space
             groupBox.applyMatrix4(obj.matrixWorld.invert());
             groupBox.getCenter(center);
         }
-        return center;
+        return {
+            center: center,
+            size: size,
+        };
     }
 
     animateExplosion() {
