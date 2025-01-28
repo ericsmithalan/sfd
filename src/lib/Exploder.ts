@@ -12,7 +12,7 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
     private center = new Vector3(0, 0, 0);
     private explosionFactor = 0.001;
     private frames = 0;
-    private maxFrames = 180;
+    private maxFrames = 10;
     exploded: boolean = false;
     state: AnimationState = "closed";
 
@@ -25,8 +25,8 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         const info = this.getObjectInfo(mesh);
         const max = info.size.max(new Vector3());
         console.log(max);
-        this.explosionFactor = max.z > 2 ? 0.002 : 0.001;
-        this.maxFrames = max.z > 2 ? 180 : 180;
+        this.explosionFactor = max.z > 2 ? 0.006 : 0.004;
+        this.maxFrames = max.z > 2 ? 70 : 50;
         this.center = info.center;
     }
 
