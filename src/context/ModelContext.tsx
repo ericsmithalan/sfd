@@ -19,11 +19,6 @@ export const ModelProvider = ({ children, viewport }: ModelContextProps) => {
     useEffect(() => {
         const modelChanged = (e: IViewportEvent["modelChanged"]) => {
             setModel(e.model);
-            if (e.model) {
-                viewport.toggleHome(false);
-            } else {
-                viewport.toggleHome(true);
-            }
         };
 
         viewport.addEventListener("modelChanged", modelChanged);

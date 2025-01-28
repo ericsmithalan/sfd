@@ -31,9 +31,6 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
         if (category && !params.categoryId) {
             setCategory(null);
         }
-        if (!category) {
-            viewport.toggleHome(true);
-        }
     }, [category, params.categoryId]);
 
     useEffect(() => {
@@ -41,6 +38,7 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
             const loadModel = async (obj: IOutliner) => {
                 await viewport.loadModel(obj);
                 setModel(obj);
+                console.log("loaded");
             };
 
             if (category && params.modelId && model?.id !== Number(params.modelId)) {
