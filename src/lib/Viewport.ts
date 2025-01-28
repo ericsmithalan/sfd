@@ -4,7 +4,7 @@ import { IModel } from "../interface/IModel";
 import { AnimationState } from "../types";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
-import { Exploder } from "./Exploder";
+import { Exploder, IExploderEvent } from "./Exploder";
 import { Selection } from "./Selection";
 import { IWorldEvent, World } from "./World";
 
@@ -13,7 +13,6 @@ export interface IViewportEvent {
     modelChanged: { type: string; model: IModel | null };
     modelAnimated: {
         type: string;
-        mixer: AnimationMixer;
         running: boolean;
         state: AnimationState;
     };
@@ -72,7 +71,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.world.scene.add(value.object);
             this.world.scene.add(value.edges.edgeGroup);
             value.edges.edgeGroup.visible = this.edges;
-            this.exploder = new Exploder(value.object, value.edges);
+            this.setupExploder(value);
             if (value.animations) {
                 this.setupModelAnimations(value.object);
             } else {
@@ -131,7 +130,6 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
                 this.dispatchEvent({
                     type: "modelAnimated",
-                    mixer: this.mixer,
                     running: true,
                     state: state,
                 });
@@ -141,12 +139,34 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         }
     }
 
+    private setupExploder(model: IModel | null) {
+        if (this.exploder) {
+            this.disposeExploder();
+        }
+
+        if (model) {
+            this.exploder = new Exploder(model.object, model.edges);
+            this.exploder.addEventListener("animated", (e) => this.handleExploderAnimated(e));
+            this.exploder.animate = false;
+        }
+    }
+
+    private disposeExploder() {
+        if (this.exploder) {
+            this.exploder.removeEventListener("animated", (e) => this.handleExploderAnimated(e));
+            this.exploder = null;
+        }
+    }
+
+    private handleExploderAnimated(e: IExploderEvent["animated"]) {
+        this.dispatchEvent({ type: "modelAnimated", running: e.running, state: e.state });
+    }
+
     private handleModelAnimationComplete(e: any) {
         this.animating = false;
         if (this.mixer) {
             this.dispatchEvent({
                 type: "modelAnimated",
-                mixer: this.mixer,
                 running: false,
                 state: e.direction === 1 ? "opened" : "closed",
             });

@@ -79,7 +79,6 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                 state: e.state,
                 animating: e.running,
             });
-            console.log("done", e.state);
         };
 
         if (model) {
@@ -87,15 +86,11 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                 setSelected(model.materials);
             }
 
-            if (model.animations) {
-                viewport.addEventListener("modelAnimated", (e) => handleModelAnimationComplete(e));
-                setAnimate({
-                    state: "closed",
-                    animating: false,
-                });
-            } else {
-                setAnimate(null);
-            }
+            viewport.addEventListener("modelAnimated", (e) => handleModelAnimationComplete(e));
+            setAnimate({
+                state: "closed",
+                animating: false,
+            });
         } else {
             setAnimate(null);
             setSelected(new Map());
@@ -183,12 +178,12 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
             )} */}
 
             <Button
-                title={"explode"}
+                title={animate?.state === "closed" ? "Explode" : "Implode"}
                 variant="toolbar"
                 icon={"stack"}
-                text={"Explode"}
-                active={false}
-                disabled={false}
+                text={animate?.state === "closed" ? "Explode" : "Implode"}
+                active={animate?.animating || animate?.state === "opened"}
+                disabled={animate?.animating}
                 onClick={(e) => {
                     viewport.toggleExplode();
                 }}

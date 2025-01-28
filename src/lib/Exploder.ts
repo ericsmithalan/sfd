@@ -1,7 +1,12 @@
-import { Box3, Group, Mesh, Object3D, Vector3 } from "three";
+import { Box3, EventDispatcher, Group, Mesh, Object3D, Vector3 } from "three";
+import { AnimationState } from "../types";
 import { Edges } from "./Edges";
 
-export class Exploder {
+export interface IExploderEvent {
+    animated: { type: string; state: AnimationState; running: boolean };
+}
+
+export class Exploder extends EventDispatcher<IExploderEvent> {
     private mesh: Object3D;
     private edges: Edges;
     private center = new Vector3(0, 0, 0);
@@ -9,12 +14,24 @@ export class Exploder {
     private frames = 0;
     private maxFrames = 100;
     exploded: boolean = false;
-    animate: boolean = false;
+    state: AnimationState = "closed";
+
+    private _animate: boolean = false;
 
     constructor(mesh: Object3D, edges: Edges) {
+        super();
         this.mesh = mesh;
         this.edges = edges;
         this.center = this.getCenter(mesh);
+    }
+
+    get animate() {
+        return this._animate;
+    }
+
+    set animate(value: boolean) {
+        this._animate = value;
+        this.dispatchEvent({ type: "animated", running: value, state: this.state });
     }
 
     private getCenter(obj: Object3D) {
@@ -85,9 +102,12 @@ export class Exploder {
                 });
             }
         } else {
-            this.animate = false;
-            this.exploded = false;
-            this.frames = 0;
+            if (this.animate) {
+                this.state = "closed";
+                this.exploded = false;
+                this.frames = 0;
+                this.animate = false;
+            }
         }
 
         this.frames++;
@@ -120,9 +140,12 @@ export class Exploder {
                 });
             }
         } else {
-            this.animate = false;
-            this.exploded = true;
-            this.frames = 0;
+            if (this.animate) {
+                this.state = "opened";
+                this.exploded = true;
+                this.frames = 0;
+                this.animate = false;
+            }
         }
 
         this.frames++;
