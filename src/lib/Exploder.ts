@@ -12,6 +12,7 @@ import {
     Vector3,
 } from "three";
 import { AnimationState } from "../types";
+import { getLengthWidthThickness } from "../utils";
 import { Edges } from "./Edges";
 export interface IExploderEvent {
     animated: { type: string; state: AnimationState; running: boolean };
@@ -40,11 +41,16 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         const center = meshBox.getCenter(new Vector3());
         this.center = center;
 
-        this.multiplier = size.y / 2;
+        const area = this.calculateBoxArea(size);
+        this.multiplier = area * 0.05;
 
         this.scene = this.mesh.parent as Scene;
+    }
 
-        // this.createHelpers(meshBox);
+    calculateBoxArea(vector: Vector3) {
+        const { length, width, thickness } = getLengthWidthThickness(vector);
+        const surfaceArea = 2 * (length * width + width * thickness + thickness * length);
+        return surfaceArea;
     }
 
     private createHelpers(box3: Box3) {

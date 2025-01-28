@@ -28,6 +28,21 @@ export const convertMeterToInchRaw = (vector: Vector3): Vector3 => {
     );
 };
 
+export const getLengthWidthThickness = (vector: Vector3) => {
+    // board feet = length (ft) × width (in) × thickness (in) / 12
+    const arr: Array<number> = [vector.x, vector.y, vector.z].sort((a, b) => a - b);
+
+    const thickness = arr[0];
+    const width = arr[1];
+    const length = arr[2];
+
+    return {
+        length: length,
+        width: width,
+        thickness: thickness,
+    };
+};
+
 export const convertToBordFeet = (vector: Vector3) => {
     // board feet = length (ft) × width (in) × thickness (in) / 12
     const arr: Array<number> = [vector.x, vector.y, vector.z].sort((a, b) => a - b);
