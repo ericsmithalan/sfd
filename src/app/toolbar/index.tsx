@@ -168,7 +168,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                 }}
             />
 
-            {animate !== null && (
+            {/* {animate !== null && (
                 <Button
                     title={animate.state === "closed" ? "Open" : "Close"}
                     variant="toolbar"
@@ -180,7 +180,19 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                         viewport.toggleAnimation();
                     }}
                 />
-            )}
+            )} */}
+
+            <Button
+                title={"explode"}
+                variant="toolbar"
+                icon={"stack"}
+                text={"Explode"}
+                active={false}
+                disabled={false}
+                onClick={(e) => {
+                    viewport.toggleExplode();
+                }}
+            />
 
             {children}
         </Panel>

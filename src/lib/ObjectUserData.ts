@@ -2,6 +2,7 @@ import { IOutliner } from "../interface";
 
 export interface IEdgeInfo {
     objectId: number;
+    edgeId: number;
 }
 
 export interface ITextureInfo {

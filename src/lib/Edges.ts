@@ -1,4 +1,13 @@
-import { EdgesGeometry, Group, LineBasicMaterial, LineSegments, Mesh, Scene, Vector3 } from "three";
+import {
+    EdgesGeometry,
+    Group,
+    LineBasicMaterial,
+    LineSegments,
+    Mesh,
+    Object3D,
+    Scene,
+    Vector3,
+} from "three";
 import { disposeGeometry, disposeObject } from "../utils";
 import { ObjectUserData } from "./ObjectUserData";
 
@@ -13,28 +22,65 @@ export class Edges {
     }
 
     add(mesh: Mesh) {
+        mesh.updateMatrixWorld();
         let line: LineSegments;
 
         const edges = new EdgesGeometry(mesh.geometry, this.threshold);
-        let wp = mesh.getWorldPosition(new Vector3());
+
+        let wp = mesh.position;
 
         if (mesh.parent) {
             wp = mesh.parent.getWorldPosition(new Vector3());
         }
 
         line = new LineSegments(edges, new LineBasicMaterial({ color: "black", linewidth: 3 }));
-        line.name = mesh.name;
-        line.userData = new ObjectUserData(null, null, { objectId: mesh.id });
+        line.name = `${mesh.name}__edge`;
+        line.userData = new ObjectUserData(null, null, { objectId: mesh.id, edgeId: line.id });
+        mesh.userData = new ObjectUserData(null, null, { objectId: mesh.id, edgeId: line.id });
 
-        line.position.x = wp.x;
-        line.position.y = wp.y;
-        line.position.z = wp.z;
+        // line.position.x = wp.x;
+        // line.position.y = wp.y;
+        // line.position.z = wp.z;
+
+        line.position.copy(mesh.position);
 
         this.edgeGroup.add(line);
 
         disposeGeometry(edges);
 
         return line;
+    }
+
+    explodeEdge(obj: Mesh, direction: Vector3, subtract: boolean = false) {
+        const edge = this.edgeGroup.getObjectByName(`${obj.name}__edge`);
+
+        if (edge) {
+            if (subtract) {
+                edge.position.sub(direction);
+            } else {
+                edge.position.add(direction);
+            }
+        }
+    }
+
+    setPosition(edge: Object3D, mesh: Object3D) {
+        if (mesh.parent) {
+            edge.position.x = mesh.parent.position.x;
+            edge.position.y = mesh.parent.position.y;
+            edge.position.z = mesh.parent.position.z;
+
+            edge.rotation.x = mesh.parent.rotation.x;
+            edge.rotation.y = mesh.parent.rotation.y;
+            edge.rotation.z = mesh.parent.rotation.z;
+        } else {
+            edge.position.x = mesh.position.x;
+            edge.position.y = mesh.position.y;
+            edge.position.z = mesh.position.z;
+
+            edge.rotation.x = mesh.rotation.x;
+            edge.rotation.y = mesh.rotation.y;
+            edge.rotation.z = mesh.rotation.z;
+        }
     }
 
     update(scene: Scene) {
@@ -46,23 +92,7 @@ export class Edges {
 
                         if (obj) {
                             // if obj has parent (from blender) other than scene
-                            if (obj.parent) {
-                                item.position.x = obj.parent.position.x;
-                                item.position.y = obj.parent.position.y;
-                                item.position.z = obj.parent.position.z;
-
-                                item.rotation.x = obj.parent.rotation.x;
-                                item.rotation.y = obj.parent.rotation.y;
-                                item.rotation.z = obj.parent.rotation.z;
-                            } else {
-                                item.position.x = obj.position.x;
-                                item.position.y = obj.position.y;
-                                item.position.z = obj.position.z;
-
-                                item.rotation.x = obj.rotation.x;
-                                item.rotation.y = obj.rotation.y;
-                                item.rotation.z = obj.rotation.z;
-                            }
+                            this.setPosition(item, obj);
                         }
                     }
                 }

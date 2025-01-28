@@ -4,6 +4,7 @@ import { IModel } from "../interface/IModel";
 import { AnimationState } from "../types";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
+import { Exploder } from "./Exploder";
 import { Selection } from "./Selection";
 import { IWorldEvent, World } from "./World";
 
@@ -25,6 +26,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
     readonly world: World;
     readonly selection: Selection | null;
+    exploder: Exploder | null = null;
 
     private _model: IModel | null = null;
     private _edges: boolean = true;
@@ -62,6 +64,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         if (this._model) {
             this.disposeModelAnimations();
             disposeObject(this._model.object);
+            this.exploder = null;
             this._model.edges.dispose();
         }
 
@@ -69,7 +72,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
             this.world.scene.add(value.object);
             this.world.scene.add(value.edges.edgeGroup);
             value.edges.edgeGroup.visible = this.edges;
-
+            this.exploder = new Exploder(value.object, value.edges);
             if (value.animations) {
                 this.setupModelAnimations(value.object);
             } else {
@@ -82,6 +85,12 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this._model = value;
         this.dispatchEvent({ type: "modelChanged", model: value });
+    }
+
+    toggleExplode() {
+        if (this.model && this.exploder) {
+            this.exploder.animate = true;
+        }
     }
 
     toggleAnimation() {
@@ -191,6 +200,9 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         renderer.setViewport(0, 0, size.width, size.height);
         renderer.render(scene, camera);
 
+        if (this.exploder) {
+            this.exploder.animateExplosion();
+        }
         if (this.mixer && this.animating && this.model?.edges) {
             this.mixer.update(this.clock.getDelta());
             this.model.edges.update(this.world.scene);
