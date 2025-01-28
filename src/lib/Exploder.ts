@@ -25,7 +25,8 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         const info = this.getObjectInfo(mesh);
         const max = info.size.max(new Vector3());
         console.log(max);
-        this.explosionFactor = max.z > 2 ? 0.006 : 0.001;
+        this.explosionFactor = max.z > 2 ? 0.002 : 0.001;
+        this.maxFrames = max.z > 2 ? 180 : 180;
         this.center = info.center;
     }
 
