@@ -21,6 +21,12 @@ export class Edges {
         this.threshold = 30;
     }
 
+    get(obj: Object3D) {
+        const edge = this.edgeGroup.getObjectByName(`${obj.name}__edge`);
+
+        return edge;
+    }
+
     add(mesh: Mesh) {
         mesh.updateMatrixWorld();
         let line: LineSegments;

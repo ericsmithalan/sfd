@@ -1,7 +1,18 @@
-import { Box3, EventDispatcher, Group, Mesh, Object3D, Vector3 } from "three";
+import { Easing, Tween, Group as TweenGroup } from "@tweenjs/tween.js";
+import {
+    Box3,
+    Box3Helper,
+    BoxGeometry,
+    EventDispatcher,
+    Group,
+    Mesh,
+    MeshBasicMaterial,
+    Object3D,
+    Scene,
+    Vector3,
+} from "three";
 import { AnimationState } from "../types";
 import { Edges } from "./Edges";
-
 export interface IExploderEvent {
     animated: { type: string; state: AnimationState; running: boolean };
 }
@@ -9,33 +20,145 @@ export interface IExploderEvent {
 export class Exploder extends EventDispatcher<IExploderEvent> {
     private mesh: Object3D;
     private edges: Edges;
-    private center = new Vector3(0, 0, 0);
-    private explosionFactor = 0.001;
-    private frames = 0;
-    private maxFrames = 10;
+    private center: Vector3;
+    private tweenGroup = new TweenGroup();
+    private _animating: boolean = false;
+    private scene: Scene | null = null;
+
     exploded: boolean = false;
     state: AnimationState = "closed";
-
-    private _animate: boolean = false;
 
     constructor(mesh: Object3D, edges: Edges) {
         super();
         this.mesh = mesh;
         this.edges = edges;
-        const info = this.getObjectInfo(mesh);
-        const max = info.size.max(new Vector3());
-        console.log(max);
-        this.explosionFactor = max.z > 2 ? 0.006 : 0.004;
-        this.maxFrames = max.z > 2 ? 70 : 50;
-        this.center = info.center;
+
+        const meshBox = new Box3();
+        meshBox.setFromObject(this.mesh);
+        const center = meshBox.getCenter(new Vector3());
+        this.center = center;
+
+        this.scene = this.mesh.parent as Scene;
+
+        // this.createHelpers(meshBox);
     }
 
-    get animate() {
-        return this._animate;
+    private createHelpers(box3: Box3) {
+        const helper = new Box3Helper(box3, "red");
+        const center = box3.getCenter(new Vector3());
+
+        const centerRef = new Mesh(
+            new BoxGeometry(0.01, 0.01, 0.01),
+            new MeshBasicMaterial({ color: "blue" }),
+        );
+
+        centerRef.position.copy(this.center);
+
+        if (this.scene) {
+            this.scene.add(helper, centerRef);
+        }
     }
 
-    set animate(value: boolean) {
-        this._animate = value;
+    play() {
+        if (!this.animating) {
+            this.tweenGroup.removeAll();
+            console.log("should play");
+
+            this.mesh.traverse((child) => {
+                if (child instanceof Mesh) {
+                    const meshInfo = this.getMeshTweenInfo(child);
+                    let edgeTween: Tween | null = null;
+
+                    if (meshInfo.edge) {
+                        edgeTween = new Tween(meshInfo.edge.position)
+                            .to(meshInfo.to, 1000)
+                            .easing(Easing.Quadratic.InOut)
+                            .repeat(0);
+                    }
+
+                    const meshTween = new Tween(child.position)
+                        .to(meshInfo.to, 1000)
+                        .easing(Easing.Quadratic.InOut)
+                        .repeat(0);
+
+                    meshTween.onComplete(() => {
+                        if (this.animating) {
+                            this.animating = false;
+                            if (this.exploded) {
+                                this.exploded = false;
+                            } else {
+                                this.exploded = true;
+                            }
+                        }
+                    });
+
+                    if (edgeTween) {
+                        this.tweenGroup.add(edgeTween);
+                        edgeTween.start();
+                    }
+
+                    this.tweenGroup.add(meshTween);
+                    meshTween.start();
+
+                    this.animating = true;
+                }
+            });
+        }
+    }
+
+    getMeshTweenInfo(mesh: Mesh): { to: Vector3; edge: Object3D | null } {
+        if (!mesh.geometry.boundingSphere) {
+            mesh.geometry.computeBoundingSphere();
+        }
+
+        // const pos = mesh.getWorldPosition(new Vector3());
+
+        mesh.userData.oldPosition =
+            mesh.userData.oldPosition || mesh.geometry.boundingSphere?.center.clone();
+
+        let direction = mesh.userData.oldPosition.clone().sub(this.center).normalize();
+
+        let to: Vector3 = direction.clone().multiplyScalar(this.exploded ? 0 : 0.2);
+
+        const edge = this.edges.get(mesh) || null;
+
+        return {
+            to: to,
+            edge: edge,
+        };
+    }
+
+    get animating() {
+        return this._animating;
+    }
+
+    animateExplosion() {
+        if (this.animating) {
+            this.tweenGroup.update();
+        }
+    }
+
+    createTween(mesh: Mesh): { edge: Object3D | null; to: Vector3 } {
+        if (!mesh.geometry.boundingSphere) {
+            mesh.geometry.computeBoundingSphere();
+        }
+
+        const edge = this.edges.get(mesh) || null;
+
+        mesh.userData.oldPosition =
+            mesh.userData.oldPosition || mesh.geometry.boundingSphere?.center.clone();
+
+        const direction = mesh.userData.oldPosition.clone().sub(this.center).normalize();
+        const moveTo: Vector3 = direction.clone().multiplyScalar(0.3);
+
+        return {
+            to: moveTo,
+            edge: edge,
+        };
+    }
+
+    set animating(value: boolean) {
+        this._animating = value;
         this.dispatchEvent({ type: "animated", running: value, state: this.state });
     }
 
@@ -44,6 +167,10 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         const groupBox = new Box3();
         const center = new Vector3();
         const size = new Vector3();
+
+        if (obj.parent) {
+            this.scene = obj.parent as Scene;
+        }
 
         if (obj instanceof Group) {
             obj.traverse(function (child) {
@@ -73,96 +200,7 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
         return {
             center: center,
             size: size,
+            groupBox: groupBox,
         };
-    }
-
-    animateExplosion() {
-        if (this.animate) {
-            if (this.exploded) {
-                this.implode();
-            } else {
-                this.explode();
-            }
-        }
-    }
-
-    implode() {
-        if (this.frames <= this.maxFrames) {
-            if (this.mesh instanceof Group) {
-                this.mesh.traverse((child) => {
-                    if (child instanceof Mesh) {
-                        if (!child.geometry.boundingSphere) {
-                            child.geometry.computeBoundingSphere();
-                        }
-
-                        child.userData.oldPosition =
-                            child.userData.oldPosition ||
-                            child.geometry.boundingSphere.center.clone();
-
-                        const direction = child.userData.oldPosition
-                            .clone()
-                            .sub(this.center)
-                            .normalize();
-
-                        const moveTo = direction.clone().multiplyScalar(this.explosionFactor);
-
-                        child.position.sub(moveTo);
-
-                        this.edges.explodeEdge(child, moveTo, true);
-                    }
-                });
-            }
-        } else {
-            if (this.animate) {
-                this.state = "closed";
-                this.exploded = false;
-                this.frames = 0;
-                this.animate = false;
-            }
-        }
-
-        this.frames++;
-    }
-
-    explode() {
-        if (this.frames <= this.maxFrames) {
-            if (this.mesh instanceof Group) {
-                this.mesh.traverse((child) => {
-                    if (child instanceof Mesh) {
-                        if (!child.geometry.boundingSphere) {
-                            child.geometry.computeBoundingSphere();
-                        }
-
-                        child.userData.oldPosition =
-                            child.userData.oldPosition ||
-                            child.geometry.boundingSphere.center.clone();
-
-                        const direction = child.userData.oldPosition
-                            .clone()
-                            .sub(this.center)
-                            .normalize();
-
-                        const moveTo = direction.clone().multiplyScalar(this.explosionFactor);
-
-                        child.position.add(moveTo);
-
-                        this.edges.explodeEdge(child, moveTo);
-                    }
-                });
-            }
-        } else {
-            if (this.animate) {
-                this.state = "opened";
-                this.exploded = true;
-                this.frames = 0;
-                this.animate = false;
-            }
-        }
-
-        this.frames++;
-    }
-
-    reset() {
-        this.frames = 0;
     }
 }

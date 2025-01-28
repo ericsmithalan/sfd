@@ -70,6 +70,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         if (value) {
             this.world.scene.add(value.object);
             this.world.scene.add(value.edges.edgeGroup);
+            // value.edges.edgeGroup.position.copy(value.object.position);
             value.edges.edgeGroup.visible = this.edges;
             this.setupExploder(value);
             if (value.animations) {
@@ -87,8 +88,8 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     }
 
     toggleExplode() {
-        if (this.model && this.exploder) {
-            this.exploder.animate = true;
+        if (this.model && this.exploder && !this.exploder.animating) {
+            this.exploder.play();
         }
     }
 
@@ -147,7 +148,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         if (model) {
             this.exploder = new Exploder(model.object, model.edges);
             this.exploder.addEventListener("animated", (e) => this.handleExploderAnimated(e));
-            this.exploder.animate = false;
+            this.exploder.animating = false;
         }
     }
 

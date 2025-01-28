@@ -95,6 +95,7 @@ export const loadModel = (
 
                 model.userData = new ObjectUserData(outliner, { selectable: true }, null, null);
                 edges.edgeGroup.updateMatrixWorld();
+                model.updateMatrixWorld();
                 resolve({
                     object: model,
                     outliner: outliner,
