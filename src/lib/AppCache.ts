@@ -2,10 +2,20 @@ import { Material, Texture } from "three";
 import { disposeMaterial } from "../utils";
 
 export class AppCache<K, T> {
-    private readonly collection: Map<K, T>;
+    readonly collection: Map<K, T>;
 
     constructor() {
         this.collection = new Map();
+    }
+
+    isEmpty() {
+        return this.collection.size === 0;
+    }
+
+    forEach(callback: (key: K, value: T) => void) {
+        Array.from(this.collection.entries()).forEach(([key, value]) => {
+            callback(key, value);
+        });
     }
 
     get(key: K): T | null {

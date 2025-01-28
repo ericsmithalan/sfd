@@ -5,6 +5,7 @@ import { AnimationState } from "../types";
 import { disposeObject, fitCameraToObject } from "../utils";
 import { loadModel } from "../utils/loadModel";
 import { Exploder, IExploderEvent } from "./Exploder";
+import { HomeScene } from "./HomeScene";
 import { Selection } from "./Selection";
 import { IWorldEvent, World } from "./World";
 
@@ -21,6 +22,7 @@ export interface IViewportEvent {
 
 export class Viewport extends EventDispatcher<IViewportEvent> {
     private readonly isMobile: boolean = false;
+    private readonly homeScene: HomeScene;
     mixer: AnimationMixer | null = null;
 
     readonly world: World;
@@ -37,10 +39,14 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         super();
 
         this.world = new World(canvas, isMobile);
-        this.selection = isMobile
-            ? null
-            : new Selection(canvas, this.world.scene, this.world.camera, this.world.renderer);
+        this.selection = new Selection(
+            canvas,
+            this.world.scene,
+            this.world.camera,
+            this.world.renderer,
+        );
 
+        this.homeScene = new HomeScene(this.world);
         this.init();
     }
 
@@ -85,6 +91,14 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
 
         this._model = value;
         this.dispatchEvent({ type: "modelChanged", model: value });
+    }
+
+    toggleHome(show: boolean) {
+        if (show) {
+            this.homeScene.show();
+        } else {
+            this.homeScene.hide();
+        }
     }
 
     toggleExplode() {
@@ -250,6 +264,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         }
 
         this.selection?.dispose();
+        this.homeScene.dispose();
         this.world.dispose();
     }
 }

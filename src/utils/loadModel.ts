@@ -107,3 +107,36 @@ export const loadModel = (
         }
     });
 };
+
+export const loadSimpleModel = (url: string): Promise<{ object: Object3D; edges: Edges }> => {
+    return new Promise((resolve) => {
+        loader.load(url, (gltf) => {
+            const model = gltf.scene;
+            const edges = new Edges();
+
+            model.castShadow = true;
+            model.receiveShadow = true;
+
+            model.traverse((object: Object3D) => {
+                if (object instanceof Mesh) {
+                    object.castShadow = true;
+                    object.receiveShadow = true;
+
+                    object.userData = new ObjectUserData(null, { selectable: true });
+
+                    edges.add(object);
+                } else {
+                    object.layers.disableAll();
+                }
+            });
+
+            model.userData = new ObjectUserData(null, { selectable: true }, null, null);
+            edges.edgeGroup.updateMatrixWorld();
+            model.updateMatrixWorld();
+            resolve({
+                object: model,
+                edges: edges,
+            });
+        });
+    });
+};
