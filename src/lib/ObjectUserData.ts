@@ -1,4 +1,4 @@
-import { IOutliner } from "../interface";
+import { IHomeSceneModel, IOutliner } from "../interface";
 
 export interface IEdgeInfo {
     objectId: number;
@@ -25,16 +25,19 @@ export class ObjectUserData implements IObjectUserData {
     edgeInfo: IEdgeInfo | null;
     textureInfo: ITextureInfo | null;
     viewportInfo: IViewportInfo | null;
+    homeInfo: IHomeSceneModel | null;
 
     constructor(
         outliner: IOutliner | null = null,
         viewportInfo: IViewportInfo | null,
         edgeInfo: IEdgeInfo | null = null,
         textureInfo: ITextureInfo | null = null,
+        homeInfo: IHomeSceneModel | null = null,
     ) {
         this.outliner = outliner;
         this.edgeInfo = edgeInfo;
         this.textureInfo = textureInfo;
         this.viewportInfo = viewportInfo;
+        this.homeInfo = homeInfo;
     }
 }

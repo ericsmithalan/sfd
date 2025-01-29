@@ -1,6 +1,3 @@
-import { Material, Texture } from "three";
-import { disposeMaterial } from "../utils";
-
 export class AppCache<K, T> {
     private readonly collection: Map<K, T>;
 
@@ -24,16 +21,14 @@ export class AppCache<K, T> {
     }
 
     dispose() {
-        Array.from(this.collection.entries()).forEach(([key, item]) => {
-            if (item instanceof Material) {
-                disposeMaterial(item);
-            }
-
-            if (item instanceof Texture) {
-                item.dispose();
-            }
-        });
-
-        this.collection.clear();
+        // Array.from(this.collection.entries()).forEach(([key, item]) => {
+        //     if (item instanceof Material) {
+        //         disposeMaterial(item);
+        //     }
+        //     if (item instanceof Texture) {
+        //         item.dispose();
+        //     }
+        // });
+        // this.collection.clear();
     }
 }

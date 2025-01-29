@@ -42,7 +42,10 @@ export class Edges {
         line = new LineSegments(edges, new LineBasicMaterial({ color: "black", linewidth: 3 }));
         line.name = `${mesh.name}__edge`;
         line.userData = new ObjectUserData(null, null, { objectId: mesh.id, edgeId: line.id });
-        mesh.userData = new ObjectUserData(null, null, { objectId: mesh.id, edgeId: line.id });
+
+        if (mesh.userData instanceof ObjectUserData) {
+            mesh.userData.edgeInfo = { objectId: mesh.id, edgeId: line.id };
+        }
 
         // line.position.x = wp.x;
         // line.position.y = wp.y;

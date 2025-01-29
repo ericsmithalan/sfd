@@ -1,3 +1,4 @@
+export * from "./IHomeSceneModel";
 export * from "./IImageResource";
 export * from "./IMenu";
 export * from "./IObjectMaterial";

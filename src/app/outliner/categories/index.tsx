@@ -27,7 +27,7 @@ export const CategoriesOutliner = () => {
                             <>
                                 <NavLink
                                     variant="outliner"
-                                    href={`/${String(item.id)}`}
+                                    href={`/models/${String(item.id)}`}
                                     icon="folder"
                                     active={outliner.category?.id === item.id}
                                     text={item.name}

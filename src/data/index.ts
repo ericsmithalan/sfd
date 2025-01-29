@@ -1,6 +1,7 @@
-import { IOutliner } from "../interface";
+import { IHomeSceneModel, IOutliner } from "../interface";
 import { ITexture } from "../interface/ITexture";
 import { getAllFabricTextures } from "./fabricTextures";
+import { homeScene } from "./homeScene";
 import { getAllMetalTextures } from "./metalTexture";
 import { rootOutliner } from "./outliner";
 import { getAllWoodTextures } from "./woodTextures";
@@ -13,6 +14,7 @@ export interface IData {
     metalTextures: Array<ITexture>;
     defaultMetalTexture: ITexture;
     rootOutliner: Array<IOutliner>;
+    homeScene: Array<IHomeSceneModel>;
 }
 
 const wood = getAllWoodTextures();
@@ -27,4 +29,5 @@ export const DATA: IData = {
     metalTextures: metal,
     defaultMetalTexture: metal[0],
     rootOutliner: rootOutliner,
+    homeScene: homeScene,
 };

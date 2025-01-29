@@ -9,6 +9,7 @@ export * from "./getObjectDimensions";
 export * from "./getObjectsById";
 export * from "./getObjectUserData";
 export * from "./isObjEmpty";
+export * from "./loadHomeModel";
 export * from "./loadTexture";
 export * from "./mapTextures";
 export * from "./popupHelpers";
