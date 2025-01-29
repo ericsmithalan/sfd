@@ -15,7 +15,7 @@ export const getObject = <T extends Object3D>(
     }
 
     if (object && select && viewport.selection) {
-        viewport.selection.object = object;
+        viewport.selection.selectedObject = object;
     }
 
     return (object as T) || null;

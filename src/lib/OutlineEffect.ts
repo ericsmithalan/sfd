@@ -24,9 +24,11 @@ export class OutlineEffect {
     private target: WebGLRenderTarget;
     private composer: EffectComposer;
     private effectFXAA: ShaderPass;
-    private outlinePass: OutlinePass;
+    private selectionPass: OutlinePass;
+    private hoverPass: OutlinePass;
 
-    private _objects: Array<Object3D> = [];
+    private _selectedObjects: Array<Object3D> = [];
+    private _hoverObjects: Array<Object3D> = [];
 
     enabled: boolean = true;
 
@@ -52,20 +54,35 @@ export class OutlineEffect {
         renderPass.clearAlpha = 0;
         this.composer.addPass(renderPass);
 
-        this.outlinePass = new OutlinePass(
+        this.hoverPass = new OutlinePass(
             new Vector2(window.innerWidth, window.innerHeight),
             scene,
             camera,
         );
 
-        this.outlinePass.edgeGlow = 0;
-        this.outlinePass.edgeThickness = 2;
-        this.outlinePass.edgeStrength = 10;
-        this.outlinePass.pulsePeriod = 0;
+        this.hoverPass.edgeGlow = 0;
+        this.hoverPass.edgeThickness = 2;
+        this.hoverPass.edgeStrength = 10;
+        this.hoverPass.pulsePeriod = 0;
 
-        this.outlinePass.visibleEdgeColor.set(new Color(0xc2883d));
-        this.outlinePass.hiddenEdgeColor.set(new Color(0xc2883d));
-        this.composer.addPass(this.outlinePass);
+        this.hoverPass.visibleEdgeColor.set(new Color("red"));
+        this.hoverPass.hiddenEdgeColor.set(new Color("red"));
+        this.composer.addPass(this.hoverPass);
+
+        this.selectionPass = new OutlinePass(
+            new Vector2(window.innerWidth, window.innerHeight),
+            scene,
+            camera,
+        );
+
+        this.selectionPass.edgeGlow = 0;
+        this.selectionPass.edgeThickness = 2;
+        this.selectionPass.edgeStrength = 10;
+        this.selectionPass.pulsePeriod = 0;
+
+        this.selectionPass.visibleEdgeColor.set(new Color(0xc2883d));
+        this.selectionPass.hiddenEdgeColor.set(new Color(0xc2883d));
+        this.composer.addPass(this.selectionPass);
 
         const outputPass = new OutputPass();
         this.composer.addPass(outputPass);
@@ -85,13 +102,22 @@ export class OutlineEffect {
         disposeObject(effectScene);
     }
 
-    get objects() {
-        return this._objects;
+    get selectedObjects() {
+        return this._selectedObjects;
     }
 
-    set objects(objs: Array<Object3D>) {
-        this.outlinePass.selectedObjects = objs;
-        this._objects = objs;
+    set selectedObjects(objs: Array<Object3D>) {
+        this.selectionPass.selectedObjects = objs;
+        this._selectedObjects = objs;
+    }
+
+    get hoverObjects() {
+        return this._hoverObjects;
+    }
+
+    set hoverObjects(objs: Array<Object3D>) {
+        this.hoverPass.selectedObjects = objs;
+        this._hoverObjects = objs;
     }
 
     resize() {
@@ -112,7 +138,8 @@ export class OutlineEffect {
     dispose() {
         this.composer.dispose();
         this.effectFXAA.dispose();
-        this.outlinePass.dispose();
+        this.selectionPass.dispose();
+        this.hoverPass.dispose();
         this.target.dispose();
     }
 }

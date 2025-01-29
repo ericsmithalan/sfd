@@ -35,10 +35,10 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     clock = new Clock();
     animating: boolean = false;
 
-    constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
+    constructor(canvas: HTMLCanvasElement, container: HTMLDivElement, isMobile: boolean) {
         super();
 
-        this.world = new World(canvas, isMobile);
+        this.world = new World(canvas, container, isMobile);
         this.selection = new Selection(
             canvas,
             this.world.scene,
@@ -69,6 +69,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         if (this._model) {
             this.disposeModelAnimations();
             disposeObject(this._model.object);
+
             this.exploder = null;
             this._model.edges.dispose();
         }
@@ -238,6 +239,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
         if (this.exploder) {
             this.exploder.animateExplosion();
         }
+
         if (this.mixer && this.animating && this.model?.edges) {
             this.mixer.update(this.clock.getDelta());
             this.model.edges.update(this.world.scene);

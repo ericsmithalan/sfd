@@ -8,6 +8,10 @@ export interface ISelectionEvent {
         type: string;
         object: Object3D | null;
     };
+    mouseover: {
+        type: string;
+        object: Object3D | null;
+    };
     mode: { type: string; mode: SelectMode };
 }
 
@@ -20,11 +24,10 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     private readonly scene: Scene;
     readonly borderEffect: OutlineEffect;
 
-    private _object: Object3D | null = null;
+    private _selectedObject: Object3D | null = null;
+    private _hoverObject: Object3D | null = null;
     private _mode: SelectMode = "select";
-    private timer: any = null;
 
-    dragging = false;
     enabled: boolean = true;
 
     constructor(container: HTMLElement, scene: Scene, camera: Camera, renderer: WebGLRenderer) {
@@ -40,36 +43,39 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.borderEffect = new OutlineEffect(scene, renderer, camera);
     }
 
-    get mode() {
-        return this._mode;
+    get hoverObject() {
+        return this._hoverObject;
     }
 
-    set mode(value: SelectMode) {
-        if (value !== this._mode) {
-            this._mode = value;
+    set hoverObject(value: Object3D | null) {
+        if (value !== this.hoverObject && value !== this.selectedObject) {
+            this._hoverObject = value;
 
-            if (value === "edit") {
-                this.borderEffect.enabled = false;
+            if (value !== null) {
+                this.borderEffect.hoverObjects = [value];
             } else {
-                this.borderEffect.enabled = true;
+                this.borderEffect.hoverObjects = [];
             }
 
-            this.dispatchEvent({ type: "mode", mode: value });
+            this.dispatchEvent({
+                type: "mouseover",
+                object: value,
+            });
         }
     }
 
-    get object() {
-        return this._object;
+    get selectedObject() {
+        return this._selectedObject;
     }
 
-    set object(value: Object3D | null) {
-        if (value !== this.object) {
-            this._object = value;
+    set selectedObject(value: Object3D | null) {
+        if (value !== this.selectedObject) {
+            this._selectedObject = value;
 
             if (value !== null) {
-                this.borderEffect.objects = [value];
+                this.borderEffect.selectedObjects = [value];
             } else {
-                this.borderEffect.objects = [];
+                this.borderEffect.selectedObjects = [];
             }
 
             this.dispatchEvent({
@@ -84,14 +90,14 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     }
 
     clear() {
-        if (this.object) {
-            this.object = null;
+        if (this.selectedObject) {
+            this.selectedObject = null;
         }
     }
     animate = () => {
         // if UI hides object
-        if (this.object && !this.object.visible) {
-            this.object = null;
+        if (this.selectedObject && !this.selectedObject.visible) {
+            this.selectedObject = null;
         }
 
         this.borderEffect.animate();
@@ -107,24 +113,32 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
         this.mouse.y = y;
     };
 
-    private mouseDwn(e: MouseEvent) {
+    private mouseMove = (e: MouseEvent) => {
+        this.setMouse(e);
+
+        const objects = this.intersects(this.mouse.x, this.mouse.y);
+
+        if (objects) {
+            const obj = objects[0]?.object || null;
+            this.hoverObject = obj;
+        } else {
+            this.hoverObject = null;
+        }
+    };
+    private mouseDown = (e: MouseEvent) => {
         this.setMouse(e);
         const self = this;
-        if (self.enabled) {
-            const objects = self.intersects(self.mouse.x, self.mouse.y);
 
-            if (objects) {
-                self.object = objects[0]?.object || null;
-            } else {
-                self.object = null;
-            }
+        const objects = self.intersects(self.mouse.x, self.mouse.y);
 
-            clearTimeout(self.timer);
-            self.timer = null;
+        if (objects) {
+            self.selectedObject = objects[0]?.object || null;
+        } else {
+            self.selectedObject = null;
         }
-    }
+    };
 
-    private mouseUp(e: MouseEvent) {
+    private mouseEvent(e: MouseEvent) {
         this.setMouse(e);
     }
 
@@ -148,14 +162,16 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
     };
 
     private registerEvents() {
-        this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
-        this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
+        this.container.addEventListener("mousemove", (e: MouseEvent) => this.mouseMove(e));
+        this.container.addEventListener("mousedown", (e: MouseEvent) => this.mouseDown(e));
+        this.container.addEventListener("mouseup", (e: MouseEvent) => this.mouseEvent(e));
     }
 
     dispose() {
-        this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDwn(e));
-        this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseUp(e));
+        this.container.removeEventListener("mousemove", (e: MouseEvent) => this.mouseMove(e));
+        this.container.removeEventListener("mousedown", (e: MouseEvent) => this.mouseDown(e));
+        this.container.removeEventListener("mouseup", (e: MouseEvent) => this.mouseEvent(e));
 
-        this.borderEffect.dispose();
+        // this.borderEffect.dispose();
     }
 }

@@ -15,6 +15,7 @@ export const Viewer = () => {
     const [viewport, setViewport] = useState<Viewport>();
     const [loading, setLoading] = useState(false);
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         let vp: Viewport;
@@ -22,12 +23,10 @@ export const Viewer = () => {
             setLoading(e.value);
         };
 
-        if (canvasRef) {
-            if (canvasRef.current) {
-                vp = new Viewport(canvasRef.current, isMobile);
-                vp.addEventListener("loading", loading);
-                setViewport(vp);
-            }
+        if (canvasRef.current && containerRef.current) {
+            vp = new Viewport(canvasRef.current, containerRef.current, isMobile);
+            vp.addEventListener("loading", loading);
+            setViewport(vp);
         }
 
         return () => {
@@ -36,10 +35,10 @@ export const Viewer = () => {
                 vp.dispose();
             }
         };
-    }, [canvasRef]);
+    }, [canvasRef, containerRef]);
 
     return (
-        <div id="viewer-main" className="viewer">
+        <div ref={containerRef} id="viewer-main" className="viewer">
             {loading && <Loading message="Loading" />}
             {viewport &&
                 (isMobile ? (
@@ -47,7 +46,6 @@ export const Viewer = () => {
                 ) : (
                     <StandardViewer loading={loading} viewport={viewport} />
                 ))}
-
             <canvas className="canvas" ref={canvasRef} />
         </div>
     );

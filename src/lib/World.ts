@@ -34,6 +34,8 @@ export class World extends EventDispatcher<IWorldEvent> {
     readonly lights: Lights;
     readonly grid: Grid;
     readonly floor: Floor;
+    readonly container: HTMLDivElement;
+    readonly canvas: HTMLCanvasElement;
 
     private geometries = 0;
     private textures = 0;
@@ -44,8 +46,11 @@ export class World extends EventDispatcher<IWorldEvent> {
         aspect: 0,
     };
 
-    constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
+    constructor(canvas: HTMLCanvasElement, container: HTMLDivElement, isMobile: boolean) {
         super();
+
+        this.canvas = canvas;
+        this.container = container;
 
         this.setSize();
 
@@ -162,6 +167,11 @@ export class World extends EventDispatcher<IWorldEvent> {
         this.size.aspect = width / height;
         this.size.width = width;
         this.size.height = height;
+
+        this.canvas.height = height;
+        this.canvas.width = width;
+        this.container.setAttribute("width", `${width}px`);
+        this.container.setAttribute("height", `${height}px`);
     }
 
     dispose() {
