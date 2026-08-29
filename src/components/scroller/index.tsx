@@ -69,17 +69,13 @@ export const Scroller: FC<ScrollerProps> = ({
         };
     }, [scrollerRef, scrolling, showShadow]);
 
-    // useEffect(() => {
-    //     const timer = setTimeout(() => {
-    //         if (scrollTo) {
-    //             const to = document.getElementById(scrollTo);
-    //             console.log("scrollTo ", scrollTo, to);
-    //             to?.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    //         }
-    //     }, 10);
-
-    //     return () => clearTimeout(timer);
-    // }, [scrollTo, scrollerRef]);
+    useEffect(() => {
+        if (scrollTo) {
+            const to = document.getElementById(scrollTo);
+            console.log("scrollTo ", scrollTo, to);
+            to?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        }
+    }, [scrollTo, scrollerRef]);
 
     return (
         <div

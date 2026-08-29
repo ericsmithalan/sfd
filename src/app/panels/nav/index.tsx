@@ -2,6 +2,7 @@ import clsx from "clsx";
 import { Fragment, useEffect, useState } from "react";
 import { NavLink, Panel, Scroller } from "../../../components";
 import { IOutlinerContext } from "../../../context";
+import { IOutliner } from "../../../interface";
 import { Viewport } from "../../../lib";
 import "./style.scss";
 
@@ -17,38 +18,36 @@ type Props = {
 };
 
 export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
-    const [SelectedId, setSelectedId] = useState<number>(0);
+    const [obj, setObj] = useState<IOutliner | null>(null);
 
     useEffect(() => {
         if (outliner.category?.id) {
-            if (SelectedId === 0) {
-                setSelectedId(outliner.category.id);
+            if (!obj) {
+                setObj(outliner.category);
             }
         }
-    }, [SelectedId, outliner.category]);
+    }, [obj, outliner.category]);
 
-    return outliner.model && SelectedId !== 0 ? (
+    return outliner.model ? (
         <Panel
             className={clsx("projects-panel", isMobile && "mobile")}
             icon="shapes"
             title="Projects"
         >
-            <Scroller className="project-scroller" scrollTo={`cat_${SelectedId}`}>
+            <Scroller className="project-scroller" scrollTo={`cat_${obj?.id}`}>
                 {outliner.models.map((item, i) => {
                     return (
                         <Fragment key={i}>
                             <NavLink
-                                id={`cat_${SelectedId}`}
+                                id={`cat_${obj?.id}`}
                                 variant="outliner"
                                 href={`/${String(item.parentName)}/${String(item.name)}`}
                                 icon="armchair"
-                                active={
-                                    (outliner.model && outliner.model.id === item.id) || undefined
-                                }
+                                active={obj?.id === item.id}
                                 text={item.name}
                                 onClick={(e) => {
-                                    setSelectedId(item.id);
-                                    if (outliner.model && outliner.model.id === item.id) {
+                                    setObj(item);
+                                    if (obj?.id === item.id) {
                                         e.preventDefault();
                                     }
                                 }}
