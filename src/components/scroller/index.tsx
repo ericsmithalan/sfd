@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, ReactNode, useLayoutEffect, useRef, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import "./style.scss";
 
 type ScrollerProps = {
@@ -35,7 +35,7 @@ export const Scroller: FC<ScrollerProps> = ({
 
     const scrollerRef = useRef<HTMLDivElement>(null);
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         const el = scrollerRef.current;
 
         const handleScroll = (e: Event) => {
@@ -69,15 +69,17 @@ export const Scroller: FC<ScrollerProps> = ({
         };
     }, [scrollerRef, scrolling, showShadow]);
 
-    useLayoutEffect(() => {
-        if (scrollTo && scrollerRef.current) {
-            const element = document.getElementById(scrollTo);
+    // useEffect(() => {
+    //     const timer = setTimeout(() => {
+    //         if (scrollTo) {
+    //             const to = document.getElementById(scrollTo);
+    //             console.log("scrollTo ", scrollTo, to);
+    //             to?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    //         }
+    //     }, 10);
 
-            if (element) {
-                element.scrollIntoView({ behavior: "smooth", block: "nearest" });
-            }
-        }
-    }, [scrollTo, scrollerRef]);
+    //     return () => clearTimeout(timer);
+    // }, [scrollTo, scrollerRef]);
 
     return (
         <div

@@ -17,28 +17,28 @@ type Props = {
 };
 
 export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
-    const [SelectedId, setSelectedId] = useState<number>(-1);
+    const [SelectedId, setSelectedId] = useState<number>(0);
 
     useEffect(() => {
-        if (outliner.model) {
-            setSelectedId(outliner.model.id);
+        if (outliner.category?.id) {
+            if (SelectedId === 0) {
+                setSelectedId(outliner.category.id);
+            }
         }
-    }, [outliner.model]);
+    }, [SelectedId, outliner.category]);
 
-    return outliner.model ? (
+    return outliner.model && SelectedId !== 0 ? (
         <Panel
             className={clsx("projects-panel", isMobile && "mobile")}
             icon="shapes"
             title="Projects"
         >
-            <Scroller
-                className="project-scroller"
-                scrollTo={`obj_${outliner.model.id}` || undefined}
-            >
+            <Scroller className="project-scroller" scrollTo={`cat_${SelectedId}`}>
                 {outliner.models.map((item, i) => {
                     return (
                         <Fragment key={i}>
                             <NavLink
+                                id={`cat_${SelectedId}`}
                                 variant="outliner"
                                 href={`/${String(item.parentName)}/${String(item.name)}`}
                                 icon="armchair"

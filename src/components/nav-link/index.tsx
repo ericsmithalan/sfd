@@ -7,6 +7,7 @@ import { Icon } from "../icon";
 import "./style.scss";
 
 type NavLinkProps = {
+    id?: string;
     children?: ReactNode;
     className?: string;
     href: string;
@@ -33,10 +34,12 @@ export const NavLink: FC<NavLinkProps> = ({
     isNav = true,
     variant = "link",
     wrap = true,
+    id,
     icon,
 }) => {
     return isNav ? (
         <NavLink2
+            id={id}
             title={title}
             relative={resolve}
             onClick={onClick}
@@ -49,6 +52,7 @@ export const NavLink: FC<NavLinkProps> = ({
         </NavLink2>
     ) : (
         <Link
+            id={id}
             title={title}
             relative={resolve}
             onClick={onClick}
