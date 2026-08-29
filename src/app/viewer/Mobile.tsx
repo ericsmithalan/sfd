@@ -18,9 +18,11 @@ export const MobileViewer = ({ viewport, loading }: Props) => {
 
             <Region className={clsx("mobile", loading && "loading")} placement="top">
                 <ModelProvider viewport={viewport}>
-                    <Toolbar isMobile={true} viewport={viewport}>
-                        <ImagesPanel isMobile={true} viewport={viewport} loading={loading} />
-                    </Toolbar>
+                    {!loading && (
+                        <Toolbar isMobile={true} viewport={viewport}>
+                            <ImagesPanel isMobile={true} viewport={viewport} loading={loading} />
+                        </Toolbar>
+                    )}
                 </ModelProvider>
             </Region>
         </OutlinerProvider>

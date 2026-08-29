@@ -70,7 +70,6 @@ export class Exploder extends EventDispatcher<IExploderEvent> {
     play() {
         if (!this.animating) {
             this.tweenGroup.removeAll();
-            console.log("should play");
 
             this.mesh.traverse((child) => {
                 if (child instanceof Mesh) {

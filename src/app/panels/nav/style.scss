@@ -31,10 +31,16 @@
             bottom: 0;
         }
     }
+
     &.mobile {
         padding-bottom: 0;
         font-size: var(--font-5);
         background-color: var(--color-white-8);
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 35vh;
 
         & > .outliner-title {
             margin-bottom: 0;

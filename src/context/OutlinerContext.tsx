@@ -60,7 +60,6 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
             const loadModel = async (obj: IOutliner) => {
                 await viewport.loadModel(obj);
                 setModel(obj);
-                console.log("loaded");
             };
 
             if (category && params.modelName && model?.name !== params.modelName) {

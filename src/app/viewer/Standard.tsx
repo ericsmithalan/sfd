@@ -16,24 +16,34 @@ export const StandardViewer = ({ viewport, loading }: Props) => {
         <>
             <OutlinerProvider viewport={viewport}>
                 <Region placement="left">
-                    <Outlet
-                        context={{
-                            viewport: viewport,
-                            loading: loading,
-                            isMobile: false,
-                        }}
-                    />
+                    {!loading && (
+                        <Outlet
+                            context={{
+                                viewport: viewport,
+                                loading: loading,
+                                isMobile: false,
+                            }}
+                        />
+                    )}
                 </Region>
 
                 <Region placement="right">
-                    <ModelPanel viewport={viewport} isMobile={false} loading={loading} />
-                    <ObjectPanel viewport={viewport} isMobile={false} loading={loading} />
+                    {!loading && (
+                        <>
+                            <ModelPanel viewport={viewport} isMobile={false} loading={loading} />
+                            <ObjectPanel viewport={viewport} isMobile={false} loading={loading} />
+                        </>
+                    )}
                 </Region>
             </OutlinerProvider>
 
             <Region placement="top">
                 <ModelProvider viewport={viewport}>
-                    <Toolbar isMobile={false} viewport={viewport} />
+                    {!loading && (
+                        <>
+                            <Toolbar isMobile={false} viewport={viewport} />
+                        </>
+                    )}
                 </ModelProvider>
             </Region>
         </>

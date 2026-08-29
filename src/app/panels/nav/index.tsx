@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { Fragment, useEffect, useState } from "react";
 import { NavLink, Panel, Scroller } from "../../../components";
 import { IOutlinerContext } from "../../../context";
@@ -21,12 +22,15 @@ export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
     useEffect(() => {
         if (outliner.model) {
             setSelectedId(outliner.model.id);
-            console.log(outliner.model);
         }
     }, [outliner.model]);
 
     return outliner.model ? (
-        <Panel className="projects-panel" icon="shapes" title="Projects">
+        <Panel
+            className={clsx("projects-panel", isMobile && "mobile")}
+            icon="shapes"
+            title="Projects"
+        >
             <Scroller
                 className="project-scroller"
                 scrollTo={`obj_${outliner.model.id}` || undefined}
