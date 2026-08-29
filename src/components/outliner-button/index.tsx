@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import { MouseEvent, useState } from "react";
+import { IconName } from "../../types";
 import { Button } from "../button";
 import "./style.scss";
 
@@ -8,6 +9,7 @@ type OutlinerButtonProps = {
     className?: string;
     active?: boolean;
     text?: string;
+    icon?: IconName;
     onClick?: (e: MouseEvent) => void;
     onVisible?: (visible: boolean, e: MouseEvent) => void;
 };
@@ -19,6 +21,7 @@ export const OutlinerButton = ({
     onClick,
     onVisible,
     className,
+    icon,
 }: OutlinerButtonProps) => {
     const [visible, setVisible] = useState(true);
 
@@ -28,7 +31,7 @@ export const OutlinerButton = ({
                 title={text}
                 variant="outliner"
                 active={active}
-                icon="box-1"
+                icon={(icon && icon) || "blender"}
                 text={text}
                 onClick={(e) => {
                     if (onClick) {
@@ -37,6 +40,7 @@ export const OutlinerButton = ({
                 }}
             />
             <Button
+                className="visible-btn"
                 title={"Toggle Visibility"}
                 variant="outliner"
                 onClick={(e) => {

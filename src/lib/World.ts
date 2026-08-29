@@ -34,6 +34,7 @@ export class World extends EventDispatcher<IWorldEvent> {
     readonly lights: Lights;
     readonly grid: Grid;
     readonly floor: Floor;
+    private showStats: boolean;
 
     private geometries = 0;
     private textures = 0;
@@ -44,11 +45,11 @@ export class World extends EventDispatcher<IWorldEvent> {
         aspect: 0,
     };
 
-    constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
+    constructor(canvas: HTMLCanvasElement, isMobile: boolean, showStats: boolean) {
         super();
 
         this.setSize();
-
+        this.showStats = showStats;
         this.scene = new Scene();
         this.scene.name = "Scene";
         this.scene.background = new Color("#222222");
@@ -104,14 +105,16 @@ export class World extends EventDispatcher<IWorldEvent> {
     }
 
     logStats() {
-        if (this.renderer.info.memory.geometries !== this.geometries) {
-            this.geometries = this.renderer.info.memory.geometries;
-            console.log("geometries", this.renderer.info.memory.geometries);
-        }
+        if (this.showStats) {
+            if (this.renderer.info.memory.geometries !== this.geometries) {
+                this.geometries = this.renderer.info.memory.geometries;
+                console.log("geometries", this.renderer.info.memory.geometries);
+            }
 
-        if (this.renderer.info.memory.textures !== this.textures) {
-            this.textures = this.renderer.info.memory.textures;
-            console.log("textures", this.renderer.info.memory.geometries);
+            if (this.renderer.info.memory.textures !== this.textures) {
+                this.textures = this.renderer.info.memory.textures;
+                console.log("textures", this.renderer.info.memory.geometries);
+            }
         }
     }
 

@@ -138,40 +138,6 @@ export const rootOutliner: Array<IOutliner> = [
         name: "Misc Designs",
         id: 2,
     },
-    {
-        id: 3223,
-        name: "Designs",
-        level: 1,
-        children: [
-            {
-                id: 9873,
-                name: "Display Case",
-                level: 1,
-                modelUrl: "/models/john/case-1.glb",
-            },
-            {
-                id: 11002,
-                modelUrl: "/models/desk-2/desk-2.glb",
-                level: 3,
-                name: "Deks-1",
-                children: [],
-            },
-            {
-                id: 11002,
-                modelUrl: "/models/desk-3/desk-3.glb",
-                level: 3,
-                name: "Desk 2",
-                children: [],
-            },
-            {
-                id: 3333,
-                modelUrl: "/models/kitchen-table/kitchen-table.glb",
-                level: 3,
-                name: "Kitchen Table",
-                children: [],
-            },
-        ],
-    },
 ];
 
 export const outlinerIdToName = (

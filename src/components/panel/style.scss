@@ -32,9 +32,9 @@
     & > .panel-title {
         display: flex;
         flex-direction: row;
-        text-transform: capitalize;
-        font-size: var(--font-5);
-        font-weight: bold;
+        text-transform: uppercase;
+        font-size: var(--font-6);
+        font-weight: 500;
         position: relative;
         z-index: 1;
     }

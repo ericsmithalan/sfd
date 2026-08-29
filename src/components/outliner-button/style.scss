@@ -18,4 +18,8 @@
             text-transform: capitalize;
         }
     }
+
+    & .visible-btn {
+        margin-right: var(--margin-3);
+    }
 }

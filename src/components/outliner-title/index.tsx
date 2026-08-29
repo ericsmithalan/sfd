@@ -27,20 +27,29 @@ export const OutlinerTitle = ({
 }: OutlinerTitleProps) => {
     return (
         <div className={clsx("outliner-title", noIcon && "no-icon", className)}>
-            <div className={clsx("title-content")}>
-                {isMobile ? (
-                    <NavLink title="Home" className="logo-icon-link" isNav={false} href="/">
-                        <LogoIcon height={30} />
-                    </NavLink>
-                ) : (
-                    !noIcon && (
-                        <NavLink title="Home" isNav={false} href="../../" icon="arrow-go-back" />
-                    )
-                )}
-                <div title={title} className="header">
-                    {title && <div className="outliner-title-text">{title}</div>}
+            {title && (
+                <div className={clsx("title-content", !title && "no-title")}>
+                    {isMobile ? (
+                        <NavLink title="Home" className="logo-icon-link" isNav={false} href="/">
+                            <LogoIcon height={30} />
+                        </NavLink>
+                    ) : (
+                        !noIcon && (
+                            <NavLink
+                                title="Home"
+                                isNav={false}
+                                href="../../"
+                                icon="arrow-go-back"
+                            />
+                        )
+                    )}
+                    {title && (
+                        <div title={title} className="header">
+                            <div className="outliner-title-text">{title}</div>
+                        </div>
+                    )}
                 </div>
-            </div>
+            )}
             {subTitle && <div className="subtitle">{subTitle}</div>}
         </div>
     );

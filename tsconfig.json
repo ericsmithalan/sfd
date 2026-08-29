@@ -23,6 +23,6 @@
         "src/utils/edgesGeometry",
         "src/lib/Model.old",
         "scripts/textures.js"
-    ],
+, "src/app/outliner/projects/index copy.old"    ],
     "exclude": ["node_modules"]
 }

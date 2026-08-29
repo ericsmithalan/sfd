@@ -14,9 +14,7 @@ type Props = {
 export const MobileViewer = ({ viewport, loading }: Props) => {
     return (
         <OutlinerProvider viewport={viewport}>
-            <Region className={clsx("mobile", loading && "loading")} placement="left">
-                <Outlet context={{ viewport: viewport, loading: loading, isMobile: true }} />
-            </Region>
+            <Outlet context={{ viewport: viewport, loading: loading, isMobile: true }} />
 
             <Region className={clsx("mobile", loading && "loading")} placement="top">
                 <ModelProvider viewport={viewport}>

@@ -36,7 +36,7 @@ export class Viewport extends EventDispatcher<IViewportEvent> {
     constructor(canvas: HTMLCanvasElement, isMobile: boolean) {
         super();
 
-        this.world = new World(canvas, isMobile);
+        this.world = new World(canvas, isMobile, false);
         this.selection = isMobile
             ? null
             : new Selection(canvas, this.world.scene, this.world.camera, this.world.renderer);

@@ -57,7 +57,9 @@ export const ModelOutliner = () => {
                                 active={object?.id === item.id}
                                 text={item.name}
                                 onVisible={(visible, e) => {
-                                    setObjectVisibility(viewport, item.id, visible);
+                                    if (item.name) {
+                                        setObjectVisibility(viewport, item.id, visible);
+                                    }
                                 }}
                                 onClick={(e) => {
                                     getObject(viewport, item.id, true);
