@@ -28,7 +28,7 @@ export const ProjectsPanel = ({ viewport, loading, isMobile, outliner }: Props) 
 
     return outliner.model ? (
         <Panel className="projects-panel" icon="shapes" title="Projects">
-            <Scroller className="root-scroller">
+            <Scroller className="project-scroller">
                 {outliner.models.map((item, i) => {
                     return (
                         <Fragment key={i}>

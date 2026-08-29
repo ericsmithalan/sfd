@@ -47,6 +47,11 @@
         z-index: 1;
     }
 
+    &.panel-closed {
+        height: auto;
+        padding-bottom: var(--padding-3);
+    }
+
     &.mobile {
         & > .panel-title {
             font-size: var(--font-4);

@@ -31,7 +31,10 @@ export const Panel: FC<PanelProps> = ({
     }, [opened]);
 
     return (
-        <div ref={panelRef} className={clsx("panel", open && "panel-open", className)}>
+        <div
+            ref={panelRef}
+            className={clsx("panel", open ? "panel-open" : "panel-closed", className)}
+        >
             {title && (
                 <Button
                     iconFill={true}
