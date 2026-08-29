@@ -1,6 +1,8 @@
 import { Outlet, useOutletContext } from "react-router-dom";
 import { useOutliner } from "../../hooks";
 import { Viewport } from "../../lib";
+import { NavPanel } from "../panels/nav";
+import { PartsPanel } from "../panels/parts";
 import "./style.scss";
 
 export const OutlinerView = () => {
@@ -12,13 +14,30 @@ export const OutlinerView = () => {
     }>();
 
     return (
-        <Outlet
-            context={{
-                outliner: outliner,
-                viewport: viewport,
-                isMobile: isMobile,
-                loading: loading,
-            }}
-        />
+        <>
+            <NavPanel
+                viewport={viewport}
+                isMobile={isMobile}
+                loading={loading}
+                outliner={outliner}
+            />
+            {!isMobile && (
+                <PartsPanel
+                    viewport={viewport}
+                    isMobile={isMobile}
+                    loading={loading}
+                    outliner={outliner}
+                />
+            )}
+
+            <Outlet
+                context={{
+                    outliner: outliner,
+                    viewport: viewport,
+                    isMobile: isMobile,
+                    loading: loading,
+                }}
+            ></Outlet>
+        </>
     );
 };

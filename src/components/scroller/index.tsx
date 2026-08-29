@@ -81,11 +81,17 @@ export const Scroller: FC<ScrollerProps> = ({
 
     return (
         <div
-            className={clsx("scroller", disable && "disabled", scrolling && "scrolling", className)}
+            className={clsx(
+                "scroller",
+                disable && "disabled",
+                scrolling && "scrolling",
+                scrollCss,
+                className,
+            )}
         >
             <div
                 ref={scrollerRef}
-                className={clsx("scroller-scroll", scrollCss)}
+                className="scroll"
                 style={{
                     width: (!disable && width) || undefined,
                     height: (!disable && height) || undefined,

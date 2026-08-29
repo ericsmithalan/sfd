@@ -15,20 +15,22 @@ type Props = {
     outliner: IOutlinerContext;
 };
 
-export const ProjectsPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
-    const [viewer, setViewer] = useState<ViewerState>({
-        visible: false,
-    });
+export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
+    const [SelectedId, setSelectedId] = useState<number>(-1);
 
     useEffect(() => {
         if (outliner.model) {
-            setViewer({ visible: true });
+            setSelectedId(outliner.model.id);
+            console.log(outliner.model);
         }
     }, [outliner.model]);
 
     return outliner.model ? (
         <Panel className="projects-panel" icon="shapes" title="Projects">
-            <Scroller className="project-scroller">
+            <Scroller
+                className="project-scroller"
+                scrollTo={`obj_${outliner.model.id}` || undefined}
+            >
                 {outliner.models.map((item, i) => {
                     return (
                         <Fragment key={i}>
@@ -41,6 +43,7 @@ export const ProjectsPanel = ({ viewport, loading, isMobile, outliner }: Props) 
                                 }
                                 text={item.name}
                                 onClick={(e) => {
+                                    setSelectedId(item.id);
                                     if (outliner.model && outliner.model.id === item.id) {
                                         e.preventDefault();
                                     }

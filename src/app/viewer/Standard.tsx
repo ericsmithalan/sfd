@@ -16,7 +16,13 @@ export const StandardViewer = ({ viewport, loading }: Props) => {
         <>
             <OutlinerProvider viewport={viewport}>
                 <Region placement="left">
-                    <Outlet context={{ viewport: viewport, loading: loading, isMobile: false }} />
+                    <Outlet
+                        context={{
+                            viewport: viewport,
+                            loading: loading,
+                            isMobile: false,
+                        }}
+                    />
                 </Region>
 
                 <Region placement="right">
