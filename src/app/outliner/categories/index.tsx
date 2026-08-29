@@ -25,10 +25,10 @@ export const CategoriesOutliner = () => {
                             variant="outliner"
                             href={`/${String(item.parentName)}/${String(item.name)}`}
                             icon="box-1"
-                            active={outliner.category?.id === item.id}
+                            active={outliner.category?.id === item.parentId}
                             text={item.name}
                             onClick={(e) => {
-                                if (item.id === outliner.category?.id) {
+                                if (item.parentId === outliner.category?.id) {
                                     e.preventDefault();
                                 }
                             }}
