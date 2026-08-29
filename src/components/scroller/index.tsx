@@ -72,7 +72,6 @@ export const Scroller: FC<ScrollerProps> = ({
     useEffect(() => {
         if (scrollTo) {
             const to = document.getElementById(scrollTo);
-            console.log("scrollTo ", scrollTo, to);
             to?.scrollIntoView({ behavior: "smooth", block: "nearest" });
         }
     }, [scrollTo, scrollerRef]);
