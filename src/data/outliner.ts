@@ -3,10 +3,9 @@ import { IOutliner } from "../interface";
 export const rootOutliner: Array<IOutliner> = [
     {
         group: true,
-        name: "Completed",
+        name: "Projects",
         id: 1,
     },
-
     {
         id: 100,
         name: "Desks",
@@ -34,25 +33,25 @@ export const rootOutliner: Array<IOutliner> = [
         children: [
             {
                 id: 7564,
-                modelUrl: "/models/bunks/bunks1.glb",
+                modelUrl: "/models/bunks/bunk/bunks1.glb",
                 level: 3,
                 name: "Bunk Bed",
                 imageResouce: {
-                    primaryImg: 18,
-                    count: 18,
-                    path: "/models/bunks/images/",
+                    primaryImg: 14,
+                    count: 15,
+                    path: "/models/bunks/bunk/images/",
                 },
                 children: [],
             },
             {
                 id: 7921,
-                modelUrl: "/models/bunks/twin-Portfolio.glb",
+                modelUrl: "/models/bunks/twin/twin-Portfolio.glb",
                 level: 3,
                 name: "Twin Bed",
                 imageResouce: {
-                    primaryImg: 18,
-                    count: 18,
-                    path: "/models/bunks/images/",
+                    primaryImg: 3,
+                    count: 3,
+                    path: "/models/bunks/twin/images/",
                 },
                 children: [],
             },
