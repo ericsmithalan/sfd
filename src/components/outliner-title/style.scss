@@ -114,4 +114,22 @@
             }
         }
     }
+    &.no-icon {
+        & > .title-content {
+            & > .header {
+                margin-left: 0;
+                align-items: center;
+                align-content: center;
+                align-self: center;
+
+                & > .icon {
+                    display: none;
+                }
+
+                & > .outliner-title-text {
+                    margin-top: var(--margin-3);
+                }
+            }
+        }
+    }
 }

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Fragment } from "react";
 import { Outlet, useOutletContext } from "react-router-dom";
-import { NavLink } from "../../../components";
+import { NavLink, OutlinerTitle } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import { Viewport } from "../../../lib";
 import "./style.scss";
@@ -16,44 +16,23 @@ export const CategoriesOutliner = () => {
 
     return (
         <div className={clsx("outliner-root", isMobile && "mobile")}>
-            {outliner.categories.map((item, i) => {
+            <OutlinerTitle title="" noIcon={true} subTitle="Projects" />
+
+            {outliner.models.map((item, i) => {
                 return (
                     <Fragment key={i}>
-                        {item.group ? (
-                            <div key={i} className="outliner-group">
-                                {item.name}
-                            </div>
-                        ) : (
-                            <>
-                                <NavLink
-                                    variant="outliner"
-                                    href={`/${String(item.id)}`}
-                                    icon="folder"
-                                    active={outliner.category?.id === item.id}
-                                    text={item.name}
-                                    onClick={(e) => {
-                                        if (item.id === outliner.category?.id) {
-                                            e.preventDefault();
-                                        }
-                                    }}
-                                />
-                                {outliner.category && outliner.category.id === item.id && (
-                                    <div className="outliner-category-children">
-                                        {outliner.category.children?.map((item, n) => {
-                                            return (
-                                                <NavLink
-                                                    key={n + i + n}
-                                                    variant="outliner"
-                                                    href={String(item.id)}
-                                                    icon="sofa"
-                                                    text={item.name}
-                                                />
-                                            );
-                                        })}
-                                    </div>
-                                )}
-                            </>
-                        )}
+                        <NavLink
+                            variant="outliner"
+                            href={`/${String(item.parentName)}/${String(item.name)}`}
+                            icon="box-1"
+                            active={outliner.category?.id === item.id}
+                            text={item.name}
+                            onClick={(e) => {
+                                if (item.id === outliner.category?.id) {
+                                    e.preventDefault();
+                                }
+                            }}
+                        />
                     </Fragment>
                 );
             })}

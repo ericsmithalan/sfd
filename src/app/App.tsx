@@ -10,8 +10,8 @@ export const App = () => {
             <Route path="/" element={<Viewer />}>
                 <Route path="" element={<OutlinerView />}>
                     <Route path="" element={<CategoriesOutliner />} />
-                    <Route path=":categoryId" element={<CategoriesOutliner />} />
-                    <Route path=":categoryId/:modelId" element={<ModelOutliner />} />
+                    <Route path=":categoryName" element={<CategoriesOutliner />} />
+                    <Route path=":categoryName/:modelName" element={<ModelOutliner />} />
                 </Route>
             </Route>
         </Routes>

@@ -8,6 +8,7 @@ export interface IOutlinerContext {
     categories: Array<IOutliner>;
     category: IOutliner | null;
     model: IOutliner | null;
+    models: Array<IOutliner>;
 }
 
 export const OutlinerContext = createContext<IOutlinerContext>({} as IOutlinerContext);
@@ -20,18 +21,39 @@ type OutlinerContextProps = {
 export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) => {
     const [category, setCategory] = useState<IOutliner | null>(null);
     const [model, setModel] = useState<IOutliner | null>(null);
+    const [models, setModels] = useState<Array<IOutliner>>([]);
     const params = useParams();
 
     useEffect(() => {
-        if (params.categoryId) {
-            const item = DATA.rootOutliner.find((item) => item.id === Number(params.categoryId));
+        const ms = new Array<IOutliner>();
+
+        if (DATA) {
+            for (let categ of DATA.rootOutliner) {
+                if (categ.children) {
+                    categ.children.forEach((mod) => {
+                        if (mod) {
+                            mod.parentId = categ.id;
+                            mod.parentName = categ.name;
+                            ms.push(mod);
+                        }
+                    });
+                }
+            }
+
+            setModels(ms);
+        }
+    }, [setModels]);
+
+    useEffect(() => {
+        if (params.categoryName) {
+            const item = DATA.rootOutliner.find((item) => item.name === params.categoryName);
             setCategory(item || null);
         }
 
-        if (category && !params.categoryId) {
+        if (category && !params.categoryName) {
             setCategory(null);
         }
-    }, [category, params.categoryId]);
+    }, [category, params.categoryName]);
 
     useEffect(() => {
         if (category) {
@@ -41,9 +63,9 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
                 console.log("loaded");
             };
 
-            if (category && params.modelId && model?.id !== Number(params.modelId)) {
+            if (category && params.modelName && model?.name !== params.modelName) {
                 const model =
-                    category?.children?.find((item) => item.id === Number(params.modelId)) || null;
+                    category?.children?.find((item) => item.name === params.modelName) || null;
 
                 if (model) {
                     loadModel(model);
@@ -52,12 +74,12 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
                 }
             }
 
-            if (model && !params.modelId) {
+            if (model && !params.modelName) {
                 setModel(null);
                 viewport.model = null;
             }
         }
-    }, [model, params.modelId, category, viewport]);
+    }, [model, category, viewport, params.modelName]);
 
     return (
         <OutlinerContext.Provider
@@ -65,6 +87,7 @@ export const OutlinerProvider = ({ children, viewport }: OutlinerContextProps) =
                 categories: DATA.rootOutliner,
                 model: model,
                 category: category,
+                models: models,
             }}
         >
             {children}
