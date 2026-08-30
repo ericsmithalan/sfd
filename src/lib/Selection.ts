@@ -32,6 +32,7 @@ export class Selection extends EventDispatcher<ISelectionEvent> {
 
         this.camera = camera;
         this.raycaster = new Raycaster();
+        this.raycaster.layers.enable(0);
         this.container = container;
         this.scene = scene;
         this.raycaster.setFromCamera(this.mouse, this.camera);

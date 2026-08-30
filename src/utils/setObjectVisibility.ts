@@ -14,17 +14,26 @@ export const setObjectVisibility = (
 
         if (object) {
             let edge = getEdge(viewport, object.id);
+
             if (edge) {
                 edge.visible = visible;
             }
+            object.visible = visible;
 
             if (viewport.selection?.object?.id === object.id) {
                 viewport.selection.object = null;
             }
 
-            object.visible = visible;
+            if (visible) {
+                edge?.layers.set(0);
+                object?.layers.set(0);
+            } else {
+                edge?.layers.set(1);
+                object?.layers.set(1);
+            }
         }
 
+        console.log(object, object?.layers.mask);
         return object;
     }
     return null;
