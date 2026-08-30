@@ -48,6 +48,17 @@
         height: 100%;
     }
 
+    & > .selected {
+        margin-top: var(--margin-3);
+    }
+
+    & > .btn-expand {
+        z-index: 1;
+        font-size: var(--font-6);
+        color: var(--color-white-3);
+        margin-top: var(--margin-3);
+    }
+
     &.panel-closed {
         height: auto;
         padding-bottom: var(--padding-3);

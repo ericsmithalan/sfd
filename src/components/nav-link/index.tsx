@@ -14,7 +14,7 @@ type NavLinkProps = {
     title?: string;
     active?: boolean;
     text?: string;
-    variant?: "link" | "outliner" | "back";
+    variant?: "link" | "outliner" | "back" | "title";
     icon?: IconName;
     isNav?: boolean;
     resolve?: "path" | "route";

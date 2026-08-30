@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, useState } from "react";
 import { NavLink, Panel, Scroller } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import { IOutliner } from "../../../interface";
@@ -17,22 +17,15 @@ type Props = {
     outliner: IOutlinerContext;
 };
 
-export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
+export const NavPanel = ({ isMobile, outliner }: Props) => {
     const [obj, setObj] = useState<IOutliner | null>(null);
-
-    useEffect(() => {
-        if (outliner.category?.id) {
-            if (!obj) {
-                setObj(outliner.category);
-            }
-        }
-    }, [obj, outliner.category]);
 
     return outliner.model ? (
         <Panel
             className={clsx("projects-panel", isMobile && "mobile")}
             icon="shapes"
             title="Projects"
+            selected={outliner.model}
         >
             <Scroller className="project-scroller" scrollTo={`cat_${obj?.id}`}>
                 {outliner.models.map((item, i) => {
@@ -47,6 +40,7 @@ export const NavPanel = ({ viewport, loading, isMobile, outliner }: Props) => {
                                 text={item.name}
                                 onClick={(e) => {
                                     setObj(item);
+
                                     if (obj?.id === item.id) {
                                         e.preventDefault();
                                     }

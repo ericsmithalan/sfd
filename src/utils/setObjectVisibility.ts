@@ -33,7 +33,6 @@ export const setObjectVisibility = (
             }
         }
 
-        console.log(object, object?.layers.mask);
         return object;
     }
     return null;
