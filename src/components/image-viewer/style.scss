@@ -94,7 +94,7 @@
         & > .viewer {
             max-height: 400px;
             position: static;
-            width: 97vw;
+            width: 94vw;
 
             & > .close {
                 background-color: var(--color-alt-1);
@@ -104,14 +104,44 @@
             & > .selected {
                 height: auto;
                 max-height: 300px;
+
                 & > .bg-image {
                     max-height: 300px;
                 }
             }
 
             & > .images {
-                height: auto;
                 max-height: 110px;
+                gap: 0;
+
+                & > .scroll {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 0;
+
+                    button {
+                        width: 100px;
+                        height: 100px;
+
+                        padding: 0;
+                        margin: 0;
+                        gap: 0;
+
+                        .bg-image {
+                            height: 100px;
+                            width: 100px;
+                            padding: 0;
+                            margin: 0;
+
+                            & > .background {
+                                height: 100px;
+                                width: 100px;
+                                padding: 0;
+                                margin: 0;
+                            }
+                        }
+                    }
+                }
             }
         }
     }

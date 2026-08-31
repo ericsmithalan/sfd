@@ -87,7 +87,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                                           setSelected(img.replace("_thumb", ""));
                                       }}
                                   >
-                                      <BgImage width={100} size="cover" src={`${img}_thumb.png`} />
+                                      <BgImage
+                                          width={100}
+                                          height={100}
+                                          size="cover"
+                                          src={`${img}_thumb.png`}
+                                      />
                                   </Button>
                               );
                           })}
