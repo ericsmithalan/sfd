@@ -20,8 +20,14 @@ export const NavPanel = ({ isMobile, outliner }: Props) => {
     const [obj, setObj] = useState<IOutliner | null>(null);
 
     return outliner.model ? (
-        <PanelDropdown icon="apps" title="Projects" selected={outliner.model} isMobile={isMobile}>
-            <Scroller className="project-scroller" scrollTo={`cat_${obj?.id}`}>
+        <PanelDropdown
+            icon="apps"
+            className="nav-panel"
+            title="Projects"
+            selected={outliner.model}
+            isMobile={isMobile}
+        >
+            <Scroller className="nav-scroller" scrollTo={`cat_${obj?.id}`}>
                 {outliner.models.map((item, i) => {
                     return (
                         <Fragment key={i}>

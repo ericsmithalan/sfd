@@ -1,5 +1,5 @@
 .object-panel {
-    display: flex;
-    flex-direction: column;
-    padding-top: var(--padding-1);
+    .stats {
+        padding: 10px;
+    }
 }

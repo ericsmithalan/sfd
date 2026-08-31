@@ -37,12 +37,13 @@
         flex-direction: row;
         text-transform: uppercase;
         font-size: var(--font-6);
-        font-weight: 800;
+        font-weight: 600;
         position: relative;
         z-index: 1;
         flex: 1 1 auto;
         gap: var(--gap-5);
-        margin-left: var(--margin-4);
+        margin: var(--margin-4);
+        margin-bottom: 0;
 
         & > .icon {
             color: var(--color-alt-1);
