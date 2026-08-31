@@ -31,13 +31,10 @@ export const Panel: FC<PanelProps> = ({
 
     return (
         <div ref={panelRef} className={clsx("panel", className)}>
-            {icon ||
-                (title && (
-                    <div className="panel-title">
-                        {icon && <Icon fill className="icn-dropdown" name={icon} />}
-                        {title && <div>{title}</div>}
-                    </div>
-                ))}
+            <div className={title && icon ? "panel-title" : ""}>
+                {icon && <Icon fill className="icn-dropdown" name={icon} />}
+                {title && <div>{title}</div>}
+            </div>
 
             <div className={clsx("panel-content", contentCss)}>{children}</div>
 
