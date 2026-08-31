@@ -91,7 +91,7 @@
         z-index: 300;
         display: flex;
         flex: 1 1 auto;
-        height: 280px;
+        height: 285px;
     }
 
     &.mobile {
@@ -101,6 +101,12 @@
         right: var(--margin-4);
         flex: 1 1 auto;
         width: auto;
-        height: 240px;
+        height: 380px;
+
+        a {
+            font-size: var(--font-5);
+            padding-top: var(--padding-3);
+            padding-bottom: var(--padding-3);
+        }
     }
 }
