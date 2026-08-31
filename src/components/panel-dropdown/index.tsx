@@ -58,6 +58,7 @@ export const PanelDropdown = ({
             <Button
                 ref={btnRef}
                 icon="apps"
+                iconFill={true}
                 variant="panel"
                 className={clsx("panel-dropdown", isMobile && "mobile", className)}
                 onClick={(e) => {
@@ -75,7 +76,11 @@ export const PanelDropdown = ({
                     </div>
                 )}
 
-                <Icon className="icn-dropdown" name={open ? "arrow-up-s" : "arrow-down-s"} />
+                <Icon
+                    fill={true}
+                    className="icn-dropdown"
+                    name={open ? "arrow-up-s" : "arrow-down-s"}
+                />
 
                 <div className="inner-border"></div>
                 <BorderHighlight />
