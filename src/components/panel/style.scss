@@ -5,11 +5,12 @@
     backdrop-filter: var(--blur-3);
     box-shadow: var(--shadow-1);
     border-radius: var(--radius-6);
-    border: 1px solid var(--color-dark-4);
+    border: 1px solid var(--color-dark-2);
     padding: var(--padding-4);
     position: relative;
     margin-top: var(--margin-4);
     margin-left: var(--margin-4);
+    background-color: var(--color-white-9);
     margin-right: var(--margin-4);
 
     & > .inner-border {
