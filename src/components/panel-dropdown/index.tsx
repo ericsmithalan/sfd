@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { IOutliner } from "../../interface";
 import { IconName } from "../../types";
 import { Button } from "../button";
+import { Icon } from "../icon";
 import { BorderHighlight } from "../panel/BorderHighlight";
 import "./style.scss";
 
@@ -54,50 +55,27 @@ export const PanelDropdown = ({
 
     return (
         <>
-            <div
+            <Button
                 ref={btnRef}
+                icon="apps"
+                variant="panel"
                 className={clsx("panel-dropdown", isMobile && "mobile", className)}
                 onClick={(e) => {
                     setOpen(!open);
-                    console.log(!open);
                     e.stopPropagation();
                 }}
             >
-                <div className="layout">
-                    <div
-                        className="layout-title"
-                        onClick={() => {
-                            setOpen(!open);
-                            console.log(!open);
-                        }}
-                    >
-                        <Button
-                            className="title"
-                            title={`${title}`}
-                            variant="title"
-                            active={active}
-                            icon={icon}
-                            text={`${title}:`}
-                        />
-                        {selected && (
-                            <Button
-                                title={selected?.name}
-                                className="selected"
-                                variant="title"
-                                active={active}
-                                icon={textIcon}
-                                text={selected?.name}
-                            />
-                        )}
-                    </div>
-                    <Button
-                        title={open ? "Close" : "Open"}
-                        className="dropdown-toggle"
-                        variant="title"
-                        active={active}
-                        icon={open ? "arrow-up-s" : "arrow-down-s"}
-                    />
+                <div className="title" title={`${title}`}>
+                    {`${title}:`}
                 </div>
+
+                {selected && (
+                    <div title={selected?.name} className="selected">
+                        {selected.name}
+                    </div>
+                )}
+
+                <Icon className="icn-dropdown" name={open ? "arrow-up-s" : "arrow-down-s"} />
 
                 <div className="inner-border"></div>
                 <BorderHighlight />
@@ -113,7 +91,7 @@ export const PanelDropdown = ({
                         </div>,
                         document.body,
                     )}
-            </div>
+            </Button>
         </>
     );
 };

@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { createRef, FC, ReactNode, RefObject } from "react";
 import { IOutliner } from "../../interface";
 import { IconName } from "../../types";
-import { Button } from "../button";
+import { Icon } from "../icon";
 import { BorderHighlight } from "./BorderHighlight";
 import "./style.scss";
 
@@ -31,15 +31,10 @@ export const Panel: FC<PanelProps> = ({
 
     return (
         <div ref={panelRef} className={clsx("panel", className)}>
-            {title && (
-                <Button
-                    iconFill={true}
-                    className="panel-title"
-                    variant="panel"
-                    icon={icon}
-                    text={title}
-                />
-            )}
+            <div className="panel-title">
+                {icon && <Icon className="icn-dropdown" name={icon} />}
+                <div>{title}</div>
+            </div>
 
             <div className={clsx("panel-content", contentCss)}>{children}</div>
 

@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import { FC, MouseEvent, ReactNode } from "react";
+import { FC, MouseEvent, ReactNode, Ref, forwardRef } from "react";
 import { IconName } from "../../types";
 import { Icon } from "../icon";
 import "./style.scss";
@@ -15,6 +15,7 @@ type ButtonProps = {
     active?: boolean;
     variant?: "toolbar" | "image" | "panel" | "title" | "outliner" | "back" | "close";
     className?: string;
+    ref?: Ref<HTMLButtonElement>;
     onClick?: (e: MouseEvent) => void;
 };
 
@@ -30,9 +31,11 @@ export const Button: FC<ButtonProps> = ({
     variant = "default",
     className,
     onClick,
+    ref,
 }) => {
     return (
         <button
+            ref={ref}
             title={title}
             id={id}
             className={clsx(
@@ -51,3 +54,9 @@ export const Button: FC<ButtonProps> = ({
         </button>
     );
 };
+
+export const ForwardedButton = forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+    return <Button ref={ref} {...props} />;
+});
+
+ForwardedButton.displayName = "ForwardedButton";

@@ -1,58 +1,45 @@
 .panel-dropdown {
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     backdrop-filter: var(--blur-3);
     box-shadow: var(--shadow-1);
     border-radius: var(--radius-6);
     border: 1px solid var(--color-dark-4);
-    padding: var(--padding-3);
+    padding: var(--padding-1) !important;
     margin-top: var(--margin-4);
     margin-left: var(--margin-4);
     z-index: 100;
     margin-right: var(--margin-4);
     background-color: var(--color-white-7);
     cursor: pointer;
+    font-size: var(--font-6);
 
-    & > .layout {
+    & > .title {
         display: flex;
-        flex-direction: row;
-        flex: 1 1 auto;
-        z-index: 101;
-        font-size: var(--font-5);
+        font-weight: 200;
+        text-transform: uppercase;
+        color: var(--color-white-3);
+    }
 
-        & > .layout-title {
-            display: flex;
-            flex-direction: row;
-            gap: 0;
-            flex: 1 1 auto;
-            gap: var(--gap-6);
+    & > .selected {
+        display: flex;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        max-width: 500px;
+        min-width: 50px;
+        width: 100%;
+        color: var(--color-alt-1);
+        font-weight: 900;
+        margin-left: var(--margin-6);
+    }
 
-            & > .title {
-                padding: 0;
-                margin: 0;
-                height: auto;
-                width: auto;
-            }
-
-            & > .selected {
-                flex: 1 1 auto;
-                padding: 0;
-                margin: 0;
-                overflow: hidden;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                max-width: 200px;
-                min-width: 50px;
-                width: 100%;
-            }
-        }
-
-        & > .dropdown-toggle {
-            display: flex;
-            padding: 0;
-            margin: 0;
-            margin-left: var(--margin-4);
-        }
+    .icn-dropdown {
+        display: flex;
+        padding: 0;
+        margin: 0;
+        margin-left: var(--margin-4);
+        font-weight: 900;
     }
 
     &.mobile {
@@ -62,6 +49,7 @@
         right: var(--margin-4);
         padding-top: var(--padding-1);
         padding-bottom: var(--padding-1);
+        font-size: var(--font-5);
     }
 
     & > .inner-border {
