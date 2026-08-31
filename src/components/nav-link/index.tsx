@@ -48,7 +48,7 @@ export const NavLink: FC<NavLinkProps> = ({
         >
             {icon && <Icon name={icon} fill={active} />}
             {text && <div className={clsx("link-content", !wrap && "no-wrap")}>{text}</div>}
-            {children}
+            {children && children}
         </NavLink2>
     ) : (
         <Link
@@ -61,7 +61,7 @@ export const NavLink: FC<NavLinkProps> = ({
         >
             {icon && <Icon name={icon} fill={active} />}
             {text && <div className={clsx("link-content", !wrap && "no-wrap")}>{text}</div>}
-            {children}
+            {children && children}
         </Link>
     );
 };

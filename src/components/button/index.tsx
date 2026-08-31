@@ -13,7 +13,7 @@ type ButtonProps = {
     disabled?: boolean;
     iconFill?: boolean;
     active?: boolean;
-    variant?: "toolbar" | "image" | "panel" | "outliner" | "back" | "close";
+    variant?: "toolbar" | "image" | "panel" | "title" | "outliner" | "back" | "close";
     className?: string;
     onClick?: (e: MouseEvent) => void;
 };

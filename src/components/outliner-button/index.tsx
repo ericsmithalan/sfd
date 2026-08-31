@@ -31,6 +31,7 @@ export const OutlinerButton = ({
                 title={text}
                 variant="outliner"
                 active={active}
+                className="btn-text"
                 icon={(icon && icon) || "blender"}
                 text={text}
                 onClick={(e) => {
@@ -40,7 +41,7 @@ export const OutlinerButton = ({
                 }}
             />
             <Button
-                className="visible-btn"
+                className="btn-eye"
                 title={"Toggle Visibility"}
                 variant="outliner"
                 onClick={(e) => {

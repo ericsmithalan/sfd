@@ -12,8 +12,7 @@
     & > .scroll {
         overflow-y: auto;
         padding-top: var(--padding-3);
-        display: flex;
-        flex: 1 1 auto;
+        padding-bottom: var(--padding-3);
         flex-direction: column;
         position: absolute;
         top: 0;

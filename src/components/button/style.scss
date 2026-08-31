@@ -31,6 +31,23 @@ input::-moz-focus-inner {
         }
     }
 
+    &.btn-title {
+        font-size: inherit;
+        display: flex;
+        flex-direction: row;
+        background-color: transparent;
+        border: 1px solid transparent;
+        gap: var(--gap-6);
+
+        & > .icon {
+            color: var(--color-alt-1);
+        }
+
+        &.selected {
+            font-weight: 900;
+        }
+    }
+
     &.btn-panel {
         display: flex;
         flex-direction: row;

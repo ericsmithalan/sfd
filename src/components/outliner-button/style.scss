@@ -3,13 +3,30 @@
     flex-direction: row;
     align-items: center;
 
-    & > .button:first-of-type {
+    // & > .button:first-of-type {
+    //     flex: 1 1 auto;
+    //     width: 100%;
+    //     align-self: flex-start;
+
+    //     & > .text {
+    //         max-width: 8rem;
+    //         overflow: hidden;
+    //         text-overflow: ellipsis;
+    //         text-align: left;
+    //         width: 100%;
+    //         white-space: nowrap;
+    //         text-transform: capitalize;
+    //     }
+    // }
+
+    .btn-text {
+        display: flex;
+
         flex: 1 1 auto;
         width: 100%;
-        align-self: flex-start;
 
         & > .text {
-            max-width: 8rem;
+            max-width: 9.3rem;
             overflow: hidden;
             text-overflow: ellipsis;
             text-align: left;
@@ -19,7 +36,8 @@
         }
     }
 
-    & .visible-btn {
-        margin-right: var(--margin-3);
+    .btn-eye {
+        display: flex;
+        margin-right: var(--margin-5);
     }
 }

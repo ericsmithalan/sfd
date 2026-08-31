@@ -2,10 +2,7 @@
     display: flex;
     flex: 1 1 auto;
     flex-direction: column;
-    padding-top: var(--padding-3);
-    height: 30vh;
     overflow: hidden;
-    background-color: var(--color-white-9);
 
     .link.active {
         background-color: transparent;
@@ -13,13 +10,11 @@
 
     &.mobile {
         padding-bottom: 0;
-        font-size: var(--font-5);
-        background-color: var(--color-white-8);
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 35vh;
+        height: auto;
 
         & > .outliner-title {
             margin-bottom: 0;

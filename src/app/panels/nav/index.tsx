@@ -1,6 +1,5 @@
-import clsx from "clsx";
 import { Fragment, useState } from "react";
-import { NavLink, Panel, Scroller } from "../../../components";
+import { NavLink, PanelDropdown, Scroller } from "../../../components";
 import { IOutlinerContext } from "../../../context";
 import { IOutliner } from "../../../interface";
 import { Viewport } from "../../../lib";
@@ -21,12 +20,7 @@ export const NavPanel = ({ isMobile, outliner }: Props) => {
     const [obj, setObj] = useState<IOutliner | null>(null);
 
     return outliner.model ? (
-        <Panel
-            className={clsx("projects-panel", isMobile && "mobile")}
-            icon="shapes"
-            title="Projects"
-            selected={outliner.model}
-        >
+        <PanelDropdown icon="apps" title="Projects" selected={outliner.model} isMobile={isMobile}>
             <Scroller className="project-scroller" scrollTo={`cat_${obj?.id}`}>
                 {outliner.models.map((item, i) => {
                     return (
@@ -50,6 +44,6 @@ export const NavPanel = ({ isMobile, outliner }: Props) => {
                     );
                 })}
             </Scroller>
-        </Panel>
+        </PanelDropdown>
     ) : null;
 };

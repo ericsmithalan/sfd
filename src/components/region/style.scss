@@ -1,6 +1,7 @@
 .region {
     position: absolute;
     display: flex;
+    flex: 1 1 auto;
     z-index: 100;
 
     &.mobile {
@@ -65,7 +66,9 @@
             flex-direction: column;
             left: 1rem;
             top: 1rem;
-            width: 17rem;
+            width: 18.5rem;
+            flex: 1 1 auto;
+            gap: var(--gap-6);
         }
 
         &.place-right {

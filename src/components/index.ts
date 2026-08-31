@@ -1,5 +1,6 @@
 export * from "./bg-image";
 export * from "./button";
+export * from "./panel-dropdown";
 export * from "./icon";
 export * from "./loading";
 export * from "./logo";
