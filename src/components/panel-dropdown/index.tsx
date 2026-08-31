@@ -60,7 +60,12 @@ export const PanelDropdown = ({
                 icon="apps"
                 iconFill={true}
                 variant="panel"
-                className={clsx("panel-dropdown", isMobile && "mobile", className)}
+                className={clsx(
+                    "panel-dropdown",
+                    open && "dropdown-open",
+                    isMobile && "mobile",
+                    className,
+                )}
                 onClick={(e) => {
                     setOpen(!open);
                     e.stopPropagation();
@@ -78,19 +83,27 @@ export const PanelDropdown = ({
 
                 <Icon fill={true} className="icn-dropdown" name={open ? "menu" : "menu"} />
 
-                <div className="inner-border"></div>
-                <BorderHighlight />
+                {!isMobile && (
+                    <>
+                        <div className="inner-border"></div>
+                        <BorderHighlight />
+                    </>
+                )}
                 {open &&
                     btnRef.current &&
                     createPortal(
                         <div
                             ref={portalRef}
-                            className={clsx("panel", "dropdown", isMobile && "mobile")}
+                            className={clsx(
+                                "dropdown",
+                                open && "dropdown-open",
+                                isMobile && "mobile",
+                            )}
                         >
                             <div className="dropdown-items">{children}</div>
-                            <div className="inner-border"></div>
+                            {!isMobile && <div className="inner-border"></div>}
                         </div>,
-                        document.body,
+                        document.querySelector("#root") || document.body,
                     )}
             </Button>
         </>

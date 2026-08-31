@@ -1,27 +1,26 @@
 .panel-dropdown {
     display: flex;
     flex-direction: row;
-    backdrop-filter: var(--blur-3);
-    box-shadow: var(--shadow-1);
-    border-radius: var(--radius-6);
-    border: 1px solid var(--color-dark-2);
-    padding: var(--padding-2) !important;
-    margin-top: var(--margin-4);
-    margin-left: var(--margin-4);
-    z-index: 100;
-    margin-right: var(--margin-4);
-    background-color: var(--color-alt-2) !important;
+    background-color: var(--color-white-7) !important;
+    backdrop-filter: var(--blur-3) !important;
+    box-shadow: var(--shadow-1) !important;
+    border-radius: var(--radius-6) !important;
+    border: 1px solid var(--color-dark-2) !important;
+    padding-top: var(--padding-1) !important;
+    padding-bottom: var(--padding-1) !important;
+    padding-left: var(--padding-1) !important;
+    padding-right: var(--padding-1) !important;
+    position: relative;
     cursor: pointer;
-    font-size: var(--font-6);
 
-    &:hover {
-        background-color: var(--color-alt-1) !important;
+    &.dropdown-open {
+        background-color: var(--color-white-5) !important;
     }
+
     & > .title {
         display: flex;
-
-        text-transform: uppercase;
-        color: var(--color-white-2);
+        color: var(--color-white-1);
+        font-weight: 400;
     }
 
     & > .selected {
@@ -32,8 +31,9 @@
         max-width: 500px;
         min-width: 50px;
         width: 100%;
-        font-weight: 900;
+        font-weight: 700;
         margin-left: var(--margin-6);
+        color: var(--color-alt-1);
     }
 
     .icn-dropdown {
@@ -42,17 +42,11 @@
         margin: 0;
         margin-left: var(--margin-4);
         font-weight: 900;
-        color: var(--color-white-1) !important;
+        color: var(--color-white-3) !important;
     }
 
-    &.mobile {
-        position: absolute;
-        top: var(--margin-4);
-        left: var(--margin-4);
-        right: var(--margin-4);
-        padding-top: var(--padding-1);
-        padding-bottom: var(--padding-1);
-        font-size: var(--font-5);
+    & > .icon:not(.icn-dropdown) > i {
+        color: var(--color-alt-1) !important;
     }
 
     & > .inner-border {
@@ -74,42 +68,82 @@
         height: 1px;
         opacity: 0.2;
     }
+
+    &:hover {
+        background-color: var(--color-white-6) !important;
+    }
+
+    &.mobile {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        font-size: var(--font-5);
+        margin: 0;
+        border-radius: 0 !important;
+
+        & > .inner-border {
+            border-radius: 0 !important;
+        }
+    }
 }
 
 .dropdown {
     display: flex;
     flex-direction: column;
-    width: 262px;
-    z-index: 100;
+    width: 278px;
+    z-index: 1000;
     position: absolute;
-    top: 76px;
+    top: 75px;
     left: 15px;
-    background-color: var(--color-white-8) !important;
-    backdrop-filter: var(--blur-1);
+    background-color: var(--color-white-9) !important;
     box-shadow: var(--shadow-4) !important;
-    border-radius: var(--radius-6);
+    overflow: visible !important;
+    backdrop-filter: var(--blur-3) !important;
+    padding: var(--padding-2);
+    padding-top: 0;
+    border: 0 !important;
+
+    &.dropdown-open {
+        a {
+            padding-top: var(--padding-4);
+            padding-bottom: var(--padding-4);
+            background-color: transparent !important;
+
+            &:hover {
+                background-color: var(--color-black-5) !important;
+            }
+        }
+    }
 
     & > .dropdown-items {
         position: relative;
         z-index: 300;
         display: flex;
         flex: 1 1 auto;
-        height: 285px;
+        height: 250px;
     }
 
     &.mobile {
         position: absolute;
-        top: 71px;
-        left: var(--margin-4);
-        right: var(--margin-4);
+        top: 63px;
+        left: 0;
+        right: 0;
         flex: 1 1 auto;
         width: auto;
         height: 380px;
+        border: 0 !important;
+        box-shadow: var(--shadow-4) !important;
 
         a {
             font-size: var(--font-5);
             padding-top: var(--padding-3);
             padding-bottom: var(--padding-3);
+            background-color: transparent !important;
+
+            &:hover {
+                background-color: var(--color-black-5) !important;
+            }
         }
     }
 }

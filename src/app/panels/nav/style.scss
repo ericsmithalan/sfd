@@ -1,23 +1,2 @@
 .nav-panel {
-    .link.active {
-        background-color: transparent;
-    }
-
-    &.mobile {
-        padding-bottom: 0;
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: auto;
-
-        & > .outliner-title {
-            margin-bottom: 0;
-            padding-bottom: 0;
-
-            & > .title-content {
-                border-bottom: 0;
-            }
-        }
-    }
 }
