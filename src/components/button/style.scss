@@ -41,7 +41,7 @@ input::-moz-focus-inner {
         gap: var(--gap-6);
 
         & > .icon {
-            color: var(--color-alt-1);
+            color: inherit;
         }
 
         &.selected {
@@ -60,7 +60,7 @@ input::-moz-focus-inner {
         gap: var(--gap-6);
 
         & > .icon {
-            color: var(--color-alt-1);
+            color: inherit;
         }
     }
 
