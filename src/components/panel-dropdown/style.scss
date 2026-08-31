@@ -83,7 +83,7 @@
     left: 15px;
     background-color: var(--color-white-8) !important;
     backdrop-filter: var(--blur-1);
-    box-shadow: var(--shadow-1);
+    box-shadow: var(--shadow-4) !important;
     border-radius: var(--radius-6);
 
     & > .dropdown-items {

@@ -3,6 +3,7 @@ import { FC, useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { BgImage } from "../bg-image";
 import { Button } from "../button";
+import { Icon } from "../icon";
 import { Scroller } from "../scroller";
 import "./style.scss";
 
@@ -26,9 +27,6 @@ export const ImageViewer: FC<ImageViewerProps> = ({
     const divRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
-        if (divRef) {
-        }
-
         if (visible) {
             setIsVisible(visible);
         }
@@ -58,17 +56,27 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                           e.stopPropagation();
                       }}
                   >
-                      <div className="selected">
-                          <BgImage
-                              size="cover"
-                              minHeight={300}
-                              maxHeight={1000}
-                              height={"100%"}
-                              src={`${selected}.png`}
+                      <div className="header">
+                          <Icon name="image" fill />
+                          <div className="title"> Images</div>
+
+                          <Button
+                              className="close"
+                              icon="close"
+                              variant="close"
+                              onClick={() => {
+                                  setIsVisible(false);
+                                  if (onClosed) {
+                                      onClosed();
+                                  }
+                              }}
                           />
                       </div>
+                      <div className="selected">
+                          <BgImage size="contain" height={"100%"} src={`${selected}.png`} />
+                      </div>
 
-                      <Scroller className="images">
+                      <Scroller className="images" showShadow={false}>
                           {images.map((img, i) => {
                               return (
                                   <Button
@@ -79,28 +87,12 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                                           setSelected(img.replace("_thumb", ""));
                                       }}
                                   >
-                                      <BgImage
-                                          minWidth={99}
-                                          minHeight={99}
-                                          maxHeight={99}
-                                          size="cover"
-                                          src={`${img}_thumb.png`}
-                                      />
+                                      <BgImage width={100} size="cover" src={`${img}_thumb.png`} />
                                   </Button>
                               );
                           })}
                       </Scroller>
-                      <Button
-                          className="close"
-                          icon="close"
-                          variant="close"
-                          onClick={() => {
-                              setIsVisible(false);
-                              if (onClosed) {
-                                  onClosed();
-                              }
-                          }}
-                      />
+
                       <div className="inner-border"></div>
                   </div>
               </div>,
