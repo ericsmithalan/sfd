@@ -58,6 +58,8 @@ export const PanelDropdown = ({
                 ref={btnRef}
                 className={clsx("panel-dropdown", isMobile && "mobile", className)}
                 onClick={(e) => {
+                    setOpen(!open);
+                    console.log(!open);
                     e.stopPropagation();
                 }}
             >
@@ -94,9 +96,6 @@ export const PanelDropdown = ({
                         variant="title"
                         active={active}
                         icon={open ? "arrow-up-s" : "arrow-down-s"}
-                        onClick={() => {
-                            setOpen(!open);
-                        }}
                     />
                 </div>
 
@@ -111,7 +110,6 @@ export const PanelDropdown = ({
                         >
                             <div className="dropdown-items">{children}</div>
                             <div className="inner-border"></div>
-                            <BorderHighlight />
                         </div>,
                         document.body,
                     )}

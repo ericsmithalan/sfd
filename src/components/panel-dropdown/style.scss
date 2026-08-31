@@ -11,13 +11,14 @@
     z-index: 100;
     margin-right: var(--margin-4);
     background-color: var(--color-white-7);
+    cursor: pointer;
 
     & > .layout {
         display: flex;
         flex-direction: row;
         flex: 1 1 auto;
         z-index: 101;
-        font-size: var(--font-6);
+        font-size: var(--font-5);
 
         & > .layout-title {
             display: flex;
@@ -59,6 +60,8 @@
         top: var(--margin-4);
         left: var(--margin-4);
         right: var(--margin-4);
+        padding-top: var(--padding-1);
+        padding-bottom: var(--padding-1);
     }
 
     & > .inner-border {
@@ -105,7 +108,7 @@
 
     &.mobile {
         position: absolute;
-        top: 50px;
+        top: 70px;
         left: var(--margin-4);
         right: var(--margin-4);
         flex: 1 1 auto;
