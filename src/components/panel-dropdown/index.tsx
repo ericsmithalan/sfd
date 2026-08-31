@@ -76,11 +76,7 @@ export const PanelDropdown = ({
                     </div>
                 )}
 
-                <Icon
-                    fill={true}
-                    className="icn-dropdown"
-                    name={open ? "arrow-up-s" : "arrow-down-s"}
-                />
+                <Icon fill={true} className="icn-dropdown" name={open ? "menu" : "menu"} />
 
                 <div className="inner-border"></div>
                 <BorderHighlight />
