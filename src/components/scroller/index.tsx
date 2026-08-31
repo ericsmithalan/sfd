@@ -6,6 +6,7 @@ type ScrollerProps = {
     children?: ReactNode;
     className?: string;
     scrollCss?: string;
+    direction?: "both" | "x" | "y";
     showShadow?: boolean;
     width?: number | string;
     height?: number | string;
@@ -30,6 +31,7 @@ export const Scroller: FC<ScrollerProps> = ({
     children,
     scrollTo,
     disable = false,
+    direction,
 }) => {
     const [scrolling, setScrolling] = useState(false);
 
@@ -90,6 +92,9 @@ export const Scroller: FC<ScrollerProps> = ({
                 ref={scrollerRef}
                 className="scroll"
                 style={{
+                    overflowX: direction === "x" ? "auto" : undefined,
+                    overflowY: direction === "y" ? "auto" : undefined,
+                    overflow: direction === "both" ? "auto" : undefined,
                     width: (!disable && width) || undefined,
                     height: (!disable && height) || undefined,
                     maxHeight: (!disable && maxHeight) || undefined,

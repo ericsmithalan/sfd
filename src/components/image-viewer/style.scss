@@ -81,6 +81,8 @@
             & > .scroll {
                 display: flex;
                 flex-direction: row;
+                overflow-y: auto;
+                overflow-x: none;
                 gap: 2px;
             }
         }
@@ -104,15 +106,14 @@
 
             & > .selected {
                 height: auto;
-                max-height: 300px;
+                max-height: 500px;
 
                 & > .bg-image {
-                    max-height: 300px;
+                    max-height: 500px;
                 }
             }
 
             & > .images {
-                max-height: 110px;
                 gap: 0;
 
                 & > .scroll {

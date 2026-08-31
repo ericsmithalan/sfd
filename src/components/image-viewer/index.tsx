@@ -76,7 +76,7 @@ export const ImageViewer: FC<ImageViewerProps> = ({
                           <BgImage size="contain" height={"100%"} src={`${selected}.png`} />
                       </div>
 
-                      <Scroller className="images" showShadow={false}>
+                      <Scroller className="images" direction="x" height={130} showShadow={false}>
                           {images.map((img, i) => {
                               return (
                                   <Button
