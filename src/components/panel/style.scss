@@ -6,12 +6,11 @@
     box-shadow: var(--shadow-1);
     border-radius: var(--radius-6);
     border: 1px solid var(--color-dark-4);
-    padding: var(--padding-1);
+    padding: var(--padding-4);
     position: relative;
     margin-top: var(--margin-4);
     margin-left: var(--margin-4);
     margin-right: var(--margin-4);
-    flex: 1 1 auto;
 
     & > .inner-border {
         position: absolute;
@@ -66,12 +65,6 @@
         font-size: var(--font-6);
         color: var(--color-white-3);
         margin-top: var(--margin-3);
-    }
-
-    &.panel-closed {
-        height: auto;
-        padding-bottom: var(--padding-3);
-        background-color: red;
     }
 
     &.mobile {
