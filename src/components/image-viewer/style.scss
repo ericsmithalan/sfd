@@ -8,7 +8,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: var(--color-black-2);
+    background-color: var(--color-black-7);
     backdrop-filter: var(--blur-3);
 
     & > .viewer {
@@ -16,10 +16,8 @@
         flex-direction: column;
         z-index: 100;
         position: absolute;
-        top: 10px;
-        left: 10px;
-        right: 10px;
-        bottom: 10px;
+        width: 55vw;
+        height: 95vh;
         flex: 1 1 auto;
         background-color: var(--color-white-8);
         backdrop-filter: var(--blur-3);
@@ -27,11 +25,14 @@
         border-radius: var(--radius-3);
         border: 1px solid var(--color-white-9);
         padding: var(--padding-4);
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
 
         & > .header {
             display: flex;
             padding: var(--padding-4);
-            margin-bottom: var(--margin-3);
+
             font-size: var(--font-4);
             gap: 4px;
             align-items: center;
@@ -90,14 +91,11 @@
 
     &.mobile {
         display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
 
         & > .viewer {
-            max-height: 500px;
-            position: static;
-            width: 94vw;
+            max-height: 480px;
+            width: 90vw;
+            height: 100%;
             flex: 1 1 auto;
 
             & > .close {
@@ -122,6 +120,7 @@
                     display: flex;
                     flex-direction: row;
                     gap: 0;
+                    margin: 0;
 
                     button {
                         width: 100px;
