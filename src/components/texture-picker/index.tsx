@@ -43,6 +43,11 @@ export const TexturePicker: FC<TexturePickerProps> = ({
                     isMobile={isMobile}
                     active={open}
                     text={label}
+                    selected={
+                        selected.displayName && selected.displayName !== "None"
+                            ? selected.displayName
+                            : label
+                    }
                     className={clsx("menu-button", className)}
                     image={selected.thumbnail}
                     onClick={(e: MouseEvent) => {

@@ -81,7 +81,7 @@ export const TextureMenu = ({
                                 key={i}
                                 active={item.id === selected?.id}
                                 image={item.thumbnail}
-                                text={item.name}
+                                text={item.displayName}
                                 data-id={item.id}
                                 onClick={(e) => {
                                     if (onItemClick) {

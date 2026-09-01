@@ -4,6 +4,7 @@ import { BgImage } from "../../bg-image";
 import "./style.scss";
 
 type TextureButtonProps = {
+    selected?: string;
     className?: string;
     disable?: boolean;
     isMobile?: boolean;
@@ -22,6 +23,7 @@ export const TextureButton: FC<TextureButtonProps> = ({
     isMobile = false,
     ref,
     image,
+    selected,
     onClick,
 }) => {
     const buttonRef = ref || createRef();
@@ -43,7 +45,9 @@ export const TextureButton: FC<TextureButtonProps> = ({
             )}
         >
             {image && <BgImage src={image} />}
-            {text && <div className="text">{text}</div>}
+            {text && (
+                <div className="text">{!selected && selected !== "None" ? text : selected}</div>
+            )}
         </button>
     );
 };
