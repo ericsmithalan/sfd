@@ -1,36 +1,54 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Smith Furniture Design (sfd)
 
-## Getting Started
+Personal project. Public as of September 2026. One piece is wired up (the sideboard). Not a live store.
 
-First, run the development server:
+Interactive 3D furniture viewer in the browser.
+
+Live: https://www.smithfurnituredesign.com
+
+## What it is
+
+sfd is a product site experiment for furniture I build.
+
+There are several projects. Open the Projects dropdown to switch pieces. On a model you can orbit the view, toggle edge display, explode / implode the assembly, and go through a named parts list (legs, rails, panels, drawers, dividers, and so on).
+
+## Why it exists
+
+I wanted a public place to show the woodworking — not just a photo of a finished piece.
+
+I also did not want to build a large inventory of items in order to sell. The idea was to let a customer customize a design: different woods, different metal, same underlying piece. This app is where I try those features in the browser before they belong on a storefront.
+
+So the project has two jobs:
+
+1. Show how the furniture is made.
+2. Test UI that would matter on a site that sells made-to-order work (part views, finishes, materials) instead of a warehouse of SKUs.
+
+It is also current UI / front-end work I can point to.
+
+## What works in the UI now
+
+- Project dropdown to switch between projects
+- Rotate and inspect the 3D model
+- Scroll a parts list for the sideboard
+- Toggle Edges
+- Explode / implode the assembly
+- View gizmo for axis orientation
+
+Material / finish customization (wood species, metal) is the intended store feature. Do not treat it as a shipped catalog until that UI is in the app.
+
+## Stack
+
+- React 19
+- TypeScript
+- Three.js (`three`, `three-viewport-gizmo`)
+- React Router
+- Sass / LESS
+- Tween.js
+- Create React App (`react-scripts`)
+
+## Run locally
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+yarn
+yarn start
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
