@@ -2,18 +2,24 @@
 
 Interactive 3D furniture viewer in the browser.
 
-Live: https://www.smithfurnituredesign.com/  
-Also: https://sfd-puce.vercel.app/
+I am not the strongest developer you will meet. I am not a weak one either.
+
+This app is more complex than it needs to be. That is on purpose for a proof of concept, not because every layer earned its keep. I have shipped production programs and websites within teams. This repo is a personal project. It does not use the same review, testing, or structure bar.
+
+If you are hiring for UI design / UI development, treat this as a working prototype I designed and built myself. Several parts of it I would ask for help on in a team setting. Right now I am designing and building on the fly. The standard is: it has to work.
+
+website: https://www.smithfurnituredesign.com/  
+github: https://github.com/ericsmithalan
 
 ## What it is
 
-sfd is a product site experiment for furniture I build.
+sfd is a product site experiment for furniture I design and make.
 
 There are several projects. Open the Projects dropdown to switch pieces. On a model you can orbit the view, toggle edge display, explode / implode the assembly, and go through a named parts list (legs, rails, panels, drawers, dividers, and so on).
 
 Select a part to see its details, including dimensions. Open the image viewer to see photos of the finished piece.
 
-Every 3D model in the app was built by me in Blender. Part dimensions are modeled to 1/16 inch.
+Every 3D model in the app was built by me in Blender. Part dimensions are modeled precisely and were used as the reference when I built the piece. To do this I modified a Blender plugin that I downloaded and
 
 ## Why it exists
 
@@ -21,9 +27,7 @@ sfd is a product-site experiment I build in public.
 
 The furniture is real work I make. The point of the website is technical: UI design and UI development I can show instead of only talking about jobs from 2000–2021.
 
-I did not want a photo grid and a price list. I wanted a browser app that has to solve the same problems I used to solve in product UI — navigation, toolbars, panels, selection, 3D view controls, mobile layout, and state across more than one project.
-
-A second product idea sits behind that: made-to-order furniture. Instead of stocking every wood and metal combination, a customer would customize the piece. That store feature is not a catalog yet. The UI work needed to get there is.
+Several product ideas sit behind this application. I am not disclosing them here. The potential is real. That is not a claim that any of them is proven, and it is not a claim that they are not. Several inovative ideas I have could turn this into a product.
 
 So the site has three jobs:
 
