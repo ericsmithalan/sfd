@@ -6,7 +6,7 @@ export const App = () => {
     return (
         <Routes>
             <Route path="/" element={<Viewer />}>
-                <Route path="" element={<Navigate to="/Desks/Desk" />} />
+                <Route path="" element={<Navigate to="/Sideboards/Sideboard" />} />
                 <Route path="/:categoryName/:modelName" element={<OutlinerView />} />
             </Route>
         </Routes>

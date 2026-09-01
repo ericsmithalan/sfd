@@ -4,7 +4,7 @@ import "./style.scss";
 
 type RegionProps = {
     className?: string;
-    placement: "left" | "right" | "top" | "bottom";
+    placement: "left" | "right" | "bottom";
     children?: ReactNode;
 };
 

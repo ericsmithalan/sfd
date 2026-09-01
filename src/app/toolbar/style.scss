@@ -18,10 +18,30 @@
         & > .button {
             border-radius: 0;
             height: 70px;
-            width: 70px;
+            width: 90px;
 
             & > .bg-image {
                 border-radius: 0;
+            }
+        }
+
+        & > .explode-button {
+            justify-content: space-between;
+            padding-bottom: 4px;
+
+            & > .icon {
+                font-size: var(--font-1);
+                margin-top: var(--margin-4);
+            }
+        }
+
+        & > .edges-button {
+            justify-content: space-between;
+            padding-bottom: 4px;
+
+            & > .icon {
+                font-size: var(--font-1);
+                margin-top: var(--margin-4);
             }
         }
 
@@ -49,29 +69,45 @@
     &.mobile {
         z-index: 9999999;
         border-radius: 0;
-        padding: 1px;
+        padding: 0px;
 
         & > .panel-content {
             gap: 1px;
             border-radius: 0;
-            justify-content: space-around;
             position: relative;
 
-            & > .button {
-                height: 60px;
-                width: 58px;
+            & > .explode-button {
+                justify-content: space-between;
+                padding-bottom: 3px;
+
+                & > .icon {
+                    font-size: var(--font-2);
+                    margin-top: var(--margin-4);
+                }
             }
+            & > .images-button {
+                justify-content: space-between;
+                padding-bottom: 3px;
 
-            & > .button:first-of-type {
-                border-radius: 0;
+                & > .icon {
+                    font-size: var(--font-2);
+                    margin-top: var(--margin-4);
+                }
+            }
+            & > .edges-button {
+                justify-content: space-between;
+                padding-bottom: 3px;
 
-                & > .bg-image {
-                    border-radius: 0;
+                & > .icon {
+                    font-size: var(--font-2);
+                    margin-top: var(--margin-4);
                 }
             }
 
-            & > .button:last-of-type {
+            & > .button {
                 border-radius: 0;
+                height: 70px;
+                width: 60px;
 
                 & > .bg-image {
                     border-radius: 0;

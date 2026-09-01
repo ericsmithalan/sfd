@@ -27,7 +27,7 @@ export const getTextureFromBlenderMaterial = (
         return {
             type: "wood",
             texture: DATA.woodTextures[0],
-            formattedName: "color 1",
+            formattedName: "Base",
         };
     }
 
@@ -35,7 +35,7 @@ export const getTextureFromBlenderMaterial = (
         return {
             type: "wood",
             texture: DATA.woodTextures[0],
-            formattedName: "color 2",
+            formattedName: "Accent",
         };
     }
 

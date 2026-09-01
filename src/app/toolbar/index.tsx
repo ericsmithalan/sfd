@@ -152,6 +152,7 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                 ))}
 
             <Button
+                className={clsx("edges-button", isMobile && "mobile")}
                 title="Toggle Edges"
                 variant="toolbar"
                 icon="artboard-2"
@@ -163,21 +164,8 @@ export const Toolbar: FC<ToolbarProps> = ({ viewport, children, isMobile }) => {
                 }}
             />
 
-            {/* {animate !== null && (
-                <Button
-                    title={animate.state === "closed" ? "Open" : "Close"}
-                    variant="toolbar"
-                    icon={animate.state === "closed" ? "door-closed" : "door-open"}
-                    text={animate.state === "closed" ? "Open" : "Close"}
-                    active={animate.animating || animate.state === "opened"}
-                    disabled={animate.animating}
-                    onClick={(e) => {
-                        viewport.toggleAnimation();
-                    }}
-                />
-            )} */}
-
             <Button
+                className={clsx("explode-button", isMobile && "mobile")}
                 title={animate?.state === "closed" ? "Explode" : "Implode"}
                 variant="toolbar"
                 icon={"stack"}

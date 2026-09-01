@@ -37,7 +37,7 @@ export const StandardViewer = ({ viewport, loading }: Props) => {
                 </Region>
             </OutlinerProvider>
 
-            <Region placement="top">
+            <Region placement="bottom">
                 <ModelProvider viewport={viewport}>
                     {!loading && (
                         <>

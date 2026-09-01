@@ -16,7 +16,7 @@ export const MobileViewer = ({ viewport, loading }: Props) => {
         <OutlinerProvider viewport={viewport}>
             <Outlet context={{ viewport: viewport, loading: loading, isMobile: true }} />
 
-            <Region className={clsx("mobile", loading && "loading")} placement="top">
+            <Region className={clsx("mobile", loading && "loading")} placement="bottom">
                 <ModelProvider viewport={viewport}>
                     {!loading && (
                         <Toolbar isMobile={true} viewport={viewport}>

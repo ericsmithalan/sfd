@@ -5,7 +5,6 @@ import { ImageViewer } from "../../../components/image-viewer";
 import { useOutliner } from "../../../hooks";
 import { Viewport } from "../../../lib";
 import { generateImageResource, ImageResource } from "../../../utils";
-import "./style.scss";
 
 type ViewerState = {
     visible: boolean;
@@ -49,6 +48,7 @@ export const ImagesPanel = ({ loading, viewport, isMobile }: ImagesPanelProps) =
         <>
             {imageResource.primary && (
                 <Button
+                    className={clsx("images-button", isMobile && "mobile")}
                     variant="toolbar"
                     text="Images"
                     icon="multi-image"
